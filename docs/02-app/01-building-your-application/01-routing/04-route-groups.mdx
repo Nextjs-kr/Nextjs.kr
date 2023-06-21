@@ -1,18 +1,24 @@
 ---
-title: Route Groups
-description: Route Groups can be used to partition your Next.js application into different sections.
+title: 라우팅 그룹
+description: 라우팅 그룹을 사용하여 Next.js 애플리케이션을 여러 섹션으로 분할할 수 있습니다.
 ---
 
-In the `app` directory, nested folders are normally mapped to URL paths. However, you can mark a folder as a **Route Group** to prevent the folder from being included in the route's URL path.
+`app` 디렉토리에서 중첩된 폴더는 일반적으로 URL 경로에 매핑됩니다. 그러나 폴더를 **라우팅 그룹**으로 표시하여 폴더가 경로의 URL 경로에 포함되지 않도록 할 수 있습니다. 
 
-This allows you to organize your route segments and project files into logical groups without affecting the URL path structure.
 
-Route groups are useful for:
+이를 통해 URL 경로 구조에 영향을 주지 않고 경로 세그먼트와 프로젝트 파일을 논리적 그룹으로 구성할 수 있습니다. 
 
-- [Organizing routes into groups](#organize-routes-without-affecting-the-url-path) e.g. by site section, intent, or team.
-- Enabling [nested layouts](/docs/app/building-your-application/routing/pages-and-layouts) in the same route segment level:
-  - [Creating multiple nested layouts in the same segment, including multiple root layouts](#creating-multiple-root-layouts)
-  - [Adding a layout to a subset of routes in a common segment](#opting-specific-segments-into-a-layout)
+
+라우팅 그룹은 이런 상황에서 유용합니다:
+
+- [라우트를 그룹으로 정리](#organize-routes-without-affecting-the-url-path) - 예를 들어, 사이트 섹션별, 의도, 혹은 팀 단위로 정리할 때
+- 같은 라우트 세분화 단계에서 [네스팅 레이아웃](/docs/app/building-your-application/routing/pages-and-layouts) 활성화: 
+  - [여러 루트 레이아웃을 포함한 동일한 세그먼트에 여러 네스팅된 레이아웃 만들기](#creating-multiple-root-layouts)
+  - [공통 세그먼트의 라우트 하위 집합에 레이아웃 추가하기](#opting-specific-segments-into-a-layout)
+
+
+
+
 
 ## Convention
 
