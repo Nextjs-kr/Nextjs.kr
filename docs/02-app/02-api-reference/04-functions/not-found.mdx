@@ -8,7 +8,7 @@ description: `notFound` 함수에 대한 API 레퍼런스입니다.
 ## `notFound()`
 
 `notFound()` 함수를 호출하게 되면, `NEXT_NOT_FOUND` 에러가 발생하고 해당 오류가 발생한 라우트 부분의 렌더링이 종료됩니다. 이때 지정한 [**not-found**
-파일](/docs/app/api-reference/file-conventions/not-found) UI 를 렌더링 함으로써 not-found 에러를 처리할 수 있습니다.
+파일](/docs/app/api-reference/file-conventions/not-found) UI를 렌더링 함으로써 not-found 에러를 처리할 수 있습니다.
 
 ```jsx filename="app/user/[id]/page.js"
 import { notFound } from 'next/navigation'
@@ -30,7 +30,7 @@ export default async function Profile({ params }) {
 }
 ```
 
-> **참고**: `notFound()`는 Typescript 의 [**never**](https://www.typescriptlang.org/docs/handbook/2/functions.html#never) 타입을 사용하기 때문에, `return notFound()`을 사용하지 않아도 됩니다.
+> **참고**: `notFound()`는 Typescript의 [**never**](https://www.typescriptlang.org/docs/handbook/2/functions.html#never) 타입을 사용하기 때문에, `return notFound()`를 사용하지 않아도 됩니다.
 
 ## Version History
 
