@@ -1,12 +1,12 @@
 ---
 title: error.js
-description: API reference for the error.js special file.
+description: error.js 파일의 API 레퍼런스 입니다.
 ---
 
-An **error** file defines an error UI boundary for a route segment.
+**error** 파일은 라우트 세그먼트의 error UI를 정의합니다.
 
 ```tsx filename="app/dashboard/error.tsx" switcher
-'use client' // Error components must be Client Components
+'use client' // Error 컴포넌트는 Client 컴포넌트여야 합니다.
 
 import { useEffect } from 'react'
 
@@ -18,7 +18,7 @@ export default function Error({
   reset: () => void
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
+    // 오류 리포트 서비스에 오류를 기록합니다.
     console.error(error)
   }, [error])
 
@@ -27,7 +27,7 @@ export default function Error({
       <h2>Something went wrong!</h2>
       <button
         onClick={
-          // Attempt to recover by trying to re-render the segment
+          // 세그먼트를 리렌더링하여 복구를 시도합니다.
           () => reset()
         }
       >
@@ -39,13 +39,13 @@ export default function Error({
 ```
 
 ```jsx filename="app/dashboard/error.js" switcher
-'use client' // Error components must be Client Components
+'use client' // Error 컴포넌트는 Client 컴포넌트여야 합니다.
 
 import { useEffect } from 'react'
 
 export default function Error({ error, reset }) {
   useEffect(() => {
-    // Log the error to an error reporting service
+    // 오류 리포트 서비스에 오류를 기록합니다.
     console.error(error)
   }, [error])
 
@@ -54,7 +54,7 @@ export default function Error({ error, reset }) {
       <h2>Something went wrong!</h2>
       <button
         onClick={
-          // Attempt to recover by trying to re-render the segment
+          // 세그먼트를 리렌더링하여 복구를 시도합니다.
           () => reset()
         }
       >
@@ -69,22 +69,22 @@ export default function Error({ error, reset }) {
 
 ### `error`
 
-An instance of an [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) object. This error can happen on the server or the client.
+[`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) 객체의 인스턴스입니다. 이 오류는 서버 또는 클라이언트에서 발생할 수 있습니다.
 
 ### `reset`
 
-A function to reset the error boundary, which does not return a response.
+error boundary를 재설정하고, response를 반환하지 않는 함수입니다.
 
-> **Good to know**:
+> **참고**:
 >
-> - `error.js` boundaries must be **[Client Components](/docs/getting-started/react-essentials)**.
-> - An `error.js` boundary will **not** handle errors thrown in a `layout.js` component in the **same** segment because the error boundary is nested **inside** that layouts component.
->   - To handle errors for a specific layout, place an `error.js` file in the layouts parent segment.
->   - To handle errors within the root layout or template, use a variation of `error.js` called `app/global-error.js`.
+> - `error.js`는 **[Client 컴포넌트](/docs/getting-started/react-essentials)** 여야 합니다.
+> - error boundary가 해당 레이아웃 컴포넌트 **안에** 중첩되어 있기 때문에 `error.js`는 **동일한** 세그먼트의 `layout.js` 컴포넌트에서 발생한 오류를 **처리하지 않습니다.**
+>   - 특정 레아아웃의 오류를 처리하면 `error.js` 파일을 레이아웃 상위 세그먼트에 배치합니다.
+>   - 루트 레이아웃 또는 템플릿 내에서 오류를 처리하려면 `error.js`를 변형한 `app/global-error.js`를 사용하세요.
 
 ## `global-error.js`
 
-To specifically handle errors in root `layout.js`, use a variation of `error.js` called `app/global-error.js` located in the root `app` directory.
+루트 `layout.js`의 오류를 명확하게 처리하려면 루트 `app` 디렉토리에 있는 `error.js`를 변형한 `app/global-error.js`를 사용합니다.
 
 ```tsx filename="app/global-error.tsx" switcher
 'use client'
@@ -122,14 +122,14 @@ export default function GlobalError({ error, reset }) {
 }
 ```
 
-> **Good to know**:
+> **참고**:
 >
-> - `global-error.js` replaces the root `layout.js` when active and so **must** define its own `<html>` and `<body>` tags.
-> - While designing error UI, you may find it helpful to use the [React Developer Tools](https://react.dev/learn/react-developer-tools) to manually toggle Error boundaries.
+> - `global-error.js`가 활성화되면 루트 `layout.js`를 대체하므로 자체 `<html>` 및 `<body>` 태그를 정의해야 합니다.
+> - error UI를 디자인할 때, [React Developer Tools](https://react.dev/learn/react-developer-tools)를 사용하는 것이 도움이 될 수 있습니다.
 
 ## Version History
 
-| Version   | Changes                    |
-| --------- | -------------------------- |
-| `v13.1.0` | `global-error` introduced. |
-| `v13.0.0` | `error` introduced.        |
+| Version   | Changes             |
+| --------- | ------------------- |
+| `v13.1.0` | `global-error` 도입 |
+| `v13.0.0` | `error` 도입        |
