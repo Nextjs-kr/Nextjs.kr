@@ -1,13 +1,14 @@
 ---
 title: notFound
-description: API Reference for the notFound function.
+description: `notFound` 함수에 대한 API 레퍼런스입니다.
 ---
 
-The `notFound` function allows you to render the [`not-found file`](/docs/app/api-reference/file-conventions/not-found) within a route segment as well as inject a `<meta name="robots" content="noindex" />` tag.
+`notFound` 함수는 라우트 부분에서 [**not-found** 파일](/docs/app/api-reference/file-conventions/not-found)을 렌더링하고,<br/>`<meta name="robots" content="noindex" />` 태그를 주입할 수 있게 해줍니다.
 
 ## `notFound()`
 
-Invoking the `notFound()` function throws a `NEXT_NOT_FOUND` error and terminates rendering of the route segment in which it was thrown. Specifying a [**not-found** file](/docs/app/api-reference/file-conventions/not-found) allows you to gracefully handle such errors by rendering a Not Found UI within the segment.
+`notFound()` 함수를 호출하게 되면, `NEXT_NOT_FOUND` 에러가 발생하고 해당 오류가 발생한 라우트 부분의 렌더링이 종료됩니다. 이때 지정한 [**not-found**
+파일](/docs/app/api-reference/file-conventions/not-found) UI 를 렌더링 함으로써 not-found 에러를 처리할 수 있습니다.
 
 ```jsx filename="app/user/[id]/page.js"
 import { notFound } from 'next/navigation'
@@ -29,7 +30,7 @@ export default async function Profile({ params }) {
 }
 ```
 
-> **Good to know**: `notFound()` does not require you to use `return notFound()` due to using the TypeScript [`never`](https://www.typescriptlang.org/docs/handbook/2/functions.html#never) type.
+> **참고**: `notFound()`는 Typescript 의 [**never**](https://www.typescriptlang.org/docs/handbook/2/functions.html#never) 타입을 사용하기 때문에, `return notFound()`을 사용하지 않아도 됩니다.
 
 ## Version History
 
