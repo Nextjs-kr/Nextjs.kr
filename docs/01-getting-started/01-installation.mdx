@@ -10,20 +10,21 @@ related:
     - app/building-your-application/configuring/typescript
 ---
 
-System Requirements:
+시스템 요구사항:
 
-- [Node.js 16.8](https://nodejs.org/) or later.
-- macOS, Windows (including WSL), and Linux are supported.
+- [Node.js 16.8](https://nodejs.org/) 이상
+- macOS, Windows (WSL 포함) 및 Linux가 지원됩니다. 
 
-## Automatic Installation
+## 자동 설치
 
-We recommend creating a new Next.js app using `create-next-app`, which sets up everything automatically for you. To create a project, run:
+모든 것을 자동으로 설정하는  `create-next-app` 를 사용해 새로운 Next.js 앱을 만드는 것이 좋습니다.  
+ 프로젝트를 만들기 위해 아래의 명령어를 실행합니다. 
 
 ```bash filename="Terminal"
 npx create-next-app@latest
 ```
 
-On installation, you'll see the following prompts:
+설치 시 다음과 같은 메시지가 표시됩니다.
 
 ```txt filename="Terminal"
 What is your project named? my-app
@@ -34,12 +35,12 @@ Would you like to use `src/` directory with this project? No / Yes
 Use App Router (recommended)? No / Yes
 Would you like to customize the default import alias? No / Yes
 ```
+Next.js는 이제 TypeScript, ESLint 및 Tailwind CSS 구성과 함께 기본적으로 제공됩니다.  
+또한, 응용 프로그램 코드에 `src` 폴더를 사용하도록 선택할 수 있습니다.
 
-Next.js now ships with TypeScript, ESLint, and Tailwind CSS configuration by default. You can also choose to use the `src` directory for your application code.
+프롬프트가 표시되면, `create-next-app`이 프로젝트 이름으로 폴더를 생성하고 필요한 종속성을 설치합니다. 
 
-After the prompts, `create-next-app` will create a folder with your project name and install the required dependencies.
-
-> **Good to know**: While you can use the [Pages Router](/docs/pages) in your new project. We recommend starting new applications with the App Router to leverage React's latest features.
+> **Good to know**: 새 프로젝트에서 [Pages Router](/docs/pages)를 사용할 수 있습니다. React의 최신 기능을 활용하려면 App Router에서 새로운 애플리케이션을 시작하는 것이 좋습니다. 
 
 ## Manual Installation
 
