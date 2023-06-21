@@ -1,19 +1,21 @@
 ---
-title: Script Optimization
+title: 스크립트 최적화
 nav_title: Scripts
-description: Optimize 3rd party scripts with the built-in Script component.
+description: 내장 스크립트 컴포넌트를 사용해서 타사 스크립트를 최적화합니다.
 related:
   title: API Reference
-  description: Learn more about the next/script API.
+  description: next/script API에 대해 더 알아보세요.
   links:
     - app/api-reference/components/script
 ---
 
 <AppOnly>
 
-### Layout Scripts
+### 레이아웃 스크립트
 
-To load a third-party script for multiple routes, import `next/script` and include the script directly in your layout component:
+여러 경로에 대한 타사 스크립트를 불러오려면 `next/script`를 가져와 레이아웃 구성요소에 직접 스크립트를 포함시킵니다.
+
+<!-- To load a third-party script for multiple routes, import `next/script` and include the script directly in your layout component: -->
 
 ```tsx filename="app/dashboard/layout.tsx" switcher
 import Script from 'next/script'
@@ -45,15 +47,21 @@ export default function DashboardLayout({ children }) {
 }
 ```
 
-The third-party script is fetched when the folder route (e.g. `dashboard/page.js`) or any nested route (e.g. `dashboard/settings/page.js`) is accessed by the user. Next.js will ensure the script will **only load once**, even if a user navigates between multiple routes in the same layout.
+사용자가 폴더 경로(예시. `dashboard/page.js`) 혹은 중첩 경로(예시. `dashboard/settings/page.js`)에 접근할 때 타사 스크립트를 가져옵니다. Next.js는 사용자가 동일한 레이아웃에러 여러 경로 사이를 탐색하는 경우에도 스크립트가 **한 번만** 불러와지도록 합니다.
+
+<!-- The third-party script is fetched when the folder route (e.g. `dashboard/page.js`) or any nested route (e.g. `dashboard/settings/page.js`) is accessed by the user. Next.js will ensure the script will **only load once**, even if a user navigates between multiple routes in the same layout. -->
 
 </AppOnly>
 
-### Application Scripts
+### 애플리케이션 스크립트
+
+<!-- ### Application Scripts -->
 
 <AppOnly>
 
-To load a third-party script for all routes, import `next/script` and include the script directly in your root layout:
+모든 경로에 대한 타사 스크립트를 불러오려면 `next/script`를 가져와 루트 레이아웃에 직접 스크립트를 포함시킵니다.
+
+<!-- To load a third-party script for all routes, import `next/script` and include the script directly in your root layout: -->
 
 ```tsx filename="app/layout.tsx" switcher
 import Script from 'next/script'
@@ -89,7 +97,9 @@ export default function RootLayout({ children }) {
 
 <PagesOnly>
 
-To load a third-party script for all routes, import `next/script` and include the script directly in your custom `_app`:
+모든 경로에 대해 타사 스크립트를 로드하려면 `next/script`를 가져오고 사용자 지정 `_app`에 직접 스크립트를 포함합니다.
+
+<!-- To load a third-party script for all routes, import `next/script` and include the script directly in your custom `_app`: -->
 
 ```jsx filename="pages/_app.js"
 import Script from 'next/script'
@@ -106,28 +116,48 @@ export default function MyApp({ Component, pageProps }) {
 
 </PagesOnly>
 
-This script will load and execute when _any_ route in your application is accessed. Next.js will ensure the script will **only load once**, even if a user navigates between multiple pages.
+이 스크립트는 응용프로그램의 _any_ 경로에 접근할 때 불러오고 실행됩니다. next.js는 사용자가 여러 페이지를 이동하더라도 스크립트를 **한 번만** 오도록 합니다.
 
-> **Recommendation**: We recommend only including third-party scripts in specific pages or layouts in order to minimize any unnecessary impact to performance.
+<!-- This script will load and execute when _any_ route in your application is accessed. Next.js will ensure the script will **only load once**, even if a user navigates between multiple pages. -->
+
+> **권장 사항**: 성능에 대한 불필요한 영향을 최소화 하기 위해 타사 스크립트만 특정 페이지 혹은 레이아웃에 포함하는 것이 좋습니다.
+
+<!-- > **Recommendation**: We recommend only including third-party scripts in specific pages or layouts in order to minimize any unnecessary impact to performance. -->
 
 ### Strategy
 
-Although the default behavior of `next/script` allows you load third-party scripts in any page or layout, you can fine-tune its loading behavior by using the `strategy` property:
+기본 동작인 `next/script`를 사용하면 페이지나 레이아웃에서 타사 스크립트를 불러올 수 있지만, `strategy` 속성을 사용해서 로드 동작을 미세 조정할 수 있습니다.
 
-- `beforeInteractive`: Load the script before any Next.js code and before any page hydration occurs.
-- `afterInteractive`: (**default**) Load the script early but after some hydration on the page occurs.
-- `lazyOnload`: Load the script later during browser idle time.
-- `worker`: (experimental) Load the script in a web worker.
+<!-- Although the default behavior of `next/script` allows you load third-party scripts in any page or layout, you can fine-tune its loading behavior by using the `strategy` property: -->
 
-Refer to the [`next/script`](/docs/app/api-reference/components/script#strategy) API reference documentation to learn more about each strategy and their use cases.
+- `beforeInteractive`: Next.js 코드를 불러오기 전과 페이지 하이드레이션이 발생하기 전에 스크립트를 불러옵니다.
+<!-- - `beforeInteractive`: Load the script before any Next.js code and before any page hydration occurs. -->
+- `afterInteractive`: (**default**) 페이지에서 하이드레이션이 발생한 직후 스크립트를 불러옵니다.
+<!-- - `afterInteractive`: (**default**) Load the script early but after some hydration on the page occurs. -->
+- `lazyOnload`: 브라우저 유휴시간이 지난 후에 스크립트를 불러옵니다.
+<!-- - `lazyOnload`: Load the script later during browser idle time. -->
+- `worker`: (실험 중) 웹 워커에 스크립트를 불러옵니다.
+<!-- - `worker`: (experimental) Load the script in a web worker. -->
 
-### Offloading Scripts To A Web Worker (Experimental)
+각 strategy 및 사용 사례에 대한 자세한 내용은 [`next/script`](/docs/app/api-reference/components/script#strategy) 문서를 참조하세요.
 
-> **Warning:** The `worker` strategy is not yet stable and does not yet work with the [`app`](/docs/app/building-your-application/routing/defining-routes) directory. Use with caution.
+<!-- Refer to the [`next/script`](/docs/app/api-reference/components/script#strategy) API reference documentation to learn more about each strategy and their use cases. -->
 
-Scripts that use the `worker` strategy are offloaded and executed in a web worker with [Partytown](https://partytown.builder.io/). This can improve the performance of your site by dedicating the main thread to the rest of your application code.
+### 웹 워커에 스크립트 오프로딩하기(실험 중)
 
-This strategy is still experimental and can only be used if the `nextScriptWorkers` flag is enabled in `next.config.js`:
+<!-- ### Offloading Scripts To A Web Worker (Experimental) -->
+
+> **경고**: `worker` strategy는 아직 안정적이지 않으며 [`app`](/docs/app/building-your-application/routing/defining-routes) 디렉토리에서 작동하지 않습니다. 주의하여 사용하세요.
+
+<!-- > **Warning:** The `worker` strategy is not yet stable and does not yet work with the [`app`](/docs/app/building-your-application/routing/defining-routes) directory. Use with caution. -->
+
+`worker` strategy를 사용하는 스크립트는 [Partytown](https://partytown.builder.io/)을 통해 웹 워커에서 오프로드 및 실행됩니다. 이렇게 하면 메인 스레드를 응용 프로그램 코드의 나머지 부분에 할당하여 사이트의 성능을 향상시킬 수 있습니다.
+
+<!-- Scripts that use the `worker` strategy are offloaded and executed in a web worker with [Partytown](https://partytown.builder.io/). This can improve the performance of your site by dedicating the main thread to the rest of your application code. -->
+
+이 strategy는 여전히 실험적이며 `next.config.js`에서 `nextScriptWorkers` 플래그가 활성화된 경우에만 사용할 수 있습니다.
+
+<!-- This strategy is still experimental and can only be used if the `nextScriptWorkers` flag is enabled in `next.config.js`: -->
 
 ```js filename="next.config.js"
 module.exports = {
@@ -137,15 +167,21 @@ module.exports = {
 }
 ```
 
-Then, run `next` (normally `npm run dev` or `yarn dev`) and Next.js will guide you through the installation of the required packages to finish the setup:
+다음으로 `next`(일반적으로 `npm run dev` 혹은 `yarn dev`)를 실행하면 Next.js가 설치를 완료하는 데 필요한 패키지 설치 과정을 안내합니다.
+
+<!-- Then, run `next` (normally `npm run dev` or `yarn dev`) and Next.js will guide you through the installation of the required packages to finish the setup: -->
 
 ```bash filename="Terminal"
 npm run dev
 ```
 
-You'll see instructions like these: Please install Partytown by running `npm install @builder.io/partytown`
+`npm install @builder.io/partytown` 라는 지침이 표시됩니다.
 
-Once setup is complete, defining `strategy="worker"` will automatically instantiate Partytown in your application and offload the script to a web worker.
+<!-- You'll see instructions like these: Please install Partytown by running `npm install @builder.io/partytown` -->
+
+설치가 완료되고 `strategy="worker"` 를 정의하면 응용프로그램에서 Partytown이 자동으로 인스턴스화되고, 스크립트가 웹 워커에세 오프로딩됩니다.
+
+<!-- Once setup is complete, defining `strategy="worker"` will automatically instantiate Partytown in your application and offload the script to a web worker. -->
 
 ```tsx filename="pages/home.tsx" switcher
 import Script from 'next/script'
@@ -171,11 +207,17 @@ export default function Home() {
 }
 ```
 
-There are a number of trade-offs that need to be considered when loading a third-party script in a web worker. Please see Partytown's [tradeoffs](https://partytown.builder.io/trade-offs) documentation for more information.
+웹 워커에게 타사 스크립트를 불러올 때 고려해야 할 여러 단점이 있습니다. 자세한 내용은 Partytown의 [tradeoffs](https://partytown.builder.io/trade-offs) 문서를 참고하세요.
 
-### Inline Scripts
+<!-- There are a number of trade-offs that need to be considered when loading a third-party script in a web worker. Please see Partytown's [tradeoffs](https://partytown.builder.io/trade-offs) documentation for more information. -->
 
-Inline scripts, or scripts not loaded from an external file, are also supported by the Script component. They can be written by placing the JavaScript within curly braces:
+### 인라인 스크립트
+
+<!-- ### Inline Scripts -->
+
+인라인 스크립트 또는 외부 파일에서 불러오지 않은 스크립트도 Script 구성 요소에서 지원됩니다. 자바스크립트를 중괄호 안에 넣어 작성할 수 있습니다:
+
+<!-- Inline scripts, or scripts not loaded from an external file, are also supported by the Script component. They can be written by placing the JavaScript within curly braces: -->
 
 ```jsx
 <Script id="show-banner">
@@ -183,7 +225,9 @@ Inline scripts, or scripts not loaded from an external file, are also supported 
 </Script>
 ```
 
-Or by using the `dangerouslySetInnerHTML` property:
+혹은 `dangerouslySetInnerHTML` 특성을 사용하세요.
+
+<!-- Or by using the `dangerouslySetInnerHTML` property: -->
 
 ```jsx
 <Script
@@ -194,19 +238,30 @@ Or by using the `dangerouslySetInnerHTML` property:
 />
 ```
 
-> **Warning**: An `id` property must be assigned for inline scripts in order for Next.js to track and optimize the script.
+> **경고**: Next.js가 스크립트를 추적하고 최적화하려면 인라인 스크립트에 'id' 속성을 할당해야 합니다.
 
-### Executing Additional Code
+<!-- > **Warning**: An `id` property must be assigned for inline scripts in order for Next.js to track and optimize the script. -->
 
-Event handlers can be used with the Script component to execute additional code after a certain event occurs:
+### 추가 코드 실행
 
-- `onLoad`: Execute code after the script has finished loading.
-- `onReady`: Execute code after the script has finished loading and every time the component is mounted.
-- `onError`: Execute code if the script fails to load.
+<!-- ### Executing Additional Code -->
+
+이벤트 핸들러를 스크립트 구성 요소와 함께 사용하여 특정 이벤트가 발생한 후 추가 코드를 실행할 수 있습니다.
+
+<!-- Event handlers can be used with the Script component to execute additional code after a certain event occurs: -->
+
+- `onLoad`: 스크립트를 불러온 후 코드를 실행합니다.
+<!-- - `onLoad`: Execute code after the script has finished loading. -->
+- `onReady`: 스크립트를 불러온 후 구성 요소가 마운트될 때마다 코드를 실행합니다.
+<!-- - `onReady`: Execute code after the script has finished loading and every time the component is mounted. -->
+- `onError`: 스크립트를 불러오지 못했으면 코드를 실행합니다.
+<!-- - `onError`: Execute code if the script fails to load. -->
 
 <AppOnly>
 
-These handlers will only work when `next/script` is imported and used inside of a [Client Component](/docs/getting-started/react-essentials) where `"use client"` is defined as the first line of code:
+이러한 핸들러는 `"use client"`가 코드의 첫 줄로 정의된 [Client Component](/docs/getting-started/react-essentials) 내 에서 `next/script`를 가져와 사용할 때만 작동합니다.
+
+<!-- These handlers will only work when `next/script` is imported and used inside of a [Client Component](/docs/getting-started/react-essentials) where `"use client"` is defined as the first line of code: -->
 
 ```tsx filename="app/page.tsx" switcher
 'use client'
@@ -246,13 +301,17 @@ export default function Page() {
 }
 ```
 
-Refer to the [`next/script`](/docs/app/api-reference/components/script#onload) API reference to learn more about each event handler and view examples.
+각 이벤트 핸들러에 대해 자세히 알아보고 예제를 보려면 [`next/script`](/docs/app/api-reference/components/script#onload) 문서를 참조하세요.
+
+<!-- Refer to the [`next/script`](/docs/app/api-reference/components/script#onload) API reference to learn more about each event handler and view examples. -->
 
 </AppOnly>
 
 <PagesOnly>
 
-These handlers will only work when `next/script` is imported and used inside of a [Client Component](/docs/getting-started/react-essentials) where `"use client"` is defined as the first line of code:
+이러한 핸들러는 `"use client"`가 코드의 첫 줄로 정의된 [Client Component](/docs/getting-started/react-essentials) 내 에서 `next/script`를 가져와 사용할 때만 작동합니다.
+
+<!-- These handlers will only work when `next/script` is imported and used inside of a [Client Component](/docs/getting-started/react-essentials) where `"use client"` is defined as the first line of code: -->
 
 ```tsx filename="pages/index.tsx" switcher
 import Script from 'next/script'
@@ -288,13 +347,19 @@ export default function Page() {
 }
 ```
 
-Refer to the [`next/script`](/docs/pages/api-reference/components/script#onload) API reference to learn more about each event handler and view examples.
+각 이벤트 핸들러에 대해 자세히 알아보고 예제를 보려면 [`next/script`](/docs/app/api-reference/components/script#onload) 문서를 참조하세요.
+
+<!-- Refer to the [`next/script`](/docs/pages/api-reference/components/script#onload) API reference to learn more about each event handler and view examples. -->
 
 </PagesOnly>
 
-### Additional Attributes
+### 추가 속성
 
-There are many DOM attributes that can be assigned to a `<script>` element that are not used by the Script component, like [`nonce`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) or [custom data attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*). Including any additional attributes will automatically forward it to the final, optimized `<script>` element that is included in the HTML.
+<!-- ### Additional Attributes -->
+
+스크립트 구성 요소에서 사용하지 않는 `<script>` 요소에 할당할 수 있는 DOM 속성은 [`nonce`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce), [custom data attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*) 등 다수 존재합니다. 추가 속성을 포함하면 HTML에 포함된 최종 최적화된 `<script>`요소로 자동 전달됩니다.
+
+<!-- There are many DOM attributes that can be assigned to a `<script>` element that are not used by the Script component, like [`nonce`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) or [custom data attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*). Including any additional attributes will automatically forward it to the final, optimized `<script>` element that is included in the HTML. -->
 
 <AppOnly>
 
