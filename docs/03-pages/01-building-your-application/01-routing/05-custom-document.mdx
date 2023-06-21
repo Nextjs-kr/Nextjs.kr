@@ -3,7 +3,7 @@ title: 커스텀 Document
 description: Next.js의 기본 문서 마크업을 확장합니다.
 ---
 
-커스텀 Document는 [페이지](/docs/pages/building-your-application/routing/pages-and-layouts)를 렌더링할 때 사용되는 <html> 및 <body> 태그를 업데이트할 수 있습니다. 이 파일은 서버에서만 렌더링되므로 `_document`에서는 onClick과 같은 이벤트 핸들러를 사용할 수 없습니다.
+커스텀 Document는 [페이지](/docs/pages/building-your-application/routing/pages-and-layouts)를 렌더링할 때 사용되는 <html> 및 <body> 태그를 업데이트할 수 있습니다. 이 파일은 서버에서만 렌더링 되므로 `_document`에서는 onClick과 같은 이벤트 핸들러를 사용할 수 없습니다.
 
 기본 Document를 덮어쓰려면 아래와 같이 `pages/_document.js` 파일을 생성하십시오:
 
@@ -35,7 +35,7 @@ export default function Document() {
 <body className="bg-white">
 ```
 
-`<Html>`, `<Head />`,` <Main />`, `<NextScript />`은 페이지가 올바르게 렌더링되기 위해 필요합니다.
+`<Html>`, `<Head />`,` <Main />`, `<NextScript />`은 페이지가 올바르게 렌더링 되기 위해 필요합니다.
 
 ## 경고
 
