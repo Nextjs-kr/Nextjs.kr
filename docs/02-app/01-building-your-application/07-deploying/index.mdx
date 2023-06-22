@@ -11,15 +11,15 @@ description: Vercel이 관리하는 환경 또는 직접 호스팅하는 운영 
 
 - `getStaticProps` 또는 [정적파일 최적화](/docs/pages/building-your-application/rendering/automatic-static-optimization)로 생성한 페이지들을 위한 HTML 파일
 - 일부 범위 또는 글로벌에서 사용하는 스타일을 위한 CSS 파일
-- Nest.js 서버에서 동적인 콘텐츠를 프리 렌더링하기 위한 자바스크립트 파일
-- 클라이언트에서 리액트를 통한 반응성 주입하기 위한 자바스크립트 파일
+- Next.js 서버에서 동적인 콘텐츠를 프리 렌더링하기 위한 자바스크립트 파일
+- 클라이언트에서 리액트 반응성 주입을 위한 자바스크립트 파일
 
 `.next` 폴더 안에 결과물을 생성합니다.
 
 - `.next/static/chunks/pages` – 이 폴더 안에는 같은 이름의 라우트와 관계가 있는 자바스크립트 파일이 있습니다. 예를 들어서 `.next/static/chunks/pages/about.js` 파일은 `/about` 페이지에 접근할 때 로드합니다.
 - `.next/static/media` – `next/image` 컴포넌트에서 정적으로 임포트해서 사용한 이미지의 복사본이 있습니다. 복사할 때 파일 이름에 해시값을 추가하여 생성합니다.
 - `.next/static/css` – 모든 페이지를 위한 글로벌 CSS 파일이 있습니다.
-- `.next/server/pages` – Next.js 서버에서 프리렌더링하기 위한 HTML과 자바스크립트의 진입점인 파일이 있습니다. [결과물 파일 추적](/docs/pages/api-reference/next-config-js/output) 기능을 활성화 했을 때, 페이지와 관련있는 모든 파일의 경로를 포함하는 `.nft.json`으로 끝나는 파일을 생성합니다.
+- `.next/server/pages` – Next.js 서버에서 프리렌더링하기 위한 HTML과 자바스크립트의 진입점인 파일이 있습니다. [결과물 파일 추적](/docs/pages/api-reference/next-config-js/output) 기능을 활성화 했을 때, 페이지와 관련있는 모든 파일의 경로를 포함하고 있는 `.nft.json`으로 끝나는 파일을 생성합니다.
 - `.next/server/chunks` – 다양한 페이지에서 공유하는 자바스크립트 청크 파일이 있습니다.
 - `.next/cache` – Next.js 서버에서 만드는 캐시, 캐시한 이미지, 응답, 그리고 페이지들의 결과물이 있습니다. 캐시가 있음으로써 빌드 시간을 줄여주고, 이미지를 불러오는데 필요한 성능을 개선합니다.
 
