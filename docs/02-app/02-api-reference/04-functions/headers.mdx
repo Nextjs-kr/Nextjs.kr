@@ -53,7 +53,7 @@ const headersList = headers()
 - [`Headers.forEach()`](https://developer.mozilla.org/en-US/docs/Web/API/Headers/forEach): `Headers` 객체의 키/값 쌍에 대해 제공된 함수를 한 번씩 실행합니다.
 - [`Headers.get()`](https://developer.mozilla.org/en-US/docs/Web/API/Headers/get): 주어진 이름과 일치하는 `Headers` 객체 내 헤더의 모든 값을 [`문자열`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) 시퀀스로 반환합니다.
 
-- [`Headers.has()`](https://developer.mozilla.org/en-US/docs/Web/API/Headers/has): `Headers` 객체가 특정 헤더를 포함하고 있는지 여부를 나타내는 boolean 값을 반환합니다.
+- [`Headers.has()`](https://developer.mozilla.org/en-US/docs/Web/API/Headers/has): `Headers` 객체가 특정 헤더를 포함하고 있는지를 나타내는 boolean 값을 반환합니다.
 - [`Headers.keys()`](https://developer.mozilla.org/en-US/docs/Web/API/Headers/keys): 해당 객체에 포함된 key/value 쌍의 key를 순회하여 확인할 수 있는 [`이터레이터`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)를 반환합니다.
 - [`Headers.values()`](https://developer.mozilla.org/en-US/docs/Web/API/Headers/values): 해당 객체에 포함된 key/value 쌍의 value를 순회하여 확인할 수 있는 [`이터레이터`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)를 반환합니다.
 
@@ -62,7 +62,7 @@ const headersList = headers()
 
 `headers()` can be used in combination with [Suspense for Data Fetching](/docs/app/building-your-application/data-fetching/fetching).
 
-`headers()`는 [Data Fetching에 대한 Suspense](/docs/app/building-your-application/data-fetching/fetching)와 결합하여 사용될 수 있습니다.
+`headers()`는 [Data Fetching에 대한 Suspense](/docs/app/building-your-application/data-fetching/fetching)와 결합하여 사용할 수 있습니다.
 
 ```jsx filename="app/page.js"
 import { headers } from 'next/headers'
