@@ -3,28 +3,27 @@ title: 배포하기
 description: Vercel이 관리하는 환경 또는 직접 호스팅하는 운영 환경에 Next.js 앱을 배포하는 방법을 배우세요.
 ---
 
-Congratulations! You're here because you are ready to deploy your Next.js application. This page will show how to deploy either managed or self-hosted using the [Next.js Build API](#nextjs-build-api).
 축하합니다! Next.js 앱을 배포할 준비가 끝났습니다. 이 페이지에서는 [Next.js 빌드 API](#nextjs-빌드-api)를 사용하여 Vercel이 관리하는 환경 또는 직접 호스팅하는 환경에 배포하는 방법을 다룹니다.
 
 ## Next.js 빌드 API
 
-`next build` generates an optimized version of your application for production. This standard output includes:
+`next build` 명령어는 운영 환경을 위한 최적화한 버전을 생성합니다. 결과물은 아래와 같은 항목들을 포함합니다.
 
-- HTML files for pages using `getStaticProps` or [Automatic Static Optimization](/docs/pages/building-your-application/rendering/automatic-static-optimization)
-- CSS files for global styles or for individually scoped styles
-- JavaScript for pre-rendering dynamic content from the Next.js server
-- JavaScript for interactivity on the client-side through React
+- `getStaticProps` 또는 [정적파일 최적화](/docs/pages/building-your-application/rendering/automatic-static-optimization)로 생성한 페이지들을 위한 HTML 파일
+- 일부 범위 또는 글로벌에서 사용하는 스타일을 위한 CSS 파일
+- Nest.js 서버에서 동적인 콘텐츠를 프리 렌더링하기 위한 자바스크립트 파일
+- 클라이언트에서 리액트를 통한 반응성 주입하기 위한 자바스크립트 파일
 
-This output is generated inside the `.next` folder:
+`.next` 폴더 안에 결과물을 생성합니다.
 
-- `.next/static/chunks/pages` – Each JavaScript file inside this folder relates to the route with the same name. For example, `.next/static/chunks/pages/about.js` would be the JavaScript file loaded when viewing the `/about` route in your application
-- `.next/static/media` – Statically imported images from `next/image` are hashed and copied here
-- `.next/static/css` – Global CSS files for all pages in your application
-- `.next/server/pages` – The HTML and JavaScript entry points prerendered from the server. The `.nft.json` files are created when [Output File Tracing](/docs/pages/api-reference/next-config-js/output) is enabled and contain all the file paths that depend on a given page.
-- `.next/server/chunks` – Shared JavaScript chunks used in multiple places throughout your application
-- `.next/cache` – Output for the build cache and cached images, responses, and pages from the Next.js server. Using a cache helps decrease build times and improve performance of loading images
+- `.next/static/chunks/pages` – 이 폴더 안에는 같은 이름의 라우트와 관계가 있는 자바스크립트 파일이 있습니다. 예를 들어서 `.next/static/chunks/pages/about.js` 파일은 `/about` 페이지에 접근할 때 로드합니다.
+- `.next/static/media` – `next/image` 컴포넌트에서 정적으로 임포트해서 사용한 이미지의 복사본이 있습니다. 복사할 때 파일 이름에 해시값을 추가하여 생성합니다.
+- `.next/static/css` – 모든 페이지를 위한 글로벌 CSS 파일이 있습니다.
+- `.next/server/pages` – Next.js 서버에서 프리렌더링하기 위한 HTML과 자바스크립트의 진입점인 파일이 있습니다. [결과물 파일 추적](/docs/pages/api-reference/next-config-js/output) 기능을 활성화 했을 때, 페이지와 관련있는 모든 파일의 경로를 포함하는 `.nft.json`으로 끝나는 파일을 생성합니다.
+- `.next/server/chunks` – 다양한 페이지에서 공유하는 자바스크립트 청크 파일이 있습니다.
+- `.next/cache` – Next.js 서버에서 만드는 캐시, 캐시한 이미지, 응답, 그리고 페이지들의 결과물이 있습니다. 캐시가 있음으로써 빌드 시간을 줄여주고, 이미지를 불러오는데 필요한 성능을 개선합니다.
 
-All JavaScript code inside `.next` has been **compiled** and browser bundles have been **minified** to help achieve the best performance and support [all modern browsers](/docs/architecture/supported-browsers).
+`.next` 폴더에 있는 모든 자바스크립트는 **컴파일되어 있고** 브라우저에서 사용하는 번들도 **압축되어 있어서** 가장 좋은 성능을 낼 수 있게 해주고, [모든 모던 브라우저](/docs/architecture/supported-browsers)를 지원합니다.
 
 ## Managed Next.js with Vercel
 
