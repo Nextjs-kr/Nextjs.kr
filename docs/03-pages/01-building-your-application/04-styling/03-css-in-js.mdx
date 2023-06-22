@@ -1,7 +1,73 @@
 ---
 title: CSS-in-JS
-description: Use CSS-in-JS libraries with Next.js
+description: Next.js에서 CSS-in-JS 사용하기
 source: app/building-your-application/styling/css-in-js
 ---
 
-{/* DO NOT EDIT. The content of this doc is generated from the source above. To edit the content of this page, navigate to the source page in your editor. You can use the `<PagesOnly>Content</PageOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+<details>
+  <summary>예시</summary>
+  
+- [Styled JSX](https://github.com/vercel/next.js/tree/canary/examples/with-styled-jsx)
+- [Styled Components](https://github.com/vercel/next.js/tree/canary/examples/with-styled-components)
+- [Emotion](https://github.com/vercel/next.js/tree/canary/examples/with-emotion)
+- [Linaria](https://github.com/vercel/next.js/tree/canary/examples/with-linaria)
+- [Tailwind CSS + Emotion](https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss-emotion)
+- [Styletron](https://github.com/vercel/next.js/tree/canary/examples/with-styletron)
+- [Cxs](https://github.com/vercel/next.js/tree/canary/examples/with-cxs)
+- [Aphrodite](https://github.com/vercel/next.js/tree/canary/examples/with-aphrodite)
+- [Fela](https://github.com/vercel/next.js/tree/canary/examples/with-aphrodite)
+- [Stitches](https://github.com/vercel/next.js/tree/canary/examples/with-stitches)
+</details>
+
+Next.js에서 기존의 CSS-in-JS를 사용할 수 있습니다. 가장 간단한 방법은 인라인 스타일입니다. 
+
+```jsx
+function HiThere() {
+  return <p style={{ color: 'red' }}>hi there</p>
+}
+ 
+export default HiThere
+```
+Next.js는 격리된 scope의 CSS를 지원하기 위해 [styled-jsx](https://github.com/vercel/styled-jsx)를 번들로 제공합니다. 목표는 [서버 렌더링을 지원하지 않고 JS 전용](https://github.com/w3c/webcomponents/issues/71)인 Web 컴포넌트와 비슷한 "shadow CSS"를 지원하는 것입니다. 
+
+다른 인기 있는 CSS-in-JS에 대해서는 위의 예시를 참고하세요
+(예시: Styled Components).
+
+`styled-jsx`를 사용하는 컴포넌트는 다음과 같습니다.
+
+```jsx
+function HelloWorld() {
+  return (
+    <div>
+      Hello world
+      <p>scoped!</p>
+      <style jsx>{`
+        p {
+          color: blue;
+        }
+        div {
+          background: red;
+        }
+        @media (max-width: 600px) {
+          div {
+            background: blue;
+          }
+        }
+      `}</style>
+      <style global jsx>{`
+        body {
+          background: black;
+        }
+      `}</style>
+    </div>
+  )
+}
+ 
+export default HelloWorld
+```
+
+더 많은 예제는 [styled-jsx 문서](https://github.com/vercel/styled-jsx)를 참고하세요.
+
+JavaScript 비활성화
+-------------
+JavaScript를 비활성화하더라도 CSS는 프로덕션 빌드(`next start`)에 가져와집니다. 그러나 개발 중에는 빠른 새로고침으로 최고의 개발자 경험을 제공하기 위해 JavaScript를 활성화해야 합니다. 
