@@ -1,0 +1,75 @@
+---
+title: 클라이언트 사이드 데이터 가져오기
+description: 클라이언트 사이드측에서 데이터를 요청하는 방법과 캐싱, 재검증, 포커싱 추적, 간격마다 데이터를 재요청하기 등 많은 기능을 가진 리액트 훅 SWR을 어떻게 사용하는지 배워봅시다.
+---
+
+클라이언트 사이드 데이터 요청은 당신의 페이지들의 컨텐츠들이 자주 업데이트를 하지 않을때나, 당신이 당신의 데이터를 프리렌더링 할 필요 없을때, 또한 당신의 페이지가 검색 최적화 인덱싱을 필요로 하지 않을때 유용합니다.
+
+서버사이드 렌더링 API들과는 다르게, 당신은 컴포넌트 수준에서 클라이언트 데이터 요청을 사용할 수 있습니다.
+
+만악에 페이지 수준에서 데이터 요청이 끝난다면, 데이터는 런타임에 요청되며 페이지의 컨텐츠들은 데이터가 변경될때 업데이트 됩니다. 컴포넌트 수준에서 사용될때, 데이터는 컴포넌트가 마운트 될때 요청되며 컴포넌트의 컨텐츠들은 데이터가 변경될때 업데이트 됩니다.
+
+클라이언트 사이드 데이터 요청을 사용하는것은 당신의 어플리케이션과 당신의 페이지들이 로딩 되는 속도에 영향을 끼칠수 있다는 것을 아는 것은 중요합니다. 왜냐하면 페이지나 컴포넌트가 마운트 될때 데이터 요청이 이루어지고, 데이터들은 캐시되지 않기 때문입니다.
+
+## useEffect 를 사용한 클라이언트 사이드 데이터 요청
+
+밑의 예는 당신이 useEffect Hook을 사용해서 어떻게 클라이언트측에서 데이터를 요청할수 있는지 보여줍니다.
+
+```jsx
+import { useState, useEffect } from "react";
+
+function Profile() {
+  const [data, setData] = useState(null);
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch("/api/profile-data")
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      });
+  }, []);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (!data) return <p>No profile data</p>;
+
+  return (
+    <div>
+      <h1>{data.name}</h1>
+      <p>{data.bio}</p>
+    </div>
+  );
+}
+```
+
+## SWR을 사용한 클라이언트 측 데이터 요청
+
+Next.js 팀은 [**SWR**](https://swr.vercel.app/)이라고 불리는 데이터 요청 리액트 hook을 만들었습니다.
+이것은 당신이 클라이언트 사이드에서 데이터 요청을 할때 **강력 추천** 합니다. 이것은 캐싱, 재검증, 포커싱 추적, 간격마다 데이터 재요청 등 많은 기능을 합니다.
+
+위와 동일한 예를 사용해서, 우리는 프로필 데이터를 요청하기 위해 SWR을 사용할 수 있습니다.
+SWR은 자동으로 데이이터를 캐싱하고, 만약 데이터가 오래됐다면 자동으로 재검증을 합니다.
+
+SWR에 관한 더 많은 정보를 찾고 싶으시다면, [SWR docs](https://swr.vercel.app/docs/getting-started)를 확인하세요.
+
+```jsx
+import useSWR from "swr";
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+function Profile() {
+  const { data, error } = useSWR("/api/profile-data", fetcher);
+
+  if (error) return <div>Failed to load</div>;
+  if (!data) return <div>Loading...</div>;
+
+  return (
+    <div>
+      <h1>{data.name}</h1>
+      <p>{data.bio}</p>
+    </div>
+  );
+}
+```
