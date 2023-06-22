@@ -58,7 +58,7 @@ import { Inter } from 'next/font/google'
 npx @next/codemod@latest next-image-to-legacy-image .
 ```
 
-안전하게 기존 Next.js 10, 11 또는 12 애플리케이션의 `next/image` import를 Next.js 13의 `next/legacy/image`로 변경합니다. 또한 `next/future/image`를 `next/image`로 바꿉니다.
+기존 Next.js 10, 11, 12 애플리케이션의 `next/image` import를 안전하게 Next.js 13의 `next/legacy/image`로 변경합니다. 또한 `next/future/image`를 `next/image`로 바꿉니다.
 
 예시:
 
@@ -79,9 +79,9 @@ export default function Home() {
 다음으로 변환:
 
 ```jsx filename="pages/index.js"
-// 'next/image' becomes 'next/legacy/image'
+// 'next/image'가 'next/legacy/image'로 바뀝니다
 import Image1 from 'next/legacy/image'
-// 'next/future/image' becomes 'next/image'
+// 'next/future/image'가 'next/image'로 바뀝니다
 import Image2 from 'next/image'
 
 export default function Home() {
@@ -102,15 +102,13 @@ export default function Home() {
 npx @next/codemod@latest next-image-experimental .
 ```
 
-인라인 스타일을 추가하고 사용하지 않는 props를 제거하여 `next/legacy/image`에서 `next/image`로 위험하게 마이그레이션합니다.
+인라인 스타일을 추가하고 사용하지 않는 props를 제거하여 `next/legacy/image`에서 `next/image`로 마이그레이션 하는 위험한 방법입니다.
 
 - `layout` prop을 제거하고 `style`을 추가합니다.
 - `objectFit` prop을 제거하고 `style`을 추가합니다.
 - `objectPosition` prop을 제거하고 `style`을 추가합니다.
 - `lazyBoundary` prop을 제거합니다.
 - `lazyRoot` prop을 제거합니다.
-
-#### Remove `<a>` Tags From Link Components
 
 #### Link 컴포넌트에서 `<a>` 태그 제거
 
@@ -120,7 +118,7 @@ npx @next/codemod@latest next-image-experimental .
 npx @next/codemod@latest new-link .
 ```
 
-[Link 컴포넌트](/docs/app/api-reference/components/link)내부에서 `<a>` 태그를 제거하거나 자동으로 수정될 수 없는 Link에 `legacyBehavior` prop을 추가합니다.
+[Link 컴포넌트](/docs/app/api-reference/components/link)내부에서 `<a>` 태그를 제거하거나 자동으로 변환되지 않는 Link에 `legacyBehavior` prop을 추가합니다.
 
 예시:
 
@@ -142,7 +140,7 @@ npx @next/codemod@latest new-link .
 </Link>
 ```
 
-자동으로 수정되지 않는 경우 `legacyBehavior` prop을 추가합니다. 이렇게 하면 앱이 해당 링크에 대한 이전 동작을 사용하여 계속 작동할 수 있습니다.
+자동으로 변환되지 않는 경우 `legacyBehavior` prop을 추가합니다. 이렇게 하면 앱이 해당 링크에 대한 이전 동작을 사용하여 계속 동작할 수 있습니다.
 
 ```jsx
 const Component = () => <a>About</a>
@@ -166,7 +164,7 @@ const Component = () => <a>About</a>
 npx @next/codemod cra-to-next
 ```
 
-Create React App 프로젝트를 Next.js로 마이그레이션합니다. 동작을 일치시키기 위해 페이지 라우터와 필요한 설정을 만듭니다. 클라이언트 전용 렌더링은 SSR 중 `window` 사용으로 인한 호환성 손상을 방지하기 위해 초기에 사용되며 Next.js의 특정 기능을 점진적으로 채택할 수 있도록 원활하게 활성화할 수 있습니다.
+Create React App 프로젝트를 Next.js로 마이그레이션 합니다. 동작을 일치시키기 위해 페이지 라우터와 필요한 설정을 만듭니다. 클라이언트 전용 렌더링은 SSR 중 `window` 사용으로 인한 호환성 손상을 방지하기 위해 초기에 사용되며 Next.js의 특정 기능을 점진적으로 채택할 수 있도록 원활하게 활성화할 수 있습니다.
 
 [이 토론](https://github.com/vercel/next.js/discussions/25858)에서 변환과 관련된 피드백을 공유하세요.
 
@@ -237,7 +235,7 @@ export default function MyComponent() {
 
 ### 8
 
-#### AMP 고차 컴포넌트를 페이지 구성으로 변환
+#### AMP 고차 컴포넌트를 페이지 설정으로 변환
 
 ##### `withamp-to-config`
 
@@ -245,7 +243,7 @@ export default function MyComponent() {
 npx @next/codemod withamp-to-config
 ```
 
-`withAmp` 고차 컴포넌트를 Next.js 9 페이지 구성으로 변환합니다.
+`withAmp` 고차 컴포넌트를 Next.js 9 페이지 설정으로 변환합니다.
 
 예시:
 
