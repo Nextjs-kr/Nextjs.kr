@@ -1,32 +1,32 @@
 ---
 title: Codemods
-description: Use codemods to upgrade your Next.js codebase when new features are released.
+description: 새로운 기능이 출시되면 codemod를 사용해서 Next.js 코드베이스를 업그레이드하세요.
 ---
 
-Codemods are transformations that run on your codebase programmatically. This allows a large number of changes to be programmatically applied without having to manually go through every file.
+Codemod는 코드베이스에서 프로그래밍 방식으로 실행되는 변환입니다. 이렇게 하면 모든 파일을 수동으로 검토할 필요 없이 프로그래밍 방식으로 많은 변경 사항을 적용할 수 있습니다.
 
-Next.js provides Codemod transformations to help upgrade your Next.js codebase when an API is updated or deprecated.
+Next.js는 API가 업데이트되거나 더 이상 사용되지 않을 때 Next.js 코드베이스를 업그레이드하는 데 도움이 되는 Codemod 변환을 제공합니다.
 
-## Usage
+## 사용법
 
-In your terminal, navigate (`cd`) into your project's folder, then run:
+터미널에서 프로젝트 폴더로 이동(`cd`)한 후 다음을 실행합니다.
 
 ```bash filename="Terminal"
 npx @next/codemod <transform> <path>
 ```
 
-Replacing `<transform>` and `<path>` with appropriate values.
+`<transform>`과 `<path>`를 적절한 값으로 교체합니다.
 
-- `transform` - name of transform
-- `path` - files or directory to transform
-- `--dry` Do a dry-run, no code will be edited
-- `--print` Prints the changed output for comparison
+- `transform` - 변환명
+- `path` - 변환할 파일 또는 디렉토리
+- `--dry` 모의 테스트 실행, 코드가 편집되지 않음
+- `--print` 비교를 위해 변경된 아웃풋을 출력
 
 ## Next.js Codemods
 
 ### 13.2
 
-#### Use Built-in Font
+#### 내장 글꼴 사용
 
 ##### `built-in-next-font`
 
@@ -34,15 +34,15 @@ Replacing `<transform>` and `<path>` with appropriate values.
 npx @next/codemod@latest built-in-next-font .
 ```
 
-This codemod uninstalls the `@next/font` package and transforms `@next/font` imports into the built-in `next/font`.
+이 codemod는 `@next/font` package를 제거하고 `@next/font`가 내장된 `next/font`로 변환합니다.
 
-For example:
+예시:
 
 ```js
 import { Inter } from '@next/font/google'
 ```
 
-Transforms into:
+다음으로 변환:
 
 ```js
 import { Inter } from 'next/font/google'
@@ -50,7 +50,7 @@ import { Inter } from 'next/font/google'
 
 ### 13.0
 
-#### Rename Next Image Imports
+#### Next Image Imports 대체
 
 ##### `next-image-to-legacy-image`
 
@@ -58,9 +58,9 @@ import { Inter } from 'next/font/google'
 npx @next/codemod@latest next-image-to-legacy-image .
 ```
 
-Safely renames `next/image` imports in existing Next.js 10, 11, or 12 applications to `next/legacy/image` in Next.js 13. Also renames `next/future/image` to `next/image`.
+안전하게 기존 Next.js 10, 11 또는 12 애플리케이션의 `next/image` import를 Next.js 13의 `next/legacy/image`로 변경합니다. 또한 `next/future/image`를 `next/image`로 바꿉니다.
 
-For example:
+예시:
 
 ```jsx filename="pages/index.js"
 import Image1 from 'next/image'
@@ -76,7 +76,7 @@ export default function Home() {
 }
 ```
 
-Transforms into:
+다음으로 변환:
 
 ```jsx filename="pages/index.js"
 // 'next/image' becomes 'next/legacy/image'
@@ -94,7 +94,7 @@ export default function Home() {
 }
 ```
 
-#### Migrate to the New Image Component
+#### 새 이미지 컴포넌트로 마이그레이션
 
 ##### `next-image-experimental`
 
@@ -102,15 +102,17 @@ export default function Home() {
 npx @next/codemod@latest next-image-experimental .
 ```
 
-Dangerously migrates from `next/legacy/image` to the new `next/image` by adding inline styles and removing unused props.
+인라인 스타일을 추가하고 사용하지 않는 props를 제거하여 `next/legacy/image`에서 `next/image`로 위험하게 마이그레이션합니다.
 
-- Removes `layout` prop and adds `style`.
-- Removes `objectFit` prop and adds `style`.
-- Removes `objectPosition` prop and adds `style`.
-- Removes `lazyBoundary` prop.
-- Removes `lazyRoot` prop.
+- `layout` prop을 제거하고 `style`을 추가합니다.
+- `objectFit` prop을 제거하고 `style`을 추가합니다.
+- `objectPosition` prop을 제거하고 `style`을 추가합니다.
+- `lazyBoundary` prop을 제거합니다.
+- `lazyRoot` prop을 제거합니다.
 
 #### Remove `<a>` Tags From Link Components
+
+#### Link 컴포넌트에서 `<a>` 태그 제거
 
 ##### `new-link`
 
@@ -118,15 +120,15 @@ Dangerously migrates from `next/legacy/image` to the new `next/image` by adding 
 npx @next/codemod@latest new-link .
 ```
 
-Remove `<a>` tags inside [Link Components](/docs/app/api-reference/components/link), or add a `legacyBehavior` prop to Links that cannot be auto-fixed.
+[Link 컴포넌트](/docs/app/api-reference/components/link)내부에서 `<a>` 태그를 제거하거나 자동으로 수정될 수 없는 Link에 `legacyBehavior` prop을 추가합니다.
 
-For example:
+예시:
 
 ```jsx
 <Link href="/about">
   <a>About</a>
 </Link>
-// transforms into
+// 변환 결과
 <Link href="/about">
   About
 </Link>
@@ -134,13 +136,13 @@ For example:
 <Link href="/about">
   <a onClick={() => console.log('clicked')}>About</a>
 </Link>
-// transforms into
+// 변환 결과
 <Link href="/about" onClick={() => console.log('clicked')}>
   About
 </Link>
 ```
 
-In cases where auto-fixing can't be applied, the `legacyBehavior` prop is added. This allows your app to keep functioning using the old behavior for that particular link.
+자동으로 수정되지 않는 경우 `legacyBehavior` prop을 추가합니다. 이렇게 하면 앱이 해당 링크에 대한 이전 동작을 사용하여 계속 작동할 수 있습니다.
 
 ```jsx
 const Component = () => <a>About</a>
@@ -148,7 +150,7 @@ const Component = () => <a>About</a>
 <Link href="/about">
   <Component />
 </Link>
-// becomes
+// 추가
 <Link href="/about" legacyBehavior>
   <Component />
 </Link>
@@ -156,7 +158,7 @@ const Component = () => <a>About</a>
 
 ### 11
 
-#### Migrate from CRA
+#### CRA에서 마이그레이션
 
 ##### `cra-to-next`
 
@@ -164,13 +166,13 @@ const Component = () => <a>About</a>
 npx @next/codemod cra-to-next
 ```
 
-Migrates a Create React App project to Next.js; creating a Pages Router and necessary config to match behavior. Client-side only rendering is leveraged initially to prevent breaking compatibility due to `window` usage during SSR and can be enabled seamlessly to allow the gradual adoption of Next.js specific features.
+Create React App 프로젝트를 Next.js로 마이그레이션합니다. 동작을 일치시키기 위해 페이지 라우터와 필요한 설정을 만듭니다. 클라이언트 전용 렌더링은 SSR 중 `window` 사용으로 인한 호환성 손상을 방지하기 위해 초기에 사용되며 Next.js의 특정 기능을 점진적으로 채택할 수 있도록 원활하게 활성화할 수 있습니다.
 
-Please share any feedback related to this transform [in this discussion](https://github.com/vercel/next.js/discussions/25858).
+[이 토론](https://github.com/vercel/next.js/discussions/25858)에서 변환과 관련된 피드백을 공유하세요.
 
 ### 10
 
-#### Add React imports
+#### React imports 추가
 
 ##### `add-missing-react-import`
 
@@ -178,9 +180,9 @@ Please share any feedback related to this transform [in this discussion](https:/
 npx @next/codemod add-missing-react-import
 ```
 
-Transforms files that do not import `React` to include the import in order for the new [React JSX transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) to work.
+[새로운 React JSX 변환](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)을 위해 `React`를 import하지 않은 파일에 import를 포함하도록 변환합니다.
 
-For example:
+예시:
 
 ```jsx filename="my-component.js"
 export default class Home extends React.Component {
@@ -190,7 +192,7 @@ export default class Home extends React.Component {
 }
 ```
 
-Transforms into:
+다음으로 변환:
 
 ```jsx filename="my-component.js"
 import React from 'react'
@@ -203,7 +205,7 @@ export default class Home extends React.Component {
 
 ### 9
 
-#### Transform Anonymous Components into Named Components
+#### 익명 컴포넌트를 기명 컴포넌트로 변환
 
 ##### `name-default-component`
 
@@ -211,11 +213,11 @@ export default class Home extends React.Component {
 npx @next/codemod name-default-component
 ```
 
-**Versions 9 and above.**
+**버전 9 이상**
 
-Transforms anonymous components into named components to make sure they work with [Fast Refresh](https://nextjs.org/blog/next-9-4#fast-refresh).
+익명 컴포넌트를 기명 컴포넌트로 변환하여 [Fast Refresh](https://nextjs.org/blog/next-9-4#fast-refresh)가 같이 동작하는지 확인합니다.
 
-For example:
+예시:
 
 ```jsx filename="my-component.js"
 export default function () {
@@ -223,7 +225,7 @@ export default function () {
 }
 ```
 
-Transforms into:
+다음으로 변환:
 
 ```jsx filename="my-component.js"
 export default function MyComponent() {
@@ -231,11 +233,11 @@ export default function MyComponent() {
 }
 ```
 
-The component will have a camel-cased name based on the name of the file, and it also works with arrow functions.
+컴포넌트는 파일 이름을 기준으로 캐멀 케이스로 구분되며 화살표 함수로도 동작합니다.
 
 ### 8
 
-#### Transform AMP HOC into page config
+#### AMP 고차 컴포넌트를 페이지 구성으로 변환
 
 ##### `withamp-to-config`
 
@@ -243,12 +245,12 @@ The component will have a camel-cased name based on the name of the file, and it
 npx @next/codemod withamp-to-config
 ```
 
-Transforms the `withAmp` HOC into Next.js 9 page configuration.
+`withAmp` 고차 컴포넌트를 Next.js 9 페이지 구성으로 변환합니다.
 
-For example:
+예시:
 
 ```js
-// Before
+// 이전
 import { withAmp } from 'next/amp'
 
 function Home() {
@@ -259,7 +261,7 @@ export default withAmp(Home)
 ```
 
 ```js
-// After
+// 이후
 export default function Home() {
   return <h1>My AMP Page</h1>
 }
@@ -271,7 +273,7 @@ export const config = {
 
 ### 6
 
-#### Use `withRouter`
+#### `withRouter` 사용
 
 ##### `url-to-withrouter`
 
@@ -279,9 +281,9 @@ export const config = {
 npx @next/codemod url-to-withrouter
 ```
 
-Transforms the deprecated automatically injected `url` property on top level pages to using `withRouter` and the `router` property it injects. Read more here: [https://nextjs.org/docs/messages/url-deprecated](/docs/messages/url-deprecated)
+최상위 페이지에서 더 이상 사용되지 않는 자동 주입 `url` 프로퍼티를 `withRouter`와 `withRouter`가 주입하는 `router` 프로퍼티를 사용하도록 변환합니다. 여기에서 더 읽기: [https://nextjs.org/docs/messages/url-deprecated](/docs/messages/url-deprecated)
 
-For example:
+예시:
 
 ```js filename="From"
 import React from 'react'
@@ -306,4 +308,4 @@ export default withRouter(
 )
 ```
 
-This is one case. All the cases that are transformed (and tested) can be found in the [`__testfixtures__` directory](https://github.com/vercel/next.js/tree/canary/packages/next-codemod/transforms/__testfixtures__/url-to-withrouter).
+이것은 하나의 사례입니다. 변환(및 테스트)되는 모든 사례는 [`__testfixtures__` directory](https://github.com/vercel/next.js/tree/canary/packages/next-codemod/transforms/__testfixtures__/url-to-withrouter)에서 찾을 수 있습니다.
