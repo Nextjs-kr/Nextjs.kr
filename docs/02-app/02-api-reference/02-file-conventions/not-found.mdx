@@ -1,9 +1,9 @@
 ---
 title: not-found.js
-description: API reference for the not-found.js file.
+description: "not-found.js" 파일의 API 레퍼런스 입니다.
 ---
 
-The **not-found** file is used to render UI when the [`notFound`](/docs/app/api-reference/functions/not-found) function is thrown within a route segment. Along with serving a custom UI, Next.js will also return a `404` HTTP status code.
+**not-found** 파일은 route segment 내에서 [`notFound`](/docs/app/api-reference/functions/not-found) 함수가 실행될 때 UI를 렌더링하는 데 사용됩니다. 사용자 정의 UI를 제공하는 동시에 Next.js는 404 HTTP 상태 코드를 반환합니다.
 
 ```tsx filename="app/blog/not-found.tsx" switcher
 import Link from 'next/link'
@@ -37,15 +37,15 @@ export default function NotFound() {
 }
 ```
 
-> **Good to know**: In addition to catching expected `notFound()` errors, the root `app/not-found.js` file also handles any unmatched URLs for your whole application. This means users that visit a URL that is not handled by your app will be shown the UI exported by the `app/not-found.js` file.
+> **알아두면 좋은 점**: not-found.js 파일은 예상된 notFound() 오류를 처리하는 것 외에도, 전체 애플리케이션에서 처리되지 않은 URL에 대해서도 담당합니다. 즉, 앱에서 처리되지 않은 URL을 방문하는 사용자는 app/not-found.js 파일에서 내보내진 UI를 볼 수 있습니다.
 
 ## Props
 
-`not-found.js` components do not accept any props.
+`not-found.js` 컴포넌트는 어떤 props도 허용하지 않는다..
 
 ## Version History
 
 | Version   | Changes                                             |
 | --------- | --------------------------------------------------- |
-| `v13.3.0` | Root `app/not-found` handles global unmatched URLs. |
-| `v13.0.0` | `not-found` introduced.                             |
+| `v13.3.0` | Root `app/not-found`가 전역적으로 일치하지 않는 UIL들을 처리합니다. |
+| `v13.0.0` | `not-found` 도입                                     |
