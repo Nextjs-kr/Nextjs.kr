@@ -3,7 +3,7 @@ title: 커스텀 Document
 description: Next.js의 기본 문서 마크업을 확장합니다.
 ---
 
-커스텀 Document는 [페이지](/docs/pages/building-your-application/routing/pages-and-layouts)를 렌더링할 때 사용되는 <html> 및 <body> 태그를 업데이트할 수 있습니다. 이 파일은 서버에서만 렌더링 되므로 `_document`에서는 onClick과 같은 이벤트 핸들러를 사용할 수 없습니다.
+커스텀 Document는 [페이지](/docs/pages/building-your-application/routing/pages-and-layouts)를 렌더링할 때 사용되는 `<html>` 및 `<body>`태그를 업데이트할 수 있습니다. 이 파일은 서버에서만 렌더링 되므로 `_document`에서는 onClick과 같은 이벤트 핸들러를 사용할 수 없습니다.
 
 기본 Document를 덮어쓰려면 아래와 같이 `pages/_document.js` 파일을 생성하십시오:
 
@@ -23,7 +23,7 @@ export default function Document() {
 }
 ```
 
-위의 코드는 Next.js의 기본 Document입니다. 커스텀 속성은 props를 통해 전달할 수 있습니다. 예를 들어, <html> 태그에 `lang="en"`을 추가할 수 있습니다:
+위의 코드는 Next.js의 기본 Document입니다. 커스텀 속성은 props를 통해 전달할 수 있습니다. 예를 들어, `<html>` 태그에 `lang="en"`을 추가할 수 있습니다:
 
 ```jsx
 <Html lang="en">
@@ -37,14 +37,14 @@ export default function Document() {
 
 `<Html>`, `<Head />`,` <Main />`, `<NextScript />`은 페이지가 올바르게 렌더링 되기 위해 필요합니다.
 
-## 경고
+## 주의사항
 
-- `_document`에서 사용된 <Head /> 컴포넌트는 [`next/head`](/docs/pages/api-reference/components/head)와 같지 않습니다. 여기에서 사용된 `<Head />` 컴포넌트는 모든 페이지에 공통인 `<head>` 코드에만 사용해야 합니다. 다른 경우에는 [`next/head`](/docs/pages/api-reference/components/head)를 페이지나 컴포넌트에서 사용하는 것이 좋습니다.
+- `_document`에서 사용된 `<Head />` 컴포넌트는 [`next/head`](/docs/pages/api-reference/components/head)와 다릅니다. 여기에서 사용된 `<Head />` 컴포넌트는 모든 페이지에 공통인 `<head>` 코드로써만 사용되어야 합니다. 다른 경우에는 [`next/head`](/docs/pages/api-reference/components/head)를 페이지나 컴포넌트에서 사용하는 것이 좋습니다.
 - `<Main />` 바깥의 React 컴포넌트는 브라우저에서 초기화되지 않습니다. 여기에
   애플리케이션 로직이나 사용자 지정 CSS(예: `styled-jsx`)를 추가하지 마십시오.
   모든 페이지에서 공유되는 컴포넌트(메뉴나 툴바와 같은)가 필요한 경우 [레이아웃](/docs/pages/building-your-application/routing/pages-and-layouts#layout-pattern)을
   참조하십시오.
-- `Document`는 현재 Next.js의 [데이터 로드 방법](/docs/pages/building-your-application/data-fetching)인 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 또는 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)을 지원하지 않습니다.
+- `Document`는 현재 Next.js의 [데이터 패칭 방법](/docs/pages/building-your-application/data-fetching)인 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 또는 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)을 지원하지 않습니다.
 
 ## `renderPage` 커스터마이징
 
@@ -96,7 +96,7 @@ export default MyDocument
 
 ## TypeScript
 
-내장된 `DocumentContext` 타입을 사용하고 파일 이름을 `./pages/_document.tsx`로 변경할 수 있습니다. 아래의 예시를 참조하세요:
+내장된 `DocumentContext` 타입을 사용해서 파일 이름을 `./pages/_document.tsx`로 변경할 수 있습니다. 아래의 예시를 참조하세요:
 
 ```tsx
 import Document, { DocumentContext, DocumentInitialProps } from 'next/document'
