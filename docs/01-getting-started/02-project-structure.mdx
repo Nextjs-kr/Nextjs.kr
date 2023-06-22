@@ -44,7 +44,7 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 | [`layout`](/docs/app/api-reference/file-conventions/layout)                     | `.js` `.jsx` `.tsx` | 레이아웃                       |
 | [`page`](/docs/app/api-reference/file-conventions/page)                         | `.js` `.jsx` `.tsx` | 페이지                         |
 | [`loading`](/docs/app/api-reference/file-conventions/loading)                   | `.js` `.jsx` `.tsx` | 로딩 중 UI                   |
-| [`not-found`](/docs/app/api-reference/file-conventions/not-found)               | `.js` `.jsx` `.tsx` | 찾을 수 없는 경우 UI                 |
+| [`not-found`](/docs/app/api-reference/file-conventions/not-found)               | `.js` `.jsx` `.tsx` | 404 오류 UI                 |
 | [`error`](/docs/app/api-reference/file-conventions/error)                       | `.js` `.jsx` `.tsx` | 오류 UI                     |
 | [`global-error`](/docs/app/api-reference/file-conventions/error#global-errorjs) | `.js` `.jsx` `.tsx` | 전역 오류 UI              |
 | [`route`](/docs/app/api-reference/file-conventions/route)                       | `.js` `.ts`         | 서버사이드 API 엔드포인트                 |
@@ -119,32 +119,32 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 
 |                                                                                                             |                     |                   |
 | ----------------------------------------------------------------------------------------------------------- | ------------------- | ----------------- |
-| [`_app`](/docs/pages/building-your-application/routing/custom-app)                                          | `.js` `.jsx` `.tsx` | Custom App        |
-| [`_document`](/docs/pages/building-your-application/routing/custom-document)                                | `.js` `.jsx` `.tsx` | Custom Document   |
-| [`_error`](/docs/pages/building-your-application/routing/custom-error#more-advanced-error-page-customizing) | `.js` `.jsx` `.tsx` | Custom Error Page |
-| [`404`](/docs/pages/building-your-application/routing/custom-error#404-page)                                | `.js` `.jsx` `.tsx` | 404 Error Page    |
-| [`500`](/docs/pages/building-your-application/routing/custom-error#500-page)                                | `.js` `.jsx` `.tsx` | 500 Error Page    |
+| [`_app`](/docs/pages/building-your-application/routing/custom-app)                                          | `.js` `.jsx` `.tsx` | 커스텀 앱        |
+| [`_document`](/docs/pages/building-your-application/routing/custom-document)                                | `.js` `.jsx` `.tsx` | 커스텀 문서   |
+| [`_error`](/docs/pages/building-your-application/routing/custom-error#more-advanced-error-page-customizing) | `.js` `.jsx` `.tsx` | 커스텀 오류 페이지 |
+| [`404`](/docs/pages/building-your-application/routing/custom-error#404-page)                                | `.js` `.jsx` `.tsx` | 커스텀 404 오류 페이지    |
+| [`500`](/docs/pages/building-your-application/routing/custom-error#500-page)                                | `.js` `.jsx` `.tsx` | 커스텀 500 오류 페이지    |
 
 ### Routes
 
 |                                                                                                |                     |             |
 | ---------------------------------------------------------------------------------------------- | ------------------- | ----------- |
 | **Folder convention**                                                                          |                     |             |
-| [`index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes)        | `.js` `.jsx` `.tsx` | Home page   |
-| [`folder/index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes) | `.js` `.jsx` `.tsx` | Nested page |
+| [`index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes)        | `.js` `.jsx` `.tsx` | 홈 페이지   |
+| [`folder/index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes) | `.js` `.jsx` `.tsx` | 중첨 페이지 |
 | **File convention**                                                                            |                     |             |
-| [`index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes)        | `.js` `.jsx` `.tsx` | Home page   |
-| [`file`](/docs/pages/building-your-application/routing/pages-and-layouts)                      | `.js` `.jsx` `.tsx` | Nested page |
+| [`index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes)        | `.js` `.jsx` `.tsx` | 홈 페이지   |
+| [`file`](/docs/pages/building-your-application/routing/pages-and-layouts)                      | `.js` `.jsx` `.tsx` | 중첩 페이지 |
 
 ### Dynamic Routes
 
 |                                                                                                                   |                     |                             |
 | ----------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------- |
 | **Folder convention**                                                                                             |                     |                             |
-| [`[folder]/index`](/docs/pages/building-your-application/routing/dynamic-routes)                                  | `.js` `.jsx` `.tsx` | Dynamic route segment       |
-| [`[...folder]/index`](/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments)            | `.js` `.jsx` `.tsx` | Catch-all segments          |
-| [`[[...folder]]/index`](/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments) | `.js` `.jsx` `.tsx` | Optional catch-all segments |
+| [`[folder]/index`](/docs/pages/building-your-application/routing/dynamic-routes)                                  | `.js` `.jsx` `.tsx` | 동적 라우트 세그먼트       |
+| [`[...folder]/index`](/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments)            | `.js` `.jsx` `.tsx` | Catch-all 라우팅 세그먼트          |
+| [`[[...folder]]/index`](/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments) | `.js` `.jsx` `.tsx` | 선택적 Catch-all 라우팅 세그먼트 |
 | **File convention**                                                                                               |                     |                             |
-| [`[file]`](/docs/pages/building-your-application/routing/dynamic-routes)                                          | `.js` `.jsx` `.tsx` | Dynamic route segment       |
-| [`[...file]`](/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments)                    | `.js` `.jsx` `.tsx` | Catch-all segments          |
-| [`[[...file]]`](/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments)         | `.js` `.jsx` `.tsx` | Optional catch-all segments |
+| [`[file]`](/docs/pages/building-your-application/routing/dynamic-routes)                                          | `.js` `.jsx` `.tsx` | 동적 라우트 세그먼트      |
+| [`[...file]`](/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments)                    | `.js` `.jsx` `.tsx` | Catch-all 라우팅 세그먼트          |
+| [`[[...file]]`](/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments)         | `.js` `.jsx` `.tsx` | 선택적 Catch-all 라우팅 세그먼트 |
