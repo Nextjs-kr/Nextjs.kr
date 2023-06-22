@@ -55,33 +55,33 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 
 |                                                                              |                      |
 | ---------------------------------------------------------------------------- | -------------------- |
-| [`folder`](/docs/app/building-your-application/routing#route-segments)       | Route segment        |
-| [`folder/folder`](/docs/app/building-your-application/routing#nested-routes) | Nested route segment |
+| [`folder`](/docs/app/building-your-application/routing#route-segments)       | 라우팅 세그먼트        |
+| [`folder/folder`](/docs/app/building-your-application/routing#nested-routes) | 중첩 라우팅 세그먼트 |
 
 ### Dynamic Routes
 
 |                                                                                                           |                             |
 | --------------------------------------------------------------------------------------------------------- | --------------------------- |
-| [`[folder]`](/docs/app/building-your-application/routing/dynamic-routes#convention)                       | Dynamic route segment       |
-| [`[...folder]`](/docs/app/building-your-application/routing/dynamic-routes)                               | Catch-all segments          |
-| [`[[...folder]]`](/docs/app/building-your-application/routing/dynamic-routes#optional-catch-all-segments) | Optional catch-all segments |
+| [`[folder]`](/docs/app/building-your-application/routing/dynamic-routes#convention)                       | 동적 라우팅 세그먼트       |
+| [`[...folder]`](/docs/app/building-your-application/routing/dynamic-routes)                               | Catch-all 라우팅 세그먼트          |
+| [`[[...folder]]`](/docs/app/building-your-application/routing/dynamic-routes#optional-catch-all-segments) | 선택적 Catch-all 라우팅 세그먼트 |
 
 ### Route Groups and Private Folders
 
 |                                                                                     |                                                  |
 | ----------------------------------------------------------------------------------- | ------------------------------------------------ |
-| [`(folder)`](/docs/app/building-your-application/routing/route-groups#convention)   | Group routes without affecting routing           |
-| [`_folder`](/docs/app/building-your-application/routing/colocation#private-folders) | Opt folder and all child segments out of routing |
+| [`(folder)`](/docs/app/building-your-application/routing/route-groups#convention)   | 라우팅을 변조하지 않는 라우트 그룹           |
+| [`_folder`](/docs/app/building-your-application/routing/colocation#private-folders) | 라우팅에서 제외할 디렉토리 및 하위 세그먼트 |
 
 ### Parallel and Intercepted Routes
 
 |                                                                                                |                            |
 | ---------------------------------------------------------------------------------------------- | -------------------------- |
-| [`@folder`](/docs/app/building-your-application/routing/parallel-routes#convention)            | Named slot                 |
-| [`(.)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)      | Intercept same level       |
-| [`(..)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)     | Intercept one level above  |
-| [`(..)(..)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention) | Intercept two levels above |
-| [`(...)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)    | Intercept from root        |
+| [`@folder`](/docs/app/building-your-application/routing/parallel-routes#convention)            | 병렬 라우팅 슬롯 이름                 |
+| [`(.)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)      | 현재 경로 라우팅 인터셉트        |
+| [`(..)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)     | 1단계 상위 경로 라우팅 인터셉트  |
+| [`(..)(..)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention) | 2단계 상위 경로 라우팅 인터셉트 |
+| [`(...)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)    | 최상위 경로 라우팅 인터셉트        |
 
 ### Metadata File Conventions
 
@@ -89,29 +89,29 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 
 |                                                                                                                 |                                     |                          |
 | --------------------------------------------------------------------------------------------------------------- | ----------------------------------- | ------------------------ |
-| [`favicon`](/docs/app/api-reference/file-conventions/metadata/app-icons#favicon)                                | `.ico`                              | Favicon file             |
-| [`icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#icon)                                      | `.png` `.svg`                       | App Icon file            |
-| [`icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx)       | `.ico` `.jpg` `.jpeg` `.png` `.svg` | Generated App Icon       |
-| [`apple-icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#apple-icon)                          | `.jpg` `.jpeg`, `.png`              | Apple App Icon file      |
-| [`apple-icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx) | `.js` `.ts` `.tsx`                  | Generated Apple App Icon |
+| [`favicon`](/docs/app/api-reference/file-conventions/metadata/app-icons#favicon)                                | `.ico`                              | Favicon 파일             |
+| [`icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#icon)                                      | `.png` `.svg`                       | 앱 기본 아이콘 파일            |
+| [`icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx)       | `.ico` `.jpg` `.jpeg` `.png` `.svg` | 코드로 구성한 앱 아이콘       |
+| [`apple-icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#apple-icon)                          | `.jpg` `.jpeg`, `.png`              | Apple 앱 기본 아이콘 파일      |
+| [`apple-icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx) | `.js` `.ts` `.tsx`                  | 코드로 구성한 Apple 앱 아이콘 |
 
 #### Open Graph and Twitter Images
 
 |                                                                                                                             |                              |                            |
 | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | -------------------------- |
-| [`opengraph-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#opengraph-image)                      | `.jpg` `.jpeg` `.png` `.gif` | Open Graph image file      |
-| [`opengraph-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#generate-images-using-code-js-ts-tsx) | `.js` `.ts` `.tsx`           | Generated Open Graph image |
-| [`twitter-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#twitter-image)                          | `.jpg` `.jpeg` `.png` `.gif` | Twitter image file         |
-| [`twitter-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#generate-images-using-code-js-ts-tsx)   | `.js` `.ts` `.tsx`           | Generated Twitter image    |
+| [`opengraph-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#opengraph-image)                      | `.jpg` `.jpeg` `.png` `.gif` | Open Graph 이미지 파일      |
+| [`opengraph-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#generate-images-using-code-js-ts-tsx) | `.js` `.ts` `.tsx`           | 코드로 구성한 Open Graph 이미지 |
+| [`twitter-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#twitter-image)                          | `.jpg` `.jpeg` `.png` `.gif` | Twitter 이미지 파일         |
+| [`twitter-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#generate-images-using-code-js-ts-tsx)   | `.js` `.ts` `.tsx`           | 코드로 구성한 Twitter 이미지    |
 
 #### SEO
 
 |                                                                                             |             |                       |
 | ------------------------------------------------------------------------------------------- | ----------- | --------------------- |
-| [`sitemap`](/docs/app/api-reference/file-conventions/metadata/sitemap#static-sitemapxml)    | `.xml`      | Sitemap file          |
-| [`sitemap`](/docs/app/api-reference/file-conventions/metadata/sitemap#generate-a-sitemap)   | `.js` `.ts` | Generated Sitemap     |
-| [`robots`](/docs/app/api-reference/file-conventions/metadata/robots#static-robotstxt)       | `.txt`      | Robots file           |
-| [`robots`](/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file) | `.js` `.ts` | Generated Robots file |
+| [`sitemap`](/docs/app/api-reference/file-conventions/metadata/sitemap#static-sitemapxml)    | `.xml`      | 사이트맵 파일          |
+| [`sitemap`](/docs/app/api-reference/file-conventions/metadata/sitemap#generate-a-sitemap)   | `.js` `.ts` | 코드로 구성한 사이트맵 항목    |
+| [`robots`](/docs/app/api-reference/file-conventions/metadata/robots#static-robotstxt)       | `.txt`      | Robots 파일           |
+| [`robots`](/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file) | `.js` `.ts` | 코드로 구성한 Robots 항목 |
 
 ## `pages` Routing Conventions
 
