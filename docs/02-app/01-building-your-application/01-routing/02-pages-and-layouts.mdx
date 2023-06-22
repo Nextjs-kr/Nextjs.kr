@@ -3,15 +3,15 @@ title: Pages and Layouts
 description: Create your first page and shared layout with the App Router.
 ---
 
-> We recommend reading the [Routing Fundamentals](/docs/app/building-your-application/routing) and [Defining Routes](/docs/app/building-your-application/routing/defining-routes) pages before continuing.
+> 계속하기 전에 [라우팅 기본 사항](/docs/app/building-your-application/routing)  및 [경로 정의 페이지](/docs/app/building-your-application/routing/defining-routes)를 읽어보는 것을 추천합니다.
 
-The App Router inside Next.js 13 introduced new file conventions to easily create [pages](#pages), [shared layouts](#layouts), and [templates](#templates). This page will guide you through how to use these special files in your Next.js application.
+Next.js 13의 앱 라우터에는 [pages](#pages), [shared layouts](#layouts) 및 [templates](#templates)을 쉽게 만들 수 있는 새로운 파일 규칙이 도입되었습니다. 이 페이지에서는 Next.js 애플리케이션에서 이러한 특수 파일을 사용하는 방법을 안내합니다.
 
 ## Pages
 
-A page is UI that is **unique** to a route. You can define pages by exporting a component from a `page.js` file. Use nested folders to [define a route](/docs/app/building-your-application/routing/defining-routes) and a `page.js` file to make the route publicly accessible.
+페이지는 경로에 **고유한** UI입니다. `page.js` 파일에서 컴포넌트를 내보내 페이지를 정의할 수 있습니다. 중첩 폴더를 사용하여 [경로를 정의](/docs/app/building-your-application/routing/defining-routes)하고 `page.js` 파일을 사용하여 경로를 공개적으로 액세스할 수 있도록 합니다.
 
-Create your first page by adding a `page.js` file inside the `app` directory:
+`app` 디렉토리에 `page.js` 파일을 추가하여 첫 페이지를 만듭니다.
 
 <Image
   alt="page.js special file"
@@ -51,15 +51,21 @@ export default function Page() {
 
 > **Good to know**:
 >
-> - A page is always the [leaf](/docs/app/building-your-application/routing#terminology) of the [route subtree](/docs/app/building-your-application/routing#terminology).
-> - `.js`, `.jsx`, or `.tsx` file extensions can be used for Pages.
-> - A `page.js` file is required to make a route segment publicly accessible.
-> - Pages are [Server Components](/docs/getting-started/react-essentials) by default but can be set to a [Client Component](/docs/getting-started/react-essentials#client-components).
-> - Pages can fetch data. View the [Data Fetching](/docs/app/building-your-application/data-fetching) section for more information.
+
+페이지는 데이터를 가져올 수 있습니다. 자세한 내용은 데이터 가져오기 섹션을 참조하세요.
+> - 페이지는 항상 경로 [하위 트리](/docs/app/building-your-application/routing#terminology)의 [리프](/docs/app/building-your-application/routing#terminology)입니다.
+> - 페이지에는 `.js`, `.jsx` 또는 `.tsx` 파일 확장자를 사용할 수 있습니다.
+> - 경로 세그먼트에 공개적으로 액세스하려면 `page.js` 파일이 필요합니다.
+> - 페이지는 기본적으로 [서버 컴포넌트](/docs/getting-started/react-essentials)이지만 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components)로 설정할 수 있습니다.
+> - 페이지는 데이터를 가져올 수 있습니다. 자세한 내용은 [데이터 가져오기](/docs/app/building-your-application/data-fetching) 섹션을 참조하세요.
 
 ## Layouts
 
-A layout is UI that is **shared** between multiple pages. On navigation, layouts preserve state, remain interactive, and do not re-render. Layouts can also be [nested](#nesting-layouts).
+레이아웃은 여러 페이지 간에 **공유**되는 UI입니다. 탐색에서 레이아웃은 상태를 보존하고 대화형 상태를 유지하며 다시 렌더링하지 않습니다. 레이아웃은 [중첩](#nesting-layouts)될 수도 있습니다..
+
+레이아웃은 기본적으로 layout.js 파일에서 React 컴포넌트를 내보내서 정의할 수 있습니다. 컴포넌트는 렌더링 중에 자식 레이아웃(있는 경우) 또는 자식 페이지로 채워질 자식 프로퍼티를 받아들여야 합니다.
+
+A layout is UI that is **shared** between multiple pages. On navigation, layouts preserve state, remain interactive, and do not re-render. Layouts can also be [nested]
 
 You can define a layout by `default` exporting a React component from a `layout.js` file. The component should accept a `children` prop that will be populated with a child layout (if it exists) or a child page during rendering.
 
