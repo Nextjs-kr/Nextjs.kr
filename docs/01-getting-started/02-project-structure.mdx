@@ -6,7 +6,7 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 
 이 페이지에서는 Next.js 프로젝트에 속한 디렉토리 구조에 대한 개요를 제공합니다. `app` 및 `pages` 디렉토리 내의 최상위 파일 및 하위 디렉토리, 구성 파일 및 라우팅 규칙을 다룹니다.
 
-## Top-level files
+## 프로젝트 최상위 경로 파일
 
 |                                                                                             |                                         |
 | ------------------------------------------------------------------------------------------- |-----------------------------------------|
@@ -26,7 +26,7 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 | `jsconfig.json`                                                                             | JavaScript 환경설정                             |
 | [`.eslintrc.json`](/docs/app/building-your-application/configuring/eslint)                  | ESLint 환경설정           |
 
-## Top-level folders
+## 프로젝트 최상위 경로 디렉토리
 
 |                                                                         |                                    |
 | ----------------------------------------------------------------------- | ---------------------------------- |
@@ -35,9 +35,9 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 | [`public`](/docs/getting-started/installation#create-the-public-folder) | 정적으로 제공할 파일         |
 | [`src`](/docs/app/building-your-application/configuring/src-directory)  | 기타 프로젝트 소스파일 |
 
-## `app` Routing Conventions
+## `app` 라우팅 규칙
 
-### Routing Files
+### 라우팅 파일
 
 |                                                                                 |                     |                              |
 | ------------------------------------------------------------------------------- | ------------------- | ---------------------------- |
@@ -51,14 +51,14 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 | [`template`](/docs/app/api-reference/file-conventions/template)                 | `.js` `.jsx` `.tsx` | 다시 렌더링 될 때의 UI           |
 | [`default`](/docs/app/api-reference/file-conventions/default)                   | `.js` `.jsx` `.tsx` | 병렬 라우팅 시의 대체 UI |
 
-### Nested Routes
+### 중첩 라우팅
 
 |                                                                              |                      |
 | ---------------------------------------------------------------------------- | -------------------- |
 | [`folder`](/docs/app/building-your-application/routing#route-segments)       | 라우팅 세그먼트        |
 | [`folder/folder`](/docs/app/building-your-application/routing#nested-routes) | 중첩 라우팅 세그먼트 |
 
-### Dynamic Routes
+### 동적 라우팅
 
 |                                                                                                           |                             |
 | --------------------------------------------------------------------------------------------------------- | --------------------------- |
@@ -66,14 +66,14 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 | [`[...folder]`](/docs/app/building-your-application/routing/dynamic-routes)                               | Catch-all 라우팅 세그먼트          |
 | [`[[...folder]]`](/docs/app/building-your-application/routing/dynamic-routes#optional-catch-all-segments) | 선택적 Catch-all 라우팅 세그먼트 |
 
-### Route Groups and Private Folders
+### 라우팅 그룹 및 라우팅 제외
 
 |                                                                                     |                                                  |
 | ----------------------------------------------------------------------------------- | ------------------------------------------------ |
 | [`(folder)`](/docs/app/building-your-application/routing/route-groups#convention)   | 라우팅을 변조하지 않는 라우트 그룹           |
 | [`_folder`](/docs/app/building-your-application/routing/colocation#private-folders) | 라우팅에서 제외할 디렉토리 및 하위 세그먼트 |
 
-### Parallel and Intercepted Routes
+### 병렬 라우팅과 인터셉트
 
 |                                                                                                |                            |
 | ---------------------------------------------------------------------------------------------- | -------------------------- |
@@ -83,9 +83,9 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 | [`(..)(..)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention) | 2단계 상위 경로 라우팅 인터셉트 |
 | [`(...)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)    | 최상위 경로 라우팅 인터셉트        |
 
-### Metadata File Conventions
+### 메타데이터 파일 규칙
 
-#### App Icons
+#### 앱 아이콘
 
 |                                                                                                                 |                                     |                          |
 | --------------------------------------------------------------------------------------------------------------- | ----------------------------------- | ------------------------ |
@@ -95,7 +95,7 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 | [`apple-icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#apple-icon)                          | `.jpg` `.jpeg`, `.png`              | Apple 앱 기본 아이콘 파일      |
 | [`apple-icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx) | `.js` `.ts` `.tsx`                  | 코드로 구성한 Apple 앱 아이콘 |
 
-#### Open Graph and Twitter Images
+#### Open Graph와 Twitter 이미지
 
 |                                                                                                                             |                              |                            |
 | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | -------------------------- |
@@ -113,9 +113,9 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 | [`robots`](/docs/app/api-reference/file-conventions/metadata/robots#static-robotstxt)       | `.txt`      | Robots 파일           |
 | [`robots`](/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file) | `.js` `.ts` | 코드로 구성한 Robots 항목 |
 
-## `pages` Routing Conventions
+## `pages` 라우팅 규칙
 
-### Special Files
+### 특수 파일
 
 |                                                                                                             |                     |                   |
 | ----------------------------------------------------------------------------------------------------------- | ------------------- | ----------------- |
@@ -125,7 +125,7 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 | [`404`](/docs/pages/building-your-application/routing/custom-error#404-page)                                | `.js` `.jsx` `.tsx` | 커스텀 404 오류 페이지    |
 | [`500`](/docs/pages/building-your-application/routing/custom-error#500-page)                                | `.js` `.jsx` `.tsx` | 커스텀 500 오류 페이지    |
 
-### Routes
+### 기본 라우팅
 
 |                                                                                                |                     |             |
 | ---------------------------------------------------------------------------------------------- | ------------------- | ----------- |
@@ -136,7 +136,7 @@ description: Next.js 프로젝트에 속한 디렉토리와 파일명 규칙
 | [`index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes)        | `.js` `.jsx` `.tsx` | 홈 페이지   |
 | [`file`](/docs/pages/building-your-application/routing/pages-and-layouts)                      | `.js` `.jsx` `.tsx` | 중첩 페이지 |
 
-### Dynamic Routes
+### 동적 라우팅
 
 |                                                                                                                   |                     |                             |
 | ----------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------- |
