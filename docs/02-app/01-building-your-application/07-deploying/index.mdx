@@ -17,7 +17,6 @@ description: Vercel이 관리하는 환경 또는 직접 호스팅하는 운영 
 `.next` 폴더 안에 결과물을 생성합니다.
 
 - `.next/static/chunks/pages` – 이 폴더 안에는 같은 이름의 라우트와 관계가 있는 자바스크립트 파일이 있습니다. 예를 들어서 `.next/static/chunks/pages/about.js` 파일은 `/about` 페이지에 접근할 때 로드합니다.
-- `.next/static/media` – Statically imported images from `next/image` are hashed and copied here
 - `.next/static/media` – `next/image` 컴포넌트에서 정적으로 임포트해서 사용한 이미지의 이름에 해시값을 추가한 복사본이 있습니다.
 - `.next/static/css` – 모든 페이지를 위한 글로벌 CSS 파일이 있습니다.
 - `.next/server/pages` – Next.js 서버에서 프리 렌더링하기 위한 HTML과 자바스크립트의 진입점인 파일이 있습니다. [결과물 파일 추적](/docs/pages/api-reference/next-config-js/output) 기능을 활성화 했을 때, 페이지와 관련있는 모든 파일의 경로를 포함하고 있는 `.nft.json`으로 끝나는 파일을 생성합니다.
