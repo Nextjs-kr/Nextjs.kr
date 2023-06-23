@@ -1,10 +1,10 @@
 ---
 title: exportPathMap (Deprecated)
 nav_title: exportPathMap
-description: `next export`를 사용할 때 HTML파일로 내보낼 페이지를 사용자화 합니다.
+description: `next export`를 사용할 때 HTML 파일로 내보낼 페이지를 사용자화합니다.
 ---
 
-> 이 기능은 `next export`에만 적용되며 현재 **deprecated**되었습니다. `pages` 디렉토리의 `getStaticPaths` 또는 `app`디렉토리의 `generateStaticParams`를 사용하는 것이 좋습니다.
+> 이 기능은 `next export`에만 적용되며 현재 **더 이상 사용되지 않습니다.** `pages` 디렉토리의 `getStaticPaths` 또는 `app` 디렉토리의 `generateStaticParams`를 사용하는 것이 좋습니다.
 
 <details>
   <summary>예제</summary>
@@ -13,7 +13,7 @@ description: `next export`를 사용할 때 HTML파일로 내보낼 페이지를
 
 </details>
 
-`exportPathMap`은 내보내기 중 요청 경로와 대상 페이지간의 매핑을 지정할 수 있도록 해줍니다. `exportPathMap`에서 정의된 경로는 [`next dev`](/docs/app/api-reference/next-cli#development)를 사용할 때도 사용할 수 있습니다.
+`exportPathMap`은 내보내기 중 요청 경로와 대상 페이지 간의 매핑을 지정할 수 있도록 해줍니다. `exportPathMap`에서 정의된 경로는 [`next dev`](/docs/app/api-reference/next-cli#development)를 사용할 때도 사용할 수 있습니다.
 
 아래의 페이지에서 `exportPathMap`을 사용하는 예제를 살펴보겠습니다.
 
@@ -40,13 +40,13 @@ module.exports = {
 }
 ```
 
-> **참고**: `exportPathMap`의 `query` 필드는 [automatically statically optimized pages](/docs/pages/building-your-application/rendering/automatic-static-optimization) 또는 [`getStaticProps` pages](/docs/pages/building-your-application/data-fetching/get-static-props)와 함께 사용할 수 없습니다. 이들은 빌드 시 HTML 파일로 렌더링되며 `next export` 중에 추가적인 쿼리 정보를 제공할 수 없습니다.
+> **참고**: `exportPathMap`의 `query` 필드는 [automatically statically optimized pages](/docs/pages/building-your-application/rendering/automatic-static-optimization) 또는 [`getStaticProps` pages](/docs/pages/building-your-application/data-fetching/get-static-props)와 함께 사용할 수 없습니다. 이들은 빌드 시 HTML 파일로 렌더링 되며 `next export` 중에 추가적인 쿼리 정보를 제공할 수 없습니다.
 
-페이지는 HTML파일로 내보내집니다. 예를 들어 `/about`은 `/about.html`로 내보내집니다.
+페이지는 HTML 파일로 내보내집니다. 예를 들어 `/about`은 `/about.html`로 내보내집니다.
 
-`exportPathMap`은 Next.js에서 사용되는 기본 매핑 정보인 `defaultPathMap`이라는 첫번째 인수와 아래와 같은 key값을 가진 객채 형태의 두 번째 인수를 받는 `async` 함수입니다.
+`exportPathMap`은 Next.js에서 사용되는 기본 매핑 정보인 `defaultPathMap`이라는 첫 번째 인수와 아래와 같은 key값을 가진 객체 형태의 두 번째 인수를 받는 `async` 함수입니다.
 
-- `dev` - `true`일 경우 `exportPathMap`이 개발환경에서 호출됩니다. `false`일 경우 `next export`를 실행할 때 호출되고 개발환경에서는 `exportPathMap`은 경로를 정의하는데 사용됩니다.
+- `dev` - `true`일 경우 `exportPathMap`이 개발환경에서 호출됩니다. `false`일 경우 `next export`를 실행할 때 호출되고 개발환경에서는 `exportPathMap`은 경로를 정의하는 데 사용됩니다.
 - `dir` - 프로젝트 디렉토리의 절대 경로입니다.
 - `outDir` - `out/` 디렉토리의 절대 경로입니다([configurable with `-o`](#출력-디렉토리-사용자-정의하기)). `dev`가 `true`일 경우 `outDir`의 값은 `null`입니다.
 - `distDir` - `.next/` 디렉토리의 절대경로입니다. ([`distDir`](/docs/pages/api-reference/next-config-js/distDir) config로 설정할 수 있습니다.)
@@ -61,7 +61,7 @@ module.exports = {
 
 ## 후행 슬래시 추가하기
 
-Next.js 설정을 통해 페이지를 `index.html` 파일로 내보내고 후행 슬래시를 필요로 하는 설정이 가능합니다. `/about`은 `/about/index.html`로 변환되며 `/about/`를 통해 라우팅됩니다. 이는 Next.js 9 이전의 기본 동작이었습니다.
+Next.js 설정을 통해 페이지를 `index.html` 파일로 내보내고 후행 슬래시를 필요로 하는 설정이 가능합니다. `/about`은 `/about/index.html`로 변환되며 `/about/`를 통해 라우팅 됩니다. 이는 Next.js 9 이전의 기본 동작이었습니다.
 
 후행 슬래시를 추가하려면 `next.config.js`를 열고 `trailingSlash` 설정을 아래와 같이 활성화하세요.
 
@@ -79,4 +79,4 @@ module.exports = {
 next export -o outdir
 ```
 
-**주의**: `exportPathMap`은 deprecated되었으며 `pages` 디렉토리의 `getStaticPaths`에 의해 무시됩니다. 둘을 함께 사용하는 것을 권장하지 않습니다.
+**주의**: `exportPathMap`은 더 이상 사용되지 않으며 `pages` 디렉토리의 `getStaticPaths`에 의해 무시됩니다. 둘을 함께 사용하는 것을 권장하지 않습니다.
