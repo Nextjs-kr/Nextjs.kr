@@ -1,13 +1,13 @@
 ---
 title: route.js
-description: API reference for the route.js special file.
+description: route.js 파일의 API 레퍼런스 입니다.
 ---
 
-Route Handlers allow you to create custom request handlers for a given route using the Web [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) and [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) APIs.
+Route Handler는 Web [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request)와 [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) API를 사용하여 주어진 경로에 대한 사용자 정의 request handler를 생성할 수 있습니다.
 
-## HTTP Methods
+## HTTP 메서드
 
-A **route** file allows you to create custom request handlers for a given route. The following [HTTP methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) are supported: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, and `OPTIONS`.
+**route** 파일은 주어진 경로에 사용자 정의 request handler를 생성할 수 있습니다. 지원되는 [HTTP 메서드](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods): `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, 및 `OPTIONS`.
 
 ```ts filename="route.ts" switcher
 export async function GET(request: Request) {}
@@ -22,7 +22,7 @@ export async function DELETE(request: Request) {}
 
 export async function PATCH(request: Request) {}
 
-// If `OPTIONS` is not defined, Next.js will automatically implement `OPTIONS` and  set the appropriate Response `Allow` header depending on the other methods defined in the route handler.
+// `OPTIONS`가 정의되지 않은 경우, Next.js는 `OPTIONS`를 자동으로 구현하고 해당 route handler에 정의된 다른 메서드에 따라 적절한 `Allow` 응답 헤더를 설정합니다.
 export async function OPTIONS(request: Request) {}
 ```
 
@@ -39,19 +39,19 @@ export async function DELETE(request) {}
 
 export async function PATCH(request) {}
 
-// If `OPTIONS` is not defined, Next.js will automatically implement `OPTIONS` and  set the appropriate Response `Allow` header depending on the other methods defined in the route handler.
+// `OPTIONS`가 정의되지 않은 경우, Next.js는 `OPTIONS`를 자동으로 구현하고 해당 route handler에 정의된 다른 메서드에 따라 적절한 `Allow` 응답 헤더를 설정합니다.
 export async function OPTIONS(request) {}
 ```
 
-> **Good to know**: Route Handlers are only available inside the `app` directory. You **do not** need to use API Routes (`pages`) and Route Handlers (`app`) together, as Route Handlers should be able to handle all use cases.
+> **알아두면 좋은 점**: Route Handler는 `app` 디렉토리 내에서만 사용할 수 있습니다. Route Handler는 모든 사용 사례를 처리할 수 있어야하므로 API Routes(`pages`)와 Route Handler(`app`)를 함께 사용할 필요가 **없습니다**.
 
-## Parameters
+## 매개변수
 
-### `request` (optional)
+### `request` (선택적)
 
-The `request` object is a [NextRequest](/docs/app/api-reference/functions/next-request) object, which is an extension of the Web [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) API. `NextRequest` gives you further control over the incoming request, including easily accessing `cookies` and an extended, parsed, URL object `nextUrl`.
+`request`객체는 [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) API의 확장인 [NextRequest](/docs/app/api-reference/functions/next-request)객체입니다. `NextRequest`는 들어오는 요청에 대해 더욱 세밀한 제어를 제공하며, 이는 `쿠키`에 쉽게 접근할 수 있고 확장된 URL 객체인 `nextUrl`을 사용할 수 있음을 의미합니다.
 
-### `context` (optional)
+### `context` (선택적)
 
 ```ts filename="app/dashboard/[team]/route.js"
 export async function GET(request, context: { params }) {
@@ -59,7 +59,7 @@ export async function GET(request, context: { params }) {
 }
 ```
 
-Currently, the only value of `context` is `params`, which is an object containing the [dynamic route parameters](/docs/app/building-your-application/routing/dynamic-routes) for the current route.
+현재, `context`의 유일한 값은 `params`입니다. `params`는 현재 라우트의 [동적 경로 매개변수](/docs/app/building-your-application/routing/dynamic-routes)를 포함하는 객체입니다.
 
 | Example                          | URL            | `params`                  |
 | -------------------------------- | -------------- | ------------------------- |
@@ -69,10 +69,10 @@ Currently, the only value of `context` is `params`, which is an object containin
 
 ## NextResponse
 
-Route Handlers can extend the Web Response API by returning a `NextResponse` object. This allows you to easily set cookies, headers, redirect, and rewrite. [View the API reference](/docs/app/api-reference/functions/next-response).
+Route Handler는 `NextResponse`객체를 반환함으로써 Web Response API를 확장할 수 있습니다. 이를 통해 cookies, headers, redirect 및  rewrite 설정을 쉽게 처리할 수 있습니다. [API 레퍼런스를 참고하세요](/docs/app/api-reference/functions/next-response).
 
 ## Version History
 
-| Version   | Changes                        |
-| --------- | ------------------------------ |
-| `v13.2.0` | Route handlers are introduced. |
+| Version   | Changes             |
+| --------- | ------------------- |
+| `v13.2.0` | Route handlers 도입 |
