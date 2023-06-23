@@ -180,21 +180,21 @@ export default function MyApp({ Component, pageProps }) {
 }
 ```
 
-이 스타일은(`styles.css`) 앱 안의 모든 페이지와 컴포넌트들에 적용됩니다.
+이 스타일(`styles.css`)은 앱 안의 모든 페이지와 컴포넌트에 적용됩니다.
 스타일시트의 글로벌 특성을 고려했을 때, 또 충돌을 방지하기 위해, **[`pages/_app.js`](/docs/pages/building-your-application/routing/custom-app)안에만 이 스타일들을 import**할 수 있습니다.
 
 개발 단계에서 이런 방식으로 스타일시트들을 이용한다면 수정 시 스타일을 실시간으로 반영할 수 있습니다. 즉, 앱의 상태를 계속해서 유지할 수 있습니다.
 
-프로덕션 배포 단계에서 모든 CSS 파일들은 자동으로, 하나의 최소화된 `.css` 파일로 연결됩니다. CSS가 연결되는 순서는 `_app.js` 파일에 CSS가 임포트한 순서와 같습니다.
+모든 CSS 파일은 프로덕션 배포 단계에서 자동적으로 하나의 최소화된 `.css` 파일로 연결됩니다. CSS가 연결되는 순서는 `_app.js` 파일에 CSS를 임포트한 순서와 같습니다.
 
-특히 임포트한 JS 모듈 중 고유의 CSS를 가지는 JS 모듈을 주의해주세요. JS 모듈 안의 CSS는 임포트한 CSS 파일들의 연결 순서 방식에 따라 연결될 것입니다.
+특히 임포트된 JS 모듈 중 고유의 CSS를 가지는 JS 모듈에 주의하세요. JS 모듈 안의 CSS는 임포트된 CSS 파일과 동일한 정렬 방식으로 연결됩니다.
 
 예를 들면,
 
 ```jsx
 import '../styles.css'
 // ErrorBoundary 안의 CSS는 style.css의 전역 CSS에 의존합니다.
-// 그렇기 때문에 styles.css 다음에 CSS를 임포트해야합니다.
+// 그렇기 때문에 styles.css 다음에 CSS를 임포트해야 합니다.
 import ErrorBoundary from '../components/ErrorBoundary'
 
 export default function MyApp({ Component, pageProps }) {
@@ -249,7 +249,7 @@ export default function RootLayout({ children }) {
 <PagesOnly>
 
 Next.js는 자바스크립트 파일 안에 있는 CSS 파일을 임포트할 수 있습니다.
-Next.js가 자바스크립트의 [`import`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)의 컨셉을 확장했기 때문에 가능합니다.
+자바스크립트 파일에서 CSS를 임포트할 수 있는 이유는 자바스크립트의 [`import`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)의 컨셉을 Next.js가 확장했기 때문입니다.
 
 ### `node_modules`에서 스타일을 임포트하기
 
