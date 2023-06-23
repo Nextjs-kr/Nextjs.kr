@@ -187,7 +187,7 @@ export default function MyApp({ Component, pageProps }) {
 
 모든 CSS 파일은 프로덕션 배포 단계에서 자동적으로 하나의 최소화된 `.css` 파일로 연결됩니다. CSS가 연결되는 순서는 `_app.js` 파일에 CSS를 임포트한 순서와 같습니다.
 
-특히 임포트한 JS 모듈 중 고유의 CSS를 가지는 JS 모듈을 주의해주세요. JS 모듈 안의 CSS는 임포트한 CSS 파일들의 연결 순서 방식에 따라 연결될 것입니다.
+특히 임포트된 JS 모듈 중 고유의 CSS를 가지는 JS 모듈에 주의하세요. JS 모듈 안의 CSS는 임포트된 CSS 파일과 동일한 정렬 방식으로 연결됩니다.
 
 예를 들면,
 
