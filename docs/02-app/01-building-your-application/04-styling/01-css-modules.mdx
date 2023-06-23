@@ -59,7 +59,7 @@ export default function DashboardLayout({
 
 <PagesOnly>
 
-components 디렉토리 안의 재사용 가능한 Button 컴포넌트로 예를 들어봅시다.
+예를 들어, components 디렉토리 안의 재사용 가능한 Button 컴포넌트를 생각해 봅시다.
 먼저, 다음의 코드를 `components/Button.module.css` 파일 안에 만듭니다.
 
 ```css filename="Button.module.css"
@@ -107,7 +107,7 @@ CSS 모듈은 _선택적 기능_ 이면서, **`.module.css` 확장자로만 파�
 
 > **참고**: 전역 스타일을 `_app.js` 파일 안에만 임포트할 수 있는 `pages` 디렉토리와는 다릅니다.
 
-`app/global.css`라는 스타일시트로 예를 들어봅시다.
+예를 들어, `app/global.css`라는 스타일시트를 생각해 봅시다.
 
 ```css
 body {
@@ -155,7 +155,7 @@ export default function RootLayout({ children }) {
 
 앱에 스타일시트를 적용하기 위해, `pages/_app.js` 안에 CSS 파일을 임포트하세요.
 
-`styles.css` 라는 다음의 스타일 시트로 예를 들어봅시다.
+예를 들어, `styles.css` 라는 다음의 스타일 시트를 생각해 봅시다.
 
 ```css filename="styles.css"
 body {
@@ -183,7 +183,7 @@ export default function MyApp({ Component, pageProps }) {
 이 스타일(`styles.css`)은 앱 안의 모든 페이지와 컴포넌트에 적용됩니다.
 스타일시트의 글로벌 특성을 고려했을 때, 또 충돌을 방지하기 위해, **[`pages/_app.js`](/docs/pages/building-your-application/routing/custom-app)안에만 이 스타일들을 import**할 수 있습니다.
 
-개발 단계에서 이런 방식으로 스타일시트들을 이용한다면 수정 시 스타일을 실시간으로 반영할 수 있습니다. 즉, 앱의 상태를 계속해서 유지할 수 있습니다.
+개발 단계에서 이런 방식으로 스타일시트들을 이용한다면 수정 시 스타일을 실시간으로 반영할 수 있습니다. 즉, 앱의 스테이트를 계속해서 유지할 수 있습니다.
 
 모든 CSS 파일은 프로덕션 배포 단계에서 자동적으로 하나의 최소화된 `.css` 파일로 연결됩니다. CSS가 연결되는 순서는 `_app.js` 파일에 CSS를 임포트한 순서와 같습니다.
 
@@ -194,7 +194,7 @@ export default function MyApp({ Component, pageProps }) {
 ```jsx
 import '../styles.css'
 // ErrorBoundary 안의 CSS는 style.css의 전역 CSS에 의존합니다.
-// 그렇기 때문에 styles.css 다음에 CSS를 임포트해야 합니다.
+// 그러므로 styles.css 다음에 CSS를 임포트해야 합니다.
 import ErrorBoundary from '../components/ErrorBoundary'
 
 export default function MyApp({ Component, pageProps }) {
