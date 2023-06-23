@@ -50,15 +50,15 @@ Vercel은 아래와 같은 기능을 추가로 제공합니다.
 
 [Vercel에 Next.js 애플리케이션 배포](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/hello-world&project-name=hello-world&repository-name=hello-world&utm_source=next-site&utm_medium=docs&utm_campaign=next-website)를 무료로 해보세요.
 
-## Self-Hosting
+## 직접 호스팅
 
-You can self-host Next.js with support for all features using Node.js or Docker. You can also do a Static HTML Export, which [has some limitations](/docs/app/building-your-application/deploying/static-exports).
+도커나 Node.js를 사용하여 Next.js의 모든 기능을 직접 호스팅할 수 있습니다. [일부 제약을 있는](/docs/app/building-your-application/deploying/static-exports) 정적 HTML 추출도 가능합니다.
 
-### Node.js Server
+### Node.js 서버
 
-Next.js can be deployed to any hosting provider that supports Node.js. For example, [AWS EC2](https://aws.amazon.com/ec2/) or a [DigitalOcean Droplet](https://www.digitalocean.com/products/droplets/).
+Node.js를 지원하는 모든 호스팅 서비스를 통해 배포할 수 있습니다. e.g. [AWS EC2](https://aws.amazon.com/ec2/), [DigitalOcean Droplet](https://www.digitalocean.com/products/droplets/)
 
-First, ensure your `package.json` has the `"build"` and `"start"` scripts:
+먼저, `package.json` 안에 `"build"`와 `"start"` 스크립트가 있어야 합니다.
 
 ```json filename="package.json"
 {
@@ -70,24 +70,24 @@ First, ensure your `package.json` has the `"build"` and `"start"` scripts:
 }
 ```
 
-Then, run `npm run build` to build your application. Finally, run `npm run start` to start the Node.js server. This server supports all features of Next.js.
+그리고 애플리케이션을 빌드하기 위해 `npm run build` 명령을 실행하세요. 마지막으로 Node.js 서버를 시작하기 위해 `npm run start` 명령을 실행하세요. 이 서버는 Next.js의 모든 기능을 지원합니다.
 
-> If you are using [`next/image`](/docs/pages/building-your-application/optimizing/images), consider adding `sharp` for more performant [Image Optimization](/docs/pages/building-your-application/optimizing/images) in your production environment by running `npm install sharp` in your project directory. On Linux platforms, `sharp` may require [additional configuration](https://sharp.pixelplumbing.com/install#linux-memory-allocator) to prevent excessive memory usage.
+> [`next/image`](/docs/pages/building-your-application/optimizing/images) 컴포넌트를 사용한다면, 운영 환경에서 [이미지 최적화](/docs/pages/building-your-application/optimizing/images)를 더 효율적으로 하기 위해서 프로젝트 폴더에서 `npm install sharp` 명령을 실행하여 `sharp`를 설치하는 것을 고려하세요. 리눅스 플랫폼을 사용한다면, 지나친 메모리 사용을 막기 위해서 `sharp`의 [추가 설정](https://sharp.pixelplumbing.com/install#linux-memory-allocator)이 필요할 수 있습니다.
 
-### Docker Image
+### 도커 이미지
 
-Next.js can be deployed to any hosting provider that supports [Docker](https://www.docker.com/) containers. You can use this approach when deploying to container orchestrators such as [Kubernetes](https://kubernetes.io/) or [HashiCorp Nomad](https://www.nomadproject.io/), or when running inside a single node in any cloud provider.
+Next.js는 [도커](https://www.docker.com/) 컨테이너를 지원하는 모든 호스팅 서비스를 통해 배포할 수 있습니다. 이 방식을 사용하여 [Kubernetes](https://kubernetes.io/), [HashiCorp Nomad](https://www.nomadproject.io/) 같은 컨테이너 오케스트레이터, 또는 모든 클라우드 서비스에서 싱글 노드로 실행하고 있을 때에도 배포할 수 있습니다.
 
-1. [Install Docker](https://docs.docker.com/get-docker/) on your machine
-1. Clone the [with-docker](https://github.com/vercel/next.js/tree/canary/examples/with-docker) example
-1. Build your container: `docker build -t nextjs-docker .`
-1. Run your container: `docker run -p 3000:3000 nextjs-docker`
+1. 장비에 [도커를 설치하세요](https://docs.docker.com/get-docker/).
+1. [with-docker](https://github.com/vercel/next.js/tree/canary/examples/with-docker) 예제를 복사하세요.
+1. `docker build -t nextjs-docker .` 명령어로 이미지를 빌드하세요.
+1. `docker run -p 3000:3000 nextjs-docker` 명령어로 컨테이너를 실행하세요.
 
-If you need to use different Environment Variables across multiple environments, check out our [with-docker-multi-env](https://github.com/vercel/next.js/tree/canary/examples/with-docker-multi-env) example.
+여러 환경에서 다른 환경변수를 사용해야 한다면, [with-docker-multi-env](https://github.com/vercel/next.js/tree/canary/examples/with-docker-multi-env) 예제를 확인하세요.
 
-### Static HTML Export
+### 정적 HTML 추출
 
-If you’d like to do a static HTML export of your Next.js app, follow the directions on our [Static HTML Export documentation](/docs/app/building-your-application/deploying/static-exports).
+Next.js 애플리케이션의 정적 HTML 추출을 하고 싶다면, [정적 HTML 추출 문서](/docs/app/building-your-application/deploying/static-exports) 안의 지시를 따르세요.
 
 ## Other Services
 
