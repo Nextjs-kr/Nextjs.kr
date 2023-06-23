@@ -1,11 +1,11 @@
 ---
 title: httpAgentOptions
-description: Next.js will automatically use HTTP Keep-Alive by default. Learn more about how to disable HTTP Keep-Alive here.
+description: Next.js는 기본값으로 HTTP Keep-Alive를 사용합니다. 이 문서에는 HTTP Keep-Alive를 비활성화하는 방법이 적혀 있습니다.
 ---
 
-In Node.js versions prior to 18, Next.js automatically polyfills `fetch()` with [node-fetch](/docs/architecture/supported-browsers#polyfills) and enables [HTTP Keep-Alive](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Keep-Alive) by default.
+Node.js 18 이전 버전에서, Next.js는 `fetch()`를 [node-fetch](/docs/architecture/supported-browsers#polyfills)로 polyfill하고, 그와 동시에 기본적으로 [HTTP Keep-Alive](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Keep-Alive)를 활성화합니다.
 
-To disable HTTP Keep-Alive for all `fetch()` calls on the server-side, open `next.config.js` and add the `httpAgentOptions` config:
+서버 사이드의 모든 `fetch()`의 [HTTP Keep-Alive](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Keep-Alive)를 비활성화하기 위해, `next.config.js` 파일에 `httpAgentOptions` 설정을 추가할 수 있습니다.
 
 ```js filename="next.config.js"
 module.exports = {
