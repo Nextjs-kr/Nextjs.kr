@@ -298,6 +298,7 @@ export default function Page() {
 **Output:**
 
 > **참고**: 한 줄 메모입니다.
+
 > **참고**:
 >
 > - 여러 줄로 된 노트에도 이 형식을 사용합니다.
