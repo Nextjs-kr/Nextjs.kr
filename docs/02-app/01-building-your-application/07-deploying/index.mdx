@@ -89,11 +89,11 @@ Next.js는 [도커](https://www.docker.com/) 컨테이너를 지원하는 모든
 
 Next.js 애플리케이션의 정적 HTML 추출을 하고 싶다면, [정적 HTML 추출 문서](/docs/app/building-your-application/deploying/static-exports) 안의 지시를 따르세요.
 
-## Other Services
+## 다른 서비스
 
-The following services support Next.js `v12+`. Below, you’ll find examples or guides to deploy Next.js to each service.
+아래 서비스들은 Next.js `v12 이상`을 지원합니다. 각 서비스에 Next.js를 배포하는 방법이나 예제를 아래에서 찾을 수 있습니다.
 
-### Managed Server
+### 관리형 서버
 
 - [AWS Copilot](https://aws.github.io/copilot-cli/)
 - [Digital Ocean App Platform](https://docs.digitalocean.com/tutorials/app-nextjs-deploy/)
@@ -102,17 +102,17 @@ The following services support Next.js `v12+`. Below, you’ll find examples or 
 - [Railway](https://docs.railway.app/getting-started)
 - [Render](https://render.com/docs/deploy-nextjs-app)
 
-> **Good to know**: There are also managed platforms that allow you to use a Dockerfile as shown in the [example above](#docker-image).
+> **참고**: [위의 예제](#도커-이미지)에서 다룬 Dockerfile을 사용할 수 있는 관리형 플랫폼들 입니다.
 
-### Static Only
+### 정적 배포
 
-The following services only support deploying Next.js using [`output: 'export'`](/docs/app/building-your-application/deploying/static-exports).
+아래의 서비스는 Next.js의 [`output: 'export'`](/docs/app/building-your-application/deploying/static-exports) 옵션을 설정했을 때 사용할 수 있습니다.
 
 - [GitHub Pages](https://github.com/vercel/next.js/tree/canary/examples/github-pages)
 
-You can also manually deploy the output from [`output: 'export'`](/docs/app/building-your-application/deploying/static-exports) to any static hosting provider, often through your CI/CD pipeline like GitHub Actions, Jenkins, AWS CodeBuild, Circle CI, Azure Pipelines, and more.
+GitHub Actions, Jenkins, AWS CodeBuild, Circle CI, Azure Pipelines와 같은 CI/CD 파이프라인을 통해 [`output: 'export'`](/docs/app/building-your-application/deploying/static-exports) 옵션을 사용한 결과물을 모든 정적 배포 호스팅 서비스에 직접 배포할 수 있습니다.
 
-### Serverless
+### 서버리스
 
 - [AWS Amplify](https://aws.amazon.com/blogs/mobile/amplify-next-js-13/)
 - [Azure Static Web Apps](https://learn.microsoft.com/en-us/azure/static-web-apps/nextjs)
@@ -122,7 +122,7 @@ You can also manually deploy the output from [`output: 'export'`](/docs/app/buil
 - [Terraform](https://github.com/milliHQ/terraform-aws-next-js)
 - [SST](https://docs.sst.dev/start/nextjs)
 
-> **Good to know**: Not all serverless providers implement the [Next.js Build API](#nextjs-build-api) from `next start`. Please check with the provider to see what features are supported.
+> **참고**: 모든 서버리스 서비스에서 [Next.js 빌드 API](#nextjs-빌드-api)의 `next start`를 구현하지 않았습니다. 서비스에서 어떤 기능을 제공하고 있는지 확인하세요.
 
 ## Automatic Updates
 
