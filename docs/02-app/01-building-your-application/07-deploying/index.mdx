@@ -124,13 +124,13 @@ GitHub Actions, Jenkins, AWS CodeBuild, Circle CI, Azure Pipelines와 같은 CI/
 
 > **참고**: 모든 서버리스 서비스에서 [Next.js 빌드 API](#nextjs-빌드-api)의 `next start`를 구현하지 않았습니다. 서비스에서 어떤 기능을 제공하고 있는지 확인하세요.
 
-## Automatic Updates
+## 자동 업데이트
 
-When you deploy your Next.js application, you want to see the latest version without needing to reload.
+Next.js 애플리케이션을 배포할 때, 리로드 하지 않고 최신 버전을 보고 싶어할 것 입니다.
 
-Next.js will automatically load the latest version of your application in the background when routing. For client-side navigations, `next/link` will temporarily function as a normal `<a>` tag.
+Next.js는 페이지를 이동이 있을 때 백그라운드에서 애플리케이션의 최신버전을 자동으로 로드합니다. 클라이언트 사이드 이동인 경우 `next/link` 컴포넌트는 일시적으로 평범한 `<a>` 태그 처럼 동작합니다.
 
-> **Good to know**: If a new page (with an old version) has already been prefetched by `next/link`, Next.js will use the old version. Navigating to a page that has _not_ been prefetched (and is not cached at the CDN level) will load the latest version.
+> **참고**: `next/link` 컴포넌트에 의해서 새로운 페이지(구 버전 포함)를 이미 prefetch 했다면, Next.js는 구버전을 사용합니다. prefetch _하지 않은_ (그리고 CDN에 캐시가 없는) 페이지로 이동한다면 최신 버전을 로드합니다.
 
 ## Manual Graceful shutdowns
 
