@@ -37,7 +37,7 @@ export default function NotFound() {
 }
 ```
 
-> **알아두면 좋은 점**: not-found.js 파일은 예상된 `notFound()` 오류를 처리하는 것 외에도, 전체 애플리케이션에서 처리되지 않은 URL에 대해서도 담당합니다. 즉, 앱에서 처리되지 않은 URL을 방문하는 사용자는 `app/not-found.js` 파일에서 내보내진 UI를 볼 수 있습니다.
+> **알아두면 좋은 점**: 루트 not-found.js 파일은 예상된 `notFound()` 오류를 처리하는 것 외에도, 전체 애플리케이션에서 처리하지 않는 URL도 담당합니다. 즉, 앱에서 처리하지 않는 URL을 방문하는 사용자에게는 `app/not-found.js` 파일에서 내보내진 UI가 보여집니다.
 
 ## Props
 
