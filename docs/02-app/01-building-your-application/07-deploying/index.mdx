@@ -16,26 +16,26 @@ description: Vercel이 관리하는 환경 또는 직접 호스팅하는 운영 
 
 `.next` 폴더 안에 결과물을 생성합니다.
 
-- `.next/static/chunks/pages` – 이 폴더 안에는 같은 이름의 라우트와 관계가 있는 자바스크립트 파일이 있습니다. 예를 들어서 `.next/static/chunks/pages/about.js` 파일은 `/about` 페이지에 접근할 때 로드합니다.
+- `.next/static/chunks/pages` – 이 폴더 안에는 같은 이름의 라우터와 관계가 있는 자바스크립트 파일이 있습니다. 예를 들어서 `.next/static/chunks/pages/about.js` 파일은 `/about` 페이지에 접근할 때 로드합니다.
 - `.next/static/media` – `next/image` 컴포넌트에서 정적으로 임포트해서 사용한 이미지의 이름에 해시값을 추가한 복사본이 있습니다.
 - `.next/static/css` – 모든 페이지를 위한 글로벌 CSS 파일이 있습니다.
-- `.next/server/pages` – Next.js 서버에서 프리 렌더링하기 위한 HTML과 자바스크립트의 진입점인 파일이 있습니다. [결과물 파일 추적](/docs/pages/api-reference/next-config-js/output) 기능을 활성화 했을 때, 페이지와 관련있는 모든 파일의 경로를 포함하고 있는 `.nft.json`으로 끝나는 파일을 생성합니다.
+- `.next/server/pages` – Next.js 서버에서 프리 렌더링하기 위한 HTML과 자바스크립트의 진입점인 파일이 있습니다. [결과물 파일 추적](/docs/pages/api-reference/next-config-js/output) 기능을 활성화했을 때, 페이지와 관련 있는 모든 파일의 경로를 포함하고 있는 `.nft.json`으로 끝나는 파일을 생성합니다.
 - `.next/server/chunks` – 다양한 페이지에서 공유하는 자바스크립트 청크 파일이 있습니다.
-- `.next/cache` – Next.js 서버에서 만드는 캐시, 캐시한 이미지, 응답, 그리고 페이지들의 결과물이 있습니다. 캐시가 있음으로써 빌드 시간을 줄여주고, 이미지를 불러오는데 필요한 성능을 개선합니다.
+- `.next/cache` – Next.js 서버에서 만드는 캐시, 캐시 한 이미지, 응답, 그리고 페이지들의 결과물이 있습니다. 캐시가 있음으로써 빌드 시간을 줄여주고, 이미지를 불러오는 데 필요한 성능을 개선합니다.
 
 `.next` 폴더에 있는 모든 자바스크립트는 **컴파일되어 있고** 브라우저에서 사용하는 번들도 **압축되어 있어서** 가장 좋은 성능을 낼 수 있게 해주고, [모든 모던 브라우저](/docs/architecture/supported-browsers)를 지원합니다.
 
 ## Vercel에서 관리하는 Next.js
 
-[Vercel](https://vercel.com?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)은 설정 없이 Next.js를 가장 빠르게 배포할 수 있는 방법입니다.
+[Vercel](https://vercel.com?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)은 설정 없이 Next.js를 가장 빠르게 배포하는 방법입니다.
 
-Vercel으로 배포를 한다면, [Next.js를 자동으로 감지](https://vercel.com/solutions/nextjs?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)하여 `next build` 명령을 실행하고, 빌드 결과물을 최적화합니다.
+Vercel으로 배포한다면, [Next.js를 자동으로 감지](https://vercel.com/solutions/nextjs?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)하여 `next build` 명령을 실행하고, 빌드 결과물을 최적화합니다.
 
-- 변경이 없다면 배포와 배포 사이의 정적파일을 지속적으로 캐시합니다.
-- 모든 커밋은 중복없는 URL로 [영구으로 배포](https://vercel.com/features/previews?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)가 됩니다.
+- 변경이 없다면 배포와 배포 사이의 정적파일을 지속적으로 캐시 합니다.
+- 모든 커밋은 중복 없는 URL로 [영구적으로 배포](https://vercel.com/features/previews?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)가 됩니다.
 - [페이지](/docs/pages/building-your-application/rendering/automatic-static-optimization)는 자동으로 정적으로 최적화할 수 있다면 최적화합니다.
 - 정적파일(자바스크립트, CSS, 이미지, 폰트)은 [글로벌 엣지 네트워크](https://vercel.com/features/infrastructure?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)를 통해 압축하여 호스팅합니다.
-- [API 라우트](/docs/pages/building-your-application/routing/api-routes)는 무한히 확장이 가능한 격리된 [서버리스 함수](https://vercel.com/features/infrastructure?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)로 자동으로 최적화합니다.₩₩
+- [API 라우터](/docs/pages/building-your-application/routing/api-routes)는 무한히 확장이 가능한 격리된 [서버리스 함수](https://vercel.com/features/infrastructure?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)로 자동으로 최적화합니다.₩₩
 - [미들웨어](/docs/pages/building-your-application/routing/middleware)는 콜드 스타트 없이 즉시 부팅하는 [엣지 함수](https://vercel.com/features/edge-functions?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)로 자동 최적화합니다.
 
 Vercel은 아래와 같은 기능을 추가로 제공합니다.
@@ -52,7 +52,7 @@ Vercel은 아래와 같은 기능을 추가로 제공합니다.
 
 ## 직접 호스팅
 
-도커나 Node.js를 사용하여 Next.js의 모든 기능을 직접 호스팅할 수 있습니다. [일부 제약을 있는](/docs/app/building-your-application/deploying/static-exports) 정적 HTML 추출도 가능합니다.
+도커나 Node.js를 사용하여 Next.js의 모든 기능을 직접 호스팅할 수 있습니다. [일부 제약이 있는](/docs/app/building-your-application/deploying/static-exports) 정적 HTML 추출도 가능합니다.
 
 ### Node.js 서버
 
@@ -102,7 +102,7 @@ Next.js 애플리케이션의 정적 HTML 추출을 하고 싶다면, [정적 HT
 - [Railway](https://docs.railway.app/getting-started)
 - [Render](https://render.com/docs/deploy-nextjs-app)
 
-> **참고**: [위의 예제](#도커-이미지)에서 다룬 Dockerfile을 사용할 수 있는 관리형 플랫폼들 입니다.
+> **참고**: [위의 예제](#도커-이미지)에서 다룬 Dockerfile을 사용할 수 있는 관리형 플랫폼들입니다.
 
 ### 정적 배포
 
@@ -126,15 +126,15 @@ GitHub Actions, Jenkins, AWS CodeBuild, Circle CI, Azure Pipelines와 같은 CI/
 
 ## 자동 업데이트
 
-Next.js 애플리케이션을 배포할 때, 리로드 하지 않고 최신 버전을 보고 싶어할 것 입니다.
+Next.js 애플리케이션을 배포할 때, 리로드하지 않고 최신 버전을 보고 싶어 할 것입니다.
 
-Next.js는 페이지를 이동이 있을 때 백그라운드에서 애플리케이션의 최신버전을 자동으로 로드합니다. 클라이언트 사이드 이동인 경우 `next/link` 컴포넌트는 일시적으로 평범한 `<a>` 태그 처럼 동작합니다.
+Next.js는 페이지를 이동이 있을 때 백그라운드에서 애플리케이션의 최신버전을 자동으로 로드합니다. 클라이언트 사이드 이동인 경우 `next/link` 컴포넌트는 일시적으로 평범한 `<a>` 태그처럼 동작합니다.
 
-> **참고**: `next/link` 컴포넌트에 의해서 새로운 페이지(구 버전 포함)를 이미 prefetch 했다면, Next.js는 구버전을 사용합니다. prefetch _하지 않은_ (그리고 CDN에 캐시가 없는) 페이지로 이동한다면 최신 버전을 로드합니다.
+> **참고**: `next/link` 컴포넌트에 의해서 새로운 페이지(구버전 포함)를 이미 prefetch 했다면, Next.js는 구버전을 사용합니다. prefetch _하지 않은_ (그리고 CDN에 캐시가 없는) 페이지로 이동한다면 최신 버전을 로드합니다.
 
 ## 직접 우아하게 종료하기
 
-직접 호스팅 했을 때, `SIGTERM` 또는 `SIGINT` 시그널을 받아서 서버를 종료할 때 특정 코드를 실행하고 싶을 겁니다.
+직접 호스팅했을 때, `SIGTERM` 또는 `SIGINT` 시그널을 받아서 서버를 종료할 때 특정 코드를 실행하고 싶을 겁니다.
 
 `NEXT_MANUAL_SIG_HANDLE` 환경 변수를 `true`로 설정하고 `_document.js` 파일 안에 원하는 시그널 핸들러를 등록하면 가능합니다. 그 환경 변수를 `.env` 파일이 아닌, `package.json` 파일의 scripts에 직접 등록해야 합니다.
 
