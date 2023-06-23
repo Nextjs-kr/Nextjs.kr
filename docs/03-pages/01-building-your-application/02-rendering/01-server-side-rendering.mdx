@@ -1,32 +1,32 @@
 ---
-title: Server-side Rendering (SSR)
-description: Use Server-side Rendering to render pages on each request.
+title: 서버 사이드 렌더링 (Server-side Rendering)
+description: 서버 사이드 랜더링을 사용하여 각 요청에 대해 페이지를 렌더링합니다.
 ---
 
-> Also referred to as "SSR" or "Dynamic Rendering".
+> "SSR" 또는 "동적 렌더링"이라고도 합니다.
 
-If a page uses **Server-side Rendering**, the page HTML is generated on **each request**.
+**서버 사이드 렌더링**을 사용하는 페이지라면, 페이지에 해당하는 HTML 문서는 **요청마다** 생성됩니다.
 
-To use Server-side Rendering for a page, you need to `export` an `async` function called `getServerSideProps`. This function will be called by the server on every request.
+서버 사이드 렌더링을 사용하기 위해, 당신은 `getServerSideProps`라는 `async` 함수를 `export` 해야 합니다. 이 함수는 요청마다 서버에서 호출될 것입니다.
 
-For example, suppose that your page needs to pre-render frequently updated data (fetched from an external API). You can write `getServerSideProps` which fetches this data and passes it to `Page` like below:
+예를 들어, 당신의 페이지가 자주 업데이트되는 데이터(외부 API로부터 가져온)를 사전 렌더링해야 한다고 가정해 봅시다. 당신은 아래와 같이 `getServerSideProps`를 작성할 수 있습니다. 이 함수는 데이터를 가져오고 `Page`에 전달합니다.
 
 ```jsx
 export default function Page({ data }) {
-  // Render data...
+  // 렌더 데이터...
 }
 
-// This gets called on every request
+// 이것은 각 요청마다 호출됩니다.
 export async function getServerSideProps() {
-  // Fetch data from external API
+  // 외부 API로부터 데이터를 가져옵니다.
   const res = await fetch(`https://.../data`)
   const data = await res.json()
 
-  // Pass data to the page via props
+  // 데이터를 페이지에 props로 전달합니다.
   return { props: { data } }
 }
 ```
 
-As you can see, `getServerSideProps` is similar to `getStaticProps`, but the difference is that `getServerSideProps` is run on every request instead of on build time.
+`getServerSideProps`는 `getStaticProps`와 비슷하지만, 차이점은 `getServerSideProps`는 페이지가 빌드 될 때가 아닌 요청될 때 마다 실행된다는 것입니다.
 
-To learn more about how `getServerSideProps` works, check out our [Data Fetching documentation](/docs/pages/building-your-application/data-fetching/get-server-side-props).
+`getServerSideProps`가 어떻게 동작하는지 더 알아보려면, [Data Fetching documentation](/docs/pages/building-your-application/data-fetching/get-server-side-props)을 살펴보세요.
