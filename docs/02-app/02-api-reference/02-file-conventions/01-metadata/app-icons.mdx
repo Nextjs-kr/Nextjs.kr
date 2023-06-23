@@ -3,23 +3,23 @@ title: favicon, icon, and apple-icon
 description: API Reference for the Favicon, Icon and Apple Icon file conventions.
 ---
 
-The `favicon`, `icon`, or `apple-icon` file conventions allow you to set icons for your application.
+`favicon`, `icon`, `apple-icon` 파일 컨벤션을 사용하여 애플리케이션의 아이콘을 설정할 수 있습니다.
 
-They are useful for adding app icons that appear in places like web browser tabs, phone home screens, and search engine results.
+웹 브라우저의 탭, 휴대폰 홈 화면, 검색 엔진 결과 등의 위치에 표시되는 앱 아이콘을 추가하는데 유용합니다.
 
-There are two ways to set app icons:
+앱 아이콘을 설정하는 방법에는 두 가지가 있습니다.
 
-- [Using image files (.ico, .jpg, .png)](#image-files-ico-jpg-png)
-- [Using code to generate an icon (.js, .ts, .tsx)](#generate-icons-using-code-js-ts-tsx)
+- [이미지 파일 사용 (.ico, .jpg, .png)](#image-files-ico-jpg-png)
+- [코드를 사용하여 아이콘 생성 (.js, .ts, .tsx)](#generate-icons-using-code-js-ts-tsx)
 
-## Image files (.ico, .jpg, .png)
+## 이미지 파일 (.ico, .jpg, .png)
 
-Use an image file to set an app icon by placing a `favicon`, `icon`, or `apple-icon` image file within your `/app` directory.
-The `favicon` image can only be located in the top level of `app/`.
+이미지 파일을 사용하여 앱 아이콘을 설정하려면 `app/` 디렉토리에 `favicon`, `icon`, `apple-icon` 이미지 파일을 위치시키세요.
+`favicon` 이미지는 `app/` 디렉토리의 최상위에만 위치할 수 있습니다.
 
-Next.js will evaluate the file and automatically add the appropriate tags to your app's `<head>` element.
+Next.js는 파일을 평가하여 앱의 `<head>` 엘리먼트에 해당하는 태그를 자동으로 추가합니다.
 
-| File convention             | Supported file types                    | Valid locations |
+| 파일 컨벤션             | 지원하는 파일 형식                    | 유효한 위치 |
 | --------------------------- | --------------------------------------- | --------------- |
 | [`favicon`](#favicon)       | `.ico`                                  | `app/`          |
 | [`icon`](#icon)             | `.ico`, `.jpg`, `.jpeg`, `.png`, `.svg` | `app/**/*`      |
@@ -27,17 +27,17 @@ Next.js will evaluate the file and automatically add the appropriate tags to you
 
 ### `favicon`
 
-Add a `favicon.ico` image file to the root `/app` route segment.
+`favicon.ico` 이미지 파일을 루트 `/app` 라우트 경로에 추가합니다. 
 
-```html filename="<head> output"
+```html filename="<head> 결과"
 <link rel="icon" href="/favicon.ico" sizes="any" />
 ```
 
 ### `icon`
 
-Add an `icon.(ico|jpg|jpeg|png|svg)` image file.
+`icon.(ico|jpg|jpeg|png|svg)` 이미지 파일을 추가합니다.
 
-```html filename="<head> output"
+```html filename="<head> 결과"
 <link
   rel="icon"
   href="/icon?<generated>"
@@ -48,9 +48,9 @@ Add an `icon.(ico|jpg|jpeg|png|svg)` image file.
 
 ### `apple-icon`
 
-Add an `apple-icon.(jpg|jpeg|png)` image file.
+`apple-icon.(jpg|jpeg|png)` 이미지 파일을 추가합니다.
 
-```html filename="<head> output"
+```html filename="<head> 결과"
 <link
   rel="apple-touch-icon"
   href="/apple-icon?<generated>"
@@ -59,13 +59,13 @@ Add an `apple-icon.(jpg|jpeg|png)` image file.
 />
 ```
 
-> **Good to know**
+> **알아두면 좋은 정보**
 >
-> - You can set multiple icons by adding a number suffix to the file name. For example, `icon1.png`, `icon2.png`, etc. Numbered files will sort lexically.
-> - Favicons can only be set in the root `/app` segment. If you need more granularity, you can use [`icon`](#icon).
-> - The appropriate `<link>` tags and attributes such as `rel`, `href`, `type`, and `sizes` are determined by the icon type and metadata of the evaluated file.
->   - For example, a 32 by 32px `.png` file will have `type="image/png"` and `sizes="32x32"` attributes.
-> - `sizes="any"` is added to `favicon.ico` output to [avoid a browser bug](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs) where an `.ico` icon is favored over `.svg`.
+> - 파일 이름에 숫자 접미사를 추가하여 여러 개의 아이콘을 설정할 수 있습니다. 예를 들어 `icon1.png`, `icon2.png` 등과 같이 작성할 수 있습니다. 번호가 매겨진 파일은 사전 순으로 정렬됩니다.
+> - 파비콘은 루트 `/app` 경로에서만 설정할 수 있습니다. 보다 세분화가 필요한 경우에는 [`icon`](#icon)을 사용할 수 있습니다.
+> - 적절한 `<link>` 태그 및 `rel`, `href`, `type`, and `sizes` 와 같은 어트리뷰트는 평가된 파일의 아이콘 타입과 메타데이터에 따라 결정된다.
+>   - 예를 들어 32px * 32px 사이즈의 `.png` 파일은 `type="image/png"`과 `sizes="32x32"` 어트리뷰트를 갖습니다.
+> - `.ico` 아이콘이 `.svg`보다 선호되는 [브라우저 버그를 방지](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needsa)하기 위해 `sizes="any"` 어트리뷰트가 `favicon.ico` output에 추가되었다 .
 
 ## Generate icons using code (.js, .ts, .tsx)
 
