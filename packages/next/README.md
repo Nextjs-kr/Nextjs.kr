@@ -16,7 +16,7 @@ Next.js 문서에 기여함으로써 모든 개발자를 위한 더욱 강력한
 
 GitHub를 처음 사용하는 경우 [GitHub 오픈 소스 가이드](https://opensource.guide/how-to-contribute/#opening-a-pull-request)를 읽고 레포지토리 포크, 브랜치 생성 및 풀 리퀘스트 제출 방법을 알아보는 것이 좋습니다.
 
-> **알아두면 좋은 점**: 기본 문서 코드는 비공개 코드베이스에 있으며, 이 코드베이스는 Next.js 공개 레포지토리에 동기화됩니다. 즉, 로컬에서 문서를 미리 볼 수 없습니다. 그러나 풀 리퀘스트를 병합한 후에는 [nextjs.org](https://nextjs.org/docs)에서 변경 사항을 볼 수 있습니다.
+> **참고**: 기본 문서 코드는 비공개 코드베이스에 있으며, 이 코드베이스는 Next.js 공개 레포지토리에 동기화됩니다. 즉, 로컬에서 문서를 미리 볼 수 없습니다. 그러나 풀 리퀘스트를 병합한 후에는 [nextjs.org](https://nextjs.org/docs)에서 변경 사항을 볼 수 있습니다.
 
 ### MDX 작성
 
@@ -235,7 +235,7 @@ JavaScript 코드 블록을 작성할 때 다음과 같은 언어 및 확장자 
 ```
 ````
 
-> **알아두면 좋은 점**: 향후에는 타입스크립트 스니펫을 자바스크립트로 자동 컴파일할 계획입니다. 그전까지는 [transform.tools](https://transform.tools/typescript-to-javascript)를 사용할 수 있습니다.
+> **참고**: 향후에는 타입스크립트 스니펫을 자바스크립트로 자동 컴파일할 계획입니다. 그전까지는 [transform.tools](https://transform.tools/typescript-to-javascript)를 사용할 수 있습니다.
 
 ### 라인 강조 표시
 
