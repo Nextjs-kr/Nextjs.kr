@@ -132,13 +132,13 @@ Next.js는 페이지를 이동이 있을 때 백그라운드에서 애플리케�
 
 > **참고**: `next/link` 컴포넌트에 의해서 새로운 페이지(구 버전 포함)를 이미 prefetch 했다면, Next.js는 구버전을 사용합니다. prefetch _하지 않은_ (그리고 CDN에 캐시가 없는) 페이지로 이동한다면 최신 버전을 로드합니다.
 
-## Manual Graceful shutdowns
+## 직접 우아하게 종료하기
 
-When self-hosting, you might want to run code when the server shuts down on `SIGTERM` or `SIGINT` signals.
+직접 호스팅 했을 때, `SIGTERM` 또는 `SIGINT` 시그널을 받아서 서버를 종료할 때 특정 코드를 실행하고 싶을 겁니다.
 
-You can set the env variable `NEXT_MANUAL_SIG_HANDLE` to `true` and then register a handler for that signal inside your `_document.js` file. You will need to register the env variable directly in the `package.json` script, not in the `.env` file.
+`NEXT_MANUAL_SIG_HANDLE` 환경 변수를 `true`로 설정하고 `_document.js` 파일 안에 원하는 시그널 핸들러를 등록하면 가능합니다. 그 환경 변수를 `.env` 파일이 아닌, `package.json` 파일의 scripts에 직접 등록해야 합니다.
 
-> **Good to know**: Manual signal handling is not available in `next dev`.
+> **참고**: `next dev` 명령어에서는 직접 시그널을 처리하는 것이 불가능합니다.
 
 ```json filename="package.json"
 {
@@ -152,7 +152,7 @@ You can set the env variable `NEXT_MANUAL_SIG_HANDLE` to `true` and then registe
 
 ```js filename="pages/_document.js"
 if (process.env.NEXT_MANUAL_SIG_HANDLE) {
-  // this should be added in your custom _document
+  // 커스텀 _document.js 파일에 추가해야 합니다.
   process.on('SIGTERM', () => {
     console.log('Received SIGTERM: ', 'cleaning up')
     process.exit(0)
