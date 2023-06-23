@@ -1,42 +1,42 @@
 ---
-title: Optimizations
-nav_title: Optimizing
-description: Optimize your Next.js application for best performance and user experience.
+title: 최적화
+nav_title: 최적화하기
+description: 최상의 성능과 사용자 경험을 위해 Next.js 애플리케이션을 최적화하세요.
 ---
 
-Next.js comes with a variety of built-in optimizations designed to improve your application's speed and [Core Web Vitals](https://web.dev/vitals/). This guide will cover the optimizations you can leverage to enhance your user experience.
+Next.js는 애플리케이션의 속도와 [Core Web Vitals](https://web.dev/vitals/)를 개선하도록 설계된 다양한 내장 최적화 기능을 제공합니다. 이 가이드는 사용자 경험을 향상시키기 위해 사용할 수 있는 최적화하는 방법을 다룹니다.
 
-## Built-in Components
+## 내장 컴포넌트
 
-Built-in components abstract away the complexity of implementing common UI optimizations. These components are:
+내장 컴포넌트는 일반적인 UI를 최적화하는 것의 복잡성을 추상화합니다. 이 컴포넌트는 다음과 같습니다.
 
-- **Images**: Built on the native `<img>` element. The Image Component optimizes images for performance by lazy loading and automatically resizing images based on device size.
-- **Link**: Built on the native `<a>` tags. The Link Component prefetches pages in the background, for faster and smoother page transitions.
-- **Scripts**: Built on the native `<script>` tags. The Script Component gives you control over loading and execution of third-party scripts.
+- **이미지**: 기본 `<img>` 엘리먼트를 기반으로 합니다. 이미지 컴포넌트는 성능을 위해 장치 크기에 따라 이미지를 레이지 로딩하고 자동으로 크기를 조정하여 이미지를 최적화합니다.
+- **링크**: 기본 `<a>` 태그를 기반으로 합니다. 링크 컴포넌트는 페이지 전환을 더 빠르고 원활하게 하기 위해 백그라운드에서 페이지를 미리 가져옵니다.
+- **스크립트**: 기본 `<script>` 태그를 기반으로 합니다. 스크립트 컴포넌트를 사용하면 서드파티 스크립트의 로드 및 실행을 제어할 수 있습니다.
 
-## Metadata
+## 메타데이터
 
-Metadata helps search engines understand your content better (which can result in better SEO), and allows you to customize how your content is presented on social media, helping you create a more engaging and consistent user experience across various platforms.
+메타데이터는 검색 엔진이 콘텐츠를 더 잘 이해할 수 있도록 도와줍니다(이를 통해 SEO가 개선될 수 있음). 또한 소셜 미디어에 콘텐츠가 어떻게 표시되는지를 사용자 정의할 수 있어 다양한 플랫폼에서 보다 매력적이고 일관된 사용자 경험을 만들 수 있도록 해줍니다.
 
 <AppOnly>
 
-The Metadata API in Next.js allows you to modify the `<head>` element of a page. You can configure metadata in two ways:
+Next.js의 메타데이터 API를 사용하면 페이지의 `<head>` 엘리먼트를 수정할 수 있습니다. 메타데이터는 두 가지 방법으로 설정할 수 있습니다.
 
-- **Config-based Metadata**: Export a static metadata object or a dynamic generateMetadata function in a `layout.js` or `page.js` file.
-- **File-based Metadata**: Add static or dynamically generated special files to route segments.
+- **구성 기반 메타데이터**: `layout.js` 또는 `page.js` 파일에서 정적 메타데이터 객체 또는 동적 generateMetadata 함수를 내보냅니다.
+- **파일 기반 메타데이터**: 라우트 세그먼트에 정적 또는 동적으로 생성된 특수 파일을 추가합니다.
 
-Additionally, you can create dynamic Open Graph Images using JSX and CSS with [imageResponse](/docs/app/api-reference/functions/image-response) constructor.
+[imageResponse](/docs/app/api-reference/functions/image-response) 생성자를 사용하여 JSX 및 CSS로 동적 Open Graph Images를 생성할 수도 있습니다.
 
 </AppOnly>
 
 <PagesOnly>
-The Head Component in Next.js allows you to modify the `<head>` of a page. Learn more in the [Head Component](/docs/pages/building-your-application/optimizing/head) documentation.
+Next.js의 Head 컴포넌트를 사용하면 페이지의 `<head>`를 수정할 수 있습니다. 자세한 내용은 [Head 컴포넌트](/docs/pages/building-your-application/optimizing/head) 문서를 참조하세요.
 </PagesOnly>
 
-## Static Assets
+## 정적 자산
 
-Next.js `/public` folder can be used to serve static assets like images, fonts, and other files. Files inside `/public` can also be cached by CDN providers so that they are delivered efficiently.
+Next.js `/public` 폴더는 이미지, 글꼴 및 기타 파일과 같은 정적 자산을 제공하는 데 사용할 수 있습니다. `/public` 내부의 파일도 효율적으로 전달되도록 CDN providers가 캐시할 수 있습니다.
 
-## Analytics and Monitoring
+## 분석 및 모니터링
 
-For large applications, Next.js integrates with popular analytics and monitoring tools to help you understand how your application is performing. Learn more in the <PagesOnly>[Analytics](/docs/app/building-your-application/optimizing/analytics), </PagesOnly> [OpenTelemetry](/docs/pages/building-your-application/optimizing/open-telemetry)<PagesOnly>,</PagesOnly> and [Instrumentation](/docs/pages/building-your-application/optimizing/instrumentation) guides.
+대규모 애플리케이션의 경우 Next.js는 인기있는 분석 및 모니터링 도구와 통합되어 애플리케이션의 성능을 이해하는 데 도움을 줍니다. <PagesOnly>[Analytics](/docs/app/building-your-application/optimizing/analytics), </PagesOnly> [OpenTelemetry](/docs/pages/building-your-application/optimizing/open-telemetry)<PagesOnly>,</PagesOnly> 및 [Instrumentation](/docs/pages/building-your-application/optimizing/instrumentation) 가이드에서 자세히 알아보세요.
