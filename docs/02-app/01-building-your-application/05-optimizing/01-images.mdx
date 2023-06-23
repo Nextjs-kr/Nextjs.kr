@@ -35,7 +35,7 @@ import Image from 'next/image'
 
 ### 로컬 이미지
 
-로컬 이미지를 사용하기 위해서, `.jpg`, `.png`, or `.webp` 이미지 파일들을 `import` 합니다.
+로컬 이미지를 사용하기 위해서, `.jpg`, `.png`, `.webp` 이미지 파일을 `import` 합니다.
 
 Next.js는 `width`와 `height`를 [자동으로 결정](#이미지-크기-지정)합니다. 이 값들은 이미지가 로드되는 동안 [Cumulative Layout Shift](https://nextjs.org/learn/seo/web-performance/cls)를 방지하는 데 사용됩니다.
 
@@ -232,7 +232,7 @@ Image 컴포넌트를 스타일링하는 것은 일반적인 `<img>` 요소를 �
   - [styled-jsx](/docs/app/building-your-application/styling/css-in-js)를 사용할 수 없습니다. 스타일을 `global`로 표시하지 않는 한 현재 컴포넌트에 대해 스코프가 지정되기 때문입니다.
 - `fill`을 사용하는 경우, 상위 요소는 반드시 `position: relative` 속성을 가져야 합니다.
   - 이는 해당 레이아웃에서 이미지 요소를 올바르게 렌더링하기 위함입니다.
-- `fill`을 사용하는 경우, 상위 요소는 반드시 `display: block` 속성을가져야 합니다.
+- `fill`을 사용하는 경우, 상위 요소는 반드시 `display: block` 속성을 가져야 합니다.
   - 이는 `<div>` 요소의 기본 속성이지만, 그렇지 않은 경우에는 반드시 속성을 지정해 주어야 합니다.
 
 ## 예시
