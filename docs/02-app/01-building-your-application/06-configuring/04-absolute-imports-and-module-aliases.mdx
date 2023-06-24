@@ -1,34 +1,34 @@
 ---
-title: Absolute Imports and Module Path Aliases
-description: Configure module path aliases that allow you to remap certain import paths.
+title: 절대 경로 가져오기와 모듈 경로 별칭
+description: 특정 가져오기 경로를 다시 매핑할 수 있는 모듈 경로 별칭을 구성합니다.
 ---
 
 <details>
-  <summary>Examples</summary>
+  <summary>예시</summary>
 
-- [Absolute Imports and Aliases](https://github.com/vercel/next.js/tree/canary/examples/with-absolute-imports)
+- [절대 경로 가져오기와 별칭](https://github.com/vercel/next.js/tree/canary/examples/with-absolute-imports)
 
 </details>
 
-Next.js has in-built support for the `"paths"` and `"baseUrl"` options of `tsconfig.json` and `jsconfig.json` files.
+Next.js는 `tsconfig.json` 및 `jsconfig.json` 파일의 `"paths"` 및 `"baseUrl"` 옵션을 기본적으로 지원합니다.
 
-These options allow you to alias project directories to absolute paths, making it easier to import modules. For example:
+이러한 옵션을 사용하면 프로젝트 디렉토리를 절대 경로에 별칭으로 지정하여 모듈을 더 쉽게 임포트할 수 있습니다. 예를 들어:
 
 ```tsx
-// before
+// 이전
 import { Button } from '../../../components/button'
 
-// after
+// 이전
 import { Button } from '@/components/button'
 ```
 
-> **Good to know**: `create-next-app` will prompt to configure these options for you.
+> **알아두면 좋은 정보**: `create-next-app`은 이러한 옵션을 구성하도록 안내합니다.
 
-## Absolute Imports
+## 절대 경로 가져오기
 
-The `baseUrl` configuration option allows you to import directly from the root of the project.
+`baseUrl` 구성 옵션을 사용하면 프로젝트의 루트에서 직접 임포트할 수 있습니다.
 
-An example of this configuration:
+이 구성의 예시:
 
 ```json filename="tsconfig.json or jsconfig.json"
 {
@@ -76,11 +76,11 @@ export default function HomePage() {
 }
 ```
 
-## Module Aliases
+## 모듈 별칭
 
-In addition to configuring the `baseUrl` path, you can use the `"paths"` option to "alias" module paths.
+`baseUrl` 경로를 구성하는 것 외에도, `"paths"` 옵션을 사용하여 모듈 경로에 "별칭"을 지정할 수 있습니다.
 
-For example, the following configuration maps `@/components/*` to `components/*`:
+예를 들어 다음 구성은 `@/components/*`를 `components/*`에 매핑합니다:
 
 ```json filename="tsconfig.json or jsconfig.json"
 {
@@ -131,10 +131,10 @@ export default function HomePage() {
 }
 ```
 
-Each of the `"paths"` are relative to the `baseUrl` location. For example:
+각 `"paths"`는 `baseUrl` 위치를 기준으로 상대적입니다. 예를 들어:
 
 ```json
-// tsconfig.json or jsconfig.json
+// tsconfig.json 또는 jsconfig.json
 {
   "compilerOptions": {
     "baseUrl": "src/",
