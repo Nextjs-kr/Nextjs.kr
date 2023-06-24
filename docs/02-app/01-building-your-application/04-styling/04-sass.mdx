@@ -1,11 +1,11 @@
 ---
 title: Sass
-description: Style your Next.js application using Sass.
+description: Sass를 사용하여 Next.js 애플리케이션을 꾸미세요.
 ---
 
-Next.js has built-in support for Sass using both the `.scss` and `.sass` extensions. You can use component-level Sass via CSS Modules and the `.module.scss`or `.module.sass` extension.
+Next.js는 기본적으로 `.scss`와 `.sass` 확장자를 모두 사용하여 Sass를 지원합니다. CSS 모듈과 `.module.scss` 또는 `.module.sass` 확장자를 통해 컴포넌트 수준의 Sass를 사용할 수 있습니다.
 
-First, install [`sass`](https://github.com/sass/sass):
+먼저 [`sass`](https://github.com/sass/sass)를 설치합니다.
 
 ```bash filename="Terminal"
 npm install --save-dev sass
@@ -13,16 +13,15 @@ npm install --save-dev sass
 
 > **Good to know**:
 >
-> Sass supports [two different syntax](https://sass-lang.com/documentation/syntax), each with their own extension.
-> The `.scss` extension requires you use the [SCSS syntax](https://sass-lang.com/documentation/syntax#scss),
-> while the `.sass` extension requires you use the [Indented Syntax ("Sass")](https://sass-lang.com/documentation/syntax#the-indented-syntax).
+> Sass는 각각 고유한 확장자를 가진 [두 가지 문법](https://sass-lang.com/documentation/syntax)을 지원합니다.
+> `.scss` 확장에는 [SCSS 문법](https://sass-lang.com/documentation/syntax#scss)을 사용해야 하는 반면,
+> `.sass` 확장에는 [들여쓰기 문법 ("Sass")](https://sass-lang.com/documentation/syntax#the-indented-syntax)을 사용해야 합니다.
 >
-> If you're not sure which to choose, start with the `.scss` extension which is a superset of CSS, and doesn't require you learn the
-> Indented Syntax ("Sass").
+> 어떤 것을 선택할지 확실하지 않으면 CSS의 상위 집합인 `.scss` 확장으로 시작하고 들여쓰기 문법 ("Sass")을 배우지 않아도 됩니다.
 
-### Customizing Sass Options
+### Sass 옵션 커스텀
 
-If you want to configure the Sass compiler, use `sassOptions` in `next.config.js`.
+Sass 컴파일러를 구성하려면 `next.config.js`에서 `sassOptions`를 사용하세요.
 
 ```js filename="next.config.js"
 const path = require('path')
@@ -34,11 +33,11 @@ module.exports = {
 }
 ```
 
-### Sass Variables
+### Sass 변수
 
-Next.js supports Sass variables exported from CSS Module files.
+Next.js는 CSS 모듈 파일에서 내보낸 Sass 변수를 지원합니다.
 
-For example, using the exported `primaryColor` Sass variable:
+예를 들어 `primaryColor`라는 Sass 변수를 다음과 같이 사용할 수 있습니다.
 
 ```scss filename="app/variables.module.scss"
 $primary-color: #64ff00;

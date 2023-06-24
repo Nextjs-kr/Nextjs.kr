@@ -1,27 +1,27 @@
 ---
 title: exportPathMap (Deprecated)
 nav_title: exportPathMap
-description: Customize the pages that will be exported as HTML files when using `next export`.
+description: `next export`를 사용할 때 HTML 파일로 내보낼 페이지를 사용자화합니다.
 ---
 
-> This feature is exclusive to `next export` and currently **deprecated** in favor of `getStaticPaths` with `pages` or `generateStaticParams` with `app`.
+> 이 기능은 `next export`에만 적용되며 현재 **더 이상 사용되지 않습니다.** `pages` 디렉토리의 `getStaticPaths` 또는 `app` 디렉토리의 `generateStaticParams`를 사용하는 것이 좋습니다.
 
 <details>
-  <summary>Examples</summary>
+  <summary>예제</summary>
   
 - [Static Export](https://github.com/vercel/next.js/tree/canary/examples/with-static-export)
 
 </details>
 
-`exportPathMap` allows you to specify a mapping of request paths to page destinations, to be used during export. Paths defined in `exportPathMap` will also be available when using [`next dev`](/docs/app/api-reference/next-cli#development).
+`exportPathMap`은 내보내기 중 요청 경로와 대상 페이지 간의 매핑을 지정할 수 있도록 해줍니다. `exportPathMap`에서 정의된 경로는 [`next dev`](/docs/app/api-reference/next-cli#development)를 사용할 때도 사용할 수 있습니다.
 
-Let's start with an example, to create a custom `exportPathMap` for an app with the following pages:
+아래의 페이지에서 `exportPathMap`을 사용하는 예제를 살펴보겠습니다.
 
 - `pages/index.js`
 - `pages/about.js`
 - `pages/post.js`
 
-Open `next.config.js` and add the following `exportPathMap` config:
+`next.config.js`를 열고 다음과 같이 `exportPathMap` 구성을 추가합니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -40,30 +40,30 @@ module.exports = {
 }
 ```
 
-> **Good to know**: the `query` field in `exportPathMap` cannot be used with [automatically statically optimized pages](/docs/pages/building-your-application/rendering/automatic-static-optimization) or [`getStaticProps` pages](/docs/pages/building-your-application/data-fetching/get-static-props) as they are rendered to HTML files at build-time and additional query information cannot be provided during `next export`.
+> **참고**: `exportPathMap`의 `query` 필드는 [automatically statically optimized pages](/docs/pages/building-your-application/rendering/automatic-static-optimization) 또는 [`getStaticProps` pages](/docs/pages/building-your-application/data-fetching/get-static-props)와 함께 사용할 수 없습니다. 이들은 빌드 시 HTML 파일로 렌더링 되며 `next export` 중에 추가적인 쿼리 정보를 제공할 수 없습니다.
 
-The pages will then be exported as HTML files, for example, `/about` will become `/about.html`.
+페이지는 HTML 파일로 내보내집니다. 예를 들어 `/about`은 `/about.html`로 내보내집니다.
 
-`exportPathMap` is an `async` function that receives 2 arguments: the first one is `defaultPathMap`, which is the default map used by Next.js. The second argument is an object with:
+`exportPathMap`은 Next.js에서 사용되는 기본 매핑 정보인 `defaultPathMap`이라는 첫 번째 인수와 아래와 같은 key값을 가진 객체 형태의 두 번째 인수를 받는 `async` 함수입니다.
 
-- `dev` - `true` when `exportPathMap` is being called in development. `false` when running `next export`. In development `exportPathMap` is used to define routes.
-- `dir` - Absolute path to the project directory
-- `outDir` - Absolute path to the `out/` directory ([configurable with `-o`](#customizing-the-output-directory)). When `dev` is `true` the value of `outDir` will be `null`.
-- `distDir` - Absolute path to the `.next/` directory (configurable with the [`distDir`](/docs/pages/api-reference/next-config-js/distDir) config)
-- `buildId` - The generated build id
+- `dev` - `true`일 경우 `exportPathMap`이 개발환경에서 호출됩니다. `false`일 경우 `next export`를 실행할 때 호출되고 개발환경에서는 `exportPathMap`은 경로를 정의하는 데 사용됩니다.
+- `dir` - 프로젝트 디렉토리의 절대 경로입니다.
+- `outDir` - `out/` 디렉토리의 절대 경로입니다([configurable with `-o`](#출력-디렉토리-사용자-정의하기)). `dev`가 `true`일 경우 `outDir`의 값은 `null`입니다.
+- `distDir` - `.next/` 디렉토리의 절대경로입니다. ([`distDir`](/docs/pages/api-reference/next-config-js/distDir) config로 설정할 수 있습니다.)
+- `buildId` - 생성된 빌드 ID입니다.
 
-The returned object is a map of pages where the `key` is the `pathname` and the `value` is an object that accepts the following fields:
+반환된 객체는 페이지의 맵입니다. `key`는 `pathname`이고 `value`는 다음과 같은 필드를 받는 객체입니다.
 
-- `page`: `String` - the page inside the `pages` directory to render
-- `query`: `Object` - the `query` object passed to `getInitialProps` when prerendering. Defaults to `{}`
+- `page`: `String` - `pages` 디렉토리 내부의 렌더링할 페이지입니다.
+- `query`: `Object` - 프리렌더링 시 `getInitialProps`에 전달되는 `query` 객체입니다. 기본값은 `{}`입니다.
 
-> The exported `pathname` can also be a filename (for example, `/readme.md`), but you may need to set the `Content-Type` header to `text/html` when serving its content if it is different than `.html`.
+> 내보낸 `pathname`은 파일명(`readme.md`와 같은)일 수도 있지만 `.html`이 아닌 경우에는 `Content-Type` 헤더를 `text/html`로 설정해야 할 수도 있습니다.
 
-## Adding a trailing slash
+## 후행 슬래시 추가하기
 
-It is possible to configure Next.js to export pages as `index.html` files and require trailing slashes, `/about` becomes `/about/index.html` and is routable via `/about/`. This was the default behavior prior to Next.js 9.
+Next.js 설정을 통해 페이지를 `index.html` 파일로 내보내고 후행 슬래시를 필요로 하는 설정이 가능합니다. `/about`은 `/about/index.html`로 변환되며 `/about/`를 통해 라우팅 됩니다. 이는 Next.js 9 이전의 기본 동작이었습니다.
 
-To switch back and add a trailing slash, open `next.config.js` and enable the `trailingSlash` config:
+후행 슬래시를 추가하려면 `next.config.js`를 열고 `trailingSlash` 설정을 아래와 같이 활성화하세요.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -71,12 +71,12 @@ module.exports = {
 }
 ```
 
-## Customizing the output directory
+## 출력 디렉토리 사용자 정의하기
 
-[`next export`](/docs/pages/building-your-application/deploying/static-exports) will use `out` as the default output directory, you can customize this using the `-o` argument, like so:
+[`next export`](/docs/pages/building-your-application/deploying/static-exports)는 기본 출력 디렉토리로 `out`을 사용합니다. `-o` 인자를 사용해 이를 사용자 정의할 수 있습니다. 예를 들면 다음과 같습니다.
 
 ```bash filename="Terminal"
 next export -o outdir
 ```
 
-> **Warning**: Using `exportPathMap` is deprecated and is overridden by `getStaticPaths` inside `pages`. We don't recommend using them together.
+**주의**: `exportPathMap`은 더 이상 사용되지 않으며 `pages` 디렉토리의 `getStaticPaths`에 의해 무시됩니다. 둘을 함께 사용하는 것을 권장하지 않습니다.

@@ -1,11 +1,11 @@
 ---
 title: ImageResponse
-description: API Reference for the ImageResponse constructor.
+description: ImageResponse 생성자에 대한 API 레퍼런스입니다.
 ---
 
-The `ImageResponse` constructor allows you to generate dynamic images using JSX and CSS. This is useful for generating social media images such as Open Graph images, Twitter cards, and more.
+`ImageResponse` 생성자는 JSX와 CSS를 사용하여 동적으로 이미지를 생성합니다. ImageResponse는 OG(Open Graph) 이미지, 트위터 카드 등과 같은 소셜 미디어 이미지를 생성하는 데에 유용합니다.
 
-The following options are available for `ImageResponse`:
+`ImageResponse`에 사용할 수 있는 옵션은 다음과 같습니다.
 
 ```jsx
 import { ImageResponse } from 'next/server'
@@ -24,7 +24,7 @@ new ImageResponse(
     }[]
     debug?: boolean = false
 
-    // Options that will be passed to the HTTP response
+    // HTTP Response로 전달되는 옵션
     status?: number = 200
     statusText?: string
     headers?: Record<string, string>
@@ -32,13 +32,13 @@ new ImageResponse(
 )
 ```
 
-## Supported CSS Properties
+## 지원되는 CSS 속성
 
-Please refer to [Satori’s documentation](https://github.com/vercel/satori#css) for a list of supported HTML and CSS features.
+지원되는 HTML 및 CSS 기능 목록은 [Satori’s documentation](https://github.com/vercel/satori#css)을 참조하십시오.
 
-## Version History
+## 버전 기록
 
-| Version   | Changes                                             |
-| --------- | --------------------------------------------------- |
-| `v13.3.0` | `ImageReponse` can be imported from `next/server`.  |
-| `v13.0.0` | `ImageReponse` introduced via `@vercel/og` package. |
+| Version   | Changes                                               |
+| --------- | ----------------------------------------------------- |
+| `v13.3.0` | `ImageReponse`를 `next/server`에서 import 할 수 있음. |
+| `v13.0.0` | `ImageReponse`가 `@vercel/og` 패키지를 통해 소개됨.   |
