@@ -5,7 +5,7 @@ description: Next.js 앱에 `redirects`를 추가하세요.
 
 `Redirects`는 들어오는 요청을 다른 대상 경로로 리다이렉트합니다.
 
-`redirects`를 쓰기 위해 `next.config.js` 에서 `redirects` 속성을 사용하세요.
+리다이렉션을 사용하기 위해, `next.config.js` 파일의 `redirects` 키를 사용할 수 있습니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -25,9 +25,9 @@ module.exports = {
 
 - `source`는 들어오는 요청에 대한 경로 패턴입니다.
 - `destination`은 원하는 라우트에 대한 경로입니다.
-- `permanent` `true` 또는 `false` - `true`라면 308 상태 코드를 사용하여 클라이언트 및 검색 엔진이 영구적으로 리다이렉트하도록 하며, `false` 라면 307 상태 코드를 사용하여 임시로 처리하고 캐시되지 않습니다.
+- `permanent` `true` 또는 `false` - `true`라면 308 상태 코드를 사용하여 클라이언트 및 검색 엔진이 영구적으로 리다이렉트하도록 하며, `false` 라면 307 상태 코드를 사용하여 임시로 처리하고 캐시 되지 않습니다.
 
-> **Next.js는 왜 307과 308 상태 코드를 사용하나요?** 전통적으로 302 상태 코드는 임시로 리다이렉트하기 위해 사용되어왔고, 301 상태 코드는 영구적으로 리다이렉트하기 위해 사용되었습니다. 그러나 많은 브라우저들이 원래 메소드와는 상관없이 리다이렉트의 요청 메소드를 `GET`으로 변경했습니다. 예를 들어 브라우저가 `POST /v1/users` 로 요청을 보내고 이에 대한 리스폰스로 302 상태 코드와 `/v2/users` 를 받았을 때, 그 다음 요청은 `POST /v2/users` 대신 `GET/v2/users`일 수 있습니다. Next.js는 요청에 사용된 메소드를 명시적으로 보존하기 위해 307 임시 리다이렉트와 308 영구 리다이렉트 상태 코드를 사용합니다.
+> **Next.js는 왜 307과 308 상태 코드를 사용하나요?** 전통적으로 302 상태 코드는 임시로 리다이렉트하기 위해 사용했고, 301 상태 코드는 영구적으로 리다이렉트하기 위해 사용했습니다. 그러나 많은 브라우저가 원래 메소드와는 상관없이 리다이렉트의 요청 메소드를 `GET`으로 변경했습니다. 예를 들어 브라우저가 `POST /v1/users`로 요청을 보내고 이에 대한 리스폰스로 302 상태 코드와 `/v2/users`를 받았을 때, 그다음 요청은 `POST /v2/users` 대신 `GET/v2/users`일 수 있습니다. Next.js는 요청에 사용된 메소드를 명시적으로 보존하기 위해 307 임시 리다이렉트와 308 영구 리다이렉트 상태 코드를 사용합니다.
 
 - `basePath` : `false` 또는 `undefined` - `false`라면 `basePath`는 일치하는 경우에 포함하지 않으며, 외부로 리다이렉트할때만 사용합니다.
 - `locale`: `false` 또는 `undefined` - 일치하는 경우에 `locale`을 포함하지 않아야 하는지 여부에 대한 것입니다.
@@ -38,8 +38,7 @@ module.exports = {
 
 `Redirects`는 [미들웨어](/docs/app/building-your-application/routing/middleware)가 존재하고 경로와 일치하지 않는 한 클라이언트 측 라우팅을 적용하지 않습니다.
 
-리다이렉트를 적용하면, 요청 안에 있는 모든 쿼리 값은 리다이렉트 대상으로부터 전달됩니다.
-예를 들어, 다음과 같은 리다이렉트 설정을 참고하세요.
+리다이렉트를 적용하면, 요청 안에 있는 모든 쿼리 값은 리다이렉트 대상으로부터 전달됩니다. 예를 들어, 다음과 같은 리다이렉트 설정을 참고하세요.
 
 ```js
 {
@@ -53,7 +52,7 @@ module.exports = {
 
 ## 경로 매칭
 
-경로 일치는 허용됩니다. 예를 들어 `/old-blog/:slug`는 `/old-blog/hello-world`와 일치합니다.(중첩 경로는 없음)
+경로 일치는 허용됩니다. 예를 들어 `/old-blog/:slug`는 `/old-blog/hello-world`와 일치합니다. (중첩 경로는 없음)
 
 ```js filename="next.config.js"
 module.exports = {
@@ -61,7 +60,7 @@ module.exports = {
     return [
       {
         source: '/old-blog/:slug',
-        destination: '/news/:slug', // 일치하는 매개변수는 destination에서 사용할수 있습니다.
+        destination: '/news/:slug', // 일치하는 매개변수는 destination에서 사용할 수 있습니다.
         permanent: true,
       },
     ]
@@ -79,7 +78,7 @@ module.exports = {
     return [
       {
         source: '/blog/:slug*',
-        destination: '/news/:slug*', // 일치하는 매개변수는 destination에서 사용할수 있습니다.
+        destination: '/news/:slug*', // 일치하는 매개변수는 destination에서 사용할 수 있습니다.
         permanent: true,
       },
     ]
@@ -97,7 +96,7 @@ module.exports = {
     return [
       {
         source: '/post/:slug(\\d{1,})',
-        destination: '/news/:slug', // 일치하는 매개변수는 destination에서 사용할수 있습니다.
+        destination: '/news/:slug', // 일치하는 매개변수는 destination에서 사용할 수 있습니다.
         permanent: false,
       },
     ]
@@ -125,7 +124,7 @@ module.exports = {
 
 ## 헤더, 쿠키, 쿼리 매칭
 
-헤더, 쿠키 또는 쿼리 값이 `has` 필드와 일치하거나 `missing` 필드와 일치하지 않는 경우에만 `redirect`를 일치시킵니다. `redirect`를 적용하기 위해서 `source` 와 모든 `has` 항목이 모두 일치해야 하며 모든 `missing` 항목이 일치하지 않아야 합니다.
+헤더, 쿠키 또는 쿼리 값이 `has` 필드와 일치하거나 `missing` 필드와 일치하지 않는 경우에만 `redirect`를 일치시킵니다. `redirect`를 적용하기 위해서 `source`와 모든 `has` 항목이 모두 일치해야 하며 모든 `missing` 항목이 일치하지 않아야 합니다.
 
 `has`와 `missing` 항목은 다음과 같은 필드를 가집니다.
 
