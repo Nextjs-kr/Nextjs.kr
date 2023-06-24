@@ -7,14 +7,12 @@ description: 라우트 그룹을 사용하여 Next.js 애플리케이션을 여�
 
 이를 통해 URL 경로 구조에 영향을 주지 않고 라우트 세그먼트와 프로젝트 파일들을 논리적으로 구성할 수 있습니다.
 
-
 라우팅 그룹은 다음과 같은 경우에 유용하게 사용할 수 있습니다:
 
 - [URL 경로에 영향을 주지 않고 라우트를 그룹화하고 싶을 경우](#organize-routes-without-affecting-the-url-path) 예: 사이트 섹션, 의도, 팀별로 그룹화합니다.
 - [동일한 라우트 세그먼트 수준에서 중첩된 레이아웃을 활성화할 수 있습니다:](/docs/app/building-your-application/routing/pages-and-layouts)
   - [동일한 세그먼트에서 루트 레이아웃을 포함하여 중첩된 레이아웃을 생성할 경우](#creating-multiple-root-layouts)
   - [일부 라우트에 레이아웃을 추가할 경우](#opting-specific-segments-into-a-layout)
-
 
 ## 규약
 
@@ -34,9 +32,7 @@ URL 경로에 영향을 주지 않고 라우트를 구성하려면 관련 라우
   height="930"
 />
 
-
 `(marketing)` 과 `(shop)` 안에 있는 라우트들은 같은 위계를 가지고 있더라도, 폴더 내에 `layout.js` 를 추가하여 그룹에 각자 다른 레이아웃을 만들 수 있습니다.
-
 
 <Image
   alt="다중 레이아웃으로 구성된 라우트 그룹"
@@ -50,7 +46,6 @@ URL 경로에 영향을 주지 않고 라우트를 구성하려면 관련 라우
 
 특정 라우트를 레이아웃으로 설정하려면 새로운 라우트 그룹 (예: `(shop)`)을 만들고, 동일한 레이아웃을 적용할 라우트들을 그룹 안으로 넣습니다 (예: `account` 와 `cart`). 그룹 밖에 있는 라우트들은 그룹 레이아웃이 적용되지 않습니다. (예: `checkout`)
 
-
 <Image
   alt="옵트인(Opt-in) 레이아웃이 적용된 라우트 그룹"
   srcLight="/docs/light/route-group-opt-in-layouts.png"
@@ -61,7 +56,7 @@ URL 경로에 영향을 주지 않고 라우트를 구성하려면 관련 라우
 
 ### 다중 루트 레이아웃 만들기
 
-여러 개의 [루트 레이아웃](/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required)을 만들려면 가장 상위 폴더의 `layout.js` 파일을 삭제하고, 각각의 라우트 그룹에 `layout.js` 파일을 추가합니다. 
+여러 개의 [루트 레이아웃](/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required)을 만들려면 가장 상위 폴더의 `layout.js` 파일을 삭제하고, 각각의 라우트 그룹에 `layout.js` 파일을 추가합니다.
 
 <Image
   alt="다중 루트 레이아웃이 적용된 라우트 그룹"
@@ -80,7 +75,6 @@ URL 경로에 영향을 주지 않고 라우트를 구성하려면 관련 라우
 > - 라우트 그룹의 이름은 그룹화를 통한 정리를 위한 것일뿐, 다른 특별한 의미는 없습니다. 라우트 그룹의 이름이 URL 경로에 영향을 주지 않습니다.
 > - 다른 라우트 그룹을 포함하는 라우트는 다른 라우트와 같은 URL 경로로 귀결되면 **안됩니다.** 예를 들어, 라우트 그룹은 URL 구조에 영향을 주지 않으므로 `(marketing)/about/page.js` 파일과 `(shop)/about/page.js` 파일 모두 `/about` 경로에 귀결되어 에러를 발생시킵니다.
 > - 최상위 폴더에 `layout.js` 파일 없이 루트 레이아웃을 여러 개 사용하는 경우, `app/(marketing)/page.js` 처럼 `page.js` 파일이 라우트 그룹 중 하나에 정의되어야 합니다.
-> - **여러 루트 레이아웃**을 거쳐 탐색하는 경우, 클라이언트 측 탐색과 달리 **전체 페이지 로드**(full page load)가 됩니다. 예를 들어, `app/(shop)/layout.js` 파일을 사용하는 `/cart` 에서부터 `app/(marketing)/layout.js` 파일을 사용하는 `/blog` 으로 이동하면 전체 페이지 로딩이 발생합니다. 이것은 **다중 루트 레이아웃이 있을 때만** 적용됩니다. 
+> - **여러 루트 레이아웃**을 거쳐 탐색하는 경우, 클라이언트 측 탐색과 달리 **전체 페이지 로드**(full page load)가 됩니다. 예를 들어, `app/(shop)/layout.js` 파일을 사용하는 `/cart` 에서부터 `app/(marketing)/layout.js` 파일을 사용하는 `/blog` 으로 이동하면 전체 페이지 로딩이 발생합니다. 이것은 **다중 루트 레이아웃이 있을 때만** 적용됩니다.
 >
-> 
-[def]: #opting-specific-segments-into-a-layout
+> [def]: #opting-specific-segments-into-a-layout
