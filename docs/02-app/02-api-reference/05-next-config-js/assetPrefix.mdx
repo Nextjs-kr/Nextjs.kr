@@ -3,15 +3,12 @@ title: assetPrefix
 description: CDN을 구성하기 위해 assetPrefix 설정 옵션을 사용하는 방법을 배워보세요.
 ---
 
-> **Attention**: [Deploying to Vercel](/docs/pages/building-your-application/deploying) automatically configures a global CDN for your Next.js project.
-> You do not need to manually setup an Asset Prefix.
-
 > **주의**: [Vercel에 배포](/docs/pages/building-your-application/deploying)하면 Next.js 프로젝트에 대한 글로벌 CDN이 자동으로 구성됩니다.
 > Asset Prefix를 직접 설정할 필요가 없습니다.
 
-> **Good to know**: Next.js 9.5+ added support for a customizable [Base Path](/docs/app/api-reference/next-config-js/basePath), which is better
-> suited for hosting your application on a sub-path like `/docs`.
-> We do not suggest you use a custom Asset Prefix for this use case.
+> **알아두면 좋은 점**: Next.js 9.5 부터 사용자가 직접 [Base Path](/docs/app/api-reference/next-config-js/basePath)를 정의할 수 있으며,
+> 이 기능은 `/docs`와 같은 하위 경로에 어플리케이션을 호스팅하는 데 더 적합합니다.
+> 이런 경우라면 Asset Prefix를 직접 설정하는 것을 권장하지 않습니다.
 
 To set up a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network), you can set up an asset prefix and configure your CDN's origin to resolve to the domain that Next.js is hosted on.
 
