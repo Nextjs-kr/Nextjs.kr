@@ -21,7 +21,7 @@ module.exports = {
 }
 ```
 
-`redirects`는 배열을 반환하는 것으로 예상하는 비동기 함수입니다. 이 배열은 `source`, `destination`, `permanent` 속성을 가진 객체들을 가져야 합니다.
+`redirects`는 배열을 반환하는 것으로 예상하는 비동기 함수입니다. 이 배열은 `source`, `destination`, `permanent` 프로퍼티를 가진 객체들을 가져야 합니다.
 
 - `source`는 들어오는 요청에 대한 경로 패턴입니다.
 - `destination`은 원하는 라우트에 대한 경로입니다.
@@ -31,8 +31,8 @@ module.exports = {
 
 - `basePath` : `false` 또는 `undefined` - `false`라면 `basePath`는 일치하는 경우에 포함하지 않으며, 외부로 리다이렉트할때만 사용합니다.
 - `locale`: `false` 또는 `undefined` - 일치하는 경우에 `locale`을 포함하지 않아야 하는지 여부에 대한 것입니다.
-- `has`는 `type`, `key`, `value` 속성과 함께 사용하는 [`has` 객체](#header-cookie-and-query-matching)의 배열입니다.
-- `missing`는 `type`, `key`, `value` 속성과 함께 사용하는 [`missing` 객체](#header-cookie-and-query-matching)의 배열입니다.
+- `has`는 `type`, `key`, `value` 프로퍼티와 함께 사용하는 [`has` 객체](#header-cookie-and-query-matching)의 배열입니다.
+- `missing`는 `type`, `key`, `value` 프로퍼티와 함께 사용하는 [`missing` 객체](#header-cookie-and-query-matching)의 배열입니다.
 
 `Redirects`는 `pages`와 `/public` 파일을 포함하는 파일시스템 이전에 확인합니다.
 
@@ -296,7 +296,7 @@ module.exports = {
 }
 ```
 
-드문 경우에, 오래된 HTTP 클라이언트에 대해 올바른 리다이렉트을 위해 사용자 정의 상태 코드를 지정해야 할 수도 있습니다. 이러한 경우 `permanent` 속성 대신 `statusCode` 속성을 사용할 수 있지만 둘 다 사용할 수는 없습니다. IE11 호환성을 위해서 308 상태 코드에 대해 `Refresh` 헤더가 추가됩니다.
+드문 경우에, 오래된 HTTP 클라이언트에 대해 올바른 리다이렉트을 위해 사용자 정의 상태 코드를 지정해야 할 수도 있습니다. 이러한 경우 `permanent` 프로퍼티 대신 `statusCode` 프로퍼티를 사용할 수 있지만 둘 다 사용할 수는 없습니다. IE11 호환성을 위해서 308 상태 코드에 대해 `Refresh` 헤더가 추가됩니다.
 
 ## Other Redirects
 
