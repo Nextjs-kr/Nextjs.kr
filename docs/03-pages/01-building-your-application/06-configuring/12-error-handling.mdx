@@ -9,7 +9,7 @@ description: Next.js 앱에서 에러 처리하기.
 
 Next.js 애플리케이션의 개발 단계에서 런타임 오류가 발생하면, **오버레이**를 만나게 될 것입니다. 이는 웹페이지를 덮는 모달입니다. 오직 `next dev`를 통해 개발 서버가 실행될 때 (`pnpm dev`, `npm run dev` 또는 `yarn dev` 사용 시)에만 보여지며, 프로덕션(실제 서비스)에서는 보여지지 않습니다. 오류를 수정하면 오버레이는 자동으로 사라집니다.
 
-다음은 오버레이의 예시입니다:
+다음은 오버레이의 예시입니다.
 
 ![Example of an overlay when in development mode](https://assets.vercel.com/image/upload/v1645118290/docs-assets/static/docs/error-handling/overlay.png)
 
@@ -25,13 +25,13 @@ Next.js는 기본적으로 애플리케이션에서 발생하는 서버 사이�
 
 리액트 [Error Boundaries](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)는 애플리케이션의 다른 부분이 계속 작동할 수 있도록 클라이언트에서 자바스크립트 오류를 처리하는 유연한 방법입니다. 페이지가 충돌하는 것을 방지할 뿐만 아니라 사용자가 정의한 대체 컴포넌트를 제공하고 심지어 오류 정보를 기록할 수 있습니다.
 
-Next.js 애플리케이션에서 Error Boundaries를 사용하려면, `ErrorBoundary`라는 클래스 컴포넌트를 생성하고 `pages/_app.js` 파일의 `Component` 프로퍼티를 감싸야 합니다. 이 컴포넌트는 다음을 담당합니다:
+Next.js 애플리케이션에서 Error Boundaries를 사용하려면, `ErrorBoundary`라는 클래스 컴포넌트를 생성하고 `pages/_app.js` 파일의 `Component` 프로퍼티를 감싸야 합니다. 이 컴포넌트는 다음을 담당합니다.
 
 - 오류가 발생한 후 대체 UI를 렌더링
 - 어플리케이션의 상태를 재설정하는 방법을 제공
 - 오류 정보 로그
 
-`React.Component`를 확장하여 `ErrorBoundary` 클래스 컴포넌트를 생성할 수 있습니다. 예를 들어:
+`React.Component`를 확장하여 `ErrorBoundary` 클래스 컴포넌트를 생성할 수 있습니다. 예를 들어,
 
 ```jsx
 class ErrorBoundary extends React.Component {
