@@ -30,7 +30,7 @@ module.exports = {
 > **Next.js는 왜 307과 308 상태 코드를 사용하나요?** 전통적으로 302 상태 코드는 임시로 리다이렉트하기 위해 사용했고, 301 상태 코드는 영구적으로 리다이렉트하기 위해 사용했습니다. 그러나 많은 브라우저가 원래 메소드와는 상관없이 리다이렉트의 요청 메소드를 `GET`으로 변경했습니다. 예를 들어 브라우저가 `POST /v1/users`로 요청을 보내고 이에 대한 리스폰스로 302 상태 코드와 `/v2/users`를 받았을 때, 그다음 요청은 `POST /v2/users` 대신 `GET/v2/users`일 수 있습니다. Next.js는 요청에 사용된 메소드를 명시적으로 보존하기 위해 307 임시 리다이렉트와 308 영구 리다이렉트 상태 코드를 사용합니다.
 
 - `basePath` : `false` 또는 `undefined` - `false`라면 `basePath`는 일치하는 경우에 포함하지 않으며, 외부로 리다이렉트할때만 사용합니다.
-- `locale`: `false` 또는 `undefined` - 일치하는 경우에 `locale`을 포함하지 않아야 하는지 여부에 대한 것입니다.
+- `locale`: `false` 또는 `undefined` - 일치하는 경우에 `locale`을 포함하지 않아야 하는지에 대한 여부입니다.
 - `has`는 `type`, `key`, `value` 프로퍼티와 함께 사용하는 [`has` 객체](#header-cookie-and-query-matching)의 배열입니다.
 - `missing`는 `type`, `key`, `value` 프로퍼티와 함께 사용하는 [`missing` 객체](#header-cookie-and-query-matching)의 배열입니다.
 
@@ -60,7 +60,7 @@ module.exports = {
     return [
       {
         source: '/old-blog/:slug',
-        destination: '/news/:slug', // 일치하는 매개변수는 destination에서 사용할 수 있습니다.
+        destination: '/news/:slug', // 일치하는 파라미터는 destination에서 사용할 수 있습니다.
         permanent: true,
       },
     ]
@@ -78,7 +78,7 @@ module.exports = {
     return [
       {
         source: '/blog/:slug*',
-        destination: '/news/:slug*', // 일치하는 매개변수는 destination에서 사용할 수 있습니다.
+        destination: '/news/:slug*', // 일치하는 파라미터는 destination에서 사용할 수 있습니다.
         permanent: true,
       },
     ]
@@ -96,7 +96,7 @@ module.exports = {
     return [
       {
         source: '/post/:slug(\\d{1,})',
-        destination: '/news/:slug', // 일치하는 매개변수는 destination에서 사용할 수 있습니다.
+        destination: '/news/:slug', // 일치하는 파라미터는 destination에서 사용할 수 있습니다.
         permanent: false,
       },
     ]
