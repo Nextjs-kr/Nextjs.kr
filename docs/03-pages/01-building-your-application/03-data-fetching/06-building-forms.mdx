@@ -1,20 +1,20 @@
 ---
-title: Building Forms
-description: Learn how to create forms with Next.js, from the form HTML element to advanced concepts with React.
+title: 폼 만들기
+description: HTML 엘리먼트에서 React의 고급 개념에 이르기까지 Next.js로 폼을 만드는 방법에 대해 배웁니다.
 ---
 
-A web form has a **client-server** relationship. They are used to send data handled by a web server for processing and storage. The form itself is the client, and the server is any storage mechanism that can be used to store, retrieve and send data when needed.
+웹 양식에는 **클라이언트-서버** 관계가 있습니다. 처리 및 저장을 위해 웹 서버에서 처리하는 데이터를 보내는 데 사용됩니다. 폼 자체가 클라이언트이고 서버는 필요할 때 데이터를 저장, 검색 및 전송하는 데 사용할 수 있는 스토리지 매커니즘입니다.
 
-This guide will teach you how to create a web form with Next.js.
+이 가이드는 Next.js로 웹 폼 만드는 방법을 알려줍니다.
 
-## Part 1: HTML Form
+## Part 1: HTML 폼
 
-HTML forms are built using the `<form>` tag. It takes a set of attributes and fields to structure the form for features like text fields, checkboxes, dropdown menus, buttons, radio buttons, etc.
+HTML 폼은 `<form>` 태그를 이용해 작성됩니다. 텍스트 필드, 체크박스, 드롭다운 메뉴, 버튼, 라디오 버튼 등과 같은 기능에 대한 폼을 구성하기 위해 어트리뷰트와 필드의 집합이 필요합니다.
 
-Here's the syntax of an HTML form:
+다음은 HTML 폼 문법입니다.
 
 ```html
-<!-- Basic HTML Form -->
+<!-- 기본 HTML 폼 -->
 <form action="/send-data-here" method="post">
   <label for="first">First name:</label>
   <input type="text" id="first" name="first" />
@@ -24,43 +24,43 @@ Here's the syntax of an HTML form:
 </form>
 ```
 
-The front-end looks like this:
+프론트엔드는 다음과 같이 보입니다.
 
-![html forms](https://assets.vercel.com/image/upload/dpr_auto,q_auto,f_auto/nextjs/guides/building-forms/html-forms.png)
+![html 폼](https://assets.vercel.com/image/upload/dpr_auto,q_auto,f_auto/nextjs/guides/building-forms/html-forms.png)
 
-The HTML `<form>` tag acts as a container for different `<input>` elements like `text` field and submit `button`. Let's study each of these elements:
+HTML `<form>` 태그는 `text` 필드와 제출 `button`과 같은 `<input>` 엘리먼트에 대한 컨테이너 역할을 합니다. 이제 각 요소를 살펴보겠습니다.
 
-- `action`: An attribute that specifies where the form data is sent when the form is submitted. It's generally a URL (an absolute URL or a relative URL).
-- `method`: Specifies the [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods), i.e., `GET` or `POST` used to send data while submitting the form.
-- `<label>`: An element that defines the label for other form elements. Labels aid accessibility, especially for screen readers.
-- `<input>`: The form element that is widely used to structure the form fields. It depends significantly on the value of the `type` attribute. Input types can be `text`, `checkbox`, `email`, `radio`, and more.
-- `<button>`: Represents a clickable button that's used to submit the form data.
+- `action`: 폼이 제출될 때 폼 데이터가 전송되는 위치를 지정하는 어트리뷰트입니다. 일반적으로 URL(절대 URL 또는 상대 URL)로 지정됩니다.
+--`method`: 폼을 제출하는 동안 데이터 전송에 사용되는 [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)를 지정합니다. 일반적으로 `GET` 또는 `POST`를 사용합니다.
+- `<label>`: 다른 폼 엘리먼트들에 대한 레이블을 정의하는 엘리먼트입니다. 레이블은 특히 화면 리더의 접근성을 지원합니다.
+- `<input>`: 폼 필드들을 구성하는 데 널리 사용되는 폼 엘리먼트입니다. `type` 어트리뷰트 값에 따라 크게 달라집니다. 입력 유형은 `text`, `checkbox`, `email`, `radio` 등이 될 수 있습니다.
+- `<button>`: 폼 데이터를 제출하는 데 사용되는 클릭 가능한 버튼을 나타냅니다.
 
-### Form Validation
+### 폼 유효성 검사
 
-A process that checks if the information provided by a user is correct or not. Form validation also ensures that the provided information is in the correct format (e.g. there's an @ in the email field). These are of two types:
+사용자가 제공한 정보가 정확한지 여부를 확인하는 과정입니다. 또한 폼 유효성 검사는 제공된 정보가 올바른 형식인지(이메일 필드에 @가 있는지) 확인합니다. 아래에 두 가지 유형이 있습니다.
 
-- **Client-side**: Validation is done in the browser
-- **Server-side**: Validation is done on the server
+- **클라이언트 사이드**: 유효성 검사가 브라우저에서 수행됩니다.
+- **서버 사이드**: 유효성 검사가 서버에서 수행됩니다.
 
-Though both of these types are equally important, this guide will focus on client-side validation only.
+이 두 유형 모두 중요하지만, 이 가이드에서는 클라이언트 측 유효성 검사에만 중점을 둡니다.
 
-Client-side validation is further categorized as:
+클라이언트 측 유효성 검사는 아래와 같이 추가로 분류됩니다.
 
-- **Built-in**: Uses HTML-based attributes like `required`, `type`, `minLength`, `maxLength`, `pattern`, etc.
-- **JavaScript-based**: Validation that's coded with JavaScript.
+- **내장형**: `required`, `type`, `minLength`, `maxLength`, `pattern` 등과 같은 HTML 기반 어트리뷰트를 사용합니다.
+- **JavaScript 기반**: JavaScript로 코딩된 유효성 검사입니다.
 
-### Built-in Form Validation Using `required`, `type`, `minLength`, `maxLength`
+### `required`, `type`, `minLength`, `maxLength`를 사용한 내장 폼 유효성 검사
 
-- `required`: Specifies which fields must be filled before submitting the form.
-- `type`: Specifies the data's type (i.e a number, email address, string, etc).
-- `minLength`: Specifies minimum length for the text data string.
-- `maxLength`: Specifies maximum length for the text data string.
+- `required`: 폼을 제출하기 전 반드시 채워야 하는 필드를 지정합니다
+- `type`: 데이터 유형(숫자, 이메일 주소, 문자열 등)을 지정합니다.
+- `minLength`: 텍스트 데이터 문자열의 최소 길이를 지정합니다.
+- `maxLength`: 텍스트 데이터 문자열의 최대 길이를 지정합니다.
 
-So, a form using this attributes may look like:
+따라서 이러한 어트리뷰트들을 사용하는 폼은 다음과 같습니다.
 
 ```html
-<!-- HTML Form with Built-in Validation -->
+<!-- 유효성 검사가 내장된 HTML 폼 -->
 <form action="/send-data-here" method="post">
   <label for="roll">Roll Number</label>
   <input
@@ -77,15 +77,15 @@ So, a form using this attributes may look like:
 </form>
 ```
 
-With these validation checks in place, when a user tries to submit an empty field for Name, it gives an error that pops right in the form field. Similarly, a roll number can only be entered if it's 10-20 characters long.
+이러한 유효성 검사로 사용자가 이름에 대해 빈 필드를 제출하려고 하면 바로 폼 필드에 오류가 표시됩니다. 마찬가지로, Roll 번호는 10~20자 사이의 길이로만 입력할 수 있습니다.
 
-![form validation](https://assets.vercel.com/image/upload/dpr_auto,q_auto,f_auto/nextjs/guides/building-forms/form-validation.jpg)
+![폼 유효성 검사](https://assets.vercel.com/image/upload/dpr_auto,q_auto,f_auto/nextjs/guides/building-forms/form-validation.jpg)
 
-### JavaScript-based Form Validation
+### JavaScript 기반 폼 유효성 검사
 
-Form Validation is important to ensure that a user has submitted the correct data, in a correct format. JavaScript offers an additional level of validation along with HTML native form attributes on the client side. Developers generally prefer validating form data through JavaScript because its data processing is faster when compared to server-side validation, however front-end validation may be less secure in some scenarios as a malicious user could always send malformed data to your server.
+폼 유효성 검사는 사용자가 올바른 형식으로 데이터를 제출했는지 확인하는 데 중요합니다. JavaScript는 클라이언트 측에서 HTML 기본 폼 어트리뷰트와 함께 추가적인 유효성 검사를 제공합니다. 개발자는 일반적으로 JavaScript를 이용한 폼 데이터 유효성 검사를 선호합니다. 그 이유는 서버 측 유효성 검사보다 데이터 처리 속도가 더 빠르기 때문입니다. 그러나 악의적인 사용자가 항상 서버에 잘못된 형식의 데이터를 보낼 수 있으므로 일부 상황에서는 프론트엔드 유효성 검사가 보안에 취약할 수 있습니다.
 
-The following example shows using JavaScript to validate a form:
+아래는 JavaScript를 사용하여 폼 유효성 검사를 하는 예시입니다.
 
 ```html
 <form onsubmit="validateFormWithJS()">
@@ -116,15 +116,15 @@ The following example shows using JavaScript to validate a form:
 </script>
 ```
 
-The HTML [script](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) tag is used to embed any client-side JavaScript. It can either contain inline scripting statements (as shown in the example above) or point to an external script file via the `src` attribute.
-This example validates the name and roll number of a user. The `validateFormWithJS()` function does not allow an empty name field, and the roll number must be at least three digits long. The validation is performed when you hit the Submit button. You are not redirected to the next page until the given values are correct.
+HTML [script](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) 태그는 클라이언트 측 JavaScript를 포함하기 위해 사용됩니다. `<script>` 태그는 인라인 스크립트 문장(위의 예시처럼)을 포함하거나 `src` 속성을 통해 외부 스크립트 파일을 포함할 수 있습니다.
+위 예시는 사용자의 이름과 roll 번호를 확인합니다. 'validateFormWithJS()' 함수는 이름 필드가 비어 있지 않도록 하며 롤 번호는 최소 세 자리 이상이어야 합니다. 유효성 검사는 제출 버튼을 누르면 수행됩니다. 주어진 값이 올바른 경우에만 다음 페이지로 리디렉션 됩니다.
 
-![js-validation](https://assets.vercel.com/image/upload/dpr_auto,q_auto,f_auto/nextjs/guides/building-forms/js-validation.jpg)
+![js 유효성 검사](https://assets.vercel.com/image/upload/dpr_auto,q_auto,f_auto/nextjs/guides/building-forms/js-validation.jpg)
 
-#### Form Validation Using Regular Expressions
+#### 정규 표현식을 사용한 폼 유효성 검사
 
-JavaScript validation with Regular Expressions uses the `pattern` HTML attribute. A regular expression (commonly known as RegEx) is an object that describes a pattern of characters. You can only apply the `pattern` attribute to the `<input>` element. This way, you can validate the input value using Regular Expressions (RegEx) by defining your own rules. Once again, if the value does not match the defined pattern, the input will give an error.
-The below example shows using the `pattern` attribute on an `input` element:
+정규 표현식을 사용한 JavaScript 유효성 검사는 `pattern` HTML 어트리뷰트를 사용합니다. 정규 표현식(RegEx)은 문자 패턴을 설명하는 개체입니다. `pattern` 어트리뷰트는 `<input>` 엘리먼트에만 적용할 수 있습니다. 이렇게 직접 규칙을 정의하여 정규 표현식(RegEx)을 이용해 입력값의 유효성을 검사할 수 있습니다. 값이 정의된 패턴과 일치하지 않으면 입력은 오류를 표시할 것입니다. 
+아래는 `input` 엘리먼트에 `pattern` 어트리뷰트를 사용한 예시입니다.
 
 ```html
 <form action="/action_page.php">
@@ -141,63 +141,63 @@ The below example shows using the `pattern` attribute on an `input` element:
 </form>
 ```
 
-The password form field must only contain digits (0 to 9), lowercase alphabets (a to z) and it must be no more than 15 characters in length. No other characters (#,$,&, etc.) are allowed. The rule in RegEx is written as `[a-z0-9]{1,15}`.
+비밀번호 폼 필드는 숫자(0~9), 소문자 알파벳(a~z)만 포함해야 하며 길이는 15자 이하여야 합니다. 다른 문자(#,$,& 등)는 사용할 수 없습니다. RegEx의 규칙은 `[a-z0-9]{1,15}`로 작성됩니다.
 
-![form-validate-regex](https://assets.vercel.com/image/upload/dpr_auto,q_auto,f_auto/nextjs/guides/building-forms/form-validate-regex.jpg)
+![정규 표현식을 사용한 폼 유효성 검사](https://assets.vercel.com/image/upload/dpr_auto,q_auto,f_auto/nextjs/guides/building-forms/form-validate-regex.jpg)
 
-> To learn more about HTML forms, check out the [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Learn/Forms).
+> HTML 폼에 대해 더 알아보려면 [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Learn/Forms)를 확인해보세요.
 
-## Part 2: Project Setup
+## Part 2: 프로젝트 설정
 
-In the following section you will be creating forms in React using Next.js.
+다음 섹션에서는 Next.js를 사용하여 React에서 폼을 생성합니다.
 
-Create a new Next.js app. You can use the [create-next-app](/docs/pages/api-reference/create-next-app) for a quick start. In your command line terminal, run the following:
+새로운 Next.js 앱을 만듭니다. 빠른 시작을 위해서 [create-next-app](/docs/pages/api-reference/create-next-app)을 사용할 수 있습니다. 터미널에서 다음 명령을 실행하세요.
 
 ```
 npx create-next-app
 ```
 
-Answer the questions to create your project, and give it a name, this example uses [`next-forms`](https://github.com/vercel/next.js/tree/canary/examples/next-forms). Next `cd` into this directory, and run `npm run dev` or `yarn dev` command to start the development server.
+프로젝트를 생성하기 위해 질문에 답하고 [`next-forms`](https://github.com/vercel/next.js/tree/canary/examples/next-forms)와 같은 이름을 지정하세요. 그런 다음 `cd` 로 디렉토리로 이동하여 `npm run dev` 이나 `yarn dev` 명령을 실행하여 개발 서버를 시작하세요.
 
-Open the URL printed in the terminal to ensure that your app is running successfully.
+터미널에 출력된 URL을 열어 앱이 성공적으로 실행되는지 확인하세요.
 
-## Part 3: Setting up a Next.js Form API Route
+## Part 3: Next.js 폼 API 라우트 설정
 
-Both the client and the server will be built using Next.js. For the server part, create an API endpoint where you will send the form data.
+클라이언트와 서버는 모두 Next.js를 사용하여 구축됩니다. 서버 파트에서는 폼 데이터를 보낼 API 엔드포인트를 만듭니다.
 
-Next.js offers a file-based system for routing that's built on the [concept of pages](/docs/pages/building-your-application/routing/pages-and-layouts). Any file inside the folder `pages/api` is mapped to `/api/*` and will be treated as an API endpoint instead of a page. This [API endpoint](/docs/pages/building-your-application/routing/api-routes) is going to be server-side only.
+Next.js는 [페이지 개념](/docs/pages/building-your-application/routing/pages-and-layouts)에 기반한 파일 기반 라우팅 시스템을 제공합니다. `pages/api` 폴더 안의 모든 파일은 `/api/*`와 매핑되어 페이지 대신 API 엔드포인트로 처리됩니다. 이 [API 엔드포인트](/docs/pages/building-your-application/routing/api-routes)는 서버 측에서만 작동합니다.
 
-Go to `pages/api`, create a file called `form.js` and paste this code written in Node.js:
+`pages/api`로 이동하여 `form.js` 파일을 만들고 Node.js로 작성된 아래 코드를 붙여 넣으세요.
 
 ```js
 export default function handler(req, res) {
-  // Get data submitted in request's body.
+  // body 요청에서 제출된 데이터 가져옵니다.
   const body = req.body
 
-  // Optional logging to see the responses
-  // in the command line where next.js app is running.
+  // 응답 확인을 위해 선택적으로 로깅 합니다.
+  // next.js 앱이 실행되는 명령줄에서 로그를 확인할 수 있습니다.
   console.log('body: ', body)
 
-  // Guard clause checks for first and last name,
-  // and returns early if they are not found
+  // 가드 절은 이름과 성이 있는지 확인하고
+  // 해당 정보가 없는 경우 리턴합니다.
   if (!body.first || !body.last) {
-    // Sends a HTTP bad request error code
+    // 잘못된 HTTP 요청에 오류 코드를 보냅니다.
     return res.status(400).json({ data: 'First or last name not found' })
   }
 
-  // Found the name.
-  // Sends a HTTP success code
+  // 이름을 찾고 
+  // HTTP 성공 코드를 보냅니다.
   res.status(200).json({ data: `${body.first} ${body.last}` })
 }
 ```
 
-This form `handler` function will receive the request `req` from the client (i.e. submitted form data). And in return, it'll send a response `res` as JSON that will have both the first and the last name. You can access this API endpoint at `http://localhost:3000/api/form` or replace the localhost URL with an actual Vercel deployment when you deploy.
+위 폼에서 `handler` 함수는 클라이언트로부터 `req` 요청(제출된 폼 데이터)을 받습니다. 그리고 응답으로 JSON 형식의 이름과 성을 모두 포함하는 응답 `res`를 보냅니다. `http://localhost:3000/api/form` API 엔드포인트에 접근하거나 배포 시 localhost URL을 실제 Vercel 배포로 바꿀 수 있습니다.
 
-> Moreover, you can also attach this API to a database like MongoDB or Google Sheets. This way, your submitted form data will be securely stored for later use. For this guide, no database is used. Instead, the same data is returned to the user to demo how it's done.
+> 또한 위 API를 MongoDB 또는 Google 스프레드시트와 같은 데이터베이스에 연결할 수 있습니다. 이렇게 하면 제출된 폼 데이터는 이후에 사용할 수 있도록 안전하게 저장됩니다. 이 가이드에서는 데이터베이스를 사용하지 않습니다. 대신 동일한 데이터가 사용자에게 반환되어 사용 방법을 시연합니다.
 
-### Form Submission without JavaScript
+### JavaScript 없이 폼 제출
 
-You can now use `/api/form` relative endpoint inside the `action` attribute of the form. You are sending form data to the server when the form is submitted via `POST` HTTP method (which is used to send data).
+이제 `/api/form` 상대 엔드포인트를 폼의 `action` 어트리뷰트 내에서 사용할 수 있습니다. 폼을 제출하면 데이터를 보내는데 사용되는 `POST` HTTP 메서드를 통해 폼 데이터를 서버로 보냅니다.
 
 ```html
 <form action="/api/form" method="post">
@@ -209,15 +209,15 @@ You can now use `/api/form` relative endpoint inside the `action` attribute of t
 </form>
 ```
 
-If you submit this form, it will submit the data to the forms API endpoint `/api/form`. The server then responds, generally handling the data and loading the URL defined by the action attribute, causing a new page load. So in this case you'll be redirected to `http://localhost:3000/api/form` with the following response from the server.
+위 폼을 제출하면 폼 API 엔드포인트 `/api/form`에 데이터가 제출됩니다. 그러면 서버가 응답하여 일반적으로 데이터를 처리하고 action 어트리뷰트에 정의된 URL을 로드하여 새 페이지를 로드합니다. 따라서 이 경우에는 서버로부터의 다음 응답과 함께 `http://localhost:3000/api/form`으로 리디렉션됩니다.
 
-![form-no-js](https://assets.vercel.com/image/upload/dpr_auto,q_auto,f_auto/nextjs/guides/building-forms/form-no-js.jpg)
+![js가 비활성화된 폼](https://assets.vercel.com/image/upload/dpr_auto,q_auto,f_auto/nextjs/guides/building-forms/form-no-js.jpg)
 
-## Part 4: Configuring Forms in Next.js
+## Part 4: Next.js에서 폼 구성
 
-You have created a Next.js API Route for form submission. Now it's time to configure the client (the form itself) inside Next.js using React. The first step will be extending your knowledge of HTML forms and converting it into React (using [JSX](https://react.dev/learn/writing-markup-with-jsx)).
+폼 제출을 위해 Next.js API 라우터를 만들었습니다. 이제 React를 사용하여 Next.js 내에서 클라이언트(폼 자체)를 구성할 차례입니다. 첫 번째 단계는 HTML 폼에 대한 지식을 확장하고 [JSX](https://react.dev/learn/writing-markup-with-jsx)를 사용한 React로 변환하는 것입니다.
 
-Here's the same form in a [React function component](https://react.dev/reference/react/Component) written using [JSX](https://react.dev/learn/writing-markup-with-jsx).
+다음은 [JSX](https://react.dev/learn/writing-markup-with-jsx)를 사용하여 작성된 [React 함수형 컴포넌트](https://react.dev/reference/react/Component)의 동일한 폼입니다.
 
 ```js
 export default function Form() {
@@ -235,36 +235,36 @@ export default function Form() {
 }
 ```
 
-Here's what changed:
+변경사항은 다음과 같습니다.
 
-- The `for` attribute is changed to `htmlFor`. (Since `for` is a keyword associated with the "for" loop in JavaScript, React elements use `htmlFor` instead.)
-- The `action` attribute now has a relative URL which is the form API endpoint.
+- `for` 어트리뷰트가 `htmlFor`로 변경됩니다. (`for` 키워드는 JavaScript의 "for" 루프와 관련된 키워드이므로 React 엘리먼트는 `htmlFor`을 대신 사용합니다)
+- 이제 `action` 어트리뷰트에는 폼 API 엔드포인트인 상대 URL이 있습니다.
 
-This completes the basic structure of your Next.js-based form.
+이로써 Next.js 기반 폼의 기본 구조가 완성됩니다.
 
-> You can view the entire source code of [next-forms](https://github.com/vercel/next.js/tree/canary/examples/next-forms) example repo that we're creating here as a working example. Feel free to clone it and start right away. This demo is built with create-next-app, and you can preview the basic form CSS styles inside `/styles/global.css` file.
+> 위 [next-forms](https://github.com/vercel/next.js/tree/canary/examples/next-forms) 예제의 전체 소스 코드는 해당 레포지토리에서 볼 수 있습니다. 자유롭게 복제하고 시작하세요. 이 데모는 create-next-app로 제작되었으며 `/styles/global.css` 파일 내에서 기본 폼 CSS 스타일을 미리 볼 수 있습니다.
 
-![forms with nextjs](https://assets.vercel.com/image/upload/dpr_auto,q_auto,f_auto/nextjs/guides/building-forms/forms-with-nextjs.png)
+![nextjs 폼](https://assets.vercel.com/image/upload/dpr_auto,q_auto,f_auto/nextjs/guides/building-forms/forms-with-nextjs.png)
 
-## Part 5: Form Submission without JavaScript
+## Part 5: JavaScript 없이 양식 제출
 
-JavaScript brings interactivity to our web applications, but sometimes you need to control the JavaScript bundle from being too large, or your sites visitors might have JavaScript disabled.
+JavaScript는 웹 애플리케이션에서 상호 작용을 제공하지만, 가끔 JavaScript 번들의 크기가 너무 커지지 않도록 제어해야 하거나 사이트 방문자가 JavaScript를 비활성화할 수 있습니다.
 
-There are several reasons why users disable JavaScript:
+아래는 사용자가 JavaScript를 비활성화하는 몇 가지 이유가 입니다.
 
-- Addressing bandwidth constraints
-- Increasing device (phone or laptop) battery life
-- For privacy so they won’t be tracked with analytical scripts
+- 대역폭 제약을 다루기 위해
+- 장치 (휴대전화 또는 노트북) 배터리 수명을 늘리기 위해
+- 분석 스크립트를 추적하지 않음으로써 개인 정보를 보호하기 위해
 
-Regardless of the reason, disabling JavaScript will impact site functionality partially, if not completely.
+어떤 이유에서든 JavaScript를 비활성화하면 사이트 기능에 부분적으로 영향을 줍니다.
 
-Next open the `next-forms` directory. Inside the `/pages` directory, create a file `no-js-form.js`.
+다음으로 `next-forms` 디렉토리를 엽니다. `/pages` 디렉토리 안에서 `no-js-form.js` 파일을 생성하세요.
 
-> **Quick Tip**: In Next.js, a page is a React Component exported from a `.js`, `.jsx`, `.ts`, or `.tsx` file in the Pages Router. Each page is associated with a route based on its file name.
+> **빠른 팁**: Next.js에서 페이지는 Pages 라우터의 `.js`, `.jsx`, `.ts`, `.tsx` 파일에서 내보낸 React 컴포넌트입니다. 각 페이지는 파일 이름을 기반으로 라우터와 연결됩니다.
 >
-> Example: If you create `pages/no-js-form.js`, it will be accessible at `your-domain.tld/no-js-form`.
+> 예시: `pages/no-js-form.js`를 만들려면 `your-domain.tld/no-js-form`에서 액세스할 수 있습니다.
 
-Let's use the same code from above:
+아래는 위와 동일한 코드입니다.
 
 ```js
 export default function PageWithoutJSbasedForm() {
@@ -282,61 +282,63 @@ export default function PageWithoutJSbasedForm() {
 }
 ```
 
-With JavaScript disabled, when you hit the Submit button, an event is triggered, which collects the form data and sends it to our forms API endpoint as defined in the `action` attribute and using `POST` HTTP `method`. You'll be redirected to the `/api/form` endpoint since that's how form `action` works.
+JavaScript가 비활성화된 상태에서 제출 버튼을 누르면 이벤트가 트리거되어 폼 데이터를 수집하고 `action` 어트리뷰트에 정의된 대로 `POST` HTTP `method` 사용하여 폼 API 엔드포인트로 보냅니다. 폼의 `action`이 작동하는 방식으로 `/api/form` 엔드포인트로 리디렉션됩니다.
 
-The form data will be submitted on the server as a request `req` to the form handler function written above. It will process the data and return a JSON string as a response `res` with your submitted name included.
+폼 데이터는 위에서 작성한 폼 핸들러 함수로 서버에 `req` 요청으로 제출됩니다. 이후 데이터를 처리하고 제출한 이름이 포함된 `res` 응답으로 JSON 문자열을 반환합니다.
 
-> To improve the experience here, as a response you can redirect the user to a page and thank them for submitting the form.
+> 여기에서 사용자 경험을 향상시키기 위해서 응답으로 사용자를 페이지로 리디렉션하고, 폼 제출에 대해 감사의 인사를 할 수 있습니다.
 
-## Part 6: Form Submission with JavaScript Enabled
+## Part 6: JavaScript가 활성화된 폼 제출
 
-Inside `/pages`, you'll create another file called `js-form.js`. This will create a `/js-form` page on your Next.js app.
+`/pages` 안에 `js-form.js`라는 또 다른 파일을 만듭니다. 그러면 Next.js 앱에 `/js-form` 페이지가 생성됩니다.
 
-Now, as soon as the form is submitted, we prevent the form's default behavior of reloading the page. We'll take the form data, convert it to JSON string, and send it to our server, the API endpoint. Finally, our server will respond with the name submitted. All of this with a basic JavaScript `handleSubmit()` function.
+이제 폼이 제출되는 즉시 페이지를 다시 로딩하는 폼의 기본 동작을 방지합니다. 폼 데이터를 가져와서 JSON 문자열로 변환하고 서버인 API 엔드포인트로 보냅니다. 마지막으로 서버는 제출된 이름으로 응답합니다. 이 모든 것이 기본 JavaScript `handleSubmit()` 함수로 이루어집니다.
 
-Here's what this function looks like. It's well documented for you to understand each step:
+이 함수는 아래와 같습니다. 각 단계를 이해할 수 있도록 잘 문서화 되어 있습니다.
 
 ```js
 export default function PageWithJSbasedForm() {
-  // Handles the submit event on form submit.
+  // 폼 제출 시 제출 이벤트를 처리합니다.
   const handleSubmit = async (event) => {
-    // Stop the form from submitting and refreshing the page.
+    // 폼이 제출되고 페이지를 새로고침 하는 것을 막습니다.
     event.preventDefault()
 
-    // Get data from the form.
+    // 폼에서 데이터 가져옵니다.
     const data = {
       first: event.target.first.value,
       last: event.target.last.value,
     }
 
-    // Send the data to the server in JSON format.
+    // JSON 형식으로 서버에 데이터 전송합니다.
     const JSONdata = JSON.stringify(data)
 
-    // API endpoint where we send form data.
+    // 폼 데이터를 보내는 api 엔드 포인트입니다.
     const endpoint = '/api/form'
 
-    // Form the request for sending data to the server.
+    // 서버에 데이터를 보내기 위한 요청을 작성합니다.
     const options = {
-      // The method is POST because we are sending data.
+      // 데이터를 전송하기 위한 POST 메서드를 사용합니다.
       method: 'POST',
-      // Tell the server we're sending JSON.
+      // 서버에 JSON을 보내고 있다고 알립니다.
       headers: {
         'Content-Type': 'application/json',
       },
-      // Body of the request is the JSON data we created above.
+      // 요청 body는 위에서 만든 JSON 데이터입니다.
       body: JSONdata,
     }
 
-    // Send the form data to our forms API on Vercel and get a response.
+    // 폼 데이터를 Vercel의 폼 API로 보내고 응답을 받습니다.
+
+
     const response = await fetch(endpoint, options)
 
-    // Get the response data from server as JSON.
-    // If server returns the name submitted, that means the form works.
+    // JSON으로 서버로부터 응답 데이터를 가져옵니다.  
+    // 서버가 제출된 이름을 반환하면 폼이 작동한다는 의미입니다.
     const result = await response.json()
     alert(`Is this your full name: ${result.data}`)
   }
   return (
-    // We pass the event to the handleSubmit() function on submit.
+    // 제출 시 handleSubmit() 함수에 이벤트를 전달합니다.
     <form onSubmit={handleSubmit}>
       <label htmlFor="first">First Name</label>
       <input type="text" id="first" name="first" required />
@@ -350,23 +352,27 @@ export default function PageWithJSbasedForm() {
 }
 ```
 
-It's a Next.js page with a React function component called `PageWithJSbasedForm` with a `<form>` element written in JSX. There's no action on the `<form>` element. Instead, we use the `onSubmit` event handler to send data to our `{handleSubmit}` function.
+위는 JSX로 작성된 `<form>` 엘리먼트와 `PageWithJSbasedForm`로 호출되는 React 함수형 컴포넌트가 있는 Next.js 페이지입니다. `<form>` 엘리먼트에 대한 액션이 없는 대신 `onSubmit` 이벤트 핸들러를 사용하여 `{handleSubmit}` 함수에 데이터를 보냅니다.
 
-The `handleSubmit()` function processes your form data through a series of steps:
 
-- The `event.preventDefault()` stops the `<form>` element from refreshing the entire page.
-- We created a JavaScript object called `data` with the `first` and `last` values from the form.
-- JSON is a language-agnostic data transfer format. So we use `JSON.stringify(data)` to convert the data to JSON.
-- We then use `fetch()` to send the data to our `/api/form` endpoint using JSON and HTTP `POST` method.
+`handleSubmit()`함수는 아래 단계를 통해서 폼 데이터를 처리합니다.
+
+- `event.preventDefault()`는 `<form>` 엘리먼트가 전체 페이지를 새로고침 하는 것을 방지합니다.
+- 폼에서 `first` 와 `last` 값을 사용하여 `data` 라는 JavaScript 객체를 만듭니다.
+- JSON은 언어에 구애받지 않는 데이터 전송 형식입니다. 따라서 데이터를 JSON으로 변환하기 위해 `JSON.stringify(data)`를 사용합니다.
+- 그런 다음 `fetch()`를 사용하여 JSON과 HTTP `POST` 메서드로 데이터를 `/api/form` 엔드포인트로 보냅니다.
 - Server sends back a response with the name submitted. Woohoo! 🥳
+- 서버는 제출된 이름을 포함한 응답을 보냅니다. 우와! 🥳
 
 ## Conclusion
+## 결론
 
-This guide has covered the following:
+이 가이드에서 다룬 내용은 아래와 같습니다.
 
 - The basic HTML `form` element
-- Understanding forms with React.js
-- Validating forms data with and without JavaScript
-- Using Next.js API Routes to handle `req` and `res` from the client and server
+- 기본 HTML `form` 엘리먼트
+- React.js를 사용한 폼 이해하기
+- JavaScript를 사용하거나 사용하지 않고 폼 유효성 검사
+- Next.js API Routes를 사용하여 클라이언트와 서버에서 `req` 와 `res` 처리하기
 
-For more details go through [Next.js Learn Course](https://nextjs.org/learn/basics/create-nextjs-app).
+더 자세한 내용은 [Next.js Learn Course](https://nextjs.org/learn/basics/create-nextjs-app)를 참조하세요.
