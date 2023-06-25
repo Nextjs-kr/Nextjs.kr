@@ -3,14 +3,10 @@ title: Runtime Config
 description: 사용자의 Next.js 앱에 클라이언트 런타임 구성과 서버 런타임 구성을 추가하세요.
 ---
 
-> **알아두면 좋은 정보**: 이 기능은 오래 된 기능으로 간주되어 [자동 정적 최적화(Automatic Static Optimization)]((/docs/pages/building-your-application/rendering/automatic-static-optimization)), [출력 파일 추적(Output File Tracing)](/docs/pages/api-reference/next-config-js/output#automatically-copying-traced-files), [리엑트 서버 컴포넌트(React Server Components)]((/docs/getting-started/react-essentials#server-components)) 들과 함께 작동하지 않습니다. [환경변수(environment variables)](/docs/pages/building-your-application/configuring/environment-variables)를 사용하여 불필요한 초기설정 작업을 피할 수 있습니다.
+> **알아두면 좋은 정보**: 이 기능은 오래 된 기능으로 간주되어 [자동 정적 최적화(Automatic Static Optimization)](<(/docs/pages/building-your-application/rendering/automatic-static-optimization)>), [출력 파일 추적(Output File Tracing)](/docs/pages/api-reference/next-config-js/output#automatically-copying-traced-files), [리엑트 서버 컴포넌트(React Server Components)](<(/docs/getting-started/react-essentials#server-components)>) 들과 함께 작동하지 않습니다. [환경변수(environment variables)](/docs/pages/building-your-application/configuring/environment-variables)를 사용하여 불필요한 초기설정 작업을 피할 수 있습니다.
 
-
-사용자의 앱에 런타임 구성을 추가하려면 `next.config.js` 를 열어 
+사용자의 앱에 런타임 구성을 추가하려면 `next.config.js` 를 열어
 `publicRuntimeConfig` 과 `serverRuntimeConfig` 을 추가해주세요.
-
-
-
 
 ```js filename="next.config.js"
 module.exports = {
@@ -30,13 +26,9 @@ module.exports = {
 
 클라이언트 사이드 및 서버 사이드 코드에서 둘 다 접근 할 수 있는 런타임 구성은 `publicRuntimeConfig` 아래에 배치합니다.
 
-
-> `publicRuntimeConfig` 의 런타임 구성을 사용하는 페이지는 반드시 `getInitialProps` 또는 `getServerSideProps`를 사용해야 하며 `getInitialProps` 의 경우 [자동 정적 최적화(Automatic Static Optimization)]((/docs/pages/building-your-application/rendering/automatic-static-optimization)) 옵션을 사용하지 않도록 [맞춤형 앱(Custom App)](/docs/pages/building-your-application/routing/custom-app) 설정을 해주어야 합니다. 서버 사이드 랜더링(server side rendering)이 없는 페이지(또는 페이지에 있는 컴포넌트)에서는 `publicRuntimeConfig` 런타임 구성을 사용 할 수 없습니다.
-
-
+> `publicRuntimeConfig` 의 런타임 구성을 사용하는 페이지는 반드시 `getInitialProps` 또는 `getServerSideProps`를 사용해야 하며 `getInitialProps` 의 경우 [자동 정적 최적화(Automatic Static Optimization)](<(/docs/pages/building-your-application/rendering/automatic-static-optimization)>) 옵션을 사용하지 않도록 [맞춤형 앱(Custom App)](/docs/pages/building-your-application/routing/custom-app) 설정을 해주어야 합니다. 서버 사이드 랜더링(server side rendering)이 없는 페이지(또는 페이지에 있는 컴포넌트)에서는 `publicRuntimeConfig` 런타임 구성을 사용 할 수 없습니다.
 
 런타임 구성을 접근하여 가져오려면 사용자의 앱 안에서 다음과 같이 `next/config`를 사용하세요.
-
 
 ```jsx
 import getConfig from 'next/config'
