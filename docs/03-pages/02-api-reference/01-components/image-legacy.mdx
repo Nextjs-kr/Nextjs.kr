@@ -366,7 +366,7 @@ module.exports = {
   },
 }
 ```
-> **알면 좋을 것**: 위의 예시에서는 `next/legacy/image`의 `src`프로퍼티가 `https://example.com/account123/`로 시작해야 함을 보장합니다. 다른 프로토콜, 호스트 명, 포트, 잘못된 경로는 `400 Bad Request`응답을 받게됩니다.
+> **참고**: 위의 예시에서는 `next/legacy/image`의 `src`프로퍼티가 `https://example.com/account123/`로 시작해야 함을 보장합니다. 다른 프로토콜, 호스트 명, 포트, 잘못된 경로는 `400 Bad Request`응답을 받게됩니다.
 
 다음은 `next.config.js`에서 `remotePatterns`프로퍼티를 사용한 다른 예시입니다. :
 
@@ -382,7 +382,7 @@ module.exports = {
   },
 }
 ```
-> **알면 좋을 것**:  위의 예시에서는 `next/legacy/image`의 `src`프로퍼티가 `https://img1.example.com` 혹은 `https://me.avatar.example.com`와 같은 서브도메인으로 시작해야 함을 보장합니다. 다른 프로토콜 혹은 잘못된 호스트 명은 `400 Bad Request`응답을 받게됩니다.
+> **참고**:  위의 예시에서는 `next/legacy/image`의 `src`프로퍼티가 `https://img1.example.com` 혹은 `https://me.avatar.example.com`와 같은 서브도메인으로 시작해야 함을 보장합니다. 다른 프로토콜 혹은 잘못된 호스트 명은 `400 Bad Request`응답을 받게됩니다.
 
 와일드카드 패턴은 `pathname`과 `hostname`에 적용할 수 있으며, 다음과 같은 예시를 가집니다.
 
@@ -497,7 +497,7 @@ module.exports = {
   },
 }
 ```
-> **알면 좋을 것**: AVIF는 보통 20% 정도 인코딩이 오래 걸리지만, WebP에 비해 20% 더 압축 됩니다. 이 의미는 처음 이미지가 요청되었을 때는 느릴 수 있지만 이후 요청에 대해서는 캐싱되어 빠를 것이라는 것을 의미합니다.
+> **참고**: AVIF는 보통 20% 정도 인코딩이 오래 걸리지만, WebP에 비해 20% 더 압축 됩니다. 이 의미는 처음 이미지가 요청되었을 때는 느릴 수 있지만 이후 요청에 대해서는 캐싱되어 빠를 것이라는 것을 의미합니다.
 
 ## 캐싱 동작
 
