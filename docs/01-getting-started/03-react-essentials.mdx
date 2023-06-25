@@ -3,9 +3,9 @@ title: 리액트 필수 요소
 description: 서버 컴포넌트를 포함한 Next.js 애플리케이션을 구축하기 위한 필수 React 기능 개요
 ---
 
-Next.js로 애플리케이션을 빌드하려면 서버 컴포넌트와 같은 React의 최신 기능에 익숙해지면 도움이 됩니다. 이 페이지에서는 서버 컴포넌트와 클라이언트 컴포넌트의 차이점, 사용 시기, 권장 패턴에 대해 설명합니다.
+Next.js로 애플리케이션을 빌드하려면 서버 컴포넌트와 같은 React의 최신 기능에 익숙해지면 도움이 됩니다. 이 페이지에서는 서버 컴포넌트와 클라이언트 컴포넌트의 차이점, 사용 시기, 권장 패턴에 관해 설명합니다.
 
-React를 처음 사용하는 경우, [React Docs](https://react.dev/learn)를 참고하시길 권장합니다. 다음은 학습에 도움이 되는 몇 가지 훌륭한 리소스입니다.:
+React를 처음 사용하는 경우, [React Docs](https://react.dev/learn)를 참고하시길 권장합니다. 다음은 학습에 도움이 되는 몇 가지 훌륭한 자원입니다.
 
 - [React Tutorial](https://react.dev/learn/tutorial-tic-tac-toe)
 - [Thinking in React](https://react.dev/learn/thinking-in-react)
@@ -112,17 +112,17 @@ export default function Counter() {
 
 이 표에는 서버 및 클라이언트 컴포넌트의 다양한 사용 사례가 요약되어 있습니다.
 
-| 무엇을 해야 하나요?                                                               | 서버 컴포넌트       | 클라이언트 컴포넌트 |
-| --------------------------------------------------------------------------------- | ------------------- | ------------------- |
-| 데이터 가져오기.                                                                  | <Check size={18} /> | <Cross size={18} /> |
-| 백엔드 리소스에 직접 액세스                                                       | <Check size={18} /> | <Cross size={18} /> |
-| 서버에 민감한 정보(액세스 토큰, API 키 등)를 보관                                 | <Check size={18} /> | <Cross size={18} /> |
-| 서버에 대한 대규모 종속성 유지 / 클라이언트 측 자바스크립트 감소                  | <Check size={18} /> | <Cross size={18} /> |
-| 인터랙티브 및 이벤트 리스너 추가(`onClick()`, `onChange()` 등)                    | <Cross size={18} /> | <Check size={18} /> |
-| 상태 및 라이프사이클 효과 사용 (`useState()`, `useReducer()`, `useEffect()`, etc) | <Cross size={18} /> | <Check size={18} /> |
-| 브라우저 전용 API 사용                                                            | <Cross size={18} /> | <Check size={18} /> |
-| 상태, 효과 또는 브라우저 전용 API에 의존하는 custom hooks 사용                    | <Cross size={18} /> | <Check size={18} /> |
-| [React Class components](https://react.dev/reference/react/Component) 사용        | <Cross size={18} /> | <Check size={18} /> |
+| 무엇을 해야 하나요?                                                                | 서버 컴포넌트       | 클라이언트 컴포넌트 |
+| ---------------------------------------------------------------------------------- | ------------------- | ------------------- |
+| 데이터 가져오기.                                                                   | <Check size={18} /> | <Cross size={18} /> |
+| 백엔드 리소스에 직접 액세스                                                        | <Check size={18} /> | <Cross size={18} /> |
+| 서버에 민감한 정보(액세스 토큰, API 키 등)를 보관                                  | <Check size={18} /> | <Cross size={18} /> |
+| 서버에 대한 대규모 종속성 유지 / 클라이언트 측 자바스크립트 감소                   | <Check size={18} /> | <Cross size={18} /> |
+| 인터랙티브 및 이벤트 리스너 추가(`onClick()`, `onChange()` 등)                     | <Cross size={18} /> | <Check size={18} /> |
+| State 및 Lifecycle Effects 사용 (`useState()`, `useReducer()`, `useEffect()`, etc) | <Cross size={18} /> | <Check size={18} /> |
+| 브라우저 전용 API 사용                                                             | <Cross size={18} /> | <Check size={18} /> |
+| state, 효과 또는 브라우저 전용 API에 의존하는 custom hooks 사용                    | <Cross size={18} /> | <Check size={18} /> |
+| [React Class components](https://react.dev/reference/react/Component) 사용         | <Cross size={18} /> | <Check size={18} /> |
 
 ## 패턴들
 
@@ -130,7 +130,7 @@ export default function Counter() {
 
 애플리케이션의 성능을 개선하려면 가능한 경우 클라이언트 컴포넌트를 컴포넌트 트리의 왼쪽으로 이동하는 것이 좋습니다.
 
-예를 들어 정적 요소(예: 로고, 링크 등)가 있는 레이아웃과 상태를 사용하는 대화형 검색창이 있을 수 있습니다.
+예를 들어 정적 요소(예: 로고, 링크 등)가 있는 레이아웃과 state를 사용하는 대화형 검색창이 있을 수 있습니다.
 
 전체 레이아웃을 클라이언트 컴포넌트로 만드는 대신 인터랙티브 로직을 클라이언트 컴포넌트(예: `<SearchBar />`)로 이동하고 레이아웃은 서버 컴포넌트로 유지합니다. 즉, 레이아웃의 모든 컴포넌트 자바스크립트를 클라이언트에 전송할 필요가 없습니다.
 
@@ -553,7 +553,7 @@ export default function Page() {
 }
 ```
 
-대부분의 서드파티 컴포넌트는 클라이언트 컴포넌트 내에서 사용할 가능성이 높기 때문에 래핑할 필요가 없을 것으로 예상합니다. 그러나 한 가지 예외는 공급자 컴포넌트인데, 이는 React 상태와 컨텍스트에 의존하고 일반적으로 애플리케이션의 루트에 필요하기 때문입니다. [아래에서 서드파티 컨텍스트 프로바이더에 대해 자세히 알아보세요](#rendering-third-party-context-providers-in-server-components).
+대부분의 서드파티 컴포넌트는 클라이언트 컴포넌트 내에서 사용할 가능성이 높기 때문에 래핑할 필요가 없을 것으로 예상합니다. 그러나 한 가지 예외는 공급자 컴포넌트인데, 이는 React state와 context에 의존하고 일반적으로 애플리케이션의 루트에 필요하기 때문입니다. [아래에서 서드파티 context 프로바이더에 대해 자세히 알아보세요](#rendering-third-party-context-providers-in-server-components).
 
 #### 라이브러리 작성자
 
@@ -565,13 +565,13 @@ export default function Page() {
 
 대부분의 React 애플리케이션은 컴포넌트 간에 데이터를 공유하기 위해 [context](https://react.dev/reference/react/useContext) 의존하는데, 이는 [`createContext`](https://react.dev/reference/react/useContext)를 통해 직접적으로 또는 타사 라이브러리에서 가져온 공급자 컴포넌트를 통해 간접적으로 이루어집니다.
 
-Next.js 13에서는 컨텍스트가 클라이언트 컴포넌트 내에서 완벽하게 지원되지만 서버 컴포넌트 내에서 직접 생성하거나 사용할 수는 **없습니다**. 서버 컴포넌트에는 (인터랙티브하지 않기 때문에) React state가 없고, 컨텍스트는 주로 일부 React state가 업데이트된 후 트리 깊숙한 곳에 있는 인터랙티브 컴포넌트를 다시 렌더링하는 데 사용되기 때문입니다.
+Next.js 13에서는 context가 클라이언트 컴포넌트 내에서 완벽하게 지원되지만 서버 컴포넌트 내에서 직접 생성하거나 사용할 수는 **없습니다**. 서버 컴포넌트에는 (인터랙티브하지 않기 때문에) React state가 없고, context는 주로 일부 React state가 업데이트된 후 트리 깊숙한 곳에 있는 인터랙티브 컴포넌트를 다시 렌더링하는 데 사용되기 때문입니다.
 
-서버 컴포넌트 간 데이터 공유에 대한 대안은 나중에 논의하겠지만, 먼저 클라이언트 컴포넌트 내에서 컨텍스트를 사용하는 방법을 살펴봅시다.
+서버 컴포넌트 간 데이터 공유에 대한 대안은 나중에 논의하겠지만, 먼저 클라이언트 컴포넌트 내에서 context를 사용하는 방법을 살펴봅시다.
 
-### 클라이언트 컴포넌트에서 컨텍스트 사용하기
+### 클라이언트 컴포넌트에서 context 사용하기
 
-모든 컨텍스트 API는 클라이언트 컴포넌트 내에서 완벽하게 지원됩니다.
+모든 context API는 클라이언트 컴포넌트 내에서 완벽하게 지원됩니다.
 
 ```tsx filename="app/sidebar.tsx" switcher
 'use client'
@@ -633,7 +633,7 @@ function SidebarNav() {
 }
 ```
 
-그러나 컨텍스트 공급자는 일반적으로 현재 테마와 같은 글로벌 관심사를 공유하기 위해 애플리케이션의 루트 근처에 렌더링됩니다. 컨텍스트는 서버 컴포넌트에서 지원되지 않으므로 애플리케이션의 루트에서 컨텍스트를 만들려고 하면 오류가 발생합니다.
+그러나 context 공급자는 일반적으로 현재 테마와 같은 글로벌 관심사를 공유하기 위해 애플리케이션의 루트 근처에 렌더링됩니다. context는 서버 컴포넌트에서 지원되지 않으므로 애플리케이션의 루트에서 context를 만들려고 하면 오류가 발생합니다.
 
 ```tsx filename="app/layout.tsx" switcher
 import { createContext } from 'react'
@@ -669,7 +669,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-이 문제를 해결하려면 컨텍스트를 생성하고 클라이언트 컴포넌트 내에서 해당 프로바이더를 렌더링하세요.
+이 문제를 해결하려면 context를 생성하고 클라이언트 컴포넌트 내에서 해당 프로바이더를 렌더링하세요.
 
 ```tsx filename="app/theme-provider.tsx" switcher
 'use client'
@@ -729,11 +729,11 @@ export default function RootLayout({ children }) {
 }
 ```
 
-공급자가 루트에서 렌더링되면 앱의 다른 모든 클라이언트 컴포넌트가 이 컨텍스트를 사용할 수 있습니다.
+공급자가 루트에서 렌더링되면 앱의 다른 모든 클라이언트 컴포넌트가 이 context를 사용할 수 있습니다.
 
 > **알아두면 유용한 정보**: 제공자를 트리에서 가능한 한 깊숙이 렌더링해야 합니다. `ThemeProvider`가 전체 `<html>` 문서 대신 `{children}`만 래핑하는 방식을 주목하세요. 이렇게 하면 Next.js가 서버 컴포넌트의 정적 부분을 더 쉽게 최적화할 수 있습니다.
 
-### 서버 컴포넌트에서 서드파티 컨텍스트 공급자 렌더링하기
+### 서버 컴포넌트에서 서드파티 context 공급자 렌더링하기
 
 서드파티 npm 패키지에는 애플리케이션 루트 근처에서 렌더링해야 하는 프로바이더가 포함되어 있는 경우가 많습니다. 이러한 공급자가 `"use client"` 지시문을 포함하는 경우 서버 컴포넌트 내부에서 직접 렌더링할 수 있습니다. 그러나 서버 컴포넌트는 매우 새롭기 때문에 아직 많은 타사 제공업체가 이 지시문을 추가하지 않았을 것입니다.
 
@@ -808,7 +808,7 @@ export default function RootLayout({ children }) {
 
 ### 서버 컴포넌트 간 데이터 공유
 
-서버 컴포넌트는 인터랙티브하지 않으므로 React 상태에서 읽지 않으므로 데이터를 공유하기 위해 React 컨텍스트가 필요하지 않습니다. 대신 여러 서버 컴포넌트가 액세스해야 하는 공통 데이터에 네이티브 JavaScript 패턴을 사용할 수 있습니다. 예를 들어 모듈을 사용하여 여러 컴포넌트에서 데이터베이스 연결을 공유할 수 있습니다.
+서버 컴포넌트는 인터랙티브하지 않으므로 React state에서 읽지 않으므로 데이터를 공유하기 위해 React context가 필요하지 않습니다. 대신 여러 서버 컴포넌트가 액세스해야 하는 공통 데이터에 네이티브 JavaScript 패턴을 사용할 수 있습니다. 예를 들어 모듈을 사용하여 여러 컴포넌트에서 데이터베이스 연결을 공유할 수 있습니다.
 
 ```ts filename="utils/database.ts" switcher
 export const db = new DatabaseConnection()
