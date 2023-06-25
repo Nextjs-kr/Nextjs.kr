@@ -1,11 +1,11 @@
 ---
 title: 기본경로
-description: 도메인 하위 경로에 Next.js 애플리케이션을 배포하려면 `basePath`를 사용하시기 바랍니다.
+description: 도메인 하위 경로에 Next.js 애플리케이션을 배포하려면 `basePath`를 사용합니다.
 ---
 
 도메인 하위 경로에 Next.js 애플리케이션을 배포하려면 `basePath` 옵션을 사용합니다. 
 
-`basePath`는 애플리케이션 경로에 접두사를 설정할 수 있습니다. 예컨데 `/docs`를 `''`대신 사용하고 싶은 경우(빈 문자열이 기본값), `next.config.js` 파일을 열어 `basePath` 옵션을 추가합니다.
+`basePath`는 애플리케이션 경로에 접두사를 설정할 수 있습니다. 예컨대 `/docs`를 `''`대신 사용하고 싶은 경우(빈 문자열이 기본값), `next.config.js` 파일을 열어 `basePath` 옵션을 추가합니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -13,13 +13,13 @@ module.exports = {
 }
 ```
 
-> **알면 좋은 것**: 이 값의 경우 반드시 빌드 할 때 설정해야하며, 해당 값이 클라이언트 사이드 번들에 들어가 다시 빌드하지 않는 이상 바뀌지 않습니다.
+> **알면 좋은 것**: 이 값의 경우 반드시 빌드 할 때 설정해야 하며, 해당 값이 클라이언트 사이드 번들에 들어가 다시 빌드하지 않는 이상 바뀌지 않습니다.
 
 ### Links
 
 `next/link`와 `next/router`를 이용해 다른 페이지들을 연결하는 경우, `basePath`는 자동으로 적용됩니다. 
 
-예컨데 `basePath`의 설정 값이 `/docs`인 경우, `/about`은 자동적으로 `/docs/about`가 됩니다.
+예컨대 `basePath` 설정값이 `/docs`인 경우, `/about`은 자동으로 `/docs/about`이 됩니다.
 
 ```js
 export default function HomePage() {
@@ -37,13 +37,13 @@ export default function HomePage() {
 <a href="/docs/about">About Page</a>
 ```
 
-이제 `basePath` 값을 변경할 때 애플리케이션의 모든 링크를 변경하지 않아도 됩니다.
+이제 `basePath` 설정값을 변경할 때 애플리케이션의 모든 링크를 변경하지 않아도 됩니다.
 
 ### Images
 
 [`next/image`](/docs/pages/api-reference/components/image) 컴포넌트를 사용할 경우, `basePath`를 `src` 경로 앞에 붙여야합니다.
 
-예컨데 `basePath` 값이 `/docs`인 경우, `/docs/me.png`를 사용하면 이미지가 잘 나옵니다.
+예컨대 `basePath` 값이 `/docs`인 경우, `/docs/me.png`를 사용하면 이미지가 잘 나옵니다.
 
 ```jsx
 import Image from 'next/image'
