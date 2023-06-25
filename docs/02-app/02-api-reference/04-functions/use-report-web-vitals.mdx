@@ -62,7 +62,7 @@ export default function Layout({ children }) {
 - `id`: 현재 페이지 로드 컨텍스트에서 `metric`의 고유 식별자를 나타냅니다.
 - `name`: `metric`의 이름을 나타냅니다. 웹 애플리케이션에 특정 [Web Vitals](#web-vitals) `metric`(TTFB, FCP, LCP, FID, CLS)의 이름을 포함할 수 있습니다.
 - `delta`: `metric`의 현재 값과 이전 값의 차이를 나타냅니다. 값은 보통 밀리초로 표시되며, 시간에 따른 `metric` 값의 변화를 나타냅니다.
-- `entries`: `metric`과 관련된 [Performance Entries](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceEntry)의 배열을 나타냅니다. 해당 `entries`값은 `metric`과 관련된 성능에 대하여 자세한 정보를 제공합니다.
+- `entries`: `metric`과 관련된 [Performance Entries](https://developer.mozilla.org/ko/docs/Web/API/PerformanceEntry)의 배열을 나타냅니다. 해당 `entries`값은 `metric`과 관련된 성능에 대하여 자세한 정보를 제공합니다.
 - `navigationType`: `metric`의 수집을 야기한 [navigation의 type](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming/type)을 나타냅니다. 가능한 값은 `"navigate"`, `"reload"`, `"back_forward"`, 그리고 `"prerender"`입니다.
 - `rating`: `metric` 값의 등급으로, 성능에 대한 질적인 평가를 제공합니다. 가능한 값은 `"good"`, `"needs-improvement"`, 그리고 `"poor"`입니다. 등급은 일반적으로 `metric` 값이 허용되는 또는 부적절한 성능을 나타내는 사전 정의된 임계값과 비교하여 결정됩니다.
 - `value`: 각 성능을 측정하는 항목들에 대한 실제 값 또는 지속 시간으로, 보통 밀리초로 표현됩니다. `metric`에 의해 추적된 성능의 양적인 측정치 값을 제공합니다. 해당 값의 출처는 측정되는 특정 `metric`에 따라 달라지며, 다양한 [Performance API](https://developer.mozilla.org/en-US/docs/Web/API/Performance_API)에서 가져올 수 있습니다.
