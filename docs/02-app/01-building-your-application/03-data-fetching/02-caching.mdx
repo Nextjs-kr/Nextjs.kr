@@ -26,7 +26,7 @@ async function getComments() {
   return res.json()
 }
 
-// 이 함수는 두 번 호출 되지만, 결과는 한 번만 가져옵니다.
+// 이 함수를 두 번 호출하지만, 결과는 한 번만 가져옵니다.
 const comments = await getComments() // cache MISS
 
 // 두번째 호출은 애플리케이션 어느 곳에나 있을 수 있습니다.
@@ -39,7 +39,7 @@ async function getComments() {
   return res.json()
 }
 
-// 이 함수는 두 번 호출 되지만, 결과는 한 번만 가져옵니다.
+// 이 함수를 두 번 호출하지만, 결과는 한 번만 가져옵니다.
 const comments = await getComments() // cache MISS
 
 // 두번째 호출은 애플리케이션 어느 곳에나 있을 수 있습니다.
@@ -74,7 +74,7 @@ export default async function Page() {
 
 ### React `cache()`
 
-React를 사용하면 요청을 [`cache()`](https://github.com/acdlite/rfcs/blob/first-class-promises/text/0000-first-class-support-for-promises.md)하고 중복을 제거하여 함수 호출 결과를 memo 할 수 있습니다. 동일한 인자로 호출된 동일한 함수는 다시 실행되는 대신에 캐시된 값을 재사용합니다.
+React를 사용하면 요청을 [`cache()`](https://github.com/acdlite/rfcs/blob/first-class-promises/text/0000-first-class-support-for-promises.md)하고 중복을 제거하여 함수 호출 결과를 memo 할 수 있습니다. 동일한 인자로 호출한 동일한 함수는 다시 실행되는 대신에 캐시된 값을 재사용합니다.
 
 ```ts filename="utils/getUser.ts" switcher
 import { cache } from 'react'
@@ -134,7 +134,7 @@ export default async function Page({ params: { id } }) {
 }
 ```
 
-위 예시에서 `getUser()` 함수가 두 번 호출되었지만, 데이터베이스에 대한 쿼리는 한 번만 만들어집니다. 이는 두 번째 요청이 첫 번째 요청의 결과를 재사용할 수 있도록 `getUser()`가 `cache()`로 감싸져 있기 때문입니다.
+위 예시에서 `getUser()` 함수를 두 번 호출했지만, 데이터베이스에 대한 쿼리는 한 번만 만들어집니다. 이는 두 번째 요청이 첫 번째 요청의 결과를 재사용할 수 있도록 `getUser()`가 `cache()`로 감싸져 있기 때문입니다.
 
 > **참고**
 >
