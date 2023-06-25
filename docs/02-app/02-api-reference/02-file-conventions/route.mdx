@@ -43,15 +43,15 @@ export async function PATCH(request) {}
 export async function OPTIONS(request) {}
 ```
 
-> **알아두면 좋은 점**: 라우트 핸들러는 `app` 디렉터리 내에서만 사용할 수 있습니다. 라우트 핸들러는 모든 사용 사례를 처리할 수 있어야 하므로 API Routes(`pages`)와 Route Handler(`app`)를 함께 사용할 필요가 **없습니다**.
+> **참고**: 라우트 핸들러는 `app` 디렉터리 내에서만 사용할 수 있습니다. 라우트 핸들러는 모든 사용 사례를 처리할 수 있어야 하므로 API 라우트(`pages`)와 라우트 핸들러(`app`)를 함께 사용할 필요가 **없습니다**.
 
 ## 매개변수
 
-### `request` (선택적)
+### `request` (선택사항)
 
 `request`객체는 [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) API의 확장인 [NextRequest](/docs/app/api-reference/functions/next-request)객체입니다. `NextRequest`는 들어오는 요청에 대해 더욱 세밀한 제어를 제공합니다. 이는 `쿠키`에 쉽게 접근할 수 있고 확장된 URL 객체인 `nextUrl`을 사용할 수 있음을 의미합니다.
 
-### `context` (선택적)
+### `context` (선택사항)
 
 ```ts filename="app/dashboard/[team]/route.js"
 export async function GET(request, context: { params }) {
