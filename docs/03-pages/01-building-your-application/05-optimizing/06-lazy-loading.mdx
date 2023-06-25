@@ -19,7 +19,7 @@ Next.js에서 Lazy Loading을 구현할 수 있는 두 가지 방법은 다음�
 
 `next/dynamic` 은 [`React.lazy()`](https://react.dev/reference/react/lazy) 와 [Suspense](https://react.dev/reference/react/Suspense) 컴포넌트의 합성물입니다. 점진적 마이그레이션을 허용하기 위해 `app`과 `pages` 디렉토리에서도 동일한 방식으로 작동합니다.
 
-## 예제
+## 예시
 
 `next/dynamic`을 사용하면 헤더 컴포넌트가 페이지의 초기 JavaScript 번들에 포함되지 않습니다. 페이지는 먼저 Suspense `fallback`을 렌더링하고, Suspense 영역이 해결되면 `Header` 컴포넌트를 렌더링합니다.
 
@@ -68,7 +68,7 @@ const DynamicHeader = dynamic(() => import('../components/header'), {
 
 ## 외부 라이브러리를 사용하는 경우
 
-이 예제는 `fuse.js` 외부 라이브러리를 사용하여 퍼지 검색을 수행합니다. 이 모듈은 사용자가 search input 요소에 입력한 경우에만 브라우저에서 로드됩니다.
+이 예시는 `fuse.js` 외부 라이브러리를 사용하여 퍼지 검색을 수행합니다. 이 모듈은 사용자가 search input 요소에 입력한 경우에만 브라우저에서 로드됩니다.
 
 ```jsx
 import { useState } from 'react'
