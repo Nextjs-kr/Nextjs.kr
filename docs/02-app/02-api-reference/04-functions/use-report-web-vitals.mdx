@@ -3,7 +3,7 @@ title: useReportWebVitals
 description: useReportWebVitals 함수에 대한 API 레퍼런스
 ---
 
-`useReportWebVitals` 훅을 통해 [Core Web Vitals](https://web.dev/vitals/)을 측정하고, 분석 서비스를 함께 사용할 수 있습니다.
+`useReportWebVitals` Hook을 통해 [Core Web Vitals](https://web.dev/vitals/)을 측정하고, 분석 서비스를 함께 사용할 수 있습니다.
 
 <PagesOnly>
 
@@ -50,13 +50,13 @@ export default function Layout({ children }) {
 }
 ```
 
-> `useReportWebVitals` 훅은 `"use client"` 지시문을 필요로 합니다. 때문에 가장 성능이 좋은 접근법은 루트 레이아웃이 import하는 별도의 컴포넌트를 생성하는 것입니다. 이 방법을 통해 클라이언트 경계를 WebVitals 컴포넌트로만 제한할 수 있습니다.
+> `useReportWebVitals` Hook은 `"use client"` 지시문을 필요로 합니다. 때문에 가장 성능이 좋은 접근법은 루트 레이아웃이 import하는 별도의 컴포넌트를 생성하는 것입니다. 이 방법을 통해 클라이언트 경계를 WebVitals 컴포넌트로만 제한할 수 있습니다.
 
 </AppOnly>
 
 ## useReportWebVitals
 
-훅의 인자로 전달되는 `metric` 객체는 여러 속성을 포함하고 있습니다.
+Hook의 인자로 전달되는 `metric` 객체는 여러 속성을 포함하고 있습니다.
 
 - `id`: 현재 페이지 로드 컨텍스트에서 `metric`의 고유 식별자를 나타냅니다.
 - `name`: `metric`의 이름을 나타냅니다. 웹 애플리케이션에 특정 [Web Vitals](#web-vitals) `metric`(TTFB, FCP, LCP, FID, CLS)의 이름을 포함할 수 있습니다.
