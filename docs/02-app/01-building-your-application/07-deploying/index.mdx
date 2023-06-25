@@ -16,7 +16,7 @@ description: Vercel이 관리하는 환경 또는 직접 호스팅하는 운영 
 
 `.next` 폴더 안에 결과물을 생성합니다.
 
-- `.next/static/chunks/pages` – 이 폴더 안에는 같은 이름의 라우터와 관계가 있는 JavaScript 파일이 있습니다. 예를 들어서 `.next/static/chunks/pages/about.js` 파일은 `/about` 페이지에 접근할 때 로드합니다.
+- `.next/static/chunks/pages` – 이 폴더 안에는 같은 이름의 라우트와 관계가 있는 JavaScript 파일이 있습니다. 예를 들어서 `.next/static/chunks/pages/about.js` 파일은 `/about` 페이지에 접근할 때 로드합니다.
 - `.next/static/media` – `next/image` 컴포넌트에서 정적으로 임포트해서 사용한 이미지의 이름에 해시값을 추가한 복사본이 있습니다.
 - `.next/static/css` – 모든 페이지를 위한 글로벌 CSS 파일이 있습니다.
 - `.next/server/pages` – Next.js 서버에서 프리 렌더링하기 위한 HTML과 JavaScript의 진입점인 파일이 있습니다. [결과물 파일 추적](/docs/pages/api-reference/next-config-js/output) 기능을 활성화했을 때, 페이지와 관련 있는 모든 파일의 경로를 포함하고 있는 `.nft.json`으로 끝나는 파일을 생성합니다.
@@ -35,7 +35,7 @@ Vercel으로 배포한다면, [Next.js를 자동으로 감지](https://vercel.co
 - 모든 커밋은 중복 없는 URL로 [영구적으로 배포](https://vercel.com/features/previews?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)가 됩니다.
 - [페이지](/docs/pages/building-your-application/rendering/automatic-static-optimization)는 자동으로 정적으로 최적화할 수 있다면 최적화합니다.
 - 정적파일(JavaScript, CSS, 이미지, 폰트)은 [글로벌 엣지 네트워크](https://vercel.com/features/infrastructure?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)를 통해 압축하여 호스팅합니다.
-- [API 라우터](/docs/pages/building-your-application/routing/api-routes)는 무한히 확장이 가능한 격리된 [서버리스 함수](https://vercel.com/features/infrastructure?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)로 자동으로 최적화합니다.₩₩
+- [API 라우트](/docs/pages/building-your-application/routing/api-routes)는 무한히 확장이 가능한 격리된 [서버리스 함수](https://vercel.com/features/infrastructure?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)로 자동으로 최적화합니다.₩₩
 - [미들웨어](/docs/pages/building-your-application/routing/middleware)는 콜드 스타트 없이 즉시 부팅하는 [엣지 함수](https://vercel.com/features/edge-functions?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)로 자동 최적화합니다.
 
 Vercel은 아래와 같은 기능을 추가로 제공합니다.
