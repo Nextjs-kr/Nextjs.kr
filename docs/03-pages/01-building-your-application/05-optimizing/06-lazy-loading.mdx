@@ -4,7 +4,7 @@ description: 불러온 라이브러리와 React 컴포넌트를 Lazy load해서 
 source: app/building-your-application/optimizing/lazy-loading
 ---
 
-Next.js의 [Lazy loading](https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading)은 경로를 렌더링하는 데 필요한 JavaScript의 양을 줄임으로써 애플리케이션의 초기 로드 성능을 향상시킵니다.
+Next.js의 [Lazy loading](https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading)은 경로를 렌더링하는 데 필요한 JavaScript의 양을 줄임으로써 애플리케이션의 초기 로드 성능을 향상합니다.
 
 **클라이언트 컴포넌트**와 불러온 라이브러리의 로드를 연기하고 필요한 경우에만 클라이언트 번들에 포함할 수 있습니다. 예를 들어, 사용자가 모달을 열기 위해 클릭할 때까지 모달을 로드하는 것을 연기할 수 있습니다.
 
@@ -17,7 +17,7 @@ Next.js에서 Lazy Loading을 구현할 수 있는 두 가지 방법은 다음�
 
 ### `next/dynamic`
 
-`next/dynamic` 은 [`React.lazy()`](https://react.dev/reference/react/lazy) 와 [Suspense](https://react.dev/reference/react/Suspense) 컴포넌트의 합성물입니다. 점진적 마이그레이션을 허용하기 위해 `app`과 `pages` 디렉토리에서도 동일한 방식으로 작동합니다.
+`next/dynamic` 은 [`React.lazy()`](https://react.dev/reference/react/lazy) 와 [Suspense](https://react.dev/reference/react/Suspense) 컴포넌트의 합성물입니다. 점진적 마이그레이션을 허용하기 위해 `app`과 `pages` 디렉터리에서도 동일한 방식으로 작동합니다.
 
 ## 예시
 
@@ -56,7 +56,7 @@ const DynamicComponent = dynamic(() =>
 
 ## SSR을 사용하지 않는 경우
 
-클라이언트 측에서 컴포넌트를 동적으로 로드하려면 `ssr` 옵션을 사용하여 서버 렌더링을 비활성화 할 수 있습니다. 이 기능은 외부 종속성 또는 컴포넌트가 `window`과 같은 브라우저 API에 의존하는 경우에 유용합니다.
+클라이언트 측에서 컴포넌트를 동적으로 로드하려면 `ssr` 옵션을 사용하여 서버 렌더링을 비활성화할 수 있습니다. 이 기능은 외부 종속성 또는 컴포넌트가 `window`와 같은 브라우저 API에 의존하는 경우에 유용합니다.
 
 ```jsx
 import dynamic from 'next/dynamic'
