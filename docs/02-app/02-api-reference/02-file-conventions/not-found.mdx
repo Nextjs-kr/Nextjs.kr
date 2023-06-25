@@ -3,7 +3,7 @@ title: not-found.js
 description: not-found.js 파일의 API 레퍼런스입니다.
 ---
 
-**not-found** 파일은 route segment 내에서 [`notFound`](/docs/app/api-reference/functions/not-found) 함수가 실행될 때 UI를 렌더링하는 데 사용됩니다. 사용자 정의 UI를 제공하는 동시에 Next.js는 404 HTTP 상태 코드를 반환합니다.
+**not-found** 파일은 라우트 세그먼트 내에서 [`notFound`](/docs/app/api-reference/functions/not-found) 함수가 실행될 때 UI를 렌더링하는 데 사용됩니다. 사용자 정의 UI를 제공하는 동시에 Next.js는 404 HTTP 상태 코드를 반환합니다.
 
 ```tsx filename="app/blog/not-found.tsx" switcher
 import Link from 'next/link'
@@ -37,7 +37,7 @@ export default function NotFound() {
 }
 ```
 
-> **알아두면 좋은 점**: 루트 not-found.js 파일은 예상된 `notFound()` 오류를 처리하는 것 외에도, 전체 애플리케이션에서 처리하지 않는 URL도 담당합니다. 즉, 앱에서 처리하지 않는 URL을 방문하는 사용자에게는 `app/not-found.js` 파일에서 내보내진 UI가 보여집니다.
+> **참고**: 루트 not-found.js 파일은 예상된 `notFound()` 오류를 처리하는 것 외에도, 전체 애플리케이션에서 처리하지 않는 URL도 담당합니다. 즉, 앱에서 처리하지 않는 URL을 방문하는 사용자에게는 `app/not-found.js` 파일에서 내보내진 UI가 보여집니다.
 
 ## Props
 
