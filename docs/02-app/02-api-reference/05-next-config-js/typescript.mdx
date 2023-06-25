@@ -1,23 +1,22 @@
 ---
-title: typescript
-description: Next.js reports TypeScript errors by default. Learn to opt-out of this behavior here.
+title: 타입스크립트
+description: Next.js에서 타입스크립트 오류를 제외하는 방법을 배웁니다.
 ---
 
-Next.js fails your **production build** (`next build`) when TypeScript errors are present in your project.
+Next.js는 타입스크립트 에러가 발생하면 빌드에 실패합니다.
 
-If you'd like Next.js to dangerously produce production code even when your application has errors, you can disable the built-in type checking step.
+에러가 있더라도 Next.js를 빌드하기 원한다면, 타입 검사 단계를 비활성화할 수 있습니다.
 
-If disabled, be sure you are running type checks as part of your build or deploy process, otherwise this can be very dangerous.
+비활성화된 경우, 빌드 또는 배포 과정의 일부로 타입 검사를 실행하고 있는지 확인하십시오. 그렇지 않으면 매우 위험할 수 있습니다.
 
-Open `next.config.js` and enable the `ignoreBuildErrors` option in the `typescript` config:
+'next.config.js'를 열고 'typescript' 에서 'ignoreBuildErrors' 옵션을 활성화합니다.
 
 ```js filename="next.config.js"
 module.exports = {
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
+    // !! 주의 !!
+    // 타입 에러가 있더라도 프로젝트 빌드가 완료될 수 있습니다.
+    // !! 주의 !!
     ignoreBuildErrors: true,
   },
 }
