@@ -28,7 +28,7 @@ module.exports = {
 
 > `publicRuntimeConfig` 의 런타임 구성을 사용하는 페이지는 반드시 `getInitialProps` 또는 `getServerSideProps`를 사용해야 하며 `getInitialProps` 의 경우 [자동 정적 최적화(Automatic Static Optimization)](<(/docs/pages/building-your-application/rendering/automatic-static-optimization)>) 옵션을 사용하지 않도록 [맞춤형 앱(Custom App)](/docs/pages/building-your-application/routing/custom-app) 설정을 해주어야 합니다. 서버 사이드 랜더링(server side rendering)이 없는 페이지(또는 페이지에 있는 컴포넌트)에서는 `publicRuntimeConfig` 런타임 구성을 사용 할 수 없습니다.
 
-런타임 구성을 접근하여 가져오려면 사용자의 앱 안에서 다음과 같이 `next/config`를 사용하세요.
+런타임 구성을 사용하려면 사용자의 앱 안에서 다음과 같이 `next/config`를 사용하세요.
 
 ```jsx
 import getConfig from 'next/config'
