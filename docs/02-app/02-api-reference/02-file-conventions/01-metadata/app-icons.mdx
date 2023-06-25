@@ -59,7 +59,7 @@ Next.js는 파일을 평가하여 앱의 `<head>` 엘리먼트에 해당하는 �
 />
 ```
 
-> **알아두면 좋은 정보**
+> **참고**
 >
 > - 파일 이름에 숫자 접미사를 추가하여 여러 개의 아이콘을 설정할 수 있습니다. 예를 들어 `icon1.png`, `icon2.png` 등과 같이 작성할 수 있습니다. 번호가 매겨진 파일은 사전 순으로 정렬됩니다.
 > - 파비콘은 루트 `/app` 세그먼트에서만 설정할 수 있습니다. 보다 세분화가 필요한 경우에는 [`icon`](#icon)을 사용할 수 있습니다.
@@ -170,7 +170,7 @@ export default function Icon() {
 <link rel="icon" href="/icon?<generated>" type="image/png" sizes="32x32" />
 ```
 
-> **알아두면 좋은 정보**
+> **참고**
 >
 > - 생성된 아이콘은 기본적으로 [동적 함수](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-functions)를 사용하거나 [동적 데이터 패칭](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-data-fetching)을 사용하지 않는 한 [**정적으로 최적화**](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#static-rendering-default)(빌드 타임에 생성되고 캐시됨)됩니다.
 > - [`generateImageMetadata`](/docs/app/api-reference/functions/generate-image-metadata)를 사용하여 동일한 파일에 여러 개의 아이콘을 생성할 수 있습니다.
@@ -207,7 +207,7 @@ export default function Icon({ params }) {
 
 default export 함수는 `Blob` | `ArrayBuffer` | `TypedArray` | `DataView` | `ReadableStream` | `Response`를 반환해야 합니다.
 
-> **알아두면 좋은 정보**: `ImageResponse`는 이 반환 유형을 충족합니다.
+> **참고**: `ImageResponse`는 이 반환 유형을 충족합니다.
 
 ### exports 설정
 
