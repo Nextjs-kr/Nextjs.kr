@@ -150,7 +150,7 @@ export const config = {
 
 ### TypeScript를 사용하여 `req` / `res` 객체 확장
 
-더 나은 타입 안정성을 위해, `req` 및 `res` 객체를 확장하는 것은 권장되지 않습니다. 대신, 이들과 함께 작동하는 함수를 사용하세요.
+더 나은 타입 안정성을 위해, `req` 및 `res` 객체를 확장하는 것을 권장하지 않습니다. 대신, 이들과 함께 작동하는 함수를 사용하세요.
 
 ```ts filename="utils/cookies.ts" switcher
 import { serialize, CookieSerializeOptions } from 'cookie'
@@ -223,7 +223,7 @@ const handler = (req, res) => {
 export default handler
 ```
 
-만약 이러한 객체들이 확장되는 것을 피할 수 없다면, 추가적인 속성을 포함하기 위해 타입을 만들어야 합니다.
+만약 이러한 객체를 확장하는 것을 피할 수 없다면, 추가적인 속성을 포함하기 위해 타입을 만들어야 합니다.
 
 ```ts filename="pages/api/foo.ts" switcher
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -264,7 +264,7 @@ export default withFoo(handler)
 - `res.json(body)` - JSON 응답을 보냅니다. `body`는 [직렬화할 수 있는 객체](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)여야 합니다.
 - `res.send(body)` - HTTP 응답을 보냅니다. `body`는 `string`, `object` 또는 `Buffer`일 수 있습니다.
 - `res.redirect([status,] path)` - 지정된 경로 또는 URL로 리다이렉트합니다. `status`는 유효한 [HTTP 상태 코드](https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C)여야 합니다.
-  만약 지정되지 않는다면 `status`의 기본값은 "307" 즉, "임시 리다이렉트(Temporary redirect)"입니다.
+  만약 지정하지 않는다면 `status`의 기본값은 "307" 즉, "임시 리다이렉트(Temporary redirect)"입니다.
 - `res.revalidate(urlPath)` - `getStaticProps`를 사용하여 [요청 시 페이지 재검증](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation)을 수행합니다. `urlPath`는 `string`여야 합니다.
 
 ### 응답 상태코드 설정하기
@@ -318,7 +318,7 @@ export default async function handler(req, res) {
 
 예를 들어 폼을 사용할 때, 클라이언트가 폼을 제출하면 지정된 경로 또는 URL로 리다이렉트할 수 있습니다.
 
-다음 예시는 폼이 성공적으로 제출되면 클라이언트를 `/` 경로로 리다이렉트합니다.
+다음 예시는 폼을 성공적으로 제출하면 클라이언트를 `/` 경로로 리다이렉트합니다.
 
 ```js
 export default async function handler(req, res) {
@@ -389,7 +389,7 @@ export default function handler(req, res) {
 
 ### 캐치 올 API 라우트
 
-API 라우트는 괄호 안에 세 개의 점(`...`)을 추가함으로써 모든 경로를 잡아내도록 확장될 수 있습니다. 예를 들어
+API 라우트는 괄호 안에 세 개의 점(`...`)을 추가함으로써 모든 경로를 잡아내도록 확장할 수 있습니다. 예를 들어
 
 - `pages/api/post/[...slug].js`는 `/api/post/a`를 매치할 뿐만 아니라 `/api/post/a/b`, `/api/post/a/b/c` 등도 매치합니다.
 
