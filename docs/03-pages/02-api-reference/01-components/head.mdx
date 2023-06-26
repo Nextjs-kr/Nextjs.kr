@@ -14,7 +14,7 @@ description: 내장된 Head 컴포넌트를 사용하여 페이지의 `head`에 
 내장된 컴포넌트를 사용하여 페이지의 `head`에 요소를 추가할 수 있습니다.
 
 ```jsx
-import Head from "next/head";
+import Head from 'next/head'
 
 function IndexPage() {
   return (
@@ -24,16 +24,16 @@ function IndexPage() {
       </Head>
       <p>Hello world!</p>
     </div>
-  );
+  )
 }
 
-export default IndexPage;
+export default IndexPage
 ```
 
-`key` 속성을 사용하여 `head`에서 중복된 태그를 피할 수 있습니다. 이렇게 하면 태그가 한 번만 렌더링 되도록 보장됩니다. 다음 예시와 같이 사용할 수 있습니다.
+`key` 속성을 사용하여 `head`에서 중복된 태그를 피할 수 있습니다. 이렇게 하면 태그가 한 번만 렌더링되도록 보장됩니다. 다음 예시와 같이 사용할 수 있습니다.
 
 ```jsx
-import Head from "next/head";
+import Head from 'next/head'
 
 function IndexPage() {
   return (
@@ -47,13 +47,13 @@ function IndexPage() {
       </Head>
       <p>Hello world!</p>
     </div>
-  );
+  )
 }
 
-export default IndexPage;
+export default IndexPage
 ```
 
-이 경우에는 두 번째 `<meta property="og:title" />`만 렌더링 됩니다. `key` 속성이 중복된 `meta` 태그는 자동으로 처리됩니다.
+이 경우에는 두 번째 `<meta property="og:title" />`만 렌더링됩니다. `key` 속성이 중복된 `meta` 태그는 자동으로 처리됩니다.
 
 > `head`의 내용은 컴포넌트가 언마운트될 때 지워지므로, 각 페이지가 `head`에서 필요한 내용을 완전하게 정의하고 다른 페이지가 추가한 내용을 가정하지 않도록 주의해야 합니다.
 
