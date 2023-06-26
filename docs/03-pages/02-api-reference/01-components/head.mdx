@@ -1,20 +1,20 @@
 ---
 title: <Head>
-description: Add custom elements to the `head` of your page with the built-in Head component.
+description: 내장된 Head 컴포넌트를 사용하여 페이지의 `head`에 사용자 정의 요소를 추가합니다.
 ---
 
 <details>
-  <summary>Examples</summary>
+  <summary>예시</summary>
 
 - [Head Elements](https://github.com/vercel/next.js/tree/canary/examples/head-elements)
 - [Layout Component](https://github.com/vercel/next.js/tree/canary/examples/layout-component)
 
 </details>
 
-We expose a built-in component for appending elements to the `head` of the page:
+내장된 컴포넌트를 사용하여 페이지의 `head`에 요소를 추가할 수 있습니다.
 
 ```jsx
-import Head from 'next/head'
+import Head from "next/head";
 
 function IndexPage() {
   return (
@@ -24,16 +24,16 @@ function IndexPage() {
       </Head>
       <p>Hello world!</p>
     </div>
-  )
+  );
 }
 
-export default IndexPage
+export default IndexPage;
 ```
 
-To avoid duplicate tags in your `head` you can use the `key` property, which will make sure the tag is only rendered once, as in the following example:
+`key` 속성을 사용하여 `head`에서 중복된 태그를 피할 수 있습니다. 이렇게 하면 태그가 한 번만 렌더링 되도록 보장됩니다. 다음 예시와 같이 사용할 수 있습니다.
 
 ```jsx
-import Head from 'next/head'
+import Head from "next/head";
 
 function IndexPage() {
   return (
@@ -47,17 +47,16 @@ function IndexPage() {
       </Head>
       <p>Hello world!</p>
     </div>
-  )
+  );
 }
 
-export default IndexPage
+export default IndexPage;
 ```
 
-In this case only the second `<meta property="og:title" />` is rendered. `meta` tags with duplicate `key` attributes are automatically handled.
+이 경우에는 두 번째 `<meta property="og:title" />`만 렌더링 됩니다. `key` 속성이 중복된 `meta` 태그는 자동으로 처리됩니다.
 
-> The contents of `head` get cleared upon unmounting the component, so make sure each page completely defines what it needs in `head`, without making assumptions about what other pages added.
+> `head`의 내용은 컴포넌트가 언마운트될 때 지워지므로, 각 페이지가 `head`에서 필요한 내용을 완전하게 정의하고 다른 페이지가 추가한 내용을 가정하지 않도록 주의해야 합니다.
 
-`title`, `meta` or any other elements (e.g. `script`) need to be contained as **direct** children of the `Head` element,
-or wrapped into maximum one level of `<React.Fragment>` or arrays—otherwise the tags won't be correctly picked up on client-side navigations.
+`title`, `meta` 또는 다른 요소(예: `script`)는 `Head` 요소의 **직접적인** 자식이거나 `<React.Fragment>`나 배열의 최대 한 단계 안에 포함되어야 합니다. 그렇지 않으면 클라이언트 측 탐색에서 태그가 올바르게 인식되지 않을 수 있습니다.
 
-> We recommend using [next/script](/docs/pages/building-your-application/optimizing/scripts) in your component instead of manually creating a `<script>` in `next/head`.
+> [next/script](https://chat.openai.com/docs/pages/building-your-application/optimizing/scripts)을 사용하여 `next/head`에 수동으로 `<script>`를 만드는 대신 컴포넌트에서 사용하는 것을 권장합니다.
