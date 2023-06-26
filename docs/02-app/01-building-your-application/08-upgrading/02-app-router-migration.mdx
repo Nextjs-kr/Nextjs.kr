@@ -1,7 +1,7 @@
 ---
 title: App Router 점진적 적용 가이드
 nav_title: App Router 마이그레이션
-description: 당신의 Next.js 어플리케이션을 Pages Router에서 App Router로 업그레이드하는 방법을 배웁니다.
+description: Next.js 어플리케이션을 Pages Router에서 App Router로 업그레이드하는 방법을 배웁니다.
 ---
 
 이 가이드는 당신을 도와줄 것입니다:
@@ -32,7 +32,7 @@ ESLint를 사용하는 경우 ESLint 버전을 업그레이드해야 합니다:
 npm install -D eslint-config-next@latest
 ```
 
-> **알아두면 좋습니다**: ESLint 변경 사항을 적용하려면 VS Code에서 ESLint 서버를 다시 시작해야 할 수 있습니다. 명령 팔레트(Mac의 경우 'cmd+shift+p', Windows의 경우 'ctrl+shift+p')를 열고 'ESLint: ESLint 서버 다시 시작'을 검색합니다.
+> **참고**: ESLint 변경 사항을 적용하려면 VS Code에서 ESLint 서버를 다시 시작해야 할 수 있습니다. 명령 팔레트(Mac의 경우 'cmd+shift+p', Windows의 경우 'ctrl+shift+p')를 열고 'ESLint: ESLint 서버 다시 시작'을 검색합니다.
 
 ## 다음 단계
 
@@ -89,7 +89,7 @@ Next.js 13에 대한 링크를 업그레이드하려면 [`new-link` codemod](/do
 
 ### `<Script>` 컴포넌트
 
-[`next/script`](/docs/app/api-reference/components/script)의 동작이 `pages`와 `app`을 모두 지원하도록 업데이트되었지만 원활한 마이그레이션을 위해 다음과 같이 일부 변경해야 합니다:
+[`next/script`](/docs/app/api-reference/components/script)의 동작이 `pages`와 `app`을 모두 지원하도록 업데이트되었지만 원활한 마이그레이션을 위해 다음과 같이 일부 변경해야 합니다.
 
 - 실험적인 `worker` 전략은 `app`에서 아직 작동하지 않으며 이 전략으로 표시된 스크립트는 다른 전략(예: `lazyOnload`)을 사용하기 위해 제거되거나 수정되어야 합니다.
 - 앞으로 이동이전에 `_document.js`에 포함했던 `대화형` 스크립트를 루트 레이아웃 파일(`app/layout.tsx`)에 적용합니다.
@@ -372,7 +372,7 @@ export default function Page() {
 - 2단계: 새 클라이언트 컴포넌트를 `app` 디렉토리
   에 있는 새 `page.js` 파일로 가져옵니다.
 
-> **알면 좋은 것**: `pages` 디렉토리와 가장 유사한 동작을 하기 때문에 가장 쉬운 마이그레이션 경로입니다.
+> **참고**: `pages` 디렉토리와 가장 유사한 동작을 하기 때문에 가장 쉬운 마이그레이션 경로입니다.
 
 **1단계: 새 클라이언트 컴포넌트 생성**
 
@@ -468,13 +468,14 @@ export default async function Page() {
 의 새 동작을 지원하기 위해 새 라우터가 추가되었습니다.
 
 `app`'에서는 `next/navigation`에서 가져온 세 개의 새 훅인 [`useRouter()`(/docs/app/api-reference/functions/use-router), [`usePathname()`](/docs/app/api-reference/functions/use-pathname) 및 [`useSearchParams()`](/docs/app/api-reference/api-functions)에서 가져온 새 훅을 사용해야 합니다.
+크
 
-- 새로운 `useRouter` 훅은 `next/navigation`에서 가져와 `next/router`에서 가져온 `pages`의 `useRouter` 후크와 동작이 다릅니다.
+- 새로운 `useRouter` 훅은 `next/navigation`에서 가져와 `next/router`에서 가져온 `pages`의 `useRouter` 훅과 동작이 다릅니다.
 - [`next/router`](/docs/pages/api-reference/functions/use-router)에서 가져온 `useRouter` 훅은 `app` 디렉토리
   에서 지원되지 않지만 `pages` 디렉토리
   에서 계속 사용할 수 있습니다.
 - 새 `useRouter`는 `pathname` 문자열을 반환하지 않습니다. 대신 별도의 `usePathname` 훅을 사용합니다.
-- 새 `useRouter`는 쿼리 객체를 반환하지 않습니다. 대신 별도의 `useSearchParams` 후크를 사용합니다.
+- 새 `useRouter`는 쿼리 객체를 반환하지 않습니다. 대신 별도의 `useSearchParams` 훅을 사용합니다.
 - `useSearchParams`와 `usePathname`을 함께 사용하면 페이지 변경 내용을 추적할 수 있습니다. 자세한 내용은 [Router Events](/docs/app/api-reference/functions/use-router#router-events) 섹션을 참조하십시오.
 - 이러한 새 훅은 클라이언트 컴포넌트에서만 지원됩니다. 서버 컴포넌트에서 사용할 수 없습니다.
 
@@ -913,7 +914,7 @@ export async function GET(request: Request) {}
 export async function GET(request) {}
 ```
 
-> **알아두면 좋은 것**: 이전에 API 경로를 사용하여 클라이언트에서 외부 API를 호출했다면 이제 [서버 컴포넌트](/docs/getting-started/react-essentials#server-components)를 사용하여 데이터를 안전하게 가져올 수 있습니다. [데이터 가져오기](/docs/app/building-your-application/data-fetching/fetching)에 대해 자세히 알아보십시오.
+> **참고**: 이전에 API 경로를 사용하여 클라이언트에서 외부 API를 호출했다면 이제 [서버 컴포넌트](/docs/getting-started/react-essentials#server-components)를 사용하여 데이터를 안전하게 가져올 수 있습니다. [데이터 가져오기](/docs/app/building-your-application/data-fetching/fetching)에 대해 자세히 알아보십시오.
 
 ### 7단계: 스타일링
 
@@ -942,7 +943,7 @@ module.exports = {
 }
 ```
 
-또한 `app/layout.js` 파일에서 글로벌 스타일을 가져와야 합니다:
+- 또한 `app/layout.js` 파일에서 글로벌 스타일을 가져와야 합니다:
 
 ```jsx filename="app/layout.js"
 import '../styles/globals.css'
