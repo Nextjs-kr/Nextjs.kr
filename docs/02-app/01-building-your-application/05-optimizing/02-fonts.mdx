@@ -1,27 +1,27 @@
 ---
-title: Font Optimization
-nav_title: Fonts
-description: Optimize your application's web fonts with the built-in `next/font` loaders.
+title: 글꼴 최적화
+nav_title: 글꼴
+description: 내장된 `next/font` 로더를 사용해 애플리케이션의 웹 글꼴을 최적화하세요.
 related:
-  title: API Reference
-  description: Learn more about the next/font API.
+  title: API 래퍼런스
+  description: next/font API에 대해 더 많이 알아보세요.
   links:
     - app/api-reference/components/font
 ---
 
-[**`next/font`**](/docs/app/api-reference/components/font) will automatically optimize your fonts (including custom fonts) and remove external network requests for improved privacy and performance.
+[**`next/font`**](/docs/app/api-reference/components/font)는 사용자 지정 글꼴을 포함한 글꼴을 자동으로 최적화하고 외부 네트워크 요청을 제거하여 개인 정보 보호와 성능을 향상합니다.
 
-> **🎥 Watch:** Learn more about how to use `next/font` → [YouTube (6 minutes)](https://www.youtube.com/watch?v=L8_98i_bMMA).
+> **🎥 시청하기:** `next/font`의 사용법에 대해 더 알아보세요. → [YouTube (6분)](https://www.youtube.com/watch?v=L8_98i_bMMA).
 
-`next/font` includes **built-in automatic self-hosting** for _any_ font file. This means you can optimally load web fonts with zero layout shift, thanks to the underlying CSS `size-adjust` property used.
+`next/font`는 _모든_ 글꼴 파일에 대한 **내장된 자동 자체 호스팅 기능**을 포함하고 있습니다. 이는 기본 CSS `size-adjust` 프로퍼티를 사용하여 레이아웃 이동 없이 웹 글꼴을 최적으로 불러올 수 있음을 의미합니다.
 
-This new font system also allows you to conveniently use all Google Fonts with performance and privacy in mind. CSS and font files are downloaded at build time and self-hosted with the rest of your static assets. **No requests are sent to Google by the browser.**
+새로운 글꼴 시스템을 사용하면 성능과 개인 정보 보호를 염두해 두며 편리하게 모든 Google Fonts를 사용할 수 있습니다. CSS와 글꼴 파일은 빌드 시 다운로드하고 나머지 정적 에셋과 함께 자체 호스팅됩니다. **브라우저에서 Google로 요청을 보내지 않습니다.**
 
 ## Google Fonts
 
-Automatically self-host any Google Font. Fonts are included in the deployment and served from the same domain as your deployment. **No requests are sent to Google by the browser.**
+모든 Google Font를 자동으로 자체 호스팅합니다. 글꼴은 배포 과정에 포함되고 배포와 동일한 도메인에서 제공합니다. **브라우저에서 Google로 요청을 보내지 않습니다.**
 
-Get started by importing the font you would like to use from `next/font/google` as a function. We recommend using [variable fonts](https://fonts.google.com/variablefonts) for the best performance and flexibility.
+사용하려는 글꼴을 `next/font/google`에서 함수로 가져와서 시작해보세요. 최고의 성능과 유연성을 위해 [가변 글꼴](https://fonts.google.com/variablefonts)을 사용하는 것을 추천합니다.
 
 <AppOnly>
 
@@ -111,12 +111,12 @@ export default function RootLayout({ children }) {
 
 <PagesOnly>
 
-To use the font in all your pages, add it to [`_app.js` file](/docs/pages/building-your-application/routing/custom-app) under `/pages` as shown below:
+모든 페이지에서 글꼴을 사용하려면 `/pages` 아래의 [`_app.js` 파일](/docs/pages/building-your-application/routing/custom-app)에 다음과 같이 추가합니다.
 
 ```jsx filename="pages/_app.js"
 import { Inter } from 'next/font/google'
 
-// If loading a variable font, you don't need to specify the font weight
+// 가변 글꼴을 불러오는 경우 글꼴의 두께를 지정할 필요가 없습니다.
 const inter = Inter({ subsets: ['latin'] })
 
 export default function MyApp({ Component, pageProps }) {
@@ -128,7 +128,7 @@ export default function MyApp({ Component, pageProps }) {
 }
 ```
 
-If you can't use a variable font, you will **need to specify a weight**:
+가변 글꼴을 사용할 수 없는 경우 **가중치를 지정해야 합니다**.
 
 ```jsx filename="pages/_app.js"
 import { Roboto } from 'next/font/google'
@@ -149,7 +149,7 @@ export default function MyApp({ Component, pageProps }) {
 
 </PagesOnly>
 
-You can specify multiple weights and/or styles by using an array:
+배열을 사용하면 여러 가중치 및/또는 스타일을 지정할 수 있습니다.
 
 ```jsx filename="app/layout.js"
 const roboto = Roboto({
@@ -160,13 +160,13 @@ const roboto = Roboto({
 })
 ```
 
-> **Good to know**: Use an underscore (\_) for font names with multiple words. E.g. `Roboto Mono` should be imported as `Roboto_Mono`.
+> **알아두면 좋은 것**: 여러 단어로 이루어진 글꼴 이름은 밑줄(\_)을 사용하세요. 예를 들어, `Roboto Mono`는 `Roboto_Mono`로 가져와야 합니다.
 
 <PagesOnly>
 
-### Apply the font in `<head>`
+### `<head>`에 글꼴 적용하기
 
-You can also use the font without a wrapper and `className` by injecting it inside the `<head>` as follows:
+래퍼와 `className`을 사용하지 않고도 글꼴을 사용할 수 있습니다. `<head>`안에 다음과 같이 추가합니다.
 
 ```jsx filename="pages/_app.js"
 import { Inter } from 'next/font/google'
@@ -187,9 +187,9 @@ export default function MyApp({ Component, pageProps }) {
 }
 ```
 
-### Single page usage
+### 단일 페이지에서 사용하기
 
-To use the font on a single page, add it to the specific page as shown below:
+단일 페이지에서 글꼴을 사용하려면 특정 페이지에 다음과 같이 추가합니다.
 
 ```jsx filename="pages/index.js"
 import { Inter } from 'next/font/google'
@@ -207,11 +207,11 @@ export default function Home() {
 
 </PagesOnly>
 
-### Specifying a subset
+### 부분 집합 지정하기
 
-Google Fonts are automatically [subset](https://fonts.google.com/knowledge/glossary/subsetting). This reduces the size of the font file and improves performance. You'll need to define which of these subsets you want to preload. Failing to specify any subsets while [`preload`](/docs/app/api-reference/components/font#preload) is `true` will result in a warning.
+Google Fonts는 자동으로 [부분 집합](https://fonts.google.com/knowledge/glossary/subsetting)이 됩니다. 이는 글꼴 파일의 크기를 줄이고 성능을 향상합니다. 이러한 부분 집합 중에서 미리 불러올 부분 집합을 정의해야 합니다. [`preload`](/docs/app/api-reference/components/font#preload)가 `true`인 상태에서 부분 집합을 지정하지 않는다면 경고가 발생합니다.
 
-This can be done by adding it to the function call:
+이를 함수 호출에 추가하여 수행할 수 있습니다.
 
 <AppOnly>
 
@@ -233,13 +233,13 @@ const inter = Inter({ subsets: ['latin'] })
 
 </PagesOnly>
 
-View the [Font API Reference](/docs/app/api-reference/components/font) for more information.
+[Font API 래퍼런스](/docs/app/api-reference/components/font)를 참고해 더 많은 정보를 알아보세요.
 
-### Using Multiple Fonts
+### 여러 글꼴 사용하기
 
-You can import and use multiple fonts in your application. There are two approaches you can take.
+애플리케이션에서 여러 글꼴을 가져오고 사용할 수 있습니다. 선택할 수 있는 두가지 방법이 있습니다.
 
-The first approach is to create a utility function that exports a font, imports it, and applies its `className` where needed. This ensures the font is preloaded only when it's rendered:
+첫 번째 방법은 글꼴을 내보내고 가져온 다음, 필요한 곳의 `className`에 글꼴을 적용하는 유틸리티 함수를 만드는 방법입니다. 이 방식은 렌더링될 때만 글꼴을 미리 불러옵니다.
 
 ```ts filename="app/fonts.ts" switcher
 import { Inter, Roboto_Mono } from 'next/font/google'
@@ -325,9 +325,9 @@ export default function Page() {
 
 </AppOnly>
 
-In the example above, `Inter` will be applied globally, and `Roboto Mono` can be imported and applied as needed.
+위 예시에서 `Inter`를 전역적으로 적용하고, `Roboto Mono`는 필요에 따라 가져와서 적용할 수 있습니다.
 
-Alternatively, you can create a [CSS variable](/docs/app/api-reference/components/font#variable) and use it with your preferred CSS solution:
+다른 방법으로는 [CSS 변수](/docs/app/api-reference/components/font#variable)를 생성하여 선호하는 CSS 방식과 함께 사용할 수 있습니다.
 
 <AppOnly>
 
@@ -402,13 +402,13 @@ h1 {
 }
 ```
 
-In the example above, `Inter` will be applied globally, and any `<h1>` tags will be styled with `Roboto Mono`.
+위 예시는 `Inter`를 전역적으로 적용하고, 모든 `<h1>` 태그를 `Roboto Mono`로 스타일합니다.
 
-> **Recommendation**: Use multiple fonts conservatively since each new font is an additional resource the client has to download.
+> **권장 사항**: 새로운 글꼴 각각은 클라이언트가 다운로드해야 하는 추가적인 자원이므로 여러 글꼴을 신중하게 사용하세요.
 
 ## Local Fonts
 
-Import `next/font/local` and specify the `src` of your local font file. We recommend using [variable fonts](https://fonts.google.com/variablefonts) for the best performance and flexibility.
+`next/font/local`을 가져와 로컬 글꼴 파일의 `src`를 지정합니다. 최고의 성능과 유연성을 위해 [가변 글꼴](https://fonts.google.com/variablefonts)을 사용하는 것을 추천합니다.
 
 <AppOnly>
 
@@ -459,7 +459,7 @@ export default function RootLayout({ children }) {
 ```jsx filename="pages/_app.js"
 import localFont from 'next/font/local'
 
-// Font files can be colocated inside of `pages`
+// 글꼴 파일은 `pages` 내에 함께 위치할 수 있습니다.
 const myFont = localFont({ src: './my-font.woff2' })
 
 export default function MyApp({ Component, pageProps }) {
@@ -473,7 +473,7 @@ export default function MyApp({ Component, pageProps }) {
 
 </PagesOnly>
 
-If you want to use multiple files for a single font family, `src` can be an array:
+단일 글꼴 집합의 여러 파일을 사용하려는 경우 `src`를 배열로 사용할 수 있습니다.
 
 ```js
 const roboto = localFont({
@@ -502,13 +502,13 @@ const roboto = localFont({
 })
 ```
 
-View the [Font API Reference](/docs/app/api-reference/components/font) for more information.
+[Font API 래퍼런스](/docs/app/api-reference/components/font)를 참고해 더 많은 정보를 알아보세요.
 
-## With Tailwind CSS
+## Tailwind CSS와 사용하기
 
-`next/font` can be used with [Tailwind CSS](https://tailwindcss.com/) through a [CSS variable](/docs/app/api-reference/components/font#css-variables).
+`next/font`는 [CSS 변수](/docs/app/api-reference/components/font#css-variables)를 통해 [Tailwind CSS](https://tailwindcss.com/)와 함께 사용할 수 있습니다.
 
-In the example below, we use the font `Inter` from `next/font/google` (you can use any font from Google or Local Fonts). Load your font with the `variable` option to define your CSS variable name and assign it to `inter`. Then, use `inter.variable` to add the CSS variable to your HTML document.
+아래 예시는 `next/font/google`의 `Inter` 글꼴을 사용합니다. 여기서는 Google 또는 Local Fonts의 모든 글꼴을 사용할 수 있습니다. CSS 변수 이름을 정의하고 `inter`로 할당하기 위해 `variable` 옵션을 포함하여 글꼴을 불러옵니다. 그런 다음 `inter.variable`을 사용하여 HTML 문서에 CSS 변수를 추가합니다.
 
 <AppOnly>
 
@@ -587,7 +587,7 @@ export default function MyApp({ Component, pageProps }) {
 
 </PagesOnly>
 
-Finally, add the CSS variable to your [Tailwind CSS config](/docs/app/building-your-application/styling/tailwind-css#configuring-tailwind):
+마지막으로 CSS 변수를 [Tailwind CSS 구성](/docs/app/building-your-application/styling/tailwind-css#configuring-tailwind)에 추가합니다.
 
 ```js filename="tailwind.config.js"
 /** @type {import('tailwindcss').Config} */
@@ -608,9 +608,9 @@ module.exports = {
 }
 ```
 
-You can now use the `font-sans` and `font-mono` utility classes to apply the font to your elements.
+이제 `font-sans`와 `font-mono` 유틸리티 클래스를 사용해 엘리먼트에 글꼴을 적용할 수 있습니다.
 
-## Preloading
+## 미리 불러오기
 
 <AppOnly>
 When a font function is called on a page of your site, it is not globally available and preloaded on all routes. Rather, the font is only preloaded on the related routes based on the type of file where it is used:
@@ -623,17 +623,17 @@ When a font function is called on a page of your site, it is not globally availa
 
 <PagesOnly>
 
-When a font function is called on a page of your site, it is not globally available and preloaded on all routes. Rather, the font is only preloaded on the related route/s based on the type of file where it is used:
+사이트의 페이지에서 글꼴 함수를 호출하면 글꼴을 전역적으로 사용할 수 없고, 글꼴을 모든 경로에 대해 미리 불러오지 않습니다. 대신 글꼴이 사용되는 파일의 종류에 따라 관련 경로(들)에서만 미리 불러옵니다.
 
-- if it's a [unique page](/docs/pages/building-your-application/routing/pages-and-layouts), it is preloaded on the unique route for that page
-- if it's in the [custom App](/docs/pages/building-your-application/routing/custom-app), it is preloaded on all the routes of the site under `/pages`
+- [고유한 페이지](/docs/pages/building-your-application/routing/pages-and-layouts)의 경우 해당 페이지에 대한 고유 경로로 미리 불러옵니다.
+- [사용자 지정 App](/docs/pages/building-your-application/routing/custom-app)의 경우 `/pages` 아래 사이트의 모든 경로로 미리 불러옵니다.
 
 </PagesOnly>
 
-## Reusing fonts
+## 글꼴 재사용하기
 
-Every time you call the `localFont` or Google font function, that font is hosted as one instance in your application. Therefore, if you load the same font function in multiple files, multiple instances of the same font are hosted. In this situation, it is recommended to do the following:
+`localFont` 또는 Google 글꼴 함수를 호출할 때마다 해당 글꼴은 애플리케이션에서 하나의 인스턴스로 호스팅됩니다. 그러므로 여러 파일에서 동일한 글꼴 함수를 로드하면, 동일한 글꼴의 여러 인스턴스가 호스팅됩니다. 이러한 상황에서는 다음을 수행하는 것을 추천합니다.
 
-- Call the font loader function in one shared file
-- Export it as a constant
-- Import the constant in each file where you would like to use this font
+- 하나의 공유 파일에서 글꼴 로더 함수를 호출하기
+- 상수로 내보내기
+- 글꼴을 사용하려는 각 파일에서 상수로 가져오기
