@@ -22,7 +22,7 @@ description: Next.js는 API 라우트 지원하여 Next.js 앱 내에서 API를 
 
 API 라우트는 Next.js를 사용하여 **API**를 만들 수 있는 솔루션을 제공합니다.
 
-`pages/api` 폴더 내의 모든 파일은 `/api/*`에 대응되며 `page`가 아닌 API 엔드포인트로 취급됩니다. 이들은 서버 측 번들이며 클라이언트 측 번들 크기를 증가시키지 않습니다.
+`pages/api` 폴더 내의 모든 파일은 `/api/*`에 대응되며 `page`가 아닌 API 엔드포인트로 취급됩니다. 이는 서버 측 번들이며 클라이언트 측 번들 크기를 증가시키지 않습니다.
 
 예를 들어 다음 API라우트 `pages/api/user.js`는 상태코드 `200`을 가진 `json` 응답을 반환합니다.
 
@@ -36,8 +36,8 @@ export default function handler(req, res) {
 
 API 라우트가 동작하려면 다음 매개변수를 받는 함수를 default로 내보내야 합니다. (일명 **요청 핸들러**)
 
-- `req`: [http.IncomingMessage](https://nodejs.org/api/http.html#class-httpincomingmessage) 인스턴스와 [미리 만들어진 미들웨어](/docs/pages/api-reference/functions/next-server)들
-- `res`: [http.ServerResponse](https://nodejs.org/api/http.html#class-httpserverresponse) 인스턴스와 [헬퍼 함수](/docs/pages/api-reference/functions/next-server)들
+- `req`: [http.IncomingMessage](https://nodejs.org/api/http.html#class-httpincomingmessage) 인스턴스와 [미리 만들어진 미들웨어](/docs/pages/api-reference/functions/next-server)
+- `res`: [http.ServerResponse](https://nodejs.org/api/http.html#class-httpserverresponse) 인스턴스와 [헬퍼 함수](/docs/pages/api-reference/functions/next-server)
 
 API 라우트에서 다른 HTTP 메서드를 처리하려면, 요청 핸들러에서 `req.method`를 사용하면 됩니다.
 
@@ -66,7 +66,7 @@ API 엔드포인트를 가져오려면 이 섹션의 시작 부분에 제공된 
   이러한 동작은 [CORS 요청 헬퍼](https://github.com/vercel/next.js/tree/canary/examples/api-routes-cors)를 사용하여 요청 핸들러를 래핑함으로써 사용자 정의할 수 있습니다.
 - API 라우트는 [`output: 'export'`](/docs/pages/building-your-application/deploying/static-exports)와 함께 사용할 수 없습니다.
 
-## 요청 헬퍼들
+## 요청 헬퍼
 
 API 라우트는 들어오는 요청(`req`)을 분석하는 내장 요청 헬퍼를 제공합니다.
 
@@ -150,7 +150,7 @@ export const config = {
 
 ### TypeScript를 사용하여 `req` / `res` 객체 확장
 
-더 나은 타입 안정성을 위해, `req` 및 `res` 객체를 확장하는 것을 권장하지 않습니다. 대신, 이들과 함께 작동하는 함수를 사용하세요.
+더 나은 타입 안정성을 위해, `req` 및 `res` 객체를 확장하는 것을 권장하지 않습니다. 대신, 함께 작동하는 함수를 사용하세요.
 
 ```ts filename="utils/cookies.ts" switcher
 import { serialize, CookieSerializeOptions } from 'cookie'
@@ -254,11 +254,11 @@ export default withFoo(handler)
 
 `withFoo()`를 export에서 제거하더라도 코드는 여전히 컴파일되므로, 이는 안전하지 않다는 점을 유의하세요.
 
-## 응답 헬퍼들
+## 응답 헬퍼
 
 [서버 응답 객체](https://nodejs.org/api/http.html#http_class_http_serverresponse)(보통 `res`로 줄여서 표현됨)는 개발자 경험을 향상하고 새로운 API 엔드포인트를 빠르게 생성하는 데 도움을 주기 위해 Express.js와 유사한 여러 헬퍼 함수를 포함하고 있습니다.
 
-포함된 헬퍼들은 다음과 같습니다.
+포함된 여러 헬퍼는 다음과 같습니다.
 
 - `res.status(code)` - 상태 코드를 설정하는 함수입니다. `code`는 유효한 [HTTP 상태 코드](https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C)여야 합니다.
 - `res.json(body)` - JSON 응답을 보냅니다. `body`는 [직렬화할 수 있는 객체](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)여야 합니다.
@@ -443,9 +443,9 @@ export default function handler(req, res) {
 
 에지 API 라우트를 사용하면 Next.js로 고성능 API를 만들 수 있습니다. [에지 런타임](/docs/pages/api-reference/edge)을 사용하기 때문에, 종종 Node.js 기반 API 라우트보다 빠릅니다. 이러한 성능 개선은 기본 Node.js API에 접근할 수 없는 [제약사항](/docs/pages/api-reference/edge#unsupported-apis)이 따르지만, 대신 에지 API 라우트는 표준 웹 API를 기반으로 합니다.
 
-`pages/api` 폴더 내의 모든 파일은 `api/*`로 대응되며, 페이지가 아닌 API 엔드포인트로 처리됩니다. 이들은 서버 측 전용 번들이며 클라이언트 측 번들 크기는 증가하지 않습니다.
+`pages/api` 폴더 내의 모든 파일은 `api/*`로 대응되며, 페이지가 아닌 API 엔드포인트로 처리됩니다. 이는 서버 측 전용 번들이며 클라이언트 측 번들 크기는 증가하지 않습니다.
 
-### 예시들
+### 예시
 
 #### 기본
 
@@ -566,7 +566,7 @@ export default async function handler(req: NextRequest) {
 
 에지 API 라우트는 [에지 런타임](/docs/pages/api-reference/edge)을 사용하며, API 라우트는 [Node.js 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)을 사용합니다.
 
-에지 API 라우트는 서버로부터 [응답을 스트림](/docs/pages/api-reference/edge#stream-apis)할 수 있으며, 캐시된 파일들(예: HTML, CSS, JavaScript)에 접근한 *이후*에 실행됩니다. 서버 측 스트리밍은 더 빠른 [Time To First Byte (TTFB)](https://web.dev/ttfb/)로 성능을 향상할 수 있습니다.
+에지 API 라우트는 서버로부터 [응답을 스트림](/docs/pages/api-reference/edge#stream-apis)할 수 있으며, 캐시된 여러 파일(예: HTML, CSS, JavaScript)에 접근한 *이후*에 실행됩니다. 서버 측 스트리밍은 더 빠른 [Time To First Byte (TTFB)](https://web.dev/ttfb/)로 성능을 향상할 수 있습니다.
 
 > **참고**: `getServerSideProps`와 함께 [에지 런타임](/docs/pages/api-reference/edge)을 사용하면 응답 객체에 접근할 수 없습니다. `res`에 접근이 필요하다면 `runtime: 'nodejs'`를 설정하여 [Node.js 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)을 사용해야 합니다.
 
