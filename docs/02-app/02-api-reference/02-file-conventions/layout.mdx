@@ -94,7 +94,7 @@ export default function ShopLayout({ children, params }) {
 
 ### 레이아웃은 `searchParams`를 받아 오지 않습니다.
 
-[Pages](/docs/app/api-reference/file-conventions/page)와 다르게, 레이아웃 컴포넌트는 `searchParams` prop 을 **받아 오지 않습니다**. 이는 공유되는 레이아웃은 [페이지 이동 중 다시 렌더링 되지 않아](/docs/app/building-your-application/routing#partial-rendering) 이전 페이지의 `searchParams`를 가져오는 경우가 발생할 수 있기 때문입니다.
+[Pages](/docs/app/api-reference/file-conventions/page)와 다르게, 레이아웃 컴포넌트는 `searchParams` prop 을 **받아 오지 않습니다**. 공유되는 레이아웃은 [페이지 이동 중 다시 렌더링 되지 않아](/docs/app/building-your-application/routing#partial-rendering) 이전 페이지의 `searchParams`를 가져오는 경우가 발생할 수 있기 때문입니다.
 
 클라이언트 측 이동을 사용하는 경우, 두 경로 사이 이동시 Next.js는 자동으로 공통 레이아웃 이하의 변화하는 부분만 렌더링 합니다.
 
