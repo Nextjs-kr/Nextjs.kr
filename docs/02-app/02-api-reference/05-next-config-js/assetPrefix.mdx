@@ -7,12 +7,12 @@ description: CDN을 구성하기 위해 assetPrefix 설정 옵션을 사용하�
 > Asset Prefix를 직접 설정할 필요가 없습니다.
 
 > **알아두면 좋은 점**: Next.js 9.5 부터 사용자가 직접 [Base Path](/docs/app/api-reference/next-config-js/basePath)를 정의할 수 있으며,
-> `/docs`와 같은 하위 경로에 어플리케이션을 호스팅할 때 더 적합합니다.
+> `/docs`와 같은 하위 경로에 애플리케이션을 호스팅할 때 더 적합합니다.
 > 이런 경우라면 Asset Prefix를 직접 설정하는 것을 권장하지 않습니다.
 
-[CDN](https://en.wikipedia.org/wiki/Content_delivery_network)을 사용하려면, asset prefix를 설정하여 CDN의 원본 서버(origin)가 Next.js 어플리케이션이 호스팅된 도메인에 요청을 보낼 수 있도록 합니다.
+[CDN](https://en.wikipedia.org/wiki/Content_delivery_network)을 사용하려면, asset prefix를 설정하여 CDN의 원본 서버(origin)가 Next.js 애플리케이션이 호스팅된 도메인에 요청을 보낼 수 있도록 합니다.
 
-`next.config.js` 를 열고 `assetPrefix` 를 추가하세요:
+`next.config.js` 를 열고 `assetPrefix` 를 추가하세요.
 
 ```js filename="next.config.js"
 const isProd = process.env.NODE_ENV === 'production'
@@ -35,14 +35,12 @@ Next.js는 `/_next/` 경로(`.next/static/` 폴더)의 JavaScript 및 CSS 파일
 https://cdn.mydomain.com/_next/static/chunks/4b9b41aaa062cbbfeff4add70f256968c51ece5d.4d708494b3aed70c04f0.js
 ```
 
-CDN에 파일을 업로드하기 위한 정확한 설정은 어떤 CDN을 선택하느냐에 따라 다릅니다. CDN에는 `.next/static/`내의 내용만 호스팅해야 합니다. 위의 URL에서 볼 수 있듯, `_next/static/`로 업로드 해야 합니다. 다만 `_next/static/` 폴더 외에 `.next/`에 있는 나머지 폴더들을 업로드하면 여러분의 코드와 다른 설정들이 외부에 노출되기 때문에 **반드시 `_next/static/`만 업로드 해야 합니다.**
+CDN에 파일을 업로드하기 위한 정확한 설정은 어떤 CDN을 선택하느냐에 따라 다릅니다. CDN에는 `.next/static/` 이하의 파일만 호스팅해야 합니다. 위의 URL처럼 `_next/static/` 로써 업로드 해야 합니다. `_next/static/` 폴더 외에 `.next/`에 있는 나머지 폴더들을 올리면 여러분의 코드와 다른 설정들이 외부에 노출되기 때문에 **반드시 `_next/static/`만 올려야 합니다.**
 
-`_next/static` 으로의 요청은 `assetPrefix` 의 영향을 받지만, 아래와 같은 경로들은 영향을 받지 않습니다.
+`_next/static` 으로의 요청은 `assetPrefix` 의 영향을 받지만 다음의 경로들은 영향을 받지 않습니다.
 
 - [public](/docs/pages/building-your-application/optimizing/static-assets) 폴더의 파일들은 영향을 받지 않습니다. CDN을 통해 이 파일들을 제공하고 싶다면 직접 접두어(prefix)를 추가해야 합니다.
 
-- `/_next/data/` requests for `getServerSideProps` pages. These requests will always be made against the main domain since they're not static.
 - `getServerSideProps` 함수를 사용하는 페이지에서 보내는 `/_next/data/`로의 요청도 영향을 받지 않습니다. 이런 요청은 동적이기 때문에 항상 메인 도메인으로 보내집니다.
 
-- `/_next/data/` requests for `getStaticProps` pages. These requests will always be made against the main domain to support [Incremental Static Generation](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration), even if you're not using it (for consistency).
 - `getStaticProps` 함수를 사용하는 페이지에서 보내는 `/_next/data/`로의 요청도 영향을 받지 않습니다. 이 요청은 [점진적 정적 생성(Incremental Static Generation)](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)을 (사용하지 않더라도 일관성을) 위해 항상 메인 도메인으로 보내집니다.
