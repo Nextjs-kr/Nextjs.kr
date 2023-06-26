@@ -1,11 +1,13 @@
 ---
 title: robots.txt
-description: API Reference for robots.txt file.
+description: robots.txt 파일에 대한 API 레퍼런스입니다.
 ---
 
-Add or generate a `robots.txt` file that matches the [Robots Exclusion Standard](https://en.wikipedia.org/wiki/Robots.txt#Standard) in the **root** of `app` directory to tell search engine crawlers which URLs they can access on your site.
+<!-- Add or generate a `robots.txt` file that matches the [Robots Exclusion Standard](https://en.wikipedia.org/wiki/Robots.txt#Standard) in the **root** of `app` directory to tell search engine crawlers which URLs they can access on your site. -->
 
-## Static `robots.txt`
+사이트에서 액세스할 수 있는 URL을 검색 엔진 크롤러에 알리기 위해 `app` 디렉토리의 **root**에 [Robots Exclusion Standard](https://en.wikipedia.org/wiki/Robots.txt#Standard) 와 일치하는 `robots.txt` 파일을 추가하거나 생성합니다.
+
+## 정적인 `robots.txt`
 
 ```txt filename="app/robots.txt"
 User-Agent: *
@@ -15,9 +17,11 @@ Disallow: /private/
 Sitemap: https://acme.com/sitemap.xml
 ```
 
-## Generate a Robots file
+## 로봇 파일 생성
 
-Add a `robots.js` or `robots.ts` file that returns a [`Robots` object](#robots-object).
+<!-- Add a `robots.js` or `robots.ts` file that returns a [`Robots` object](#robots-object). -->
+
+[`Robots` object](#robots-object)를 반환하는 `robots.js` 또는 `robots.ts` 파일을 추가합니다.
 
 ```ts filename="app/robots.ts" switcher
 import { MetadataRoute } from 'next'
@@ -47,7 +51,7 @@ export default function robots() {
 }
 ```
 
-Output:
+출력:
 
 ```txt
 User-Agent: *
@@ -79,8 +83,8 @@ type Robots = {
 }
 ```
 
-## Version History
+## 버전 기록
 
-| Version   | Changes              |
-| --------- | -------------------- |
-| `v13.3.0` | `robots` introduced. |
+| Version   | Changes        |
+| --------- | -------------- |
+| `v13.3.0` | `robots` 안내. |
