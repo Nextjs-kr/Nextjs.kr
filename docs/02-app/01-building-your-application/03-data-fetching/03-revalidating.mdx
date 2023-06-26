@@ -4,7 +4,7 @@ nav_title: Revalidating
 description: Incremental Static Regeneration을 사용하여 Next.js에서 데이터를 재검증하는 방법에 대해 알아보세요.
 ---
 
-Next.js를 사용하면 **전체 사이트를 다시 빌드할 필요 없이** 특정 정적 경로를 업데이트할 수 있습니다. 재검증([Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)이라고도 함)을 사용하면 정적의 이점을 유지하면서 수백만 페이지로 확장할 수 있습니다.
+Next.js를 사용하면 **전체 사이트를 다시 빌드할 필요 없이** 특정 정적 라우트를 업데이트할 수 있습니다. 재검증([Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)이라고도 함)을 사용하면 정적의 이점을 유지하면서 수백만 페이지로 확장할 수 있습니다.
 
 Next.js에는 두 가지 유형의 재검증이 있습니다:
 
@@ -13,7 +13,7 @@ Next.js에는 두 가지 유형의 재검증이 있습니다:
 
 ## Background 재검증
 
-특정 간격으로 캐시된 데이터를 재검증하려면 `fetch()`의 `next.revalidate` 옵션을 사용하여 리소스의 `cache` 수명(초)을 설정할 수 있습니다.
+특정 간격으로 캐시 된 데이터를 재검증하려면 `fetch()`의 `next.revalidate` 옵션을 사용하여 자원의 `cache` 수명(초)을 설정할 수 있습니다.
 
 ```js
 fetch('https://...', { next: { revalidate: 60 } })
@@ -22,20 +22,20 @@ fetch('https://...', { next: { revalidate: 60 } })
 `fetch`를 사용하지 않는 데이터(예시: 외부 패키지 또는 쿼리 빌더 사용)를 재검증하려면 [라우트 세그먼트 구성](/docs/app/api-reference/file-conventions/route-segment-config#revalidate)을 사용할 수 있습니다.
 
 ```tsx filename="app/page.tsx" switcher
-export const revalidate = 60 // revalidate this page every 60 seconds
+export const revalidate = 60 // 60초마다 페이지 재검증
 ```
 
 ```jsx filename="app/page.js" switcher
-export const revalidate = 60 // revalidate this page every 60 seconds
+export const revalidate = 60 // 60초마다 페이지 재검증
 ```
 
-`fetch` 외에도 [`cache`](/docs/app/building-your-application/data-fetching/caching#per-request-caching)를 사용하여 데이터를 재검증할 수도 있습니다.
+`fetch` 외에도 [`cache`](/docs/app/building-your-application/data-fetching/caching#per-request-caching) 를 사용하여 데이터를 재검증할 수도 있습니다.
 
 ### 작동 방식
 
-1. 빌드 시점에 정적으로 렌더링된 라우트에 대한 요청이 이루어지면 처음에는 캐시된 데이터가 표시됩니다.
-2. 최초 요청 이후 60초 이전의 라우트에 대한 모든 요청도 캐시되어 즉시 표시됩니다.
-3. 60초가 지난 후에도 다음 요청에는 캐시된(오래된) 데이터가 계속 표시됩니다.
+1. 빌드 시점에 정적으로 렌더링된 라우트에 대한 요청이 이루어지면 처음에는 캐시 된 데이터가 표시됩니다.
+2. 최초 요청 이후 60초 이전의 라우트에 대한 모든 요청도 캐시 되어 즉시 표시됩니다.
+3. 60초가 지난 후에도 다음 요청에는 캐시 된(오래된) 데이터가 계속 표시됩니다.
 4. Next.js는 백그라운드에서 데이터 재생성을 트리거합니다.
 5. 라우트가 성공적으로 생성되면 Next.js는 캐시를 무효화하고 업데이트된 라우트를 표시합니다. Background 재생성이 실패하면 이전 데이터는 여전히 변경되지 않습니다.
 
@@ -45,7 +45,7 @@ export const revalidate = 60 // revalidate this page every 60 seconds
 
 ## On-demand 재검증
 
-`revalidate` 시간을 `60`으로 설정하면 모든 방문자는 1분 동안 동일한 버전의 사이트를 볼 수 있습니다. 캐시를 무효화하는 유일한 방법은 1분 경과 후 누군가 페이지를 방문하는 경우입니다.
+`revalidate` 시간을 `60`으로 설정하면 모든 방문자는 1분 동안 동일한 버전의 사이트를 볼 수 있습니다. 캐시를 무효로 하는 유일한 방법은 1분 경과 후 누군가 페이지를 방문하는 경우입니다.
 
 Next.js 앱 라우터는 라우트 또는 캐시 태그를 기반으로 on-demand 콘텐츠 재검증을 지원합니다. 이를 통해 특정 fetch에 대해 Next.js 캐시를 수동으로 제거할 수 있으므로 언제 사이트를 업데이트할지 쉽게 결정할 수 있습니다.
 
@@ -74,7 +74,7 @@ export default async function Page() {
 }
 ```
 
-이렇게 캐시된 데이터는 [라우트 핸들러](/docs/app/building-your-application/routing/router-handlers)에서 `revalidateTag`를 호출하여 on-demand 방식으로 재검증될 수 있습니다.
+이렇게 캐시 된 데이터는 [라우트 핸들러](/docs/app/building-your-application/routing/router-handlers)에서 `revalidateTag`를 호출하여 on-demand 방식으로 재검증될 수 있습니다.
 
 ```ts filename="app/api/revalidate/route.ts" switcher
 import { NextRequest, NextResponse } from 'next/server'
