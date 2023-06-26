@@ -1,16 +1,16 @@
 ---
 title: generateBuildId
-description: Configure the build id, which is used to identify the current build in which your application is being served.
+description: 애플리케이션이 제공되고 있는 현재 빌드를 식별하는 데 사용되는 빌드 ID를 구성합니다.
 ---
 
-Next.js uses a constant id generated at build time to identify which version of your application is being served. This can cause problems in multi-server deployments when `next build` is run on every server. In order to keep a consistent build id between builds you can provide your own build id.
+Next.js는 빌드 시 생성된 상수 ID를 사용하여 제공 중인 애플리케이션의 버전을 식별합니다. 이로 인해 모든 서버에서 `next build`가 실행될 때 다중 서버 배포에서 문제가 발생할 수 있습니다. 빌드 간에 일관된 빌드 ID를 유지하기 위해 고유한 빌드 ID를 제공할 수 있습니다.
 
-Open `next.config.js` and add the `generateBuildId` function:
+`next.config.js`를 열고 `generateBuildId` 함수를 추가합니다:
 
 ```js filename="next.config.js"
 module.exports = {
   generateBuildId: async () => {
-    // You can, for example, get the latest git commit hash here
+    // 예를 들어 여기에서 최신 git 커밋 해시를 가져올 수 있습니다.
     return 'my-build-id'
   },
 }
