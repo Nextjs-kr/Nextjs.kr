@@ -199,7 +199,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { setCookie } from '../../utils/cookies'
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  // `res` 객체를 사용하여 순수 함수를 호출합니다, 이는 `set-cookie` 헤더를 추가합니다
+  // `res` 객체를 사용하여 순수 함수를 호출합니다. 이는 `set-cookie` 헤더를 추가합니다
   // 메인 도메인에 `set-cookie` 헤더를 추가하고 30일 후에 만료됩니다
   setCookie(res, 'Next.js', 'api-middleware!', { path: '/', maxAge: 2592000 })
   // `set-cookie` 헤더를 반환하여 브라우저에 표시하고 작동하는 것을 보여줍니다!
@@ -213,7 +213,7 @@ export default handler
 import { setCookie } from '../../utils/cookies'
 
 const handler = (req, res) => {
-  // `res` 객체를 사용하여 순수 함수를 호출합니다, 이는 `set-cookie` 헤더를 추가합니다
+  // `res` 객체를 사용하여 순수 함수를 호출합니다. 이는 `set-cookie` 헤더를 추가합니다
   // 메인 도메인에 `set-cookie` 헤더를 추가하고 30일 후에 만료됩니다
   setCookie(res, 'Next.js', 'api-middleware!', { path: '/', maxAge: 2592000 })
   // `set-cookie` 헤더를 반환하여 브라우저에 표시하고 작동하는 것을 보여줍니다!
@@ -264,7 +264,7 @@ export default withFoo(handler)
 - `res.json(body)` - JSON 응답을 보냅니다. `body`는 [직렬화할 수 있는 객체](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)여야 합니다.
 - `res.send(body)` - HTTP 응답을 보냅니다. `body`는 `string`, `object` 또는 `Buffer`일 수 있습니다.
 - `res.redirect([status,] path)` - 지정된 경로 또는 URL로 리다이렉트합니다. `status`는 유효한 [HTTP 상태 코드](https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C)여야 합니다.
-  만약 지정되지 않는다면, `status`의 기본값은 "307" 즉, "임시 리다이렉트(Temporary redirect)"입니다.
+  만약 지정되지 않는다면 `status`의 기본값은 "307" 즉, "임시 리다이렉트(Temporary redirect)"입니다.
 - `res.revalidate(urlPath)` - `getStaticProps`를 사용하여 [요청 시 페이지 재검증](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation)을 수행합니다. `urlPath`는 `string`여야 합니다.
 
 ### 응답 상태코드 설정하기
@@ -391,11 +391,11 @@ export default function handler(req, res) {
 
 API 라우트는 괄호 안에 세 개의 점(`...`)을 추가함으로써 모든 경로를 잡아내도록 확장될 수 있습니다. 예를 들어
 
-- `pages/api/post/[...slug].js`는 `/api/post/a`를 매치할 뿐만 아니라, `/api/post/a/b`, `/api/post/a/b/c` 등도 매치합니다.
+- `pages/api/post/[...slug].js`는 `/api/post/a`를 매치할 뿐만 아니라 `/api/post/a/b`, `/api/post/a/b/c` 등도 매치합니다.
 
 > **참고**: `[...param]`과 같이 `slug` 이외의 이름도 사용할 수 있습니다.
 
-매칭된 매개변수는 쿼리 매개변수(`slug`가 예시)로 페이지에 전달되며, 이 매개변수는 항상 배열 형태입니다. 따라서, `/api/post/a` 경로는 다음과 같은 `query` 객체를 가질 것입니다.
+매칭된 매개변수는 쿼리 매개변수(`slug`가 예시)로 페이지에 전달됩니다. 이 매개변수는 항상 배열 형태입니다. 따라서, `/api/post/a` 경로는 다음과 같은 `query` 객체를 가질 것입니다.
 
 ```json
 { "slug": ["a"] }
@@ -416,7 +416,7 @@ export default function handler(req, res) {
 }
 ```
 
-이제, `/api/post/a/b/c`로의 요청은 텍스트 `Post: a, b, c`를 응답으로 받게 됩니다.
+이제 `/api/post/a/b/c`로의 요청은 텍스트 `Post: a, b, c`를 응답으로 받게 됩니다.
 
 ### 선택적 캐치 올 API 라우트
 
