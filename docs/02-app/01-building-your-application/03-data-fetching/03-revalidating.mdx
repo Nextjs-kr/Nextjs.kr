@@ -1,25 +1,25 @@
 ---
 title: Revalidating Data
 nav_title: Revalidating
-description: Learn about revalidating data in Next.js using Incremental Static Regeneration.
+description: Incremental Static Regeneration을 사용하여 Next.js에서 데이터를 재검증하는 방법에 대해 알아보세요.
 ---
 
-Next.js allows you to update specific static routes **without needing to rebuild your entire site**. Revalidation (also known as [Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)) allows you to retain the benefits of static while scaling to millions of pages.
+Next.js를 사용하면 **전체 사이트를 다시 빌드할 필요 없이** 특정 정적 경로를 업데이트할 수 있습니다. 재검증([Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)이라고도 함)을 사용하면 정적의 이점을 유지하면서 수백만 페이지로 확장할 수 있습니다.
 
-There are two types of revalidation in Next.js:
+Next.js에는 두 가지 유형의 재검증이 있습니다:
 
-- **Background**: Revalidates the data at a specific time interval.
-- **On-demand**: Revalidates the data based on an event such as an update.
+- **Background**: 특정 시간 간격으로 데이터를 재검증합니다.
+- **On-demand**: 업데이트와 같은 이벤트를 기반으로 데이터를 재검증합니다.
 
-## Background Revalidation
+## Background 재검증
 
-To revalidate cached data at a specific interval, you can use the `next.revalidate` option in `fetch()` to set the `cache` lifetime of a resource (in seconds).
+특정 간격으로 캐시된 데이터를 재검증하려면 `fetch()`의 `next.revalidate` 옵션을 사용하여 리소스의 `cache` 수명(초)을 설정할 수 있습니다.
 
 ```js
 fetch('https://...', { next: { revalidate: 60 } })
 ```
 
-If you want to revalidate data that does not use `fetch` (i.e. using an external package or query builder), you can use the [route segment config](/docs/app/api-reference/file-conventions/route-segment-config#revalidate).
+`fetch`를 사용하지 않는 데이터(예시: 외부 패키지 또는 쿼리 빌더 사용)를 재검증하려면 [라우트 세그먼트 구성](/docs/app/api-reference/file-conventions/route-segment-config#revalidate)을 사용할 수 있습니다.
 
 ```tsx filename="app/page.tsx" switcher
 export const revalidate = 60 // revalidate this page every 60 seconds
@@ -29,34 +29,34 @@ export const revalidate = 60 // revalidate this page every 60 seconds
 export const revalidate = 60 // revalidate this page every 60 seconds
 ```
 
-In addition to `fetch`, you can also revalidate data using [`cache`](/docs/app/building-your-application/data-fetching/caching#per-request-caching).
+`fetch` 외에도 [`cache`](/docs/app/building-your-application/data-fetching/caching#per-request-caching)를 사용하여 데이터를 재검증할 수도 있습니다.
 
-### How it works
+### 작동 방식
 
-1. When a request is made to the route that was statically rendered at build time, it will initially show the cached data.
-2. Any requests to the route after the initial request and before 60 seconds are also cached and instantaneous.
-3. After the 60-second window, the next request will still show the cached (stale) data.
-4. Next.js will trigger a regeneration of the data in the background.
-5. Once the route generates successfully, Next.js will invalidate the cache and show the updated route. If the background regeneration fails, the old data would still be unaltered.
+1. 빌드 시점에 정적으로 렌더링된 라우트에 대한 요청이 이루어지면 처음에는 캐시된 데이터가 표시됩니다.
+2. 최초 요청 이후 60초 이전의 라우트에 대한 모든 요청도 캐시되어 즉시 표시됩니다.
+3. 60초가 지난 후에도 다음 요청에는 캐시된(오래된) 데이터가 계속 표시됩니다.
+4. Next.js는 백그라운드에서 데이터 재생성을 트리거합니다.
+5. 라우트가 성공적으로 생성되면 Next.js는 캐시를 무효화하고 업데이트된 라우트를 표시합니다. Background 재생성이 실패하면 이전 데이터는 여전히 변경되지 않습니다.
 
-When a request is made to a route segment that hasn’t been generated, Next.js will dynamically render the route on the first request. Future requests will serve the static route segments from the cache.
+생성되지 않은 라우트 세그먼트에 대한 요청이 이루어지면 Next.js는 첫 번째 요청에서 라우트를 동적으로 렌더링합니다. 이후 요청은 캐시에서 정적 라우트 세그먼트를 제공합니다.
 
-> **Good to know**: Check if your upstream data provider has caching enabled by default. You might need to disable (e.g. `useCdn: false`), otherwise a revalidation won't be able to pull fresh data to update the ISR cache. Caching can occur at a CDN (for an endpoint being requested) when it returns the `Cache-Control` header. ISR on Vercel [persists the cache globally and handles rollbacks](https://vercel.com/docs/concepts/incremental-static-regeneration/overview).
+> **알아두면 좋습니다**. 업스트림 데이터 제공 업체가 기본적으로 캐싱을 활성화했는지 확인하세요. 비활성화해야 할 수도 있습니다(예시: `useCdn: false`). 그렇지 않으면 재검증에서 새로운 데이터를 가져와서 ISR 캐시를 업데이트할 수 없습니다. 캐싱은 `Cache-Control` 헤더를 반환할 때 CDN(요청 중인 엔드포인트에 대해)에서 발생할 수 있습니다. Vercel의 ISR은 [캐시를 전역적으로 유지하고 롤백을 처리](https://vercel.com/docs/concepts/incremental-static-regeneration/overview)합니다.
 
-## On-demand Revalidation
+## On-demand 재검증
 
-If you set a `revalidate` time of `60`, all visitors will see the same generated version of your site for one minute. The only way to invalidate the cache is if someone visits the page after the minute has passed.
+`revalidate` 시간을 `60`으로 설정하면 모든 방문자는 1분 동안 동일한 버전의 사이트를 볼 수 있습니다. 캐시를 무효화하는 유일한 방법은 1분 경과 후 누군가 페이지를 방문하는 경우입니다.
 
-The Next.js App Router supports revalidating content on-demand based on a route or cache tag. This allows you to manually purge the Next.js cache for specific fetches, making it easier to update your site when:
+Next.js 앱 라우터는 라우트 또는 캐시 태그를 기반으로 on-demand 콘텐츠 재검증을 지원합니다. 이를 통해 특정 fetch에 대해 Next.js 캐시를 수동으로 제거할 수 있으므로 언제 사이트를 업데이트할지 쉽게 결정할 수 있습니다.
 
-- Content from your headless CMS is created or updated.
-- Ecommerce metadata changes (price, description, category, reviews, etc).
+- 헤드리스 CMS의 콘텐츠가 생성되거나 업데이트되는 경우.
+- 전자상거래 메타데이터(가격, 설명, 카테고리, 리뷰 등)가 변경된 경우.
 
-### Using On-Demand Revalidation
+### On-Demand 재검증 사용하기
 
-Data can be revalidated on-demand by path ([`revalidatePath`](/docs/app/api-reference/functions/revalidatePath)) or by cache tag ([`revalidateTag`](/docs/app/api-reference/functions/revalidateTag)).
+데이터는 경로([`revalidatePath`](/docs/app/api-reference/functions/revalidatePath)) 또는 캐시 태그([`revalidateTag`](/docs/app/api-reference/functions/revalidateTag))를 통해 on-demand 방식으로 재검증될 수 있습니다.
 
-For example, the following `fetch` adds the cache tag `collection`:
+예를 들어, 다음 `fetch`는 캐시 태그 `collection`을 추가합니다.
 
 ```tsx filename="app/page.tsx" switcher
 export default async function Page() {
@@ -74,7 +74,7 @@ export default async function Page() {
 }
 ```
 
-This cached data can then be revalidated on-demand by calling `revalidateTag` in a [Route Handler](/docs/app/building-your-application/routing/router-handlers).
+이렇게 캐시된 데이터는 [라우트 핸들러](/docs/app/building-your-application/routing/router-handlers)에서 `revalidateTag`를 호출하여 on-demand 방식으로 재검증될 수 있습니다.
 
 ```ts filename="app/api/revalidate/route.ts" switcher
 import { NextRequest, NextResponse } from 'next/server'
@@ -98,6 +98,6 @@ export async function GET(request) {
 }
 ```
 
-## Error Handling and Revalidation
+## 오류 처리 및 재검증
 
-If an error is thrown while attempting to revalidate data, the last successfully generated data will continue to be served from the cache. On the next subsequent request, Next.js will retry revalidating the data.
+데이터 재검증을 시도하는 동안 오류가 발생하면 마지막에 성공적으로 생성된 데이터가 캐시에서 계속 제공됩니다. 다음 후속 요청 시 Next.js는 데이터 재검증을 다시 시도합니다.
