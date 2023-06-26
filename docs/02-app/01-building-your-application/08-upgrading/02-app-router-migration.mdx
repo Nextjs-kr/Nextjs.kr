@@ -4,7 +4,7 @@ nav_title: App Router 마이그레이션
 description: Next.js 어플리케이션을 Pages Router에서 App Router로 업그레이드하는 방법을 배웁니다.
 ---
 
-이 가이드는 당신을 도와줄 것입니다:
+이 가이드는 당신을 도와줄 것입니다.
 
 - [Update your Next.js application from version 12 to version 13](#nextjs-version)
 - [Upgrade features that work in both the `pages` and the `app` directories](#upgrading-new-features)
@@ -18,7 +18,7 @@ description: Next.js 어플리케이션을 Pages Router에서 App Router로 업�
 
 ### Next.js 버전
 
-Next.js 버전 13으로 업데이트하려면 기본 패키지 관리자를 사용하여 다음 명령을 실행합니다:
+Next.js 버전 13으로 업데이트하려면 기본 패키지 관리자를 사용하여 다음 명령을 실행합니다.
 
 ```bash filename="Terminal"
 npm install next@latest react@latest react-dom@latest
@@ -26,7 +26,7 @@ npm install next@latest react@latest react-dom@latest
 
 ### ESLint 버전
 
-ESLint를 사용하는 경우 ESLint 버전을 업그레이드해야 합니다:
+ESLint를 사용하는 경우 ESLint 버전을 업그레이드해야 합니다.
 
 ```bash filename="Terminal"
 npm install -D eslint-config-next@latest
@@ -36,7 +36,7 @@ npm install -D eslint-config-next@latest
 
 ## 다음 단계
 
-업데이트한 후 다음 단계는 다음 섹션을 참조하세요:
+업데이트한 후 다음 단계는 다음 섹션을 참조하세요.
 
 - [새로운 기능 업그레이드](#업그레이드-새로운 기능): 향상된 이미지 및 링크 컴포넌트
   와 같은 새로운 기능으로 업그레이드하는 데 도움이 되는 안내서입니다.
@@ -57,7 +57,7 @@ Next.js 12는 `next/future/image`라는 임시의 import를 통해 이미지 컴
 버전 13에서 이 새로운 동작은 이제 `next/image`의 기본값입니다.
 
 새 이미지 컴포넌트
-로 마이그레이션하는 데 도움이 되는 두 가지 코드 방법이 있습니다:
+로 마이그레이션하는 데 도움이 되는 두 가지 코드 방법이 있습니다.
 
 - [**`next-image-to-legacy-image` codemod**](/docs/app/building-your-application/upgrading/codemods#next-image-to-legacy-image): `next/image` 가져오기 이름을 `next/legacy/image`로 안전하고 자동으로 변경합니다. 기존 컴포넌트
   는 동일한 동작을 유지합니다.
@@ -184,7 +184,7 @@ export default function RootLayout({
 - 루트 레이아웃은 `pages/_app.tsx` 및 `pages/_document.tsx` 파일을 대체합니다.
 - 레이아웃 파일에는 `.js`, `.jsx` 또는 `.tsx` 확장자를 사용할 수 있습니다.
 
-`<head>` HTML 요소를 관리하려면 [내장 SEO 지원](/docs/app/building-your-application/optimizing/metadata)를 사용할 수 있습니다:
+`<head>` HTML 요소를 관리하려면 [내장 SEO 지원](/docs/app/building-your-application/optimizing/metadata)를 사용할 수 있습니다.
 
 ```tsx filename="app/layout.tsx" switcher
 import { Metadata } from 'next'
@@ -366,7 +366,7 @@ export default function Page() {
   | `about.js`       | `about/page.js`       | `/about`       |
   | `blog/[slug].js` | `blog/[slug]/page.js` | `/blog/post-1` |
 
-페이지 마이그레이션을 두 가지 주요 단계로 나누는 것이 좋습니다:
+페이지 마이그레이션을 두 가지 주요 단계로 나누는 것이 좋습니다.
 
 - 1단계: 내보낸 기본 페이지 컴포넌트를 새 클라이언트 컴포넌트로 이동합니다.
 - 2단계: 새 클라이언트 컴포넌트를 `app` 디렉토리
@@ -507,7 +507,7 @@ export default function ExampleClientComponent() {
 }
 ```
 
-또한 새로운 `useRouter` 훅에는 다음과 같은 변경 사항이 있습니다:
+또한 새로운 `useRouter` 훅에는 다음과 같은 변경 사항이 있습니다.
 
 - `isFallback`이 제거된 이유는 `fallback`이 [replacing](#replacing-fallback)이기 때문입니다.
 - `locale`, `locales`, `defaultLocales`, `domainLocales` 값은 `app` 디렉토리
@@ -666,7 +666,7 @@ export default function Page(props) {
 }
 ```
 
-`app` 디렉토리는 요청 데이터를 검색하기 위한 새로운 읽기 전용 함수를 제공합니다:
+`app` 디렉토리는 요청 데이터를 검색하기 위한 새로운 읽기 전용 함수를 제공합니다.
 
 - [`headers()`](/docs/app/api-reference/functions/headers): 웹 헤더 API에 기반하며, [서버 컴포넌트](/docs/getting-started/react-essentials) 내에서 요청 헤더를 검색하는 데 사용할 수 있습니다.
 - [`cookies()`](/docs/app/api-reference/functions/cookies): Web Cookies API에 기반하며, [서버 컴포넌트](/docs/getting-started/react-essentials) 내에서 쿠키를 검색하는 데 사용할 수 있습니다.
@@ -825,7 +825,7 @@ export default function Post({ post }) {
 }
 ```
 
-`app` 디렉토리에서 [`config.dynamicParams` 속성](/docs/app/api-reference/file-config#dynamicParams)은 [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params) 외부의 매개 변수가 처리되는 방식을 제어합니다:
+`app` 디렉토리에서 [`config.dynamicParams` 속성](/docs/app/api-reference/file-config#dynamicParams)은 [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params) 외부의 매개 변수가 처리되는 방식을 제어합니다.
 
 - **`true`**: (기본값) `generateStaticParams`에 포함되지 않은 동적 세그먼트는 요청 시 생성됩니다.
 - **`false`**: `generate StaticParams`에 포함되지 않은 동적 세그먼트는 404를 반환합니다.
@@ -931,7 +931,7 @@ export async function GET(request) {}
 #### Tailwind CSS
 
 Tailwind CSS를 사용하는 경우 `app` 디렉토리
-를 `tailwind.config.js` 파일에 추가해야 합니다:
+를 `tailwind.config.js` 파일에 추가해야 합니다.
 
 ```js filename="tailwind.config.js"
 module.exports = {
@@ -943,7 +943,7 @@ module.exports = {
 }
 ```
 
-- 또한 `app/layout.js` 파일에서 글로벌 스타일을 가져와야 합니다:
+- 또한 `app/layout.js` 파일에서 글로벌 스타일을 가져와야 합니다.
 
 ```jsx filename="app/layout.js"
 import '../styles/globals.css'
