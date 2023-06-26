@@ -62,7 +62,7 @@ API 엔드포인트를 가져오려면 이 섹션의 시작 부분에 제공된 
 
 ## 주의 사항
 
-- API 라우트는 [CORS 헤더를 지정하지 않습니다.](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) 이는 기본적으로 **동일 출처 전용**임을 의미합니다.
+- API 라우트는 [CORS 헤더를 지정하지 않습니다.](https://developer.mozilla.org/ko/docs/Web/HTTP/CORS) 이는 기본적으로 **동일 출처 전용**임을 의미합니다.
   이러한 동작은 [CORS 요청 헬퍼](https://github.com/vercel/next.js/tree/canary/examples/api-routes-cors)를 사용하여 요청 핸들러를 래핑함으로써 사용자 정의할 수 있습니다.
 - API 라우트는 [`output: 'export'`](/docs/pages/building-your-application/deploying/static-exports)와 함께 사용할 수 없습니다.
 
@@ -92,7 +92,7 @@ export const config = {
 
 `bodyParser`는 자동으로 활성화됩니다. 본문을 `Stream`으로 소비하거나 [`raw-body`](https://www.npmjs.com/package/raw-body)를 사용하려면 이를 `false`로 설정할 수 있습니다.
 
-자동 `bodyParsing`을 비활성화하는 사용 사례는 **웹훅** 요청의 원시 본문을 확인하려는 경우입니다. 예를 들어 [GitHub으로부터의 웹훅](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks#validating-payloads-from-github) 요청을 받을 수 있습니다.
+자동 `bodyParsing`을 비활성화하는 사용 사례는 **웹훅** 요청의 원시 본문을 확인하려는 경우입니다. 예를 들어 [GitHub으로부터의 웹훅](https://docs.github.com/ko/webhooks-and-events/webhooks/securing-your-webhooks) 요청을 받을 수 있습니다.
 
 ```js
 export const config = {
@@ -260,10 +260,10 @@ export default withFoo(handler)
 
 포함된 헬퍼들은 다음과 같습니다.
 
-- `res.status(code)` - 상태 코드를 설정하는 함수입니다. `code`는 유효한 [HTTP 상태 코드](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)여야 합니다.
+- `res.status(code)` - 상태 코드를 설정하는 함수입니다. `code`는 유효한 [HTTP 상태 코드](https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C)여야 합니다.
 - `res.json(body)` - JSON 응답을 보냅니다. `body`는 [직렬화할 수 있는 객체](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)여야 합니다.
 - `res.send(body)` - HTTP 응답을 보냅니다. `body`는 `string`, `object` 또는 `Buffer`일 수 있습니다.
-- `res.redirect([status,] path)` - 지정된 경로 또는 URL로 리다이렉트합니다. `status`는 유효한 [HTTP 상태 코드](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)여야 합니다.
+- `res.redirect([status,] path)` - 지정된 경로 또는 URL로 리다이렉트합니다. `status`는 유효한 [HTTP 상태 코드](https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C)여야 합니다.
   만약 지정되지 않는다면, `status`의 기본값은 "307" 즉, "임시 리다이렉트(Temporary redirect)"입니다.
 - `res.revalidate(urlPath)` - `getStaticProps`를 사용하여 [요청 시 페이지 재검증](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation)을 수행합니다. `urlPath`는 `string`여야 합니다.
 
