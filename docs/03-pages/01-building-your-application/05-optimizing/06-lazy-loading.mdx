@@ -35,7 +35,7 @@ export default function Home() {
 }
 ```
 
-> **참고**: `import('path/to/component')`에서 경로는 명시적으로 작성해야 합니다. 템플릿 문자열이나 변수로 사용할 수 없습니다. 또한, Next.js가 webpack 번들/모듈 ID를 특정 `dynamic()` 호출에 매칭하고 렌더링하기 전에 미리 로드할 수 있도록 `import()`가 `dynamic()` 호출 내부에 있어야 합니다. `dynamic()`는 React 렌더링 내부에서 사용할 수 없습니다. preloading이 작동하려면 `React.lazy`와 마찬가지로 모듈의 최상위 수준에 표시되어야 합니다.
+> **참고**: `import('path/to/component')`에서 경로는 명시적으로 작성해야 합니다. 템플릿 문자열이나 변수로 사용할 수 없습니다. 또한, Next.js가 webpack 번들/모듈 ID를 특정 `dynamic()` 호출에 매칭하고 렌더링하기 전에 미리 로드할 수 있도록 `import()`가 `dynamic()` 호출 내부에 있어야 합니다. `dynamic()`는 React 렌더링 내부에서 사용할 수 없습니다. preloading이 작동하려면 `React.lazy`와 마찬가지로 모듈의 최상위 수준에 표시해야 합니다.
 
 ## Named exports된 요소의 경우
 
