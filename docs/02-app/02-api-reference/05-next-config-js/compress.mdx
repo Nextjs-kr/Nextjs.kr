@@ -1,11 +1,11 @@
 ---
 title: compress
-description: Next.js provides gzip compression to compress rendered content and static files, it only works with the server target. Learn more about it here.
+description: Next.js는 렌더링 된 콘텐츠와 정적 파일을 압축하기 위해 gzip 압축을 제공하며, 서버를 대상으로만 작동합니다. 여기서 자세히 알아보세요.
 ---
 
-Next.js provides [**gzip**](https://tools.ietf.org/html/rfc6713#section-3) compression to compress rendered content and static files. In general you will want to enable compression on a HTTP proxy like [nginx](https://www.nginx.com/), to offload load from the `Node.js` process.
+Next.js는 렌더링 된 콘텐츠와 정적 파일을 압축하기 위해 [**gzip**](https://tools.ietf.org/html/rfc6713#section-3) 압축을 제공합니다. 일반적으로 `Node.js` 프로세스의 부하를 줄이기 위해 [nginx](https://www.nginx.com/)와 같은 HTTP 프록시를 압축하는 것이 좋습니다.
 
-To disable **compression**, open `next.config.js` and disable the `compress` config:
+**압축**을 비활성화하려면, `next.config.js` 파일을 열고 `compress` 설정을 비활성화하세요.
 
 ```js filename="next.config.js"
 module.exports = {
