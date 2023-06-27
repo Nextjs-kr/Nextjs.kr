@@ -1,39 +1,39 @@
 ---
-title: Authenticating
-description: Learn about authentication patterns in Next.js apps and explore a few examples.
+title: 인증
+description: Next.js 앱에서 인증 패턴을 알아보고 몇 가지 예제를 살펴봅니다.
 ---
 
-Authentication verifies who a user is, while authorization controls what a user can access. Next.js supports multiple authentication patterns, each designed for different use cases. This page will go through each case so that you can choose based on your constraints.
+인증은 사용자가 누구인지 확인하는 것이고, 권한 부여는 사용자가 무엇에 액세스할 수 있는지 제어하는 것입니다. Next.js는 다양한 사용 사례를 위해 설계된 여러 인증 패턴을 지원합니다. 이 페이지에서는 각 경우를 살펴보고 제한 사항에 기반하여 선택할 수 있도록 안내합니다.
 
-## Authentication Patterns
+## 인증 패턴
 
-The first step to identifying which authentication pattern you need is understanding the [data-fetching strategy](/docs/pages/building-your-application/data-fetching) you want. We can then determine which authentication providers support this strategy. There are two main patterns:
+어떤 인증 패턴이 필요한지 파악하기 위해 먼저 [데이터 가져오기 전략](/docs/pages/building-your-application/data-fetching) 을 이해해야 합니다. 그런 다음 이 전략을 지원하는 인증 공급자를 결정할 수 있습니다. 주요 패턴은 다음과 같습니다.
 
-- Use [static generation](/docs/pages/building-your-application/rendering/static-site-generation) to server-render a loading state, followed by fetching user data client-side.
-- Fetch user data [server-side](/docs/pages/building-your-application/rendering/server-side-rendering) to eliminate a flash of unauthenticated content.
+- [정적 생성](/docs/pages/building-your-application/rendering/static-site-generation)을 사용하여 로딩 상태를 서버 렌더링한 다음 클라이언트 측에서 사용자 데이터를 가져옵니다.
+- 인증되지 않은 콘텐츠의 깜빡임을 없애기 위해[서버 사이드](/docs/pages/building-your-application/rendering/server-side-rendering) 에서 사용자 데이터를 가져옵니다.
 
-### Authenticating Statically Generated Pages
+### 정적으로 생성된 페이지에 대한 인증
 
-Next.js automatically determines that a page is static if there are no blocking data requirements. This means the absence of [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props) and `getInitialProps` in the page. Instead, your page can render a loading state from the server, followed by fetching the user client-side.
+Next.js는 데이터 요구 사항이 없는 경우 페이지가 정적임을 자동으로 결정합니다. 즉, 페이지에[`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props) 와 `getInitialProps` 가 없는 경우입니다. 대신 페이지는 서버에서 로딩 상태를 렌더링한 다음 사용자를 클라이언트 측에서 가져올 수 있습니다.
 
-One advantage of this pattern is it allows pages to be served from a global CDN and preloaded using [`next/link`](/docs/pages/api-reference/components/link). In practice, this results in a faster TTI ([Time to Interactive](https://web.dev/interactive/)).
+이 패턴의 장점 중 하나는 전역 CDN에서 페이지를 제공하고 [`next/link`](/docs/pages/api-reference/components/link) 를 사용하여 사전로드할 수 있다는 것입니다. 실제로 이렇게 하면 더 빠른 TTI ([Time to Interactive](https://web.dev/interactive/)).
 
-Let's look at an example for a profile page. This will initially render a loading skeleton. Once the request for a user has finished, it will show the user's name:
+프로필 페이지를 예제로 살펴보겠습니다. 이 페이지는 처음에 로딩 스켈레톤을 렌더링합니다. 사용자에 대한 요청이 완료되면 사용자의 이름을 표시합니다.
 
 ```jsx filename="pages/profile.js"
 import useUser from '../lib/useUser'
 import Layout from '../components/Layout'
 
 const Profile = () => {
-  // Fetch the user client-side
+  // 클라이언트 측에서 사용자 정보를 가져옵니다.
   const { user } = useUser({ redirectTo: '/login' })
 
-  // Server-render loading state
+  // 서버 사이드 렌더링 중 로딩 상태를 처리합니다.
   if (!user || user.isLoggedIn === false) {
     return <Layout>Loading...</Layout>
   }
 
-  // Once the user request finishes, show the user
+  // 사용자 정보를 받아온 후 사용자를 표시합니다.
   return (
     <Layout>
       <h1>Your Profile</h1>
@@ -45,21 +45,21 @@ const Profile = () => {
 export default Profile
 ```
 
-You can view this [example in action](https://iron-session-example.vercel.app/). Check out the [`with-iron-session`](https://github.com/vercel/next.js/tree/canary/examples/with-iron-session) example to see how it works.
+[예시](https://iron-session-example.vercel.app/)를 확인할 수 있습니다. [`with-iron-session`](https://github.com/vercel/next.js/tree/canary/examples/with-iron-session) 예시를 확인하여 작동 방식을 살펴보세요.
 
-### Authenticating Server-Rendered Pages
+### 서버 사이드 렌더링 페이지 인증
 
-If you export an `async` function called [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props) from a page, Next.js will pre-render this page on each request using the data returned by `getServerSideProps`.
+서버에서 `async` 라는 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props) 함수를 내보내면, Next.js는 `getServerSideProps` 에서 반환된 데이터를 사용하여 각 요청마다 이 페이지를 사전 렌더링합니다.
 
 ```jsx
 export async function getServerSideProps(context) {
   return {
-    props: {}, // Will be passed to the page component as props
+    props: {}, // 페이지 컴포넌트에 전달되는 props로 사용됩니다.
   }
 }
 ```
 
-Let's transform the profile example to use [server-side rendering](/docs/pages/building-your-application/rendering/server-side-rendering). If there's a session, return `user` as a prop to the `Profile` component in the page. Notice there is not a loading skeleton in [this example](https://iron-session-example.vercel.app/).
+프로필 예시를 [서버 사이드 렌더링](/docs/pages/building-your-application/rendering/server-side-rendering) 을 사용하도록 변경해보겠습니다. 세션이 있는 경우 페이지에서 `user` 를 `Profile` 컴포넌트에 props로 반환합니다. 이 예시에서는 로딩 스켈레톤이 없음을 주목하세요. [이 예시](https://iron-session-example.vercel.app/) 에서 로딩 상태가 나타나지 않습니다.
 
 ```jsx filename="pages/profile.js"
 import withSession from '../lib/session'
@@ -83,7 +83,7 @@ export const getServerSideProps = withSession(async function ({ req, res }) {
 })
 
 const Profile = ({ user }) => {
-  // Show the user. No loading state is required
+  // 사용자를 표시합니다. 로딩 상태가 필요하지 않습니다.
   return (
     <Layout>
       <h1>Your Profile</h1>
@@ -95,38 +95,38 @@ const Profile = ({ user }) => {
 export default Profile
 ```
 
-An advantage of this pattern is preventing a flash of unauthenticated content before redirecting. It's important to note fetching user data in `getServerSideProps` will block rendering until the request to your authentication provider resolves. To prevent creating a bottleneck and increasing your TTFB ([Time to First Byte](https://web.dev/time-to-first-byte/)), you should ensure your authentication lookup is fast. Otherwise, consider [static generation](#authenticating-statically-generated-pages).
+이 패턴의 장점은 리디렉션하기 전에 인증되지 않은 콘텐츠가 표시되는 문제를 방지한다는 것입니다.  `getServerSideProps` 에서 사용자 데이터를 가져오는 것은 인증 공급자에 대한 요청이 해결될 때까지 렌더링을 차단합니다. 병목 현상을 방지하고 TTFB ([Time to First Byte](https://web.dev/time-to-first-byte/))를 높이지 않으려면 인증 조회가 빠른지 확인해야 합니다. 그렇지 않으면 [정적 생성](#authenticating-statically-generated-pages)을 고려해야 합니다.
 
-## Authentication Providers
+## 인증 공급자
 
-Now that we've discussed authentication patterns, let's look at specific providers and explore how they're used with Next.js.
+인증 패턴에 대해 알아보았으므로 특정 공급자를 살펴보고 Next.js와 함께 사용하는 방법을 살펴보겠습니다.
 
-### Bring Your Own Database
+### 자체 데이터베이스 사용
 
 <details open>
-  <summary>Examples</summary>
+  <summary>예시</summary>
 
 - [with-iron-session](https://github.com/vercel/next.js/tree/canary/examples/with-iron-session)
 - [next-auth-example](https://github.com/nextauthjs/next-auth-example)
 
 </details>
 
-If you have an existing database with user data, you'll likely want to utilize an open-source solution that's provider agnostic.
+사용자 데이터가 있는 기존 데이터베이스를 사용하려면, 대개는 공급자에 중립적인 오픈 소스 솔루션을 활용하려고 할 것입니다.
 
-- If you want a low-level, encrypted, and stateless session utility use [`iron-session`](https://github.com/vercel/next.js/tree/canary/examples/with-iron-session).
-- If you want a full-featured authentication system with built-in providers (Google, Facebook, GitHub…), JWT, JWE, email/password, magic links and more… use [`next-auth`](https://github.com/nextauthjs/next-auth-example).
+- 낮은 수준의 암호화 및 상태 없는 세션 유틸리티를 사용하려면 [`iron-session`](https://github.com/vercel/next.js/tree/canary/examples/with-iron-session)를 사용하세요.
+- 내장된 공급자(Google, Facebook, GitHub 등), JWT, JWE, 이메일/비밀번호, 매직 링크 등이 포함된 풀 피쳐 인증 시스템을 사용하려면 [`next-auth`](https://github.com/nextauthjs/next-auth-example)를 사용하세요..
 
-Both of these libraries support either authentication pattern. If you're interested in [Passport](http://www.passportjs.org/), we also have examples for it using secure and encrypted cookies:
+이 두 라이브러리는 모든 인증 패턴을 지원합니다. [Passport](http://www.passportjs.org/)에 관심이 있다면, 보안 및 암호화된 쿠키를 사용하는 예제도 있습니다.
 
 - [with-passport](https://github.com/vercel/next.js/tree/canary/examples/with-passport)
 - [with-passport-and-next-connect](https://github.com/vercel/next.js/tree/canary/examples/with-passport-and-next-connect)
 
-### Other Providers
+### 다른 공급자
 
-To see examples with other authentication providers, check out the [examples folder](https://github.com/vercel/next.js/tree/canary/examples).
+다른 인증 공급자와 함께 사용하는 예시는 [예시 폴더](https://github.com/vercel/next.js/tree/canary/examples)를 확인하세요.
 
 <details open>
-  <summary>Examples</summary>
+  <summary>예시</summary>
 
 - [Auth0](https://github.com/vercel/next.js/tree/canary/examples/auth0)
 - [Clerk](https://github.com/vercel/next.js/tree/canary/examples/with-clerk)
