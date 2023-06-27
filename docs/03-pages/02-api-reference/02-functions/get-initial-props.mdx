@@ -43,14 +43,14 @@ export default function Page({ stars }) {
 
 `getInitialProps`는 `컨텍스트`라는 단일 인자를 받습니다. 이 `컨텍스트`는 다음과 같은 속성을 가진 객체입니다.
 
-| 이름        | 설명                                                                                                   |
-| ---------- | ----------------------------------------------------------------------------------------------------- |
-| `pathname` | 현재 경로, `/pages`내의 페이지 경로                                                                         |
-| `query`    | URL의 쿼리 문자열, 객체로 구문 분석된 형태                                                                     |
-| `asPath`   | 브라우저에 표시되는 실제 경로(쿼리를 포함한 `문자열`)                                                             |
-| `req`      | [HTTP 요청 객체](https://nodejs.org/api/http.html#http_class_http_incomingmessage) (서버 전용)            |
-| `res`      | [HTTP 응답 객체](https://nodejs.org/api/http.html#http_class_http_serverresponse) (서버 전용)             |
-| `err`      | 렌더링 중 오류가 발생한 경우의 오류 객체                                                                       |
+| 이름       | 설명                                                                                           |
+| ---------- | ---------------------------------------------------------------------------------------------- |
+| `pathname` | 현재 경로, `/pages`내의 페이지 경로                                                            |
+| `query`    | URL의 쿼리 문자열, 객체로 구문 분석된 형태                                                     |
+| `asPath`   | 브라우저에 표시되는 실제 경로(쿼리를 포함한 `문자열`)                                          |
+| `req`      | [HTTP 요청 객체](https://nodejs.org/api/http.html#http_class_http_incomingmessage) (서버 전용) |
+| `res`      | [HTTP 응답 객체](https://nodejs.org/api/http.html#http_class_http_serverresponse) (서버 전용)  |
+| `err`      | 렌더링 중 오류가 발생한 경우의 오류 객체                                                       |
 
 ## 주의 사항
 
