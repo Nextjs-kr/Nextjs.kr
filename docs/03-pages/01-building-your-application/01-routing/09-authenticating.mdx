@@ -95,7 +95,7 @@ const Profile = ({ user }) => {
 export default Profile
 ```
 
-이 패턴의 장점은 리디렉션하기 전에 인증되지 않은 콘텐츠가 표시되는 문제를 방지한다는 것입니다.  `getServerSideProps` 에서 사용자 데이터를 가져오는 것은 인증 공급자에 대한 요청이 해결될 때까지 렌더링을 차단합니다. 병목 현상을 방지하고 TTFB ([Time to First Byte](https://web.dev/time-to-first-byte/))를 높이지 않으려면 인증 조회가 빠른지 확인해야 합니다. 그렇지 않으면 [정적 생성](#authenticating-statically-generated-pages)을 고려해야 합니다.
+이 패턴의 장점은 리디렉션하기 전에 인증되지 않은 콘텐츠가 표시되는 문제를 방지한다는 것입니다. `getServerSideProps` 에서 사용자 데이터를 가져오는 것은 인증 공급자에 대한 요청이 해결될 때까지 렌더링을 차단합니다. 병목 현상을 방지하고 TTFB ([Time to First Byte](https://web.dev/time-to-first-byte/))를 높이지 않으려면 인증 조회가 빠른지 확인해야 합니다. 그렇지 않으면 [정적 생성](#authenticating-statically-generated-pages)을 고려해야 합니다.
 
 ## 인증 공급자
 
