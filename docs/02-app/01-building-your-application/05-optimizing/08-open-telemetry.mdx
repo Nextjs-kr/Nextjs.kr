@@ -1,35 +1,35 @@
 ---
-title: OpenTelemetry
-description: Learn how to instrument your Next.js app with OpenTelemetry.
+제목: OpenTelemetry
+내용: OpenTelemetry로 Next.js 앱을 다루는 법 배우기
 ---
 
-> **Good to know**: This feature is **experimental**, you need to explicitly opt-in by providing `experimental.instrumentationHook = true;` in your `next.config.js`.
+> **참고**: 이 기능은 **실험 단계**에 있습니다. you need to explicitly opt-in by providing `experimental.instrumentationHook = true;` in your `next.config.js`.
 
 Observability is crucial for understanding and optimizing the behavior and performance of your Next.js app.
 
-As applications become more complex, it becomes increasingly difficult to identify and diagnose issues that may arise. By leveraging observability tools, such as logging and metrics, developers can gain insights into their application's behavior and identify areas for optimization. With observability, developers can proactively address issues before they become major problems and provide a better user experience. Therefore, it is highly recommended to use observability in your Next.js applications to improve performance, optimize resources, and enhance user experience.
+애플리케이션이 복잡해질 수록, 발생할 수 있는 이슈를 진단하고 정의하는 것은 점점 더 어려워집니다. By leveraging observability tools, such as logging and metrics, developers can gain insights into their application's behavior and identify areas for optimization. With observability, developers can proactively address issues before they become major problems and provide a better user experience. Therefore, it is highly recommended to use observability in your Next.js applications to improve performance, optimize resources, and enhance user experience.
 
-We recommend using OpenTelemetry for instrumenting your apps.
+앱을 관리하기 위해 OpenTelemetry를 사용하는 것을 권장합니다.
 It's a platform-agnostic way to instrument apps that allows you to change your observability provider without changing your code.
 Read [Official OpenTelemetry docs](https://opentelemetry.io/docs/) for more information about OpenTelemetry and how it works.
 
 This documentation uses terms like _Span_, _Trace_ or _Exporter_ throughout this doc, all of which can be found in [the OpenTelemetry Observability Primer](https://opentelemetry.io/docs/concepts/observability-primer/).
 
 Next.js supports OpenTelemetry instrumentation out of the box, which means that we already instrumented Next.js itself.
-When you enable OpenTelemetry we will automatically wrap all your code like `getStaticProps` in _spans_ with helpful attributes.
+OpenTelemetry를 활성화하면 `getStaticProps`와 같이 다른 유용한 속성들과 함께 *spans*로 모든 코드를 자동으로 감싸주게 됩니다.
 
-> **Good to know**: We currently support OpenTelemetry bindings only in serverless functions.
+> **참고**: 현재 OpenTelemetry bindings는 서버리스 함수에서만 지원됩니다.
 > We don't provide any for `edge` or client side code.
 
-## Getting Started
+## 시작하기
 
 OpenTelemetry is extensible but setting it up properly can be quite verbose.
 That's why we prepared a package `@vercel/otel` that helps you get started quickly.
 It's not extensible and you should configure OpenTelemetry manually you need to customize your setup.
 
-### Using `@vercel/otel`
+### `@vercel/otel` 사용하기
 
-To get started, you must install `@vercel/otel`:
+시작에 앞서, 먼저 `@vercel/otel`를 설치해야 합니다.
 
 ```bash filename="Terminal"
 npm install @vercel/otel
