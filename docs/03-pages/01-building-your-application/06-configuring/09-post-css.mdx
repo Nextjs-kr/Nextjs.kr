@@ -1,41 +1,41 @@
 ---
 title: PostCSS
-description: Extend the PostCSS config and plugins added by Next.js with your own.
+description: 
+Extend the PostCSS config and plugins added by Next.js with your own.
+Next.js에서 추가한 PostCSS 구성 및 플러그인을 직접 구성 요소에 확장합니다.
 ---
 
 <details open>
-  <summary>Examples</summary>
+  <summary>예시</summary>
 
-- [Tailwind CSS Example](https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss)
+- [Tailwind CSS 예시](https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss)
 
 </details>
 
-## Default Behavior
+## 기본 동작
 
-Next.js compiles CSS for its [built-in CSS support](/docs/pages/building-your-application/styling) using PostCSS.
+Next.js는 [내장된 CSS 지원](/docs/pages/building-your-application/styling)을 위해 PostCSS를 사용하여 CSS를 컴파일합니다.
 
-Out of the box, with no configuration, Next.js compiles CSS with the following transformations:
+Next.js는 다음과 같이 별도의 구성 없이 CSS를 변환하여 컴파일합니다.
 
-- [Autoprefixer](https://github.com/postcss/autoprefixer) automatically adds vendor prefixes to CSS rules (back to IE11).
-- [Cross-browser Flexbox bugs](https://github.com/philipwalton/flexbugs) are corrected to behave like [the spec](https://www.w3.org/TR/css-flexbox-1/).
-- New CSS features are automatically compiled for Internet Explorer 11 compatibility:
-  - [`all` Property](https://developer.mozilla.org/en-US/docs/Web/CSS/all)
-  - [Break Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/break-after)
-  - [`font-variant` Property](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
-  - [Gap Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/gap)
-  - [Media Query Ranges](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries#Syntax_improvements_in_Level_4)
+- [Autoprefixer](https://github.com/postcss/autoprefixer) 는 자동으로 CSS 규칙에 접두사(vendor prefixes)를 추가합니다. (IE11 호환)
+- [Cross-browser Flexbox bugs](https://github.com/philipwalton/flexbugs) 는 [사양](https://www.w3.org/TR/css-flexbox-1/)에 맞게 동작하도록 수정되었습니다.
+- Internet Explorer 11과의 호환성을 위해 새로운 CSS 기능들이 자동으로 컴파일 됩니다:
+  - [`all` 속성](https://developer.mozilla.org/en-US/docs/Web/CSS/all)
+  - [Break 속성들](https://developer.mozilla.org/en-US/docs/Web/CSS/break-after)
+  - [`font-variant` 속성](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
+  - [Gap 속성들](https://developer.mozilla.org/en-US/docs/Web/CSS/gap)
+  - [미디어 쿼리 범위](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries#Syntax_improvements_in_Level_4)
 
-By default, [CSS Grid](https://www.w3.org/TR/css-grid-1/) and [Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/var) (CSS variables) are **not compiled** for IE11 support.
+기본적으로 IE11 지원을 위해 [CSS 그리드](https://www.w3.org/TR/css-grid-1/)와 [커스텀 속성들](https://developer.mozilla.org/en-US/docs/Web/CSS/var)(CSS 변수들)은 **컴파일하지 않습니다.**
 
-To compile [CSS Grid Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/grid) for IE11, you can place the following comment at the top of your CSS file:
-
+IE11용 [CSS 그리드 레이아웃](https://developer.mozilla.org/en-US/docs/Web/CSS/grid)을 컴파일하려면 CSS 파일 상단에 다음 주석을 추가할 수 있습니다.
 ```css
 /* autoprefixer grid: autoplace */
 ```
 
-You can also enable IE11 support for [CSS Grid Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/grid)
-in your entire project by configuring autoprefixer with the configuration shown below (collapsed).
-See ["Customizing Plugins"](#customizing-plugins) below for more information.
+또한 아래와 같이 config 파일에 autoprefixer를 추가하여 전체 프로젝트에 IE11에서의 [CSS 그리드 레이아웃](https://developer.mozilla.org/en-US/docs/Web/CSS/grid) 지원을 활성화 할 수 있습니다.(접힌 글)
+더 자세한 정보는 ["플러그인 커스터마이징"](#customizing-plugins)에서 확인해주세요.
 
 <details>
   <summary>Click to view the configuration to enable CSS Grid Layout</summary>
