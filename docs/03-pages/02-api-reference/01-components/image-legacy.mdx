@@ -20,24 +20,24 @@ Next.js 13버전에서는 개발자 경험과 성능향상을 위해 `next/image
 
 -`<img>`를 감싸고 있는 `<span>`을 제거하고 [브라우저로 계산된 비율](https://caniuse.com/mdn-html_elements_img_aspect_ratio_computed_from_attributes)을 사용합니다
 
-- 공식적인 `style` 프로퍼티를 지원합니다.
-  - `layout` 프로퍼티를 제거하고 `style`혹은 `className`의 사용으로 대체합니다.
+- 공식적인 `style`을 지원합니다.
+  - `layout` 프로퍼티를 `style`혹은 `className`으로 대체합니다.
   - `objectFit` 프로퍼티를 제거하고 `style`혹은 `className`의 사용으로 대체합니다.
   - `objectPosition` 프로퍼티를 제거하고 `style`혹은 `className`의 사용으로 대체합니다.
 - `IntersectionObserver`의 구현을 제거하고, 브라우저의 지연 로딩으로 대체합니다. [브라우저의 지연 로딩](https://caniuse.com/loading-lazy-attr)
   - 대체할 수 있는 브라우저 기능이 없기에 `lazyBoundary` 프로퍼티는 제거합니다.
   - 대체할 수 있는 브라우저 기능이 없기에 `lazyRoot` 프로퍼티는 제거합니다.
 - `loder`설정을 제거하고 [`로더`](#loader) 프로퍼티로 대체합니다.
-- `alt`프로퍼티는 필수 값에서 선택적 값으로 변경되었습니다.
+- `alt`프로퍼티는 필수 값으로 변경 되었습니다.
 - `onLoadingCompleate`에 사용되는 콜백함수는 `<image>`요소를 인자로 받을 수 있습니다.
 
-## 필수 프로퍼티
+## 필수 Props
 
 `<Image/>` 컴포넌트는 다음과 같은 프로퍼티들이 필요합니다.
 
 ### src
 
-이 값은 다음 중 하나를 만족해야 합니다.
+다음 중 하나를 만족해야 합니다.
 
 - [정적으로 임포트된 이미지 파일](/docs/pages/building-your-application/optimizing/images#local-images).
 - [loader](#loader) 프로퍼티나 [loader configuration](#loader-configuration)에 의존한 내부 경로이거나, 외부 URL일 수 있습니다.
@@ -66,7 +66,7 @@ Next.js 13버전에서는 개발자 경험과 성능향상을 위해 `next/image
 
 ## 선택적 프로퍼티
 
-`<Image />` 컴포넌트는 필수적인 프로퍼티들과 더불어 추가적인 프로퍼티들이 존재합니다. 이번 섹션에서는 주로사용되는 이미지 컴포넌트 프로퍼티들에 대해 다루어 보고 빈번하게 사용되지 않는 프로퍼티들에 대한 내용은 [고급 프로퍼티](#고급-프로퍼티) 섹션에서 확인할 수 있습니다.
+`<Image />` 컴포넌트는 필수적인 프로퍼티들과 더불어 추가적인 프로퍼티들이 존재합니다. 이번 섹션에서는 주로 사용되는 이미지 컴포넌트 프로퍼티들에 대해 다루어 보고 빈번하게 사용되지 않는 프로퍼티들에 대한 내용은 [고급 프로퍼티](#고급-프로퍼티) 섹션에서 확인할 수 있습니다.
 
 ### layout
 
@@ -96,7 +96,7 @@ Next.js 13버전에서는 개발자 경험과 성능향상을 위해 `next/image
 
 `loader`는 URL을 처리하기 위한 함수입니다. 로더 함수를 적용시, 이미지 컴포넌트의 기본 [로더 설정](#loader-configuration)를 오버라이드합니다.
 
-`loader`는 이미지의 URL을 반환하는 함수입니다. 파라메터는 다음과 같습니다.
+`loader`는 다음 매개변수를 사용하여 이미지를 위한 URL문자열을 반환합니다.
 
 - [`src`](#src)
 - [`width`](#width)
@@ -332,7 +332,7 @@ module.exports = {
 }
 ```
 
-## 다른 프로퍼티
+## 다른 Props
 
 언급되지 않은 `<Image/>`컴포넌트의 다른 프로퍼티는 아래의 예외사항을 제외하고 기본 `img` 요소와 동일하며 아래는 예외 사항입니다.
 
