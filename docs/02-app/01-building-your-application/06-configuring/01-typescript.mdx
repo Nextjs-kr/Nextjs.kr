@@ -3,36 +3,36 @@ title: TypeScript
 description: Next.js provides a TypeScript-first development experience for building your React application.
 ---
 
-Next.js provides a TypeScript-first development experience for building your React application.
+Next.js는 React 애플리케이션을 구축하기 위한 TypeScript 우선 개발 환경을 제공합니다.
 
-It comes with built-in TypeScript support for automatically installing the necessary packages and configuring the proper settings.
+필요한 패키지를 자동으로 설치하고 적절한 설정을 구성하기 위한 TypeScript 지원이 내장되어 있습니다.
 
 <AppOnly>
-As well as a [TypeScript Plugin](#typescript-plugin) for your editor.
+또한 에디터용 TypeScript 플러그인도 제공됩니다.
 
-> **🎥 Watch:** Learn about the built-in TypeScript plugin → [YouTube (3 minutes)](https://www.youtube.com/watch?v=pqMqn9fKEf8)
+> **🎥 Watch:** 내장된 TypeScript 플러그인에 대해 알아보기 → [YouTube (3 minutes)](https://www.youtube.com/watch?v=pqMqn9fKEf8)
 
 </AppOnly>
 
-## New Projects
+## 새로운 프로젝트
 
-`create-next-app` now ships with TypeScript by default.
+create-next-app은 이제 기본적으로 TypeScript이 함께 제공됩니다.
 
 ```bash filename="Terminal"
 npx create-next-app@latest
 ```
 
-## Existing Projects
+## 기존 프로젝트
 
-Add TypeScript to your project by renaming a file to `.ts` / `.tsx`. Run `next dev` and `next build` to automatically install the necessary dependencies and add a `tsconfig.json` file with the recommended config options.
+파일 이름을 `.ts` / `.tsx` 로 변경하여 프로젝트에 TypeScript를 추가합니다. `next dev` 와 `next build`를 실행하여 필요한 dependencies을 자동으로 설치하고 권장 구성 옵션이 포함된 `tsconfig.json` 파일을 추가합니다.
 
 <AppOnly>
 
-## TypeScript Plugin
+## 타입스크립트 플러그인
 
-Next.js includes a custom TypeScript plugin and type checker, which VSCode and other code editors can use for advanced type-checking and auto-completion.
+Next.js에는 사용자 지정 TypeScript 플러그인 및 type 검사기가 포함되어 있어 VSCode 및 기타 코드 편집기에서 고급 type 검사 및 자동 완성을 위해 사용할 수 있습니다.
 
-The first time you run `next dev` with a TypeScript file open, you will receive a prompt to enable the plugin.
+TypeScript 파일이 열려 있는 상태에서 `next dev`를 처음 실행하면 플러그인을 활성화하라는 메시지가 표시됩니다.
 
 <Image
   alt="TypeScript Prompt"
@@ -42,7 +42,7 @@ The first time you run `next dev` with a TypeScript file open, you will receive 
   height="403"
 />
 
-If you miss the prompt, you can enable the plugin manually by:
+프롬프트를 누락했다면 플러그인을 수동으로 활성화할 수 있습니다:
 
 1. Opening the command palette (`Ctrl/⌘` + `Shift` + `P`)
 2. Searching for "TypeScript: Select TypeScript Version"
@@ -56,32 +56,33 @@ If you miss the prompt, you can enable the plugin manually by:
   height="637"
 />
 
-Now, when editing files, the custom plugin will be enabled. When running `next build`, the custom type checker will be used. Further, we automatically create a VSCode settings file for you to automate this process.
+이제 파일을 편집할 때 사용자 정의 플러그인이 활성화됩니다. `next build`를 실행할 때 사용자 정의 type 검사기가 사용됩니다. 또한 이 프로세스를 자동화하기 위해 VSCode 설정 파일을 자동으로 생성합니다.
 
-### Plugin Features
+### 플러그인 기능
 
-The TypeScript plugin can help with:
+TypeScript 플러그인이 도움이 될 수 있습니다:
 
-- Warning if the invalid values for [segment config options](/docs/app/api-reference/file-conventions/route-segment-config) are passed.
-- Showing available options and in-context documentation.
-- Ensuring the `use client` directive is used correctly.
-- Ensuring client hooks (like `useState`) are only used in Client Components.
+- [세그먼트 구성 옵션](/docs/app/api-reference/file-conventions/route-segment-config)에 대해 잘못된 값을 전달하면 경고가 표시됩니다.
+- 사용 가능한 옵션 및 상황에 맞는 문서 표시
+- `use client` 지시어가 올바르게 사용되었는지 확인합니다.
+- 클라이언트 훅(예: `useState`)이 클라이언트 컴포넌트에서만 사용되도록 합니다. 
 
-> **Good to know**: More features will be added in the future.
+> **알아두면 유용한 정보**: 앞으로 더 많은 기능이 추가될 예정입니다.
 
 </AppOnly>
 
-## Minimum TypeScript Version
+## 최소 TypeScript 버전
 
-It is highly recommended to be on at least `v4.5.2` of TypeScript to get syntax features such as [type modifiers on import names](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#type-on-import-names) and [performance improvements](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#real-path-sync-native).
+[import names 의 type 수정자](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#type-on-import-names) 및 [성능 개선](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#real-path-sync-native)과 같은 syntax기능을 사용하려면 TypeScript v4.5.2 이상을 사용할 것을 적극 권장합니다.
+
 
 <AppOnly>
 
-## Statically Typed Links
+## 정적 유형 링크
 
-Next.js can statically type links to prevent typos and other errors when using `next/link`, improving type safety when navigating between pages.
+Next.js는 `next/link`를 사용할 때 오타 및 기타 오류를 방지하기 위해 링크를 정적으로 입력할 수 있어 페이지 간 탐색 시 유형 안전성이 향상됩니다.
 
-To opt-into this feature, `experimental.typedRoutes` need to be enabled and the project needs to be using TypeScript.
+이 기능을 사용하려면 `experimental.typedRoutes`를 활성화해야 하며 프로젝트에서 TypeScript를 사용해야 합니다.
 
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
@@ -94,9 +95,9 @@ const nextConfig = {
 module.exports = nextConfig
 ```
 
-Next.js will generate a link definition in `.next/types` that contains information about all existing routes in your application, which TypeScript can then use to provide feedback in your editor about invalid links.
+Next.js는 애플리케이션의 모든 기존 경로에 대한 정보를 포함하는 링크 정의를 `.next/types`에 생성하며, 이 링크 정의는 TypeScript가 편집기에서 잘못된 링크에 대한 피드백을 제공하는 데 사용할 수 있습니다.
 
-Currently, experimental support includes any string literal, including dynamic segments. For non-literal strings, you currently need to manually cast the `href` with `as Route`:
+현재 실험적으로 지원되는 것은 동적 세그먼트를 포함한 모든 문자열 리터럴입니다. 리터럴이 아닌 문자열의 경우, 현재 `href`를 `as Route`로 수동으로 캐스팅해야 합니다:
 
 ```tsx
 import type { Route } from 'next';
@@ -112,7 +113,7 @@ import Link from 'next/link'
 <Link href="/aboot" />
 ```
 
-To accept `href` in a custom component wrapping `next/link`, use a generic:
+`next/link`를 감싸는 사용자 정의 컴포넌트에서 `href`를 사용하려면 제네릭을 사용합니다:
 
 ```tsx
 import type { Route } from 'next';
@@ -127,9 +128,9 @@ function Card<T extends string>({ href }: { href: Route<T> | URL })
 }
 ```
 
-> **How does it work?**
+> **어떻게 작동하나요?**
 >
-> When running `next dev` or `next build`, Next.js generates a hidden `.d.ts` file inside `.next` that contains information about all existing routes in your application (all valid routes as the `href` type of `Link`). This `.d.ts` file is included in `tsconfig.json` and the TypeScript compiler will check that `.d.ts` and provide feedback in your editor about invalid links.
+> `next dev` 또는 `next build`를 실행할 때 Next.js는 애플리케이션의 모든 기존 경로(`링크`의 `href` 유형으로 유효한 모든 경로)에 대한 정보를 포함하는 숨겨진 `.d.ts` 파일을 `.next` 내부에 생성합니다. 이 `.d.ts` 파일은 `tsconfig.json`에 포함되며 TypeScript 컴파일러는 이 `.d.ts`를 검사하여 유효하지 않은 링크에 대한 피드백을 에디터에 제공합니다.
 
 ## End-to-End Type Safety
 
