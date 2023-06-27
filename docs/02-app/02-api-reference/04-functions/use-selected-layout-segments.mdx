@@ -25,6 +25,24 @@ export default function ExampleClientComponent() {
 }
 ```
 
+```jsx filename="app/example-client-component.js" switcher
+'use client'
+
+import { useSelectedLayoutSegments } from 'next/navigation'
+
+export default function ExampleClientComponent() {
+  const segments = useSelectedLayoutSegments()
+
+  return (
+    <ul>
+      {segments.map((segment, index) => (
+        <li key={index}>{segment}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
 > **알아두기 좋은 정보**:
 >
 > - `useSelectedLayoutSegments`는 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components) 훅이므로 레이아웃은 기본적으로 [서버 컴포넌트](/docs/getting-started/react-essentials#server-components)입니다. 따라서 `useSelectedLayoutSegments`는 일반적으로 레이아웃으로 가져온 클라이언트 컴포넌트를 통해 호출됩니다.
