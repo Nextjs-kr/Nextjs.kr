@@ -3,7 +3,7 @@ title: 페이지와 레이아웃
 description: 앱 라우터로 첫 페이지와 공유 레이아웃 만들기
 ---
 
-> 계속하기 전에 [라우팅 기본 사항](/docs/app/building-your-application/routing)  및 [라우팅 정의 페이지](/docs/app/building-your-application/routing/defining-routes)를 읽어보는 것을 추천합니다.
+> 계속하기 전에 [라우팅 기본 사항](/docs/app/building-your-application/routing) 및 [라우팅 정의 페이지](/docs/app/building-your-application/routing/defining-routes)를 읽어보는 것을 추천합니다.
 
 Next.js 13의 앱 라우터에는 [페이지](#pages), [공유 레이아웃](#layouts) 및 [템플릿](#templates)을 쉽게 만들 수 있는 새로운 파일 컨벤션이 도입되었습니다. 이 페이지에서는 Next.js 애플리케이션에서 이러한 특별한 파일들을 사용하는 방법을 안내합니다.
 
@@ -61,9 +61,7 @@ export default function Page() {
 
 레이아웃은 여러 페이지 간에 **공유**되는 UI입니다. 탐색할 때 레이아웃은 state를 보존하고 상호작용하는 state를 유지하며 재 렌더링을 하지 않습니다. 레이아웃은 [중첩](#nesting-layouts)될 수도 있습니다.
 
-layout.js 파일의 React 컴포넌트를 내보내서 `기본`레이아웃을 정의할 수 있습니다. 컴포넌트는 렌더링 중에 자식 레이아웃(있는 경우) 또는 자식 페이지로 채워질  `children` prop을 받아들여야 합니다.
-
-
+layout.js 파일의 React 컴포넌트를 내보내서 `기본`레이아웃을 정의할 수 있습니다. 컴포넌트는 렌더링 중에 자식 레이아웃(있는 경우) 또는 자식 페이지로 채워질 `children` prop을 받아들여야 합니다.
 
 <Image
   alt="layout.js special file"
@@ -151,7 +149,7 @@ export default function RootLayout({ children }) {
 > - 앱 디렉리에는 **반드시** 루트 레이아웃이 포함되어야 합니다.
 > - Next.js가 자동으로 생성하지 않으므로, 루트 레이아웃에는 `<html>`과`<body>`태그를 반드시 정의해야 합니다.
 > - [빌트인 SEO 지원 기능](/docs/app/building-your-application/optimizing/metadata)을 사용하여 `<head>` HTML 요소(예: `<title>` 요소)를 관리할 수 있습니다.
-> - [라우트 그룹](/docs/app/building-your-application/routing/route-groups) 여러 루트 레이아웃을 만들 수 있습니다.  [예제](/docs/app/building-your-application/routing/route-groups#creating-multiple-root-layouts)를 참조하세요.
+> - [라우트 그룹](/docs/app/building-your-application/routing/route-groups) 여러 루트 레이아웃을 만들 수 있습니다. [예제](/docs/app/building-your-application/routing/route-groups#creating-multiple-root-layouts)를 참조하세요.
 > - 루트 레이아웃은 기본적으로 [서버 컴포넌트](/docs/getting-started/react-essentials)이며 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components)로 설정할 수 **없습니다.**
 
 > **`페이지` 디렉토리에서 마이그레이션:** 루트 레이아웃은 [`_app.js`](/docs/pages/building-your-application/routing/custom-app) and [`_document.js`](/docs/pages/building-your-application/routing/custom-document)파일을 대체합니다. [마이그레이션 가이드를 확인 하세요.](/docs/app/building-your-application/upgrading/app-router-migration#migrating-_documentjs-and-_appjs)
@@ -186,7 +184,6 @@ export default function DashboardLayout({ children }) {
 
 위의 두 레이아웃을 결합하면 루트 레이아웃(`app/layout.js`)이 대시보드 레이아웃(`app/dashboard/layout.js`)을 감싸고, 대시보드 레이아웃은 `app/dashboard/*.`을 감싸게 됩니다.
 
-
 두 레이아웃은 이렇게 중첩됩니다:
 
 <Image
@@ -209,14 +206,9 @@ export default function DashboardLayout({ children }) {
 - `useEffect`(예: 페이지 조회 수 로깅) 및 `useState`(예: 페이지별 피드백 form)에 의존하는 기능들.
 - 프레임워크의 기본적인 동작을 변경할 때. 예를 들어 레이아웃 내부의 서스펜스 라우트는 레이아웃을 처음 로드할 때만 fallback을 표시하고 페이지를 전환할 때는 표시하지 않습니다. 템플릿의 경우 각 탐색에 fallback이 표시됩니다.
 
-
 > **권장사항:** 템플릿을 사용해야 할 특별한 이유가 없는 한 레이아웃을 사용하는 것이 좋습니다.
 
-
-
 템플릿은 `template.js` 파일에서 기본 React 컴포넌트를 내보내서 정의할 수 있습니다. 해당 컴포넌트는 중첩된 세그먼트가 될 `children` prop을 받아들여야 합니다.
-
-
 
 <Image
   alt="template.js special file"
