@@ -16,7 +16,7 @@ description: Next.js 앱에서 서버가 시작될 때 코드를 실행하기 �
 
 경우에 따라 특정 파일이 가지고 있는 부수효과를 위해 해당 파일을 코드에 포함시키는 것이 유용할 수 있습니다. 예를 들어, 전역 변수들이 정의된 파일을 명시적으로 사용하지는 않지만 가져올 수 있습니다. 이를 통해 해당 패키지가 선언한 전역 변수들에 접근할 수 있습니다.
 
-다음 예제와 같이 `instrumentation.ts` 에서 부수효과를 가지는 파일들을 가져온 뒤에 `register` 함수에서 사용할 수 있습니다:
+다음 예제와 같이 `instrumentation.ts` 에서 부수효과를 가지는 파일들을 가져온 뒤에 `register` 함수에서 사용할 수 있습니다.
 
 ```ts filename="your-project/instrumentation.ts" switcher
 import { init } from 'package-init'
@@ -34,7 +34,7 @@ export function register() {
 }
 ```
 
-그러나 우리는 부수효과를 가지는 파일들을 불러올 때 register 함수 내에서 `import` 하는 것을 권장합니다. 다음은 `register` 함수에서 `import` 문을 사용하는 기본 예제입니다:
+그러나 우리는 부수효과를 가지는 파일들을 불러올 때 register 함수 내에서 `import` 하는 것을 권장합니다. 다음은 `register` 함수에서 `import` 문을 사용하는 기본 예제입니다.
 
 ```ts filename="your-project/instrumentation.ts" switcher
 export async function register() {
@@ -50,7 +50,7 @@ export async function register() {
 
 이렇게 하면 모든 부수효과 코드들을 한 곳에 배치시켜 파일 가져오기로 인한 의도하지 않은 결과를 방지할 수 있습니다.
 
-우리는 모든 환경에서 `register`를 호출하기 때문에 `edge`와 `nodejs` 를 모두 지원하지 않는 코드는 조건부 import 문으로 불러와야 합니다. 당신은 현재 환경정보를 가져오기 위해 `NEXT_RUNTIME` 환경변수를 사용할 수 있습니다. 환경별 코드를 가져오는 예시는 다음과 같습니다:
+우리는 모든 환경에서 `register`를 호출하기 때문에 `edge`와 `nodejs` 를 모두 지원하지 않는 코드는 조건부 import 문으로 불러와야 합니다. 당신은 현재 환경정보를 가져오기 위해 `NEXT_RUNTIME` 환경변수를 사용할 수 있습니다. 환경별 코드를 가져오는 예시는 다음과 같습니다.
 
 ```ts filename="your-project/instrumentation.ts" switcher
 export async function register() {
