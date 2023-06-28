@@ -3,16 +3,16 @@ title: instrumentation
 description: Next.js 앱에서 서버가 시작될 때 코드를 실행하기 위해 instrumentation을 사용하는 방법 배우기
 ---
 
-프로젝트의 **루트 디렉토리**(혹은 src 디렉토리를 사용시 src 내부) 에 있는 `instrumentation.ts` (혹은 `.js`) 에서 `register` 로 명명된 함수를 export 한다면, 새로운 Next.js 서버 인스턴스가 시작될 때마다 그 함수를 호출할 것입니다.
+프로젝트의 **루트 디렉토리**(혹은 src 디렉토리를 사용시 src 내부) 에 있는 `instrumentation.ts` (혹은 `.js`) 에서 `register` 로 명명된 함수를 export 한다면 새로운 Next.js 서버 인스턴스가 시작될 때마다 그 함수를 호출할 것입니다.
 
 > **참고**
 >
 > - 이 기능은 현재 **실험적인** 단계입니다. 사용하려면 `next.config.js` 에서 `experimental.instrumentationHook = true;` 로 설정해서 명시적으로 허용해야 합니다.
-> - `instrumentation` 파일은 프로젝트 루트에 있어야 하며 `app` 이나 `pages` 디렉토리 하위에 있으면 안 됩니다. `src` 디렉토리를 사용한다면, 이 파일을 `pages` 와 `app` 과 나란히 있는 `src` 하위에 위치시키세요.
-> - 접미사를 추가하기 위해 [`pagesExtension` 설정 옵션](/docs/pages/api-reference/next-config-js/pageExtensions)을 사용한다면, instrumentation 파일이름 또한 일치시키기 위해 변경이 필요합니다.
+> - `instrumentation` 파일은 프로젝트 루트에 있어야 하며 `app` 이나 `pages` 디렉토리 하위에 있으면 안 됩니다. `src` 디렉토리를 사용한다면 이 파일을 `pages` 와 `app` 과 나란히 있는 `src` 하위에 위치시키세요.
+> - 접미사를 추가하기 위해 [`pagesExtension` 설정 옵션](/docs/pages/api-reference/next-config-js/pageExtensions)을 사용한다면 instrumentation 파일이름 또한 일치시키기 위해 변경이 필요합니다.
 > - 우리는 사용 가능한 [with-opentelemetry](https://github.com/vercel/next.js/tree/canary/examples/with-opentelemetry) 예제를 제공합니다.
 
-`register` 함수가 배포되면, 이는 각각의 cold boot마다 호출됩니다. (각 환경마다 정확히 한 번씩 호출됩니다.)
+`register` 함수가 배포되면 각각의 cold boot마다 호출됩니다. (각 환경마다 정확히 한 번씩 호출됩니다.)
 
 경우에 따라 특정 파일이 가지고 있는 부수 효과를 위해 해당 파일을 코드에 포함하는 것이 유용할 수 있습니다. 예를 들어 전역 변수가 정의된 파일을 명시적으로 사용하지는 않지만 가져올 수 있습니다. 이를 통해 해당 패키지가 선언한 전역 변수에 접근할 수 있습니다.
 
@@ -34,7 +34,7 @@ export function register() {
 }
 ```
 
-그러나 우리는 부수 효과를 가지는 파일을 불러올 때 register 함수 내에서 `import` 하는 것을 권장합니다. 다음은 `register` 함수에서 `import` 문을 사용하는 기본 예제입니다.
+그러나 이보단 부수 효과를 가지는 파일을 불러올 때는 register 함수 내에서 `import` 하는 것을 권장합니다. 다음은 `register` 함수에서 `import` 문을 사용하는 기본 예제입니다.
 
 ```ts filename="your-project/instrumentation.ts" switcher
 export async function register() {
