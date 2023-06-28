@@ -8,7 +8,7 @@ source: app/building-your-application/styling/css-modules
   <summary>예시</summary>
 
 - [기본 CSS 예시](https://github.com/vercel/next.js/tree/canary/examples/basic-css)
-</details>
+  </details>
 
 Next.js에는 `.module.css` 확장자를 사용하는 CSS 모듈에 대한 기본 지원 기능이 있습니다.
 
@@ -36,7 +36,7 @@ CSS 모듈은 고유한 클래스 이름을 자동으로 생성하여 CSS를 로
 
 ```jsx filename="components/Button.js"
 import styles from './Button.module.css'
- 
+
 export function Button() {
   return (
     <button
@@ -53,8 +53,6 @@ export function Button() {
 CSS 모듈은 선택적 기능이며 **확장자가 `.module.css`인 파일에 대해서만 활성화됩니다.** 일반 <link> 스타일시트와 전역 CSS 파일은 계속 지원됩니다.
 
 프로덕션 환경에서 모든 CSS 모듈 파일은 자동으로 **여러 개의 축소되고 코드 분할된** `.css` 파일로 연결됩니다. 이 `.css` 파일은 애플리케이션의 즉시 실행 경로를 나타내므로 애플리케이션이 페인팅할 때 최소한의 CSS만 로드합니다.
-
-
 
 ---
 
@@ -74,11 +72,11 @@ body {
 }
 ```
 
-[`pages/_app.js` 파일](https://nextjs.org/docs/pages/building-your-application/routing/custom-app)이 없는 경우 파일을 생성합니다. 그런 다음 `styles.css` 파일을 [가져옵니다](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import).
+[`pages/_app.js` 파일](https://nextjs.org/docs/pages/building-your-application/routing/custom-app)이 없는 경우 파일을 생성합니다. 그런 다음 `styles.css` 파일을 [가져옵니다](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/import).
 
 ```jsx filename="pages/_app.js"
 import '../styles.css'
- 
+
 // 이 default export는 새 `pages/_app.js` 파일에 필요합니다.
 export default function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
@@ -93,10 +91,10 @@ export default function MyApp({ Component, pageProps }) {
 
 ```jsx
 import '../styles.css'
-// ErrorBoundary의 CSS는 styles.css의 전역 CSS에 따라 달라집니다. 
+// ErrorBoundary의 CSS는 styles.css의 전역 CSS에 따라 달라집니다.
 // 따라서 styles.css 다음에 가져옵니다.
 import ErrorBoundary from '../components/ErrorBoundary'
- 
+
 export default function MyApp({ Component, pageProps }) {
   return (
     <ErrorBoundary>
@@ -110,7 +108,7 @@ export default function MyApp({ Component, pageProps }) {
 
 ## 외부 스타일시트
 
-Next.js를 사용하면 JavaScript 파일에서 CSS 파일을 가져올 수 있습니다. 이는 Next.js가 [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)의 개념을 JavaScript 이상으로 확장했기 때문에 가능합니다.
+Next.js를 사용하면 JavaScript 파일에서 CSS 파일을 가져올 수 있습니다. 이는 Next.js가 [import](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/import)의 개념을 JavaScript 이상으로 확장했기 때문에 가능합니다.
 
 ### `node_modules`에서 가져오기
 
@@ -120,7 +118,7 @@ Next.js **9.5.4 버전**부터 애플리케이션의 어느 위치에서나 `nod
 
 ```jsx
 import 'bootstrap/dist/css/bootstrap.css'
- 
+
 export default function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
 }
@@ -133,12 +131,12 @@ import { useState } from 'react'
 import { Dialog } from '@reach/dialog'
 import VisuallyHidden from '@reach/visually-hidden'
 import '@reach/dialog/styles.css'
- 
+
 function ExampleDialog(props) {
   const [showDialog, setShowDialog] = useState(false)
   const open = () => setShowDialog(true)
   const close = () => setShowDialog(false)
- 
+
   return (
     <div>
       <button onClick={open}>Open Dialog</button>
@@ -162,4 +160,4 @@ Next.js에는 스타일을 추가하는 환경을 개선하기 위한 추가 기
 
 - `next dev`을 사용해 로컬로 실행할 때, 로컬 스타일시트(전역 또는 CSS 모듈)는 [빠른 새로고침](https://nextjs.org/docs/architecture/fast-refresh) 기능을 활용하여 편집 내용이 저장될 때 변경 사항을 즉시 반영합니다.
 - `next build`를 사용해 프로덕션용으로 빌드할 때는, 스타일을 검색하는 데 필요한 네트워크 요청 횟수를 줄이기 위해 CSS 파일이 더 적은 수의 축소된 `.css` 파일로 묶입니다.
-- JavaScript를 비활성화해도 프로덕션 빌드(`next start`)에서 스타일이 계속 로드됩니다. 그러나 `next dev`에서  [빠른 새로고침](https://nextjs.org/docs/architecture/fast-refresh)을 사용하려면 여전히 JavaScript가 필요합니다.
+- JavaScript를 비활성화해도 프로덕션 빌드(`next start`)에서 스타일이 계속 로드됩니다. 그러나 `next dev`에서 [빠른 새로고침](https://nextjs.org/docs/architecture/fast-refresh)을 사용하려면 여전히 JavaScript가 필요합니다.
