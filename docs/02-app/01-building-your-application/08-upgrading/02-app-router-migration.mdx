@@ -39,13 +39,13 @@ npm install -D eslint-config-next@latest
 업데이트를 했다면, 다음 섹션을 참조하여 다음 단계를 진행하세요.
 
 - [새로운 기능 업데이트](#upgrading-new-features): 이 가이드는 개선된 이미지나 링크 컴포넌트와 같은 새로운 기능을 업그레이드하는 데 도움을 줍니다.
-- [`pages` 디렉토리에서 `app` 디렉토리로 마이그레이션 하기](#migrating-from-pages-to-app): 이 가이드는 `pages`디렉토리에서 `app`디렉토리로 점진적으로 마이그레이션 하는 것에 도움을 줍니다.
+- [`pages` 디렉토리에서 `app` 디렉토리로 마이그레이션 하기](#migrating-from-pages-to-app): 이 가이드는 `pages` 디렉토리에서 `app` 디렉토리로 점진적으로 마이그레이션 하는 것에 도움을 줍니다.
 
 ## 새로운 기능 업그레이드
 
 Next.js 13에서는 새로운 기능과 규칙이 적용된 새로운 [App Router](/docs/app/building-your-application/routing)가 도입되었습니다. 새로운 라우터는 `app` 디렉토리에서 사용할 수 있으며 `pages` 디렉토리와 같이 존재합니다.
 
-Next.js 13으로 업그레이드 하고 꼭 새로운 [App Router](/docs/app/building-your-application/routing#the-app-router)를 **사용하지 않아도 됩니다.** `pages` 디렉토리에서도 [Image component](#image-component), [Link component](#link-component), [Script component](#script-component), 그리고 [Font optimization](#font-optimization)등 새로운 기능들을 두 디렉토리 모두에서 사용할 수 있습니다.
+Next.js 13으로 업그레이드하고 꼭 새로운 [App Router](/docs/app/building-your-application/routing#the-app-router)를 **사용하지 않아도 됩니다.** `pages` 디렉토리에서도 [Image component](#image-component), [Link component](#link-component), [Script component](#script-component), 그리고 [Font optimization](#font-optimization) 등 새로운 기능들을 두 디렉토리 모두에서 사용할 수 있습니다.
 
 ### `<Image/>` 컴포넌트
 
@@ -53,7 +53,7 @@ Next.js 12에서는 `next/future/image`를 임시적으로 import 하여 이미�
 
 버전 13에서는 이제 해당 새로운 기능이 `next/image`의 기본 값이 됩니다.
 
-새로운 이미지 컴포넌트로 마이그레이션하는 데 도움이 되는 두 가지 코드 모드가 있습니다.
+새로운 이미지 컴포넌트로 마이그레이션 하는 데 도움이 되는 두 가지 코드 모드가 있습니다.
 
 - [**`next-image-to-legacy-image` 코드 모드**](/docs/app/building-your-application/upgrading/codemods#next-image-to-legacy-image): `next/image`의 import의 이름을 `next/legacy/image`로 안전하게 변경합니다. 기존 컴포넌트는 동일한 동작을 유지합니다.
 - [**`next-image-experimental` 코드 모드**](/docs/app/building-your-application/upgrading/codemods#next-image-experimental): 인라인 스타일을 위험하게 추가하고 사용하지 않는 props를 제거합니다. 이를 통해 기본 컴포넌트의 동작이 새로운 기본값과 일치하도록 변경됩니다. 이 코드 모드를 사용하려면 먼저 `next-image-to-legacy-image` 코드 모드를 먼저 실행해야 합니다.
@@ -113,7 +113,7 @@ App Router로 전환하면 서버 컴포넌트, Suspense 등과 같이 Next.js�
 - `pages/_app.js`와 `pages/_document.js`가 단일 `app/layout.js` 루트 레이아웃으로 대체되었습니다. [자세히 알아보기](/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required).
 - `pages/_error.js`가 `error.js`특수 파일로 더 세분화되어 대체되었습니다. [자세히 알아보기](/docs/app/building-your-application/routing/error-handling).
 - `pages/404.js`가 [`not-found.js`](/docs/app/api-reference/file-conventions/not-found) 파일로 대체되었습니다.
-- `pages/api/*`는 현재 `pages` 디렉토리 안에 남아있습니.
+- `pages/api/*`는 현재 `pages` 디렉토리 안에 남아있습니다.
 
 ### 1단계: `app` 디렉토리 만들기
 
@@ -184,7 +184,7 @@ export const metadata = {
 
 #### `_document.js`와 `_app.js` 마이그레이션
 
-기존에 `_app` 또는 `_document` 파일이 존재하는 경우 콘텐츠(예시: global styles)을 루트 레이아웃(`app/layout.tsx`)에 복사할 수 있습니다. `app/layout.tsx`의 스타일은 `pages/*`에 _적용되지 않습니다._ 마이그레이션을 하는 동안 `_app`/`_document`를 유지하여 `pages/*` 경로가 손상되지 않도록 해야 합니다. 마이그레이션이 완료되면 안전하게 삭제할 수 있습니다.
+기존에 `_app` 또는 `_document` 파일이 존재하는 경우 콘텐츠(예시: global styles)를 루트 레이아웃(`app/layout.tsx`)에 복사할 수 있습니다. `app/layout.tsx`의 스타일은 `pages/*`에 _적용되지 않습니다._ 마이그레이션을 하는 동안 `_app`/`_document`를 유지하여 `pages/*` 경로가 손상되지 않도록 해야 합니다. 마이그레이션이 완료되면 안전하게 삭제할 수 있습니다.
 
 React 컨텍스트 프로바이더를 사용하는 경우, 해당 프로바이더를 [클라이언트 컴포넌트](/docs/getting-started/react-essentials)로 해야 합니다.
 
@@ -233,7 +233,7 @@ Page.getLayout = function getLayout(page) {
 - `DashboardLayout`의 내용을 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components)로 이동하여 `pages` 디렉토리의 동작을 유지합니다.
 
   ```jsx filename="app/dashboard/DashboardLayout.js"
-  'use client' // 이 명령어는 import 전에 파일의 맨 위에 있어야합니다.
+  'use client' // 이 명령어는 import 전에 파일의 맨 위에 있어야 합니다.
 
   // 클라이언트 컴포넌트
   export default function DashboardLayout({ children }) {
@@ -433,7 +433,7 @@ export default function HomePage({ recentPosts }) {
   - [`next/router`에서 가져온`useRouter` hook](/docs/pages/api-reference/functions/use-router)은 `app` 디렉토리에서 지원되지 않지만 `pages` 디렉토리에서는 계속 사용할 수 있습니다.
 - 새로운 `useRouter`는 `pathname` 문자열을 반환하지 않습니다. 대신 별도의 `usePathname` hook을 사용하세요.
 - 새로운 `useRouter` `query` 객체를 반환하지 않습니다. 대신 별도의 `useSearchParams` hook을 사용하세요.
-- `useSearchParams`과 `usePathname`를 함께 사용하여 페이지 변경 사항을 확인할 수 있습니다. 자세한 내용은 [라우터 이벤트](/docs/app/api-reference/functions/use-router#router-events) 섹션을 참조하세요.
+- `useSearchParams`과 `usePathname`을 함께 사용하여 페이지 변경 사항을 확인할 수 있습니다. 자세한 내용은 [라우터 이벤트](/docs/app/api-reference/functions/use-router#router-events) 섹션을 참조하세요.
 - 이 새로운 hooks들은 클라이언트 컴포넌트에서만 지원됩니다. 서버 컴포넌트에서는 사용할 수 없습니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher
@@ -470,7 +470,7 @@ export default function ExampleClientComponent() {
 - `app` 디렉토리에 내장된 i18n Next.js 기능이 더 이상 필요하지 않기 때문에 `locale`, `locales`, `defaultLocales`, `domainLocales` 값이 제거되었습니다. [i18n에 대해 자세히 알아보기](/docs/pages/building-your-application/routing/internationalization).
 - `basePath`가 제거되었습니다. `useRouter`에는 아직 대안이 포함되어 있지 않습니다. 아직 구현되지 않았습니다.
 - `asPath`는 새로운 라우터에서 `as` 개념이 제거되었기 때문에 제거되었습니다.
-- `isReady`는 더 이상 필요하지 않아 제거되었습니. [정적 렌더링](/docs/app/building-your-application/rendering#static-rendering) 과정에서 [`useSearchParams()`](/docs/app/api-reference/functions/use-params) hook을 사용하면 모든 컴포넌트는 사전 렌더링 단계를 생략하고 대신 런타임 때 클라이언트에서 렌더링됩니다.
+- `isReady`는 더 이상 필요하지 않아 제거되었습니다. [정적 렌더링](/docs/app/building-your-application/rendering#static-rendering) 과정에서 [`useSearchParams()`](/docs/app/api-reference/functions/use-params) hook을 사용하면 모든 컴포넌트는 사전 렌더링 단계를 생략하고 대신 런타임 때 클라이언트에서 렌더링됩니다.
 
 [`useRouter()` API 레퍼런스 확인하기](/docs/app/api-reference/functions/use-router).
 
@@ -480,7 +480,7 @@ export default function ExampleClientComponent() {
 
 ```tsx filename="app/page.tsx" switcher
 export default async function Page() {
-  // 해당 요청은 수동으로 무효화될 때까지 캐싱되어야 합니다.
+  // 해당 요청은 수동으로 무효화 될 때까지 캐싱 되어야 합니다.
   // `getStaticProps`와 유사하게 동작합니다.
   // `force-cache`가 기본값이며 생략할 수 없습니다.
   const staticData = await fetch(`https://...`, { cache: 'force-cache' })
@@ -489,7 +489,7 @@ export default async function Page() {
   // `getServerSideProps`와 유사하게 동작합니다.
   const dynamicData = await fetch(`https://...`, { cache: 'no-store' })
 
-  // 해당 요청은 10초의 유지 시간을 가지며 캐싱되어야 합니다.
+  // 해당 요청은 10초의 유지 시간을 가지며 캐싱 되어야 합니다.
   // `revalidate` 옵션을 사용한 `getStaticProps`와 유사하게 동작합니다.
   const revalidatedData = await fetch(`https://...`, {
     next: { revalidate: 10 },
@@ -501,7 +501,7 @@ export default async function Page() {
 
 ```jsx filename="app/page.js" switcher
 export default async function Page() {
-  // 해당 요청은 수동으로 무효화될 때까지 캐싱되어야 합니다.
+  // 해당 요청은 수동으로 무효화 될 때까지 캐싱 되어야 합니다.
   // `getStaticProps`와 유사하게 동작합니다.
   // `force-cache`가 기본값이며 생략할 수 없습니다.
   const staticData = await fetch(`https://...`, { cache: 'force-cache' })
@@ -510,7 +510,7 @@ export default async function Page() {
   // `getServerSideProps`와 유사하게 동작합니다.
   const dynamicData = await fetch(`https://...`, { cache: 'no-store' })
 
-  // 해당 요청은 10초의 유지 시간을 가지며 캐싱되어야 합니다.
+  // 해당 요청은 10초의 유지 시간을 가지며 캐싱 되어야 합니다.
   // `revalidate` 옵션을 사용한 `getStaticProps`와 유사하게 동작합니다.
   const revalidatedData = await fetch(`https://...`, {
     next: { revalidate: 10 },
@@ -522,7 +522,7 @@ export default async function Page() {
 
 #### 서버 사이드 렌더링 (`getServerSideProps`)
 
-`pages` 디렉토리에서 `getServerSideProps`는 서버에서 데이터를 가져오고 파일에 있는 내보내는 React 컴포넌트로 props를 전달하기 위해 사용합니다. 페이지 초기 HTML은 서버에서 미리 렌더링된 후 브라우저의 페이지에서 "hydrating"(인터랙티브하게 만들기)됩니다.
+`pages` 디렉토리에서 `getServerSideProps`는 서버에서 데이터를 가져오고 파일에 있는 내보내는 React 컴포넌트로 props를 전달하기 위해 사용합니다. 페이지 초기 HTML은 서버에서 미리 렌더링 된 후 브라우저의 페이지에서 "hydrating"(인터랙티브하게 만들기)됩니다.
 
 ```jsx filename="pages/dashboard.js"
 // `pages` 디렉토리
@@ -545,7 +545,7 @@ export default function Dashboard({ projects }) {
 }
 ```
 
-`app` 디렉토리에서 [서버 컴포넌트](/docs/getting-started/react-essentials#server-components)를 사용하여 데이터 패칭을 React 컴포넌트 내부에 위치시킬 수 있습니다. 이 방법을 통해 서버에서 렌더링된 HTML을 유지하면서 클라이언트에 더 적은 자바스크립트를 전송해도 됩니다.
+`app` 디렉토리에서 [서버 컴포넌트](/docs/getting-started/react-essentials#server-components)를 사용하여 데이터 패칭을 React 컴포넌트 내부에 위치시킬 수 있습니다. 이 방법을 통해 서버에서 렌더링 된 HTML을 유지하면서 클라이언트에 더 적은 자바스크립트를 전송해도 됩니다.
 
 `cache` 옵션을 `no-store`로 설정하면 가져온 데이터를 [절대로 캐싱하지 않게](/docs/app/building-your-application/data-fetching/caching) 설정할 수 있습니다. 이는 `pages` 디렉토리의 `getServerSideProps`와 유사하게 동작합니다.
 
@@ -728,7 +728,7 @@ export default function Post({ post }) {
 
 `app` 디렉토리에서 `getStaticPaths`는 [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params)로 대체됩니다.
 
-[`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params)는 `getStaticPaths`와 유사하게 동작하지만 경로 매개변수를 반환하는 API가 간소화되었으며 [layouts](/docs/app/building-your-application/routing/pages-and-layouts) 내부에서 사용할 수 있습니다. `generateStaticParams`의 반환 형태는 중첩된 `param` 객체 배열이나 확인된 경로 문자열이 아닌 세그먼트의 배열입니다.
+[`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params)는 `getStaticPaths`와 유사하게 동작하지만, 경로 매개변수를 반환하는 API가 간소화되었으며 [layouts](/docs/app/building-your-application/routing/pages-and-layouts) 내부에서 사용할 수 있습니다. `generateStaticParams`의 반환 형태는 중첩된 `param` 객체 배열이나 확인된 경로 문자열이 아닌 세그먼트의 배열입니다.
 
 ```jsx filename="app/posts/[id]/page.js"
 // `app` 디렉토리
@@ -806,7 +806,7 @@ export default async function Post({ params }) {
 }
 ```
 
-[`dynamicParams`](/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams)를 `true` (기본값)로 설정할 때, 생성되지 않은 경로 세그먼트가 요청되면 서버에서 렌더되고 성공적으로 [정적 데이터](/docs/app/building-your-application/data-fetching#static-and-dynamic-data-fetching)로 캐싱됩니다.
+[`dynamicParams`](/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams)를 `true` (기본값)로 설정할 때, 생성되지 않은 경로 세그먼트가 요청되면 서버에서 렌더되고 성공적으로 [정적 데이터](/docs/app/building-your-application/data-fetching#static-and-dynamic-data-fetching)로 캐싱 됩니다.
 
 #### 점진적 정적 재생성 (`revalidate`를 함께 사용하는 `getStaticProps`)
 
@@ -857,7 +857,7 @@ export default async function PostList() {
 
 API 라우트는 변경 없이 `pages/api` 디렉토리에서 계속 작동합니다. 그러나 `app` 디렉토리에서는 [라우트 핸들러](/docs/app/building-your-application/routing/router-handlers)로 대체되었습니다.
 
-라우트 핸들러를 사용하면 [요청](https://developer.mozilla.org/en-US/docs/Web/API/Request) 및 [응답](https://developer.mozilla.org/en-US/docs/Web/API/Response) API를 사용하여 지정된 라우트에 대한 사용자 설정 요청 핸들러를 만들 수 있습니다.
+라우트 핸들러를 사용하면 [요청](https://developer.mozilla.org/en-US/docs/Web/API/Request) 및 [응답](https://developer.mozilla.org/en-US/docs/Web/API/Response) API를 사용하여 지정된 경로에 대한 사용자 설정 요청 핸들러를 만들 수 있습니다.
 
 ```ts filename="app/api/route.ts" switcher
 export async function GET(request: Request) {}
