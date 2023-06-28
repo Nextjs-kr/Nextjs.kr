@@ -23,76 +23,76 @@ links:
 
 ```tsx filename="icon.tsx" switcher
 export function generateImageMetadata({
-params,
+  params,
 }: {
-params: { slug: string }
+  params: { slug: string }
 }) {
-// ...
+  // ...
 }
 ```
 
 ```jsx filename="icon.js" switcher
 export function generateImageMetadata({ params }) {
-// ...
+  // ...
 }
 ```
 
-| 라우트 | URL | `params` |
+| 라우트                          | URL         | `params`                  |
 | ------------------------------- | ----------- | ------------------------- |
-| `app/shop/icon.js` | `/shop` | `undefined` |
-| `app/shop/[slug]/icon.js` | `/shop/1` | `{ slug: '1' }` |
+| `app/shop/icon.js`              | `/shop`     | `undefined`               |
+| `app/shop/[slug]/icon.js`       | `/shop/1`   | `{ slug: '1' }`           |
 | `app/shop/[tag]/[item]/icon.js` | `/shop/1/2` | `{ tag: '1', item: '2' }` |
-| `app/shop/[...slug]/icon.js` | `/shop/1/2` | `{ slug: ['1', '2'] }` |
+| `app/shop/[...slug]/icon.js`    | `/shop/1/2` | `{ slug: ['1', '2'] }`    |
 
 ## 반환값
 
 `generateImageMetadata` 함수는 `alt`와 `size` 같은 이미지의 메타데이터를 포함하고 있는 객체배열을 반환해야 합니다.
 또한 각 항목은 이미지 생성 함수의 props에게 전달될 `id` 값을 **반드시** 포함하고 있어야 합니다.
 
-| 이미지 메타데이터 객체 | 타입 |
+| 이미지 메타데이터 객체 | 타입                                |
 | ---------------------- | ----------------------------------- |
-| `id` | `string` (필수사항) |
-| `alt` | `string` |
-| `size` | `{ width: number; height: number }` |
-| `contentType` | `string` |
+| `id`                   | `string` (필수사항)                 |
+| `alt`                  | `string`                            |
+| `size`                 | `{ width: number; height: number }` |
+| `contentType`          | `string`                            |
 
 ```tsx filename="icon.tsx" switcher
 import { ImageResponse } from 'next/server'
 
 export function generateImageMetadata() {
-return [
-{
-contentType: 'image/png',
-size: { width: 48, height: 48 },
-id: 'small',
-},
-{
-contentType: 'image/png',
-size: { width: 72, height: 72 },
-id: 'medium',
-},
-]
+  return [
+    {
+      contentType: 'image/png',
+      size: { width: 48, height: 48 },
+      id: 'small',
+    },
+    {
+      contentType: 'image/png',
+      size: { width: 72, height: 72 },
+      id: 'medium',
+    },
+  ]
 }
 
 export default function Icon({ id }: { id: string }) {
-return new ImageResponse(
-(
-<div
-style={{
-width: '100%',
-height: '100%',
-display: 'flex',
-alignItems: 'center',
-justifyContent: 'center',
-fontSize: 88,
-background: '#000',
-color: '#fafafa',
-}}
->
-Icon {id}
-</div>
-)
-)
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 88,
+          background: '#000',
+          color: '#fafafa',
+        }}
+      >
+        Icon {id}
+      </div>
+    )
+  )
 }
 ```
 
@@ -100,39 +100,39 @@ Icon {id}
 import { ImageResponse } from 'next/server'
 
 export function generateImageMetadata() {
-return [
-{
-contentType: 'image/png',
-size: { width: 48, height: 48 },
-id: 'small',
-},
-{
-contentType: 'image/png',
-size: { width: 72, height: 72 },
-id: 'medium',
-},
-]
+  return [
+    {
+      contentType: 'image/png',
+      size: { width: 48, height: 48 },
+      id: 'small',
+    },
+    {
+      contentType: 'image/png',
+      size: { width: 72, height: 72 },
+      id: 'medium',
+    },
+  ]
 }
 
 export default function Icon({ id }) {
-return new ImageResponse(
-(
-<div
-style={{
-width: '100%',
-height: '100%',
-display: 'flex',
-alignItems: 'center',
-justifyContent: 'center',
-fontSize: 88,
-background: '#000',
-color: '#fafafa',
-}}
->
-Icon {id}
-</div>
-)
-)
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 88,
+          background: '#000',
+          color: '#fafafa',
+        }}
+      >
+        Icon {id}
+      </div>
+    )
+  )
 }
 ```
 
@@ -147,44 +147,44 @@ import { ImageResponse } from 'next/server'
 import { getCaptionForImage, getOGImages } from '@/app/utils/images'
 
 export async function generateImageMetadata({
-params,
+  params,
 }: {
-params: { id: string }
+  params: { id: string }
 }) {
-const images = await getOGImages(params.id)
+  const images = await getOGImages(params.id)
 
-return images.map((image, idx) => ({
-id: idx,
-size: { width: 1200, height: 600 },
-alt: image.text,
-contentType: 'image/png',
-}))
+  return images.map((image, idx) => ({
+    id: idx,
+    size: { width: 1200, height: 600 },
+    alt: image.text,
+    contentType: 'image/png',
+  }))
 }
 
 export default async function Image({
-params,
-id,
+  params,
+  id,
 }: {
-params: { id: string }
-id: number
+  params: { id: string }
+  id: number
 }) {
-const productId = params.id
-const imageId = id
-const text = await getCaptionForImage(productId, imageId)
+  const productId = params.id
+  const imageId = id
+  const text = await getCaptionForImage(productId, imageId)
 
-return new ImageResponse(
-(
-<div
-style={
-{
-// ...
-}
-}
->
-{text}
-</div>
-)
-)
+  return new ImageResponse(
+    (
+      <div
+        style={
+          {
+            // ...
+          }
+        }
+      >
+        {text}
+      </div>
+    )
+  )
 }
 ```
 
@@ -193,39 +193,39 @@ import { ImageResponse } from 'next/server'
 import { getCaptionForImage, getOGImages } from '@/app/utils/images'
 
 export async function generateImageMetadata({ params }) {
-const images = await getOGImages(params.id)
+  const images = await getOGImages(params.id)
 
-return images.map((image, idx) => ({
-id: idx,
-size: { width: 1200, height: 600 },
-alt: image.text,
-contentType: 'image/png',
-}))
+  return images.map((image, idx) => ({
+    id: idx,
+    size: { width: 1200, height: 600 },
+    alt: image.text,
+    contentType: 'image/png',
+  }))
 }
 
 export default async function Image({ params, id }) {
-const productId = params.id
-const imageId = id
-const text = await getCaptionForImage(productId, imageId)
+  const productId = params.id
+  const imageId = id
+  const text = await getCaptionForImage(productId, imageId)
 
-return new ImageResponse(
-(
-<div
-style={
-{
-// ...
-}
-}
->
-{text}
-</div>
-)
-)
+  return new ImageResponse(
+    (
+      <div
+        style={
+          {
+            // ...
+          }
+        }
+      >
+        {text}
+      </div>
+    )
+  )
 }
 ```
 
 ## 버전 히스토리
 
-| 버전 | 변경사항 |
+| 버전      | 변경사항                                  |
 | --------- | ----------------------------------------- |
 | `v13.3.0` | `generateImageMetadata`가 도입되었습니다. |
