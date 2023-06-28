@@ -5,30 +5,37 @@ source: app/building-your-application/styling/css-in-js
 ---
 
 <details>
-  <summary>예시</summary>
-  
-- [Styled JSX](https://github.com/vercel/next.js/tree/canary/examples/with-styled-jsx)
-- [Styled Components](https://github.com/vercel/next.js/tree/canary/examples/with-styled-components)
-- [Emotion](https://github.com/vercel/next.js/tree/canary/examples/with-emotion)
-- [Linaria](https://github.com/vercel/next.js/tree/canary/examples/with-linaria)
-- [Tailwind CSS + Emotion](https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss-emotion)
-- [Styletron](https://github.com/vercel/next.js/tree/canary/examples/with-styletron)
-- [Cxs](https://github.com/vercel/next.js/tree/canary/examples/with-cxs)
-- [Aphrodite](https://github.com/vercel/next.js/tree/canary/examples/with-aphrodite)
-- [Fela](https://github.com/vercel/next.js/tree/canary/examples/with-aphrodite)
-- [Stitches](https://github.com/vercel/next.js/tree/canary/examples/with-stitches)
+  <summary>예시</summary>- [Styled
+  JSX](https://github.com/vercel/next.js/tree/canary/examples/with-styled-jsx) -
+  [Styled
+  Components](https://github.com/vercel/next.js/tree/canary/examples/with-styled-components)
+  -
+  [Emotion](https://github.com/vercel/next.js/tree/canary/examples/with-emotion)
+  -
+  [Linaria](https://github.com/vercel/next.js/tree/canary/examples/with-linaria)
+  - [Tailwind CSS +
+  Emotion](https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss-emotion)
+  -
+  [Styletron](https://github.com/vercel/next.js/tree/canary/examples/with-styletron)
+  - [Cxs](https://github.com/vercel/next.js/tree/canary/examples/with-cxs) -
+  [Aphrodite](https://github.com/vercel/next.js/tree/canary/examples/with-aphrodite)
+  -
+  [Fela](https://github.com/vercel/next.js/tree/canary/examples/with-aphrodite)
+  -
+  [Stitches](https://github.com/vercel/next.js/tree/canary/examples/with-stitches)
 </details>
 
-Next.js에서 기존의 CSS-in-JS를 사용할 수 있습니다. 가장 간단한 방법은 인라인 스타일입니다. 
+Next.js에서 기존의 CSS-in-JS를 사용할 수 있습니다. 가장 간단한 방법은 인라인 스타일입니다.
 
 ```jsx
 function HiThere() {
   return <p style={{ color: 'red' }}>hi there</p>
 }
- 
+
 export default HiThere
 ```
-Next.js는 격리된 scope의 CSS를 지원하기 위해 [styled-jsx](https://github.com/vercel/styled-jsx)를 번들로 제공합니다. 목표는 [JS만을 지원하는](https://github.com/w3c/webcomponents/issues/71) Web 컴포넌트와 비슷한 "shadow CSS"를 지원하는 것입니다. 
+
+Next.js는 격리된 scope의 CSS를 지원하기 위해 [styled-jsx](https://github.com/vercel/styled-jsx)를 번들로 제공합니다. 목표는 [JS만을 지원하는](https://github.com/w3c/webcomponents/issues/71) Web 컴포넌트와 비슷한 "shadow CSS"를 지원하는 것입니다.
 
 다른 인기 있는 CSS-in-JS에 대해서는 위의 예시를 참고하세요
 (예시: Styled Components).
@@ -62,12 +69,12 @@ function HelloWorld() {
     </div>
   )
 }
- 
+
 export default HelloWorld
 ```
 
 더 많은 예제는 [styled-jsx 문서](https://github.com/vercel/styled-jsx)를 참고하세요.
 
-JavaScript 비활성화
--------------
-JavaScript를 비활성화하더라도 CSS는 프로덕션 빌드(`next start`)에 가져와집니다. 그러나 개발 중에는 빠른 새로고침으로 최고의 개발자 경험을 제공하기 위해 JavaScript를 활성화해야 합니다. 
+## JavaScript 비활성화
+
+JavaScript를 비활성화하더라도 CSS는 프로덕션 빌드(`next start`)에 가져와집니다. 그러나 개발 중에는 빠른 새로고침으로 최고의 개발자 경험을 제공하기 위해 JavaScript를 활성화해야 합니다.
