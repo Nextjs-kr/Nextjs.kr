@@ -17,7 +17,7 @@ I **love** using [Next.js](https://nextjs.org/)
 <p>I <strong>love</strong> using <a href="https://nextjs.org/">Next.js</a></p>
 ```
 
-[MDX](https://mdxjs.com/)는 마크다운 파일에 바로 [JSX](https://react.dev/learn/writing-markup-with-jsx)를 작성할 수 있게 하는 마크다운의 초 집합입니다. MDX는 역동적인 상호작용 능력을 추가하고 리액트 컴포넌트를 콘텐츠에 포함할 수 있는 강력한 방법입니다.
+[MDX](https://mdxjs.com/)는 마크다운 파일에 바로 [JSX](https://react.dev/learn/writing-markup-with-jsx)를 작성할 수 있게 하는 마크다운의 상위 집합입니다. MDX는 역동적인 상호작용 능력을 추가하고 리액트 컴포넌트를 콘텐츠에 포함할 수 있는 강력한 방법입니다.
 
 Next.js는 애플리케이션 내에 있는 로컬 MDX 콘텐츠와 서버에서 동적으로 가져온 원격 MDX를 모두 지원하고 있습니다. Next.js 플러그인은 `app` 디렉토리에선 기본값인 서버 컴포넌트에서의 사용 지원을 포함하여 마크다운과 리액트 컴포넌트를 HTML로 변환하는 작업을 처리합니다.
 
@@ -40,7 +40,7 @@ npm install @next/mdx @mdx-js/loader @mdx-js/react @types/mdx
 ```tsx filename="mdx-components.tsx" switcher
 import type { MDXComponents } from 'mdx/types'
 
-// 이 파일은 커스텀 리액트 컴포넌트를 MDX 파일들에 사용할 수 있도록 해줍니다.
+// 이 파일은 커스텀 리액트 컴포넌트를 MDX 파일에 사용할 수 있도록 해줍니다.
 // 다른 라이브러리에 있는 컴포넌트를 포함하여 우리가 원하는 어떤 리액트 컴포넌트도 가져와 사용할 수 있습니다.
 
 // 이 파일은 `app` 디렉토리에서 MDX를 사용하기 위해 필요합니다.
