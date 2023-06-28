@@ -10,7 +10,7 @@ Next.js는 개발 중에 빌드된 페이지를 메모리에서 정리하거나 
 ```js filename="next.config.js"
 module.exports = {
   onDemandEntries: {
-    // 서버가 페이지를 버퍼(buffer)에 보관하는 기간(ms)
+    // 서버가 페이지를 버퍼에 보관하는 기간(ms)
     maxInactiveAge: 25 * 1000,
     // 메모리에서 처분하지 않고 동시에 보관해야 하는 페이지 수
     pagesBufferLength: 2,
