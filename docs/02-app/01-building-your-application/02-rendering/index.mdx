@@ -1,15 +1,15 @@
 ---
 title: Rendering
-description: Learn the differences between Next.js rendering environments, strategies, and runtimes.
+description: Next.js의 렌더링 환경, 전략, 런타임 간의 차이점을 배워봅시다.
 ---
 
-Rendering converts the code you write into user interfaces.
+렌더링은 작성한 코드를 사용자 인터페이스로 변환하는 과정입니다.
 
-React 18 and Next.js 13 introduced new ways to render your application. This page will help you understand the differences between rendering environments, strategies, runtimes, and how to opt into them.
+React 18과 Next.js 13은 애플리케이션을 렌더링하는 새로운 방법을 소개했습니다. 이 페이지에서는 렌더링 환경, 전략, 런타임의 차이점과 그것들을 어떻게 선택하는지에 대해 이해할 수 있도록 도와줄 것입니다.
 
-## Rendering Environments
+## 렌더링 환경
 
-There are two environments where your application code can be rendered: the client and the server.
+애플리케이션 코드가 렌더링될 수 있는 환경은 두 가지입니다: 클라이언트와 서버.
 
 <Image
   alt="Client and Server Environments"
@@ -19,55 +19,55 @@ There are two environments where your application code can be rendered: the clie
   height="672"
 />
 
-- The **client** refers to the browser on a user's device that sends a request to a server for your application code. It then turns the response from the server into an interface the user can interact with.
-- The **server** refers to the computer in a data center that stores your application code, receives requests from a client, does some computation, and sends back an appropriate response.
+- **클라이언트**는 사용자의 장치에 있는 브라우저를 의미하며, 이는 애플리케이션 코드를 서버에 요청합니다. 그런 다음 서버의 응답을 사용자가 상호 작용할 수 있는 인터페이스로 바꿉니다.
+- **서버**는 데이터 센터에 있는 컴퓨터를 의미하며, 이는 애플리케이션 코드를 저장하고, 클라이언트의 요청을 받아 계산을 수행하고, 적절한 응답을 보냅니다.
 
-> **Good to know**: Server can refer to computers in regions where your application is deployed to, the [Edge Network](https://vercel.com/docs/concepts/edge-network/overview) where your application code is distributed, or [Content Delivery Networks (CDNs)](https://developer.mozilla.org/en-US/docs/Glossary/CDN) where the result of the rendering work can be cached.
+> **참고**: 서버는 애플리케이션이 배포된 지역의 컴퓨터, 애플리케이션 코드가 분산되는 [Edge Network](https://vercel.com/docs/concepts/edge-network/overview) 또는 렌더링 작업의 결과가 캐싱될 수 있는 [Content Delivery Networks (CDNs)](https://developer.mozilla.org/en-US/docs/Glossary/CDN)를 의미할 수 있습니다.
 
-## Component-level Client and Server Rendering
+## 컴포넌트 수준의 클라이언트와 서버 렌더링
 
-Before React 18, the primary way to render your application **using React** was entirely on the client.
+React 18 이전에는 **React를 사용하여** 애플리케이션을 전적으로 클라이언트에서 렌더링하는 것이 주요 방법이었습니다.
 
-Next.js provided an easier way to break down your application into **pages** and prerender on the server by generating HTML and sending it to the client to be [hydrated](https://react.dev/reference/react-dom/hydrate#hydrating-server-rendered-html) by React. However, this led to additional JavaScript needed on the client to make the initial HTML interactive.
+Next.js는 애플리케이션을 **페이지** 단위로 나누어 서버에서 HTML을 생성하여 사전 렌더링한 후 React가 [hydration](https://react.dev/reference/react-dom/hydrate#hydrating-server-rendered-html)하도록 클라이언트에게 보내는 간편한 방법을 제공했습니다. 하지만, 초기 HTML을 사용자와 상호작용할 수 있도록 만들기 위해 클라이언트에서 추가적인 자바스크립트가 필요했습니다.
 
-Now, with [Server and Client Components](/docs/getting-started/react-essentials), React can render on the client **and** the server meaning you can choose the rendering environment at the component level.
+이제 [클라이언트 및 서버 컴포넌트](/docs/getting-started/react-essentials)를 통해 React는 클라이언트와 서버에서 렌더링할 수 있으므로, 컴포넌트 수준에서 렌더링 환경을 선택할 수 있습니다.
 
-By default, the [`app` router uses **Server Components**](/docs/getting-started/react-essentials#server-components), allowing you to easily render components on the server and reducing the amount of JavaScript sent to the client.
+기본적으로, [`app` 라우터는 **서버 컴포넌트**](/docs/getting-started/react-essentials#server-components)를 사용합니다, 이를 통해 서버에서 컴포넌트를 쉽게 렌더링하고 클라이언트로 보내는 자바스크립트의 양을 줄일 수 있습니다.
 
-## Static and Dynamic Rendering on the Server
+## 서버에서의 정적 및 동적 렌더링
 
-In addition to client-side and server-side rendering with React components, Next.js gives you the option to optimize rendering on the server with **Static** and **Dynamic** Rendering.
+React 컴포넌트를 이용한 클라이언트 측 및 서버 측 렌더링 외에도, Next.js는 **정적** 및 **동적** 렌더링을 사용하여 서버에서 렌더링을 최적화하는 옵션을 제공합니다.
 
-### Static Rendering
+### 정적 렌더링
 
-With **Static Rendering**, both Server _and_ Client Components can be prerendered on the server at **build time**. The result of the work is [cached](/docs/app/building-your-application/data-fetching/caching) and reused on subsequent requests. The cached result can also be [revalidated](/docs/app/building-your-application/data-fetching#revalidating-data).
+정적 렌더링을 사용하여 서버 및 클라이언트 컴포넌트 모두 **빌드 시간**에 서버에서 사전 렌더링할 수 있습니다. 작업의 결과를 [캐싱](/docs/app/building-your-application/data-fetching/caching)하여 이후의 요청에서 재사용합니다. 캐싱된 결과를 [재검증](/docs/app/building-your-application/data-fetching#revalidating-data)할 수도 있습니다.
 
-> **Good to know**: This is equivalent to [Static Site Generation (SSG)](/docs/pages/building-your-application/rendering/static-site-generation) and [Incremental Static Regeneration (ISR)](/docs/pages/building-your-application/rendering/incremental-static-regeneration) in the [Pages Router](/docs/pages/building-your-application/rendering).
+> **참고**: 이는 [Static Site Generation (SSG)](/docs/pages/building-your-application/rendering/static-site-generation)과 [Incremental Static Regeneration (ISR)](/docs/pages/building-your-application/rendering/incremental-static-regeneration)이 [Pages Router](/docs/pages/building-your-application/rendering)에서 하는 것과 동일합니다.
 
-Server and Client Components are rendered differently during Static Rendering:
+정적 렌더링 중에 클라이언트 및 서버 컴포넌트는 다르게 렌더링됩니다.
 
-- Client Components have their HTML and JSON prerendered and cached on the server. The cached result is then sent to the client for hydration.
-- Server Components are rendered on the server by React, and their payload is used to generate HTML. The same rendered payload is also used to hydrate the components on the client, resulting in no JavaScript needed on the client.
+- 클라이언트 컴포넌트는 HTML과 JSON이 사전에 렌더링되고 서버에서 캐싱됩니다. 캐싱된 결과는 그 후 클라이언트로 전송되어 hydration됩니다.
+- 서버 컴포넌트는 서버에서 React에 의해 렌더링되며, 그 페이로드는 HTML을 생성하는 데 사용됩니다. 또한 렌더링된 페이로드는 클라이언트에서 컴포넌트를 hydration하는 데 사용되며, 결과적으로 클라이언트에서 필요한 자바스크립트가 없습니다.
 
-### Dynamic Rendering
+### 동적 렌더링
 
-With Dynamic Rendering, both Server _and_ Client Components are rendered on the server at **request time**. The result of the work is not cached.
+동적 렌더링을 사용하면 서버 및 클라이언트 컴포넌트 모두 요청 시에 서버에서 렌더링됩니다. 작업의 결과는 캐싱하지 않습니다.
 
-> **Good to know**: This is equivalent to [Server-Side Rendering (`getServerSideProps()`)](/docs/pages/building-your-application/rendering/server-side-rendering) in the [Pages Router](/docs/pages/building-your-application/rendering).
+> **참고**: 이는 [Pages Router](/docs/pages/building-your-application/rendering)에서의 [Server-Side Rendering (`getServerSideProps()`)](/docs/pages/building-your-application/rendering/server-side-rendering)과 동일합니다.
 
-To learn more about static and dynamic behavior, see the [Static and Dynamic Rendering](/docs/app/building-your-application/rendering/static-and-dynamic-rendering) page. To learn more about caching, see the [Caching](/docs/app/building-your-application/data-fetching/caching) sections.
+정적 및 동적 동작에 대해 자세히 알아보려면 [Static and Dynamic Rendering](/docs/app/building-your-application/rendering/static-and-dynamic-rendering) 페이지를 참조하세요. 캐싱에 대해 자세히 알아보려면, [Caching](/docs/app/building-your-application/data-fetching/caching) 섹션을 참조하세요.
 
-## Edge and Node.js Runtimes
+## Edge와 Node.js 런타임
 
-On the server, there are two runtimes where your pages can be rendered:
+서버에서 페이지가 렌더링될 수 있는 두 가지 런타임이 있습니다.
 
-- The **Node.js Runtime** (default) has access to all Node.js APIs and compatible packages from the ecosystem.
-- The **Edge Runtime** is based on [Web APIs](/docs/app/api-reference/edge).
+- **Node.js Runtime(기본 설정)** 은 모든 Node.js API와 그에 호환되는 패키지에 접근할 수 있습니다.
+- **Edge Runtime**은 Web APIs를 기반으로 합니다.
 
-Both runtimes support [streaming](/docs/app/building-your-application/routing/loading-ui-and-streaming) from the server, depending on your deployment infrastructure.
+두 런타임 모두 서버에서 [스트리밍](/docs/app/building-your-application/routing/loading-ui-and-streaming)을 지원하며, 이는 배포 인프라에 따라 달라집니다.
 
-To learn how to switch between runtimes, see the [Edge and Node.js Runtimes](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) page.
+런타임 사이를 전환하는 방법을 알아보려면 [Edge와 Node.js 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) 페이지를 참조하세요.
 
-## Next Steps
+## 다음 단계
 
-Now that you understand the fundamentals of rendering, you can learn more about implementing the different rendering strategies and runtimes:
+이제 렌더링의 기본사항을 이해했으므로 다양한 렌더링 전략과 런타임을 구현하는 방법에 대해 배울 수 있습니다.
