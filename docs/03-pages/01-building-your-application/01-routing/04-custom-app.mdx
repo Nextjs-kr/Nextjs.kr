@@ -18,7 +18,7 @@ export default function MyApp({ Component, pageProps }) {
 }
 ```
 
-`Component` prop는 현재 `page`에 해당하므로 라우트를 이동할 때마다 `Component`는 새 `page`로 변경됩니다. 따라서 `Component`에 전달하는 prop는 모두 `page`가 받습니다.
+`Component` prop는 현재 `page`에 해당하므로 라우트를 이동할 때마다 새 `page`로 변경됩니다. 따라서 `Component`에 전달하는 prop는 모두 `page`가 받습니다.
 
 `pageProps`는 Next.js의 [데이터 페칭 메서드](/docs/pages/building-your-application/data-fetching) 중 하나가 사전 로딩한 초기 prop가 담긴 객체이며 초기 prop가 없을 경우엔 빈 객체입니다.
 
