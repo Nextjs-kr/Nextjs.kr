@@ -132,16 +132,16 @@ function Card<T extends string>({ href }: { href: Route<T> | URL })
 >
 > `next dev` 또는 `next build`를 실행할 때 Next.js는 애플리케이션의 모든 기존 경로(`링크`의 `href` 유형으로 유효한 모든 경로)에 대한 정보를 포함하는 숨겨진 `.d.ts` 파일을 `.next` 내부에 생성합니다. 이 `.d.ts` 파일은 `tsconfig.json`에 포함되며 TypeScript 컴파일러는 이 `.d.ts`를 검사하여 유효하지 않은 링크에 대한 피드백을 에디터에 제공합니다.
 
-## End-to-End Type Safety
+## 엔드투엔드 type 안전성
 
-Next.js 13 has **enhanced type safety**. This includes:
+Next.js 13에는 **향상된 type 안전성**이 있습니다. 여기에는 하단 내용이 포함됩니다:
 
-1. **No serialization of data between fetching function and page**: You can `fetch` directly in components, layouts, and pages on the server. This data _does not_ need to be serialized (converted to a string) to be passed to the client side for consumption in React. Instead, since `app` uses Server Components by default, we can use values like `Date`, `Map`, `Set`, and more without any extra steps. Previously, you needed to manually type the boundary between server and client with Next.js-specific types.
-2. **Streamlined data flow between components**: With the removal of `_app` in favor of root layouts, it is now easier to visualize the data flow between components and pages. Previous, data flowing between individual `pages` and `_app` were difficult to type and could introduce confusing bugs. With [colocated data fetching](/docs/app/building-your-application/data-fetching/fetching) in Next.js 13, this is no longer an issue.
+1. **불러오기 함수와 페이지 간 데이터 직렬화 없음**: 서버의 컴포넌트, 레이아웃, 페이지에서 직접 'fetch'할 수 있습니다. 이 데이터는 React에서 사용하기 위해 클라이언트 측에 전달하기 위해 직렬화(문자열로 변환)할 필요가 없습니다. 대신 `app`은 기본적으로 서버 컴포넌트를 사용하기 때문에 추가 단계 없이 `Date`, `Map`, `Set` 등과 같은 값을 사용할 수 있습니다. 이전에는 서버와 클라이언트 사이의 경계를 Next.js 전용 type으로 수동으로 입력해야 했습니다.
+2. **컴포넌트 간 데이터 흐름 간소화**: 루트 레이아웃을 위해 `_app`을 제거하여 컴포넌트와 페이지 간의 데이터 흐름을 시각화하기 쉬워졌습니다. 기존에는 개별 `pages`와 `_app` 사이의 데이터 흐름이 입력하기 어렵고 혼란스러운 버그를 유발할 수 있었습니다. Next.js 13의 [colocated data fetching](/docs/app/building-your-application/data-fetching/fetching)를 사용하면 더 이상 이런 문제가 발생하지 않습니다.
 
-[Data Fetching in Next.js](/docs/app/building-your-application/data-fetching/fetching) now provides as close to end-to-end type safety as possible without being prescriptive about your database or content provider selection.
+[Next.js의 데이터 가져오기](/docs/app/building-your-application/data-fetching/fetching)는 이제 데이터베이스 또는 콘텐츠 제공업체 선택에 대한 규범적 제한 없이 엔드투엔드 type 안전성에 최대한 근접한 기능을 제공합니다.
 
-We're able to type the response data as you would expect with normal TypeScript. For example:
+일반적인 타입스크립트에서 예상할 수 있는 대로 응답 데이터를 입력할 수 있습니다. 예를 들어
 
 ```tsx filename="app/page.tsx"
 async function getData() {
@@ -158,27 +158,27 @@ export default async function Page() {
 }
 ```
 
-For _complete_ end-to-end type safety, this also requires your database or content provider to support TypeScript. This could be through using an [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) or type-safe query builder.
+For _complete_ 엔드투엔드 type 안전성을 확보하려면 데이터베이스 또는 콘텐츠 제공업체가 타입스크립트를 지원해야 합니다. [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) 또는 type 안전 쿼리 빌더를 사용할 수 있습니다.
 
-## Async Server Component TypeScript Error
+## 비동기 서버 컴포넌트 타입스크립트 오류
 
-To use an `async` Server Component with TypeScript, ensure you are using TypeScript `5.1.3` or higher and `@types/react` `18.2.8` or higher.
+TypeScript와 함께 `async` 서버 컴포넌트를 사용하려면 TypeScript `5.1.3` 이상 및 `@types/react` `18.2.8` 이상을 사용하고 있는지 확인하세요.
 
-If you are using an older version of TypeScript, you may see a `'Promise<Element>' is not a valid JSX element` type error. Updating to the latest version of TypeScript and `@types/react` should resolve this issue.
+이전 버전의 TypeScript를 사용하는 경우 `'Promise<Element>' is not a valid JSX element`라는 유형 오류가 표시될 수 있습니다. 최신 버전의 TypeScript 및 `@types/react`로 업데이트하면 이 문제가 해결됩니다.
 
-## Passing Data Between Server & Client Components
+## 서버와 클라이언트 컴포넌트 간 데이터 전달
 
-When passing data between a Server and Client Component through props, the data is still serialized (converted to a string) for use in the browser. However, it does not need a special type. It’s typed the same as passing any other props between components.
+props을 통해 서버와 클라이언트 컴포넌트 간에 데이터를 전달할 때에도 브라우저에서 사용할 수 있도록 데이터가 직렬화(문자열로 변환)됩니다. 하지만 특별한 유형이 필요하지 않습니다. 컴포넌트 간에 다른 프로퍼티를 전달할 때와 동일한 유형으로 전달됩니다.
 
-Further, there is less code to be serialized, as un-rendered data does not cross between the server and client (it remains on the server). This is only now possible through support for Server Components.
+또한 렌더링되지 않은 데이터는 서버와 클라이언트 간에 교차하지 않으므로(서버에 남아 있음) 직렬화할 코드가 더 적습니다. 이 기능은 이제 서버 컴포넌트 지원을 통해서만 가능합니다.
 
 </AppOnly>
 
 <PagesOnly>
 
-## Static Generation and Server-side Rendering
+## 정적 생성 및 서버 측 렌더링
 
-For [`getStaticProps`](/docs/pages/api-reference/functions/get-static-props), [`getStaticPaths`](/docs/pages/api-reference/functions/get-static-paths), and [`getServerSideProps`](/docs/pages/api-reference/functions/get-server-side-props), you can use the `GetStaticProps`, `GetStaticPaths`, and `GetServerSideProps` types respectively:
+[`getStaticProps`](/docs/pages/api-reference/functions/get-static-props), [`getStaticPaths`](/docs/pages/api-reference/functions/get-static-paths)의 경우, 그리고 [`getServerSideProps`](/docs/pages/api-reference/functions/get-server-side-props)의 경우 각각 `GetStaticProps`, `GetStaticPaths`, `GetServerSideProps` 타입을 사용할 수 있습니다:
 
 ```tsx filename="pages/blog/[slug].tsx"
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
@@ -196,9 +196,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 ```
 
-## API Routes
+## API 경로
 
-The following is an example of how to use the built-in types for API routes:
+다음은 API 경로에 기본 제공 유형을 사용하는 방법의 예입니다:
 
 ```ts
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -208,7 +208,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 ```
 
-You can also type the response data:
+응답 데이터를 입력할 수도 있습니다:
 
 ```ts
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -225,9 +225,9 @@ export default function handler(
 }
 ```
 
-## Custom `App`
+## 사용자 지정 `App`
 
-If you have a [custom `App`](/docs/pages/building-your-application/routing/custom-app), you can use the built-in type `AppProps` and change file name to `./pages/_app.tsx` like so:
+[`사용자 지정 App`](/docs/pages/building-your-application/routing/custom-app)이 있는 경우, 기본 제공 유형인 `AppProps`를 사용하고 파일 이름을 './pages/_app.tsx'로 변경하면 됩니다:
 
 ```ts
 import type { AppProps } from 'next/app'
@@ -239,15 +239,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 </PagesOnly>
 
-## Path aliases and baseUrl
+## 경로 별칭 및 baseUrl
 
-Next.js automatically supports the `tsconfig.json` `"paths"` and `"baseUrl"` options.
+Next.js는 `tsconfig.json` `"paths"` 및 `"baseUrl"` 옵션을 자동으로 지원합니다.
 
-You can learn more about this feature on the [Module Path aliases documentation](/docs/pages/building-your-application/configuring/absolute-imports-and-module-aliases).
+이 기능에 대한 자세한 내용은 [모듈 경로 별칭 문서](/docs/pages/building-your-application/configuring/absolute-imports-and-module-aliases)에서 확인할 수 있습니다.
 
-## Type checking next.config.js
+## next.config.js Type 확인
 
-The `next.config.js` file must be a JavaScript file as it does not get parsed by Babel or TypeScript, however you can add some type checking in your IDE using JSDoc as below:
+'next.config.js' 파일은 바벨이나 타입스크립트에서 구문 분석되지 않으므로 자바스크립트 파일이어야 하지만, 아래와 같이 JSDoc을 사용하여 IDE에서 타입 검사를 추가할 수 있습니다:
 
 ```js
 // @ts-check
@@ -262,19 +262,19 @@ const nextConfig = {
 module.exports = nextConfig
 ```
 
-## Incremental type checking
+## 증분 Type 검사
 
-Since `v10.2.1` Next.js supports [incremental type checking](https://www.typescriptlang.org/tsconfig#incremental) when enabled in your `tsconfig.json`, this can help speed up type checking in larger applications.
+`v10.2.1` Next.js는 `tsconfig.json`에서 활성화하면 [증분 유형 검사](https://www.typescriptlang.org/tsconfig#incremental)를 지원하므로 대규모 애플리케이션에서 유형 검사 속도를 높이는 데 도움이 될 수 있습니다.
 
-## Ignoring TypeScript Errors
+## 타입스크립트 오류 무시하기
 
-Next.js fails your **production build** (`next build`) when TypeScript errors are present in your project.
+프로젝트에 TypeScript 오류가 있는 경우 Next.js는 **production build**(`next build`)에 실패합니다.
 
-If you'd like Next.js to dangerously produce production code even when your application has errors, you can disable the built-in type checking step.
+애플리케이션에 오류가 있는 경우에도 Next.js가 프로덕션 코드를 위험하게 생성하지 않게 하려면 기본 제공 type 검사 단계를 비활성화할 수 있습니다.
 
-If disabled, be sure you are running type checks as part of your build or deploy process, otherwise this can be very dangerous.
+비활성화할 경우 빌드 또는 배포 프로세스의 일부로 유형 검사를 실행하고 있는지 확인해야 하며, 그렇지 않으면 매우 위험할 수 있습니다.
 
-Open `next.config.js` and enable the `ignoreBuildErrors` option in the `typescript` config:
+`next.config.js`를 열고 `typescript` 구성에서 `ignoreBuildErrors` 옵션을 활성화합니다:
 
 ```js filename="next.config.js"
 module.exports = {
@@ -292,6 +292,6 @@ module.exports = {
 
 | Version   | Changes                                                                                                                              |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `v13.2.0` | Statically typed links are available in beta.                                                                                        |
-| `v12.0.0` | [SWC](/docs/architecture/nextjs-compiler) is now used by default to compile TypeScript and TSX for faster builds.                    |
-| `v10.2.1` | [Incremental type checking](https://www.typescriptlang.org/tsconfig#incremental) support added when enabled in your `tsconfig.json`. |
+| `v13.2.0` | 정적으로 입력된 링크는 베타 버전에서 사용할 수 있습니다.                                                                                        |
+| `v12.0.0` | 이제 더 빠른 빌드를 위해 타입스크립트 및 TSX 컴파일에 [SWC](/docs/architecture/nextjs-compiler)가 기본으로 사용됩니다.                  |
+| `v10.2.1` | [증분 유형 검사](https://www.typescriptlang.org/tsconfig#incremental) 지원은 `tsconfig.json`에서 활성화하면 추가됩니다. |
