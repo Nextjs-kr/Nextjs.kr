@@ -12,10 +12,10 @@ Next.js에는 SEO 및 웹 공유성을 향상하기 위한 애플리케이션의
 
 애플리케이션에 메타데이터를 추가하는 방법에는 두 가지가 있습니다.
 
-- **설정 기반 메타데이터**: [정적 `메타데이터` 객체](/docs/app/api-reference/functions/generate-metadata#metadata-object)를 내보내거나, `layout.js` 또는 `page.js` 파일에서 동적 [함수 `generateMetadata`](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function)를 내보내세요.
+- **구성 기반 메타데이터**: [정적 `메타데이터` 객체](/docs/app/api-reference/functions/generate-metadata#metadata-object)를 내보내거나, `layout.js` 또는 `page.js` 파일에서 동적 [함수 `generateMetadata`](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function)를 내보내세요.
 - **파일 기반 Metadata**: 정적 또는 동적으로 만들어진 특수 파일을 라우트 세그먼트에 추가하세요.
 
-위 두 가지 옵션 모두 Next.js가 페이지에 적합한 `<head>` 엘리먼트를 자동으로 생성합니다. 또한 [`ImageResponse`](/docs/app/api-reference/functions/image-response) 생성자를 사용하여 동적 OG 이미지를 생성할 수 있습니다.
+위 두 가지 옵션 모두의 경우에, Next.js는 페이지에 적합한 `<head>` 엘리먼트를 자동으로 생성합니다. 또한 [`ImageResponse`](/docs/app/api-reference/functions/image-response) 생성자를 사용하여 동적 OG 이미지를 생성할 수 있습니다.
 
 ## 정적 메타데이터
 
@@ -106,7 +106,7 @@ export default function Page({ params, searchParams }) {}
 > **알아두면 좋은 것**:
 >
 > - 정적 메타데이터 및 `generateMetadata`를 통한 동적 메타데이터 모두 **서버 컴포넌트에서만 지원됩니다.**
-> - 라우터를 렌더링할 때 Next.js는 `generateMetadata`, `generateStaticParams`, 레이아웃, 페이지 및 서버 컴포넌트에서 같은 데이터를 가져오는 중복된 요청을 자동으로 제거합니다. `fetch`를 사용할 수 없는 경우 React [`캐시`](/docs/app/building-your-application/data-fetching/caching#react-cache)를 사용합니다.
+> - 라우트를 렌더링할 때 Next.js는 `generateMetadata`, `generateStaticParams`, 레이아웃, 페이지 및 서버 컴포넌트에서 같은 데이터를 가져오는 중복된 요청을 자동으로 제거합니다. `fetch`를 사용할 수 없는 경우 React [`캐시`](/docs/app/building-your-application/data-fetching/caching#react-cache)를 사용합니다.
 > - Next.js는 클라이언트에 UI를 스트리밍하기 전에 `generateMetadata` 내부의 데이터 불러오기가 완료될 때까지 기다립니다. 이 작업은 [스트리밍된 응답](/docs/app/building-your-application/routing/loading-ui-and-streaming)의 첫 부분에 `<head>` 태그가 포함될 수 있도록 보장합니다.
 
 ## 파일 기반 메타데이터
@@ -128,7 +128,7 @@ metadata로 사용할 수 있는 특수 파일은 아래와 같습니다.
 
 ### 기본 필드
 
-라우터가 메타데이터를 정의하지 않더라도 항상 추가되는 두 가지 기본 `meta` 태그가 있습니다.
+라우트가 메타데이터를 정의하지 않더라도 항상 추가되는 두 가지 기본 `meta` 태그가 있습니다.
 
 - [문자 집합 메타 태그](https://developer.mozilla.org/ko/docs/Web/HTML/Element/meta#attr-charset)는 웹 사이트의 문자 인코딩을 설정합니다.
 - [뷰포트 메타 태그](https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag)는 웹사이트의 뷰포트 너비와 배율을 설정하여 다양한 장치에 맞게 조정합니다.
@@ -150,7 +150,7 @@ metadata로 사용할 수 있는 특수 파일은 아래와 같습니다.
 
 ### 병합
 
-[평가 순서](#ordering)에 따라 동일한 라우터 상의 여러 세그먼트에서 내보낸 메타데이터 개체를 **얕게** 병합하여 라우터의 최종 메타데이터 출력을 구성합니다. 중복된 키는 순서에 따라 **교체**됩니다.
+[평가 순서](#ordering)에 따라 동일한 라우트 상의 여러 세그먼트에서 내보낸 메타데이터 개체를 **얕게** 병합하여 라우트의 최종 메타데이터 출력을 구성합니다. 중복된 키는 순서에 따라 **교체**됩니다.
 
 즉, 이전 세그먼트에서 정의된 [`openGraph`](/docs/app/api-reference/functions/generate-metadata#opengraph) 및 [`robots`](/docs/app/api-reference/functions/generate-metadata#robots)과 같이 중첩된 필드가 있는 메타데이터는 마지막 세그먼트에서 덮어씌워집니다.
 
