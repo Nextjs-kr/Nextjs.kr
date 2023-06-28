@@ -1,9 +1,9 @@
 ---
 title: getStaticProps
-description: API reference for `getStaticProps`. Learn how to use `getStaticProps` to generate static pages with Next.js.
+description: `getStaticProps`를 위한 API 레퍼런스입니다. 'getStaticProps'를 사용하여 Next.js로 정적 페이지를 생성하는 방법에 대해 알아봅니다.
 ---
 
-Exporting a function called `getStaticProps` will pre-render a page at build time using the props returned from the function:
+`getStaticProps`라는 함수를 내보내면 해당 함수에서 반환된 props를 사용하여 빌드 시 페이지를 미리 렌더링합니다.
 
 ```tsx filename="pages/index.tsx" switcher
 import type { InferGetStaticPropsType, GetStaticProps } from 'next'
@@ -40,7 +40,7 @@ export default function Page({ repo }) {
 }
 ```
 
-You can import modules in top-level scope for use in `getStaticProps`. Imports used will **not be bundled for the client-side**. This means you can write **server-side code directly in `getStaticProps`**, including fetching data from your database.
+`getStaticProps`에서 사용할 모듈을 최상위 스코프로 가져올 수 있습니다. 사용된 가져오기는 **클라이언트 측에서 번들링 되지 않습니다.** 즉, 데이터베이스에서 데이터를 가져오는 것을 포함하여 **서버측 코드를 'getStaticProps'에 직접 작성할 수 있습니다.**
 
 ## Context parameter
 
