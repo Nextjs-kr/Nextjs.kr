@@ -92,23 +92,23 @@ export default function Page() {
 
 ### `width`
 
-`width` 속성은 렌더링 되는 너비를 픽셀 단위로 나타내므로 이미지가 표시되는 크기에 영향을 줍니다.
+`width` 프로퍼티는 렌더링 되는 너비를 픽셀 단위로 나타내므로 이미지가 표시되는 크기에 영향을 줍니다.
 
-[정적으로 가져온 이미지](/docs/app/building-your-application/optimizing/images#local-images)나 [`fill` 속성](#fill)이 있는 이미지를 제외하고는, 필수입니다.
+[정적으로 가져온 이미지](/docs/app/building-your-application/optimizing/images#local-images)나 [`fill` 프로퍼티](#fill)가 있는 이미지를 제외하고는, 필수입니다.
 
 ### `height`
 
-`height` 속성은 렌더링 되는 높이를 픽셀 단위로 나타내므로 이미지가 표시되는 크기에 영향을 줍니다.
+`height` 프로퍼티는 렌더링 되는 높이를 픽셀 단위로 나타내므로 이미지가 표시되는 크기에 영향을 줍니다.
 
-[정적으로 가져온 이미지](/docs/app/building-your-application/optimizing/images#local-images)나 [`fill` 속성](#fill)이 있는 이미지를 제외하고는, 필수입니다.
+[정적으로 가져온 이미지](/docs/app/building-your-application/optimizing/images#local-images)나 [`fill` 프로퍼티](#fill)가 있는 이미지를 제외하고는, 필수입니다.
 
 ### `alt`
 
-`alt` 속성은 스크린 리더와 검색 엔진에 이미지를 설명하는 데 사용됩니다. 또한 이미지가 비활성화되었거나 이미지를 로드하는 동안 오류가 발생한 경우에 대체하여 보여줄 텍스트이기도 합니다.
+`alt` 프로퍼티는 스크린 리더와 검색 엔진에 이미지를 설명하는 데 사용됩니다. 또한 이미지가 비활성화되었거나 이미지를 로드하는 동안 오류가 발생한 경우에 대체하여 보여줄 텍스트이기도 합니다.
 
 [페이지의 의미를 변경하지 않고](https://html.spec.whatwg.org/multipage/images.html#general-guidelines) 이미지를 대체할 수 있는 텍스트를 포함해야 합니다. 이미지를 보완하기 위한 것이 아니어야 하며 이미지 위나 아래 설명에서 이미 제공한 정보를 반복해서는 안 됩니다.
 
-이미지가 단순한 장식용이거나 사용자를 위한 것이 아닌 경우 `alt` 속성은 빈 문자열(`alt=""`)이어야 합니다.
+이미지가 단순한 장식용이거나 사용자를 위한 것이 아닌 경우 `alt` 프로퍼티는 빈 문자열(`alt=""`)이어야 합니다.
 
 [자세히 알아보기](https://html.spec.whatwg.org/multipage/images.html#alt)
 
@@ -184,13 +184,13 @@ fill={true} // {true} | {false}
 
 다른 중단점에서 이미지가 얼마나 넓어질지에 대한 정보를 제공하는 문자열입니다. `sizes` 값은 [`fill`](#fill)을 사용하거나 반응형 크기를 갖도록 스타일을 지정한 이미지의 성능에 큰 영향을 미칩니다.
 
-`sizes` 속성은 이미지 성능과 관련된 두 가지 중요한 용도로 사용됩니다.
+`sizes` 프로퍼티는 이미지 성능과 관련된 두 가지 중요한 용도로 사용됩니다.
 
-- 첫째, `sizes` 값은 브라우저가 `next/image`의 자동 생성된 소스 세트에서 다운로드할 이미지의 크기를 결정하는 데 사용됩니다. 브라우저는 이미지를 선택할 때 아직 페이지에 있는 이미지의 크기를 알지 못하므로 뷰포트와 같은 크기이거나 더 큰 이미지를 선택합니다. `sizes` 속성을 사용하여 브라우저에 이미지가 실제 전체 화면보다 작을 것이라고 알릴 수 있습니다. `fill` 속성이 있는 이미지에 `sizes` 값을 지정하지 않으면 기본값인 `100vw` (전체 화면 너비)가 사용됩니다.
+- 첫째, `sizes` 값은 브라우저가 `next/image`의 자동 생성된 소스 세트에서 다운로드할 이미지의 크기를 결정하는 데 사용됩니다. 브라우저는 이미지를 선택할 때 아직 페이지에 있는 이미지의 크기를 알지 못하므로 뷰포트와 같은 크기이거나 더 큰 이미지를 선택합니다. `sizes` 프로퍼티를 통해 브라우저에 이미지가 실제 전체 화면보다 작을 것이라고 알릴 수 있습니다. `fill` 프로퍼티가 있는 이미지에 `sizes` 값을 지정하지 않으면 기본값인 `100vw` (전체 화면 너비)가 사용됩니다.
 
-- 둘째, `sizes` 속성은 `next/image`가 이미지 소스 집합을 자동으로 생성하는 방법을 구성합니다. `sizes` 값이 없으면 고정된 크기를 갖는 이미지에 적합한 작은 소스 세트가 생성됩니다. `sizes`가 정의되어 있으면 반응형 이미지에 적합한 큰 소스 세트가 생성됩니다. `sizes` 속성에 뷰포트 너비의 백분율을 나타내는 `50vw`와 같은 크기가 포함된 경우, 소스 세트는 너무 작아서 필요하지 않은 값을 포함하지 않도록 잘립니다.
+- 둘째, `sizes` 프로퍼티는 `next/image`가 이미지 소스 집합을 자동으로 생성하는 방법을 구성합니다. `sizes` 값이 없으면 고정된 크기를 갖는 이미지에 적합한 작은 소스 세트가 생성됩니다. `sizes`가 정의되어 있으면 반응형 이미지에 적합한 큰 소스 세트가 생성됩니다. `sizes` 프로퍼티에 뷰포트 너비의 백분율을 나타내는 `50vw`와 같은 크기가 포함된 경우, 소스 세트는 너무 작아서 필요하지 않은 값을 포함하지 않도록 잘립니다.
 
-예를 들어 스타일링으로 인해 이미지가 모바일 디바이스에서는 전체 너비, 태블릿에서는 2열 레이아웃, 데스크탑 디스플레이에서는 3열 레이아웃으로 표시되는 것을 알고 있다면 다음과 같은 `sizes` 속성을 포함해야 합니다.
+예를 들어 스타일링으로 인해 이미지가 모바일 디바이스에서는 전체 너비, 태블릿에서는 2열 레이아웃, 데스크탑 디스플레이에서는 3열 레이아웃으로 표시되는 것을 알고 있다면 다음과 같은 `sizes` 프로퍼티를 포함해야 합니다.
 
 ```jsx
 import Image from 'next/image'
@@ -231,7 +231,7 @@ priority={false} // {false} | {true}
 
 값이 참이라면 이미지의 우선순위가 높은 것으로 간주되어 미리 로드됩니다. `priority`를 사용하는 이미지에 대해서는 [지연 로딩](https://web.dev/preload-responsive-images/)이 자동으로 비활성화됩니다.
 
-[Largest Contentful Paint (LCP)](https://nextjs.org/learn/seo/web-performance/lcp) 요소로 감지된 모든 이미지에는 `priority` 속성을 사용해야 합니다. 뷰포트 크기에 따라 이미지가 LCP 요소가 될 수 있으므로 여러 개의 우선순위 이미지를 사용하는 것이 적절할 수 있습니다.
+[Largest Contentful Paint (LCP)](https://nextjs.org/learn/seo/web-performance/lcp) 요소로 감지된 모든 이미지에는 `priority` 프로퍼티를 사용해야 합니다. 뷰포트 크기에 따라 이미지가 LCP 요소가 될 수 있으므로 여러 개의 우선순위 이미지를 사용하는 것이 적절할 수 있습니다.
 
 이미지가 접힌 부분 위에 보일 때만 사용해야 합니다. 기본값은 `false`입니다.
 
@@ -245,9 +245,9 @@ placeholder = 'empty' // {empty} | {blur}
 
 A placeholder to use while the image is loading. Possible values are `blur` or `empty`. Defaults to `empty`.
 
-`blur`인 경우 `blurDataURL` 속성이 플레이스홀더로 사용됩니다. `src`가 [정적으로 가져온](/docs/app/building-your-application/optimizing/images#local-images) 이미지이고 `.jpg`, `.png`, `.webp`, 또는 `.avif`인 경우 `blurDataURL`은 자동으로 채워집니다.
+`blur`인 경우 `blurDataURL` 프로퍼티는 플레이스홀더로 사용됩니다. `src`가 [정적으로 가져온](/docs/app/building-your-application/optimizing/images#local-images) 이미지이고 `.jpg`, `.png`, `.webp`, 또는 `.avif`인 경우 `blurDataURL`은 자동으로 채워집니다.
 
-동적 이미지의 경우 `blurDataURL` 속성을 제공해야 합니다. [Plaiceholder](https://github.com/joe-bell/plaiceholder) 와 같은 솔루션은 `base64` 생성에 도움이 될 수 있습니다.
+동적 이미지의 경우 `blurDataURL` 프로퍼티를 제공해야 합니다. [Plaiceholder](https://github.com/joe-bell/plaiceholder) 와 같은 솔루션은 `base64` 생성에 도움이 될 수 있습니다.
 
 `empty`인 경우 이미지가 로드되는 동안 플레이스홀더가 표시되지 않고 빈 공간만 표시됩니다.
 
@@ -328,7 +328,7 @@ export default function ProfileImage() {
 
 ### `loading`
 
-> **추천**: 이 속성은 고급 사용 사례에만 적용됩니다. 이미지를 `eager` 로드하도록 전환하면 일반적으로 **성능이 저하**됩니다. 대신 이미지를 미리 로드하는 [`priority`](#priority) 속성을 사용하는 것이 좋습니다.
+> **추천**: 이 프로퍼티는 고급 사용 사례에만 적용됩니다. 이미지를 `eager` 로드하도록 전환하면 일반적으로 **성능이 저하**됩니다. 대신 이미지를 미리 로드하는 [`priority`](#priority) 프로퍼티를 사용하는 것이 좋습니다.
 
 ```js
 loading = 'lazy' // {lazy} | {eager}
@@ -393,7 +393,7 @@ props 외에도 `next.config.js`에서 이미지 컴포넌트를 구성할 수 �
 
 ### `remotePatterns`
 
-악의적인 사용자로부터 애플리케이션을 보호하기 위해서 외부 이미지를 사용할 때는 별도 구성이 필요합니다. 이렇게 허용된 외부 이미지만 Next.js 이미지 최적화 API를 통해 제공될 수 있습니다. 이러한 외부 이미지는 아래와 같이 `next.config.js` 파일에서 `remotePatterns` 속성을 사용하여 구성할 수 있습니다.
+악의적인 사용자로부터 애플리케이션을 보호하기 위해서 외부 이미지를 사용할 때는 별도 구성이 필요합니다. 이렇게 허용된 외부 이미지만 Next.js 이미지 최적화 API를 통해 제공될 수 있습니다. 이러한 외부 이미지는 아래와 같이 `next.config.js` 파일에서 `remotePatterns` 프로퍼티를 사용하여 구성할 수 있습니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -410,9 +410,9 @@ module.exports = {
 }
 ```
 
-> **참고**: 위의 예에서는 `next/image`의 `src` 속성이 `https://example.com/account123/`으로 시작해야 합니다. 다른 프로토콜, 호스트 이름, 포트 또는 일치하지 않는 경로가 있으면 400 Bad Request로 응답합니다.
+> **참고**: 위의 예에서는 `next/image`의 `src` 프로퍼티는 `https://example.com/account123/`으로 시작해야 합니다. 다른 프로토콜, 호스트 이름, 포트 또는 일치하지 않는 경로가 있으면 400 Bad Request로 응답합니다.
 
-다음은 `next.config.js` 파일에 있는 `remotePatterns` 속성의 또 다른 예입니다.
+다음은 `next.config.js` 파일에 있는 `remotePatterns` 프로퍼티의 또 다른 예입니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -427,7 +427,7 @@ module.exports = {
 }
 ```
 
-> **참고**: 위의 예에서는 `next/image`의 `src` 속성이 `https://img1.example.com` 또는 `https://me.avatar.example.com` 또는 하위 도메인 수와 관계 없이 시작해야 합니다. 다른 프토콜이나 일치하지 않는 호스트 이름은 400 Bad Request로 응답합니다.
+> **참고**: 위의 예에서는 `next/image`의 `src` 프로퍼티는 `https://img1.example.com` 또는 `https://me.avatar.example.com` 또는 하위 도메인 수와 관계 없이 시작해야 합니다. 다른 프토콜이나 일치하지 않는 호스트 이름은 400 Bad Request로 응답합니다.
 
 와일드카드 패턴은 `pathname`과 `hostname` 모두에 사용될 수 있으며 구문은 다음과 같습니다.
 
@@ -444,7 +444,7 @@ module.exports = {
 
 그러나 `domains` 구성은 와일드카드 패턴 일치를 지원하지 않으며 프로토콜, 포트 또는 경로명을 제한할 수 없습니다.
 
-다음은 `next.config.js` 파일에 있는 `domians` 속성의 예시입니다.
+다음은 `next.config.js` 파일에 있는 `domians` 프로퍼티의 예시입니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -495,7 +495,7 @@ export default function myImageLoader({ src, width, quality }) {
 
 ### `deviceSizes`
 
-사용자의 기기 너비를 알고 있는 경우 `next.config.js`의 `deviceSizes` 속성을 사용하여 기기 너비 중단점 목록을 지정할 수 있습니다. 이 너비는 `next/image` 컴포넌트가 `sizes` 속성을 사용할 때 사용자 기기에 맞는 이미지가 표시되도록 하기 위해 사용됩니다.
+사용자의 기기 너비를 알고 있는 경우 `next.config.js`의 `deviceSizes` 프로퍼티를 사용하여 기기 너비 중단점 목록을 지정할 수 있습니다. 이 너비는 `next/image` 컴포넌트가 `sizes` prop을 사용할 때 사용자 기기에 맞는 이미지가 표시되도록 하기 위해 사용됩니다.
 
 설정이 제공되지 않으면 아래 기본값이 사용됩니다.
 
@@ -509,7 +509,7 @@ module.exports = {
 
 ### `imageSizes`
 
-`next.config.js` 파일에서 `images.imageSizes` 속성을 사용하면 이미지 너비 목록을 지정할 수 있습니다. 너비는 [디바이스 크기](#devicesizes) 배열과 연결되어 이미지 [소스셋](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset)을 생성하는데 사용되는 전체 크기 배열을 형성합니다.
+`next.config.js` 파일에서 `images.imageSizes` 프로퍼티를 사용하면 이미지 너비 목록을 지정할 수 있습니다. 너비는 [디바이스 크기](#devicesizes) 배열과 연결되어 이미지 [소스셋](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset)을 생성하는데 사용되는 전체 크기 배열을 형성합니다.
 
 이미지가 화면의 전체 너비보다 작다는 것을 나타내는 [`size`](#sizes) 속성을 제공하는 이미지에만 imageSizes가 사용되기 때문에 두 개의 별도 목록이 존재합니다. **따라서 imageSizes의 크기는 모두 deviceSizes의 가장 작은 크기보다 작아야 합니다.**
 
@@ -592,7 +592,7 @@ module.exports = {
 
 ### `disableStaticImages`
 
-기본 동작은 `'./icon.png'에서 아이콘 가져오기`와 같은 정적 파일을 가져온 다음 이를 `src` 속성으로 전달할 수 있습니다.
+기본 동작은 `'./icon.png'에서 아이콘 가져오기`와 같은 정적 파일을 가져온 다음 이를 `src` 프로퍼티로 전달할 수 있습니다.
 
 가져오기가 다르게 작동할 것으로 예상되는 다른 플러그인과 충돌하는 경우 이 기능을 비활성화하는 것이 좋을 수도 있습니다.
 
