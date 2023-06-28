@@ -40,7 +40,7 @@ description: 프론트엔드 애플리케이션을 위한 라우팅의 기본 �
 
 앱 라우터는 `app`이라는 새 디렉터리에서 작동합니다. `app` 디렉터리는 `pages`디렉터리와 함께 작동하여 점진적으로 사용할 수 있습니다. 애플리케이션의 일부 경로를 새 동작으로 선택하면서 다른 경로는 이전 동작을 위해`pages`디렉터리에 유지할 수 있습니다. 애플리케이션에서`pages` 디렉터리를 사용한다면 [Pages Router](/docs/pages/building-your-application/routing) 문서를 참조하세요.
 
-> **알아두면 좋은 정보**: 앱 라우터가 페이지 라우터보다 우선순위가 높습니다. 디렉터리 간 경로는 동일한 URL 경로로 확인되어서는 안 되며 충돌을 방지하기 위해 빌드 시 오류가 발생합니다.
+> **참고**: 앱 라우터가 페이지 라우터보다 우선순위가 높습니다. 디렉터리 간 경로는 동일한 URL 경로로 확인되어서는 안 되며 충돌을 방지하기 위해 빌드 시 오류가 발생합니다.
 
 <Image
   alt="Next.js 앱 디렉터리"
@@ -99,7 +99,7 @@ Next.js는 중첩된 경로에서 특정 동작을 하는 UI를 생성하기 위
 | [`template`](/docs/app/building-your-application/routing/pages-and-layouts#templates) | 새롭게 렌더링된 특수 레이아웃 UI                                                        |
 | [`default`](/docs/app/api-reference/file-conventions/default)                         | [병렬 경로](/docs/app/building-your-application/routing/parallel-routes)에 대한 폴백 UI |
 
-> **유용한 정보**: `.js`, `.jsx` 또는 `.tsx` 파일 확장자는 특수 파일에 사용할 수 있습니다.
+> **참고**: `.js`, `.jsx` 또는 `.tsx` 파일 확장자는 특수 파일에 사용할 수 있습니다.
 
 ## 컴포넌트 계층
 
