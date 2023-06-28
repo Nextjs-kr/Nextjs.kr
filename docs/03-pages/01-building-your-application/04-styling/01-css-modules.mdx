@@ -18,9 +18,9 @@ CSS 모듈은 고유한 클래스 이름을 자동으로 생성하여 CSS를 로
 
 ## 예시
 
-예를 들어 `components/` 폴더에 재사용 가능한 Button 컴포넌트가 있다고 가정해 봅시다:
+예를 들어 `components/` 폴더에 재사용 가능한 Button 컴포넌트가 있다고 가정해 봅시다.
 
-먼저 다음 내용으로 `components/Button.module.css`를 생성합니다:
+먼저 다음 내용으로 `components/Button.module.css`를 생성합니다.
 
 ```css filename="Button.module.css"
 /*
@@ -32,7 +32,7 @@ CSS 모듈은 고유한 클래스 이름을 자동으로 생성하여 CSS를 로
 }
 ```
 
-그런 다음 위에서 작성한 CSS 파일을 가져와 `components/Button.js`를 생성합니다:
+그런 다음 위에서 작성한 CSS 파일을 가져와 `components/Button.js`를 생성합니다.
 
 ```jsx filename="components/Button.js"
 import styles from './Button.module.css'
@@ -60,7 +60,7 @@ CSS 모듈은 선택적 기능이며 **확장자가 `.module.css`인 파일에 �
 
 당신의 애플리케이션에 전역 CSS를 추가하려면 `pages/_app.js` 파일을 다음과 같이 작성하세요.
 
-예를 들어, `styles.css`라는 스타일시트를 생각해 보겠습니다:
+예를 들어, `styles.css`라는 스타일시트를 생각해 보겠습니다.
 
 ```css filename="styles.css"
 body {
@@ -87,7 +87,7 @@ export default function MyApp({ Component, pageProps }) {
 
 개발 단계에서 스타일시트를 이런 식으로 표현하면 편집할 때 스타일을 핫 리로드할 수 있으므로 애플리케이션 상태를 유지할 수 있습니다.
 
-프로덕션 환경에서는 모든 CSS 파일이 자동으로 하나의 축소된 `.css` 파일로 연결됩니다. CSS가 연결된 순서는 CSS를 `_app.js` 파일로 가져온 순서와 일치합니다. 자체 CSS가 포함된 JS 모듈을 가져올 때는 특히 주의하세요. JS 모듈의 CSS는 가져온 CSS 파일과 동일한 순서 규칙에 따라 연결됩니다. 예를 들어,
+프로덕션 환경에서는 모든 CSS 파일이 자동으로 하나의 축소된 `.css` 파일로 연결됩니다. CSS가 연결된 순서는 CSS를 `_app.js` 파일로 가져온 순서와 일치합니다. 자체 CSS가 포함된 JS 모듈을 가져올 때는 특히 주의하세요. JS 모듈의 CSS는 가져온 CSS 파일과 동일한 순서 규칙에 따라 연결됩니다.
 
 ```jsx
 import '../styles.css'
@@ -114,7 +114,7 @@ Next.js를 사용하면 JavaScript 파일에서 CSS 파일을 가져올 수 있�
 
 Next.js **9.5.4 버전**부터 애플리케이션의 어느 위치에서나 `node_modules`의 CSS 파일을 가져올 수 있습니다.
 
-`bootstrap`이나 `nprogress`와 같은 전역 스타일시트의 경우 `pages/_app.js` 내에서 파일을 가져와야 합니다. 예를 들어:
+`bootstrap`이나 `nprogress`와 같은 전역 스타일시트의 경우 `pages/_app.js` 내에서 파일을 가져와야 합니다.
 
 ```jsx
 import 'bootstrap/dist/css/bootstrap.css'
@@ -124,7 +124,7 @@ export default function MyApp({ Component, pageProps }) {
 }
 ```
 
-써드파티 컴포넌트에 필요한 CSS를 가져오려면 컴포넌트에서 가져올 수 있습니다. 예를 들어:
+써드파티 컴포넌트에 필요한 CSS를 가져오려면 컴포넌트에서 가져올 수 있습니다.
 
 ```jsx
 import { useState } from 'react'
