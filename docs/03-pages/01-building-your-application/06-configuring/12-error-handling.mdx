@@ -1,60 +1,59 @@
 ---
-title: Error Handling
-description: Handle errors in your Next.js app.
+title: 오류 처리
+description: Next.js 앱에서 에러 처리하기.
 ---
 
-This documentation explains how you can handle development, server-side, and client-side errors.
+이 문서는 개발 중, 서버 사이드, 그리고 클라이언트 사이드에서 발생하는 오류를 어떻게 처리할 수 있는지에 대해 설명합니다.
 
-## Handling Errors in Development
+## 개발 중 오류 처리
 
-When there is a runtime error during the development phase of your Next.js application, you will encounter an **overlay**. It is a modal that covers the webpage. It is **only** visible when the development server runs using `next dev` via `pnpm dev`, `npm run dev`, or `yarn dev` and will not be shown in production. Fixing the error will automatically dismiss the overlay.
+Next.js 애플리케이션의 개발 단계에서 런타임 오류가 발생하면, **오버레이**를 만나게 될 것입니다. 이는 웹페이지를 덮는 모달입니다. **오직** `next dev`를 통해 개발 서버가 실행될 때 (`pnpm dev`, `npm run dev` 또는 `yarn dev` 사용 시)에만 보이며, 프로덕션(실제 서비스)에서는 보이지 않습니다. 오류를 수정하면 오버레이는 자동으로 사라집니다.
 
-Here is an example of an overlay:
+다음은 오버레이의 예시입니다.
 
-{/* TODO UPDATE SCREENSHOT */}
 ![Example of an overlay when in development mode](https://assets.vercel.com/image/upload/v1645118290/docs-assets/static/docs/error-handling/overlay.png)
 
-## Handling Server Errors
+## 서버 오류 처리하기
 
-Next.js provides a static 500 page by default to handle server-side errors that occur in your application. You can also [customize this page](/docs/pages/building-your-application/routing/custom-error#customizing-the-500-page) by creating a `pages/500.js` file.
+Next.js는 기본적으로 애플리케이션에서 발생하는 서버 사이드 오류를 처리하기 위해 정적 500 페이지를 제공합니다. `pages/500.js` 파일을 생성함으로써 [사용자가 정의한 페이지](/docs/pages/building-your-application/routing/custom-error#customizing-the-500-page)를 사용할 수 있습니다.
 
-Having a 500 page in your application does not show specific errors to the app user.
+애플리케이션에 500 페이지가 있는 경우 앱 사용자에게 특정 오류를 보여주지 않습니다.
 
-You can also use [404 page](/docs/pages/building-your-application/routing/custom-error#404-page) to handle specific runtime error like `file not found`.
+`file not found`와 같은 특정 런타임 오류를 처리하기 위해 [404 페이지](/docs/pages/building-your-application/routing/custom-error#404-page)를 사용할 수도 있습니다.
 
-## Handling Client Errors
+## 클라이언트 오류 처리하기
 
-React [Error Boundaries](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary) is a graceful way to handle a JavaScript error on the client so that the other parts of the application continue working. In addition to preventing the page from crashing, it allows you to provide a custom fallback component and even log error information.
+리액트 [Error Boundaries](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)는 애플리케이션의 다른 부분이 계속 작동할 수 있도록 클라이언트에서 자바스크립트 오류를 처리하는 유연한 방법입니다. 페이지가 충돌하는 것을 방지할 뿐만 아니라 사용자가 정의한 대체 컴포넌트를 제공하고 심지어 오류 정보를 기록할 수 있습니다.
 
-To use Error Boundaries for your Next.js application, you must create a class component `ErrorBoundary` and wrap the `Component` prop in the `pages/_app.js` file. This component will be responsible to:
+Next.js 애플리케이션에서 Error Boundaries를 사용하려면, `ErrorBoundary`라는 클래스 컴포넌트를 생성하고 `pages/_app.js` 파일의 `Component` 프로퍼티를 감싸야 합니다. 이 컴포넌트는 다음을 담당합니다.
 
-- Render a fallback UI after an error is thrown
-- Provide a way to reset the Application's state
-- Log error information
+- 오류가 발생한 후 대체 UI를 렌더링
+- 애플리케이션의 상태를 재설정하는 방법을 제공
+- 오류 정보 로그
 
-You can create an `ErrorBoundary` class component by extending `React.Component`. For example:
+`React.Component`를 확장하여 `ErrorBoundary` 클래스 컴포넌트를 생성할 수 있습니다. 예를 들어,
 
 ```jsx
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props)
 
-    // Define a state variable to track whether is an error or not
+    // 오류 여부를 추적할 상태 변수를 정의합니다.
     this.state = { hasError: false }
   }
   static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI
+    // 다음 렌더링에서 대체 UI가 보이도록 상태를 업데이트하세요.
 
     return { hasError: true }
   }
   componentDidCatch(error, errorInfo) {
-    // You can use your own error logging service here
+    // 이 부분에서 자체 오류 로깅 서비스를 사용할 수 있습니다.
     console.log({ error, errorInfo })
   }
   render() {
-    // Check if the error is thrown
+    // 오류가 발생했는지 확인합니다.
     if (this.state.hasError) {
-      // You can render any custom fallback UI
+      // 사용자가 정의한 대체 UI를 렌더링할 수 있습니다.
       return (
         <div>
           <h2>Oops, there is an error!</h2>
@@ -68,7 +67,7 @@ class ErrorBoundary extends React.Component {
       )
     }
 
-    // Return children components in case of no error
+    // 오류가 없는 경우 자식 컴포넌트를 반환합니다.
 
     return this.props.children
   }
@@ -77,17 +76,17 @@ class ErrorBoundary extends React.Component {
 export default ErrorBoundary
 ```
 
-The `ErrorBoundary` component keeps track of an `hasError` state. The value of this state variable is a boolean. When the value of `hasError` is `true`, then the `ErrorBoundary` component will render a fallback UI. Otherwise, it will render the children components.
+`ErrorBoundary` 컴포넌트는 `hasError` 상태를 관리합니다. 이 상태 변수의 값은 boolean입니다. `hasError` 값이 `true`이면 `ErrorBoundary` 컴포넌트가 대체 UI를 렌더링합니다. 그렇지 않으면 자식 컴포넌트를 렌더링합니다.
 
-After creating an `ErrorBoundary` component, import it in the `pages/_app.js` file to wrap the `Component` prop in your Next.js application.
+`ErrorBoundary` 컴포넌트를 생성한 후 `pages/_app.js` 파일에서 불러와서 Next.js 애플리케이션의 `Component` 프로퍼티를 감쌉니다.
 
 ```jsx
-// Import the ErrorBoundary component
+// ErrorBoundary 컴포넌트를 불러옵니다.
 import ErrorBoundary from '../components/ErrorBoundary'
 
 function MyApp({ Component, pageProps }) {
   return (
-    // Wrap the Component prop with ErrorBoundary component
+    // 컴포넌트 프로퍼티를 ErrorBoundary 컴포넌트로 감쌉니다.
     <ErrorBoundary>
       <Component {...pageProps} />
     </ErrorBoundary>
@@ -97,8 +96,8 @@ function MyApp({ Component, pageProps }) {
 export default MyApp
 ```
 
-You can learn more about [Error Boundaries](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary) in React's documentation.
+[Error Boundaries](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)에 대한 자세한 내용은 React 문서에서 확인할 수 있습니다.
 
 ### Reporting Errors
 
-To monitor client errors, use a service like [Sentry](https://github.com/vercel/next.js/tree/canary/examples/with-sentry), Bugsnag or Datadog.
+클라이언트 오류를 모니터링하려면 [Sentry](https://github.com/vercel/next.js/tree/canary/examples/with-sentry), Bugsnag 또는 Datadog과 같은 서비스를 사용하세요.
