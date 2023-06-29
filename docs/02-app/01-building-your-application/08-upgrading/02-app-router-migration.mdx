@@ -1,20 +1,20 @@
 ---
-title: App Router 점진적 적용 가이드
-nav_title: App Router 마이그레이션
-description: Next.js 어플리케이션을 Pages Router에서 App Router로 업그레이드하는 방법을 배웁니다.
+title: 앱 라우터 점진적 적용 가이드
+nav_title: 앱 라우터 마이그레이션
+description: Next.js 어플리케이션을 페이지 라우터에서 앱 라우터로 업그레이드하는 방법을 배웁니다.
 ---
 
 이 가이드는 당신을 도와줄 것입니다.
 
-- [Update your Next.js application from version 12 to version 13](#nextjs-version)
-- [Upgrade features that work in both the `pages` and the `app` directories](#upgrading-new-features)
-- [Incrementally migrate your existing application from `pages` to `app`](#migrating-from-pages-to-app)
+- [당신의 Next.js 어플리케이션을 12 버전에서 13 버전으로 업데이트하세요.](#nextjs-version)
+- [페이지 디렉토리와 앱 디렉토리 모두에서 작동하는 기능을 업그레이드하기](#upgrading-new-features)
+- [기존 애플리케이션을 `pages`에서 `app`으로 점진적으로 마이그레이션하기](#migrating-from-pages-to-app)
 
 ## 업그레이드하기
 
 ### Node.js 버전
 
-현재 최소 Node.js 버전은 **v16.8**입니다. 자세한 내용은 [Node.js 설명서](https://nodejs.org/docs/latest-v16.x/api/) 를 참조하세요.
+현재 최소 Node.js 버전은 **v16.8**입니다. 자세한 내용은 [Node.js 문서](https://nodejs.org/docs/latest-v16.x/api/) 를 참조하세요.
 
 ### Next.js 버전
 
@@ -32,7 +32,7 @@ ESLint를 사용하는 경우 ESLint 버전을 업그레이드해야 합니다.
 npm install -D eslint-config-next@latest
 ```
 
-> **참고**: ESLint 변경 사항을 적용하려면 VS Code에서 ESLint 서버를 다시 시작해야 할 수 있습니다. 명령 팔레트(Mac의 경우 'cmd+shift+p', Windows의 경우 'ctrl+shift+p')를 열고 'ESLint: ESLint 서버 다시 시작'을 검색합니다.
+> **참고**: ESLint 변경 사항을 적용하려면 VS Code에서 ESLint 서버를 다시 시작해야 할 수 있습니다. 명령 팔레트(Mac의 경우 `cmd+shift+p`, Windows의 경우 `ctrl+shift+p`)를 열고 `ESLint: ESLint 서버 다시 시작`을 검색합니다.
 
 ## 다음 단계
 
@@ -45,9 +45,9 @@ npm install -D eslint-config-next@latest
 
 ## 새 기능 업그레이드
 
-Next.js 13은 새로운 기능과 규약을 갖춘 새로운 [App Router](/docs/app/building-your-application/routing)을 소개했습니다. 새 라우터는 `app` 디렉토리에서 사용할 수 있으며 `pages` 디렉토리와 공존합니다.
+Next.js 13은 새로운 기능과 규약을 갖춘 새로운 [앱 라우터](/docs/app/building-your-application/routing)을 소개했습니다. 새 라우터는 `app` 디렉토리에서 사용할 수 있으며 `pages` 디렉토리와 공존합니다.
 
-Next.js 13으로 업그레이드하려면 새로운 [App Router](/docs/app/building-your-application/routing#the-app-router)를 사용할 필요가 없습니다. 업데이트된 [Image component](#image-component), [Link component](#link-component), [Script component](#script-component), [Font optimization](#font-optimization)과 같은 두 디렉토리 모두에서 작동하는 새로운 기능과 함께 'pages'를 계속 사용할 수 있습니다.
+Next.js 13으로 업그레이드하려면 새로운 [앱 라우터](/docs/app/building-your-application/routing#the-app-router)를 사용할 필요가 없습니다. 업데이트된 [Image component](#image-component), [Link component](#link-component), [Script component](#script-component), [Font optimization](#font-optimization)과 같은 두 디렉토리 모두에서 작동하는 새로운 기능과 함께 'pages'를 계속 사용할 수 있습니다.
 
 ### `<Image/>` 컴포넌트
 
@@ -122,7 +122,8 @@ Next.js 13에 대한 링크를 업그레이드하려면 [`new-link` codemod](/do
 - 특수 파일에는 `.js`, `.jsx` 또는 `.tsx` 파일 확장자를 사용할 수 있습니다.
 - 컴포넌트
   , 스타일, 테스트 등과 같은 다른 파일을 `app` 디렉토리 내에 배치할 수 있습니다. [자세히 알아보기](/docs/app/building-your-application/routing).
-- `getServerSideProps`와 `getStaticProps`와 같은 데이터 가져오기 기능이 `app` 내부의 [새로운 API](/docs/app/building-your-application/data-fetching)로 대체되었습니다. `getStaticPaths`가 [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params)로 대체되었습니다.
+- `getServerSideProps`와 `getStaticProps`와 같은 data fetching
+  기능이 `app` 내부의 [새로운 API](/docs/app/building-your-application/data-fetching)로 대체되었습니다. `getStaticPaths`가 [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params)로 대체되었습니다.
 - `pages/_app.js` 및 `pages/_pages.js`가 단일 `app/pages.js` 루트 레이아웃으로 대체되었습니다. [자세히 보기](/docs/app/building-your-application/routing/page-and-layout#root-layout-required).
 - `pages/_error.js`가 보다 세분화된 `error.js` 특수 파일로 대체되었습니다. [자세히 보기](/docs/app/building-your-application/routing/error-handling).
 - `pages/404.js`가 [`not-found.js`](/pages/app/api-reference/file-conventions/not-found) 파일로 대체되었습니다.
@@ -357,7 +358,8 @@ export default function Page() {
 ### Step 4: Pages 마이그레이션
 
 - [`app` 디렉토리](/docs/app/building-your-application/routing)의 페이지는 기본적으로 [서버 컴포넌트](/docs/getting-started/react-essentials)입니다. 페이지가 [클라이언트 컴포넌트](/docs/getting-started/react-essentials)인 `pages` 디렉토리와는 다릅니다.
-- [데이터 가져오기](/docs/app/building-your-application/data-fetching)가 `app`에서 변경되었습니다. `getServerSideProps`, `getStaticProps` 및 `getInitialProps`는 보다 단순한 API로 대체되었습니다.
+- [data fetching
+  ](/docs/app/building-your-application/data-fetching)가 `app`에서 변경되었습니다. `getServerSideProps`, `getStaticProps` 및 `getInitialProps`는 보다 단순한 API로 대체되었습니다.
 - `app` 디렉토리
   는 중첩된 폴더를 사용하여 [경로를 정의](/docs/app/building-your-application/routing/defining-routes)하고 특수한 `page.js` 파일을 사용하여 경로 세그먼트에 공개적으로 액세스할 수 있도록 합니다.
 - | `pages` 디렉토리 | `app` 디렉토리        | Route          |
@@ -420,7 +422,10 @@ export default function HomePage({ recentPosts }) {
 - `app` 디렉토리
   에 새 `app/page.tsx` 파일을 만듭니다. 기본적으로 서버 컴포넌트입니다.
 - `home-page.tsx` Client 컴포넌트를 페이지로 가져옵니다.
-- `pages/index.js`에서 데이터를 가져오는 경우 새로운 [데이터 가져오기 API](/docs/app/building-your-application/data-fetching/fetching)을 사용하여 데이터 가져오기 로직을 서버 컴포넌트로 직접 이동합니다. 자세한 내용은 [데이터 가져오기 업그레이드 가이드](#step-6-migrating-data-fetching-methods)를 참조하십시오.
+- `pages/index.js`에서 데이터를 가져오는 경우 새로운 [data fetching
+  API](/docs/app/building-your-application/data-fetching/fetching)을 사용하여 data fetching
+  로직을 서버 컴포넌트로 직접 이동합니다. 자세한 내용은 [data fetching
+  업그레이드 가이드](#step-6-migrating-data-fetching-methods)를 참조하십시오.
 
 ```tsx filename="app/page.tsx" switcher
 // 클라이언트 컴포넌트 가져오기
@@ -433,7 +438,8 @@ async function getPosts() {
 }
 
 export default async function Page() {
-  // 서버 컴포넌트에서 직접 데이터 가져오기
+  // 서버 컴포넌트에서 직접 data fetching
+
   const recentPosts = await getPosts()
   // 가져온 데이터를 클라이언트 컴포넌트로 전달
   return <HomePage recentPosts={recentPosts} />
@@ -451,7 +457,8 @@ async function getPosts() {
 }
 
 export default async function Page() {
-  // 서버 컴포넌트에서 직접 데이터 가져오기
+  // 서버 컴포넌트에서 직접 data fetching
+
   const recentPosts = await getPosts()
   // 가져온 데이터를 클라이언트 컴포넌트로 전달
   return <HomePage recentPosts={recentPosts} />
@@ -519,10 +526,13 @@ export default function ExampleClientComponent() {
 
 [`useRouter()` API reference 보기](/docs/app/api-reference/functions/use-router).
 
-### 6단계: 데이터 가져오기 방법 마이그레이션
+### 6단계: data fetching
+
+방법 마이그레이션
 
 `pages` 디렉토리
-는 `getServerSideProps`와 `getStaticProps`를 사용하여 페이지 데이터를 가져옵니다. `app` 디렉토리 내에서 이러한 이전의 데이터 가져오기 기능은 `fetch()` 및 `async` React Server Components 위에 구축된 [간단한 API](/docs/app/building-your-application/data-fetching)로 대체됩니다.
+는 `getServerSideProps`와 `getStaticProps`를 사용하여 페이지 데이터를 가져옵니다. `app` 디렉토리 내에서 이러한 이전의 data fetching
+기능은 `fetch()` 및 `async` React Server Components 위에 구축된 [간단한 API](/docs/app/building-your-application/data-fetching)로 대체됩니다.
 
 ```tsx filename="app/page.tsx" switcher
 export default async function Page() {
@@ -592,7 +602,8 @@ export default function Dashboard({ projects }) {
 }
 ```
 
-`app` 디렉토리에서 [서버 컴포넌트](/docs/getting-started/react-essentials#server-components)를 사용하여 React 컴포넌트 내에서 데이터 가져오기를 공동으로 수행할 수 있습니다. 이렇게 하면 서버에서 렌더링된 HTML을 유지하면서 클라이언트에 더 적은 JavaScript를 보낼 수 있습니다.
+`app` 디렉토리에서 [서버 컴포넌트](/docs/getting-started/react-essentials#server-components)를 사용하여 React 컴포넌트 내에서 data fetching
+를 공동으로 수행할 수 있습니다. 이렇게 하면 서버에서 렌더링된 HTML을 유지하면서 클라이언트에 더 적은 JavaScript를 보낼 수 있습니다.
 
 `cache` 옵션을 `no-store`로 설정하면 가져온 데이터를 [절대 캐시하지 않음](/docs/app/building-your-application/data-fetching/caching)해야 함을 나타낼 수 있습니다. 이는 `pages` 디렉토리
 에 있는 `getServerSideProps`와 유사합니다.
@@ -682,7 +693,8 @@ async function getData() {
 }
 
 export default async function Page() {
-  // 서버 컴포넌트 내 직접 또는 데이터 가져오기 기능에서 `cookies()` 또는 `header()`를 사용할 수 있습니다.
+  // 서버 컴포넌트 내 직접 또는 data fetching
+  // 기능에서 `cookies()` 또는 `header()`를 사용할 수 있습니다.
   const theme = cookies().get('theme')
   const data = await getData()
   return '...'
@@ -700,7 +712,8 @@ async function getData() {
 }
 
 export default async function Page() {
-  // 서버 컴포넌트 내 직접 또는 데이터 가져오기 기능에서 `cookies()` 또는 `header()`를 사용할 수 있습니다.
+  // 서버 컴포넌트 내 직접 또는 data fetching
+  // 기능에서 `cookies()` 또는 `header()`를 사용할 수 있습니다.
   const theme = cookies().get('theme')
   const data = await getData()
   return '...'
@@ -914,7 +927,8 @@ export async function GET(request: Request) {}
 export async function GET(request) {}
 ```
 
-> **참고**: 이전에 API 경로를 사용하여 클라이언트에서 외부 API를 호출했다면 이제 [서버 컴포넌트](/docs/getting-started/react-essentials#server-components)를 사용하여 데이터를 안전하게 가져올 수 있습니다. [데이터 가져오기](/docs/app/building-your-application/data-fetching/fetching)에 대해 자세히 알아보십시오.
+> **참고**: 이전에 API 경로를 사용하여 클라이언트에서 외부 API를 호출했다면 이제 [서버 컴포넌트](/docs/getting-started/react-essentials#server-components)를 사용하여 데이터를 안전하게 가져올 수 있습니다. [data fetching
+> ](/docs/app/building-your-application/data-fetching/fetching)에 대해 자세히 알아보십시오.
 
 ### 7단계: 스타일링
 
