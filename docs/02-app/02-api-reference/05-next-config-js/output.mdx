@@ -31,8 +31,7 @@ module.exports = {
 
 해당 코드는 `.next/standalone`에 `node_modules` 설치 없이도 자체적으로 배포될 수 있는 폴더를 생성합니다.
 
-추가로, `next start` 대신에 사용할 수 있는 최소한의 `server.js` 파일도 출력됩니다. `public`과 `.next/static` 폴더는 각각 `server.js` 파일이 자동으로 제공하는 `standalone/public`과 `standalone/.next/static` 폴더로 복사될 수 있습니다. 하지만, 이 최소한의 서버는 이상적으로는 CDN이 대신 처리해야하는 `public` 또는 `.next/static` 폴더를 기본값으로 복사하지 않습니다. 
-
+추가로, `next start` 대신에 사용할 수 있는 최소한의 `server.js` 파일도 출력됩니다. `public`과 `.next/static` 폴더는 각각 `server.js` 파일이 자동으로 제공하는 `standalone/public`과 `standalone/.next/static` 폴더로 복사될 수 있습니다. 하지만, 이 최소한의 서버는 이상적으로는 CDN이 대신 처리해야하는 `public` 또는 `.next/static` 폴더를 기본값으로 복사하지 않습니다.
 
 > **참고**:
 >
@@ -55,7 +54,6 @@ pnpm add sharp
 ## 주의사항
 
 - 모노레포 설정에서 추적하는 동안, 기본적으로 프로젝트 디렉터리는 추적하는데 사용됩니다. `next build packages/web-app`에 대해서 `packages/web-app`는 추적 루트(root)가 되고, 해당 폴더의 외부에 있는 파일은 포함되지 않습니다. 해당 폴더의 외부에 있는 파일을 포함하려면 `next.config.js`에서 `experimental.outputFileTracingRoot` 옵션을 설정해야 합니다.
-
 
 ```js filename="packages/web-app/next.config.js"
 module.exports = {
