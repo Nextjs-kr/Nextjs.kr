@@ -82,5 +82,8 @@
       "language": "markdown",
       "scheme": "file"
     }
-  ]
+  ],
+  "files.associations": {
+    "*.mdx": "markdown"
+  }
 }
