@@ -1,163 +1,163 @@
 ---
 title: Edge Runtime
-description: API Reference for the Edge Runtime.
+description: Edge Runtime에 대한 API 레퍼런스입니다.
 ---
 
-The Next.js Edge Runtime is based on standard Web APIs, it supports the following APIs:
+Next.js Edge Runtime은 표준 웹 API를 기반으로 하며, 다음 API를 지원합니다:
 
-## Network APIs
+## 네트워크 API
 
-| API                                                                                   | Description                       |
+| API                                                                                   | 설명                               |
 | ------------------------------------------------------------------------------------- | --------------------------------- |
-| [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)                       | Represents a blob                 |
-| [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)                 | Fetches a resource                |
-| [`FetchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent)           | Represents a fetch event          |
-| [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)                       | Represents a file                 |
-| [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)               | Represents form data              |
-| [`Headers`](https://developer.mozilla.org/en-US/docs/Web/API/Headers)                 | Represents HTTP headers           |
-| [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request)                 | Represents an HTTP request        |
-| [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response)               | Represents an HTTP response       |
-| [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) | Represents URL search parameters  |
-| [`WebSocket`](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)             | Represents a websocket connection |
+| [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)                       | blob을 나타냅니다.|
+| [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)                 | 자원을 가져옵니다.|
+| [`FetchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent)           | 가져오기 이벤트를 나타냅니다.|
+| [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)                       | 파일을 나타냅니다.|
+| [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)               | 폼 데이터를 나타냅니다.|
+| [`Headers`](https://developer.mozilla.org/en-US/docs/Web/API/Headers)                 | HTTP 헤더를 나타냅니다.|
+| [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request)                 | HTTP 요청을 나타냅니다.|
+| [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response)               | HTTP 응답을 나타냅니다.|
+| [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) | URL 검색 매개변수를 나타냅니다.|
+| [`WebSocket`](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)             | 웹 소켓 연결을 나타냅니다.|
 
-## Encoding APIs
+## 인코딩 API
 
-| API                                                                                       | Description                        |
+| API                                                                                       | 설명                                |
 | ----------------------------------------------------------------------------------------- | ---------------------------------- |
-| [`atob`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/atob) | Decodes a base-64 encoded string   |
-| [`btoa`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa) | Encodes a string in base-64        |
-| [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder)             | Decodes a Uint8Array into a string |
-| [`TextDecoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoderStream) | Chainable decoder for streams      |
-| [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder)             | Encodes a string into a Uint8Array |
-| [`TextEncoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoderStream) | Chainable encoder for streams      |
+| [`atob`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/atob) | Base-64로 인코딩된 문자열을 디코딩합니다.|
+| [`btoa`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa) | 문자열을 base-64로 인코딩합니다.|
+| [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder)             | Uint8Array를 문자열로 디코딩합니다.|
+| [`TextDecoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoderStream) | 스트림을 위한 연쇄가능한 디코더|
+| [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder)             | 문자열을 Uint8Array로 인코딩합니다.|
+| [`TextEncoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoderStream) | 스트림을 위한 연쇄가능한 인코더|
 
-## Stream APIs
+## 스트림 API
 
-| API                                                                                                           | Description                             |
+| API                                                                                                           | 설명                                     |
 | ------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream)                           | Represents a readable stream            |
-| [`ReadableStreamBYOBReader`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStreamBYOBReader)       | Represents a reader of a ReadableStream |
-| [`ReadableStreamDefaultReader`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStreamDefaultReader) | Represents a reader of a ReadableStream |
-| [`TransformStream`](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream)                         | Represents a transform stream           |
-| [`WritableStream`](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream)                           | Represents a writable stream            |
-| [`WritableStreamDefaultWriter`](https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter) | Represents a writer of a WritableStream |
+| [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream)                           | 읽을 수 있는 스트림을 나타냅니다.|
+| [`ReadableStreamBYOBReader`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStreamBYOBReader)       | ReadableStream의 reader를 나타냅니다.|
+| [`ReadableStreamDefaultReader`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStreamDefaultReader) | ReadableStream의 reader를 나타냅니다.|
+| [`TransformStream`](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream)                         | 트랜스폼 스트림을 나타냅니다.|
+| [`WritableStream`](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream)                           | 쓰기 가능한 스트림을 나타냅니다.|
+| [`WritableStreamDefaultWriter`](https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter) | WritableStream의 writer를 나타냅니다.|
 
-## Crypto APIs
+## 암호 API
 
-| API                                                                             | Description                                                                                         |
+| API                                                                             | 설명                                                                                                 |
 | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| [`crypto`](https://developer.mozilla.org/en-US/docs/Web/API/Window/crypto)      | Provides access to the cryptographic functionality of the platform                                  |
-| [`CryptoKey`](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKey)       | Represents a cryptographic key                                                                      |
-| [`SubtleCrypto`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) | Provides access to common cryptographic primitives, like hashing, signing, encryption or decryption |
+| [`crypto`](https://developer.mozilla.org/en-US/docs/Web/API/Window/crypto)      | 플랫폼의 암호화 기능에 대한 접근를 제공합니다.|
+| [`CryptoKey`](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKey)       | 암호화 키를 나타냅니다.|
+| [`SubtleCrypto`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) | 해싱, 서명, 암호화 또는 복호화와 같은 일반적인 암호화 기본 요소에 대한 접근를 제공합니다.|
 
-## Web Standard APIs
+## 웹 표준 API
 
-| API                                                                                                                         | Description                                                                                                                                                                                          |
+| API                                                                                                                         | 설명                                                                                                                                                                                                  |
 | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)                                       | Allows you to abort one or more DOM requests as and when desired                                                                                                                                     |
-| [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)                           | Represents an array of values                                                                                                                                                                        |
-| [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)               | Represents a generic, fixed-length raw binary data buffer                                                                                                                                            |
-| [`Atomics`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics)                       | Provides atomic operations as static methods                                                                                                                                                         |
-| [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)                         | Represents a whole number with arbitrary precision                                                                                                                                                   |
-| [`BigInt64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt64Array)           | Represents a typed array of 64-bit signed integers                                                                                                                                                   |
-| [`BigUint64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigUint64Array)         | Represents a typed array of 64-bit unsigned integers                                                                                                                                                 |
-| [`Boolean`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)                       | Represents a logical entity and can have two values: `true` and `false`                                                                                                                              |
-| [`clearInterval`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/clearInterval)                 | Cancels a timed, repeating action which was previously established by a call to `setInterval()`                                                                                                      |
-| [`clearTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/clearTimeout)                   | Cancels a timed, repeating action which was previously established by a call to `setTimeout()`                                                                                                       |
-| [`console`](https://developer.mozilla.org/en-US/docs/Web/API/Console)                                                       | Provides access to the browser's debugging console                                                                                                                                                   |
-| [`DataView`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView)                     | Represents a generic view of an `ArrayBuffer`                                                                                                                                                        |
-| [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)                             | Represents a single moment in time in a platform-independent format                                                                                                                                  |
-| [`decodeURI`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURI)                   | Decodes a Uniform Resource Identifier (URI) previously created by `encodeURI` or by a similar routine                                                                                                |
-| [`decodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent) | Decodes a Uniform Resource Identifier (URI) component previously created by `encodeURIComponent` or by a similar routine                                                                             |
-| [`DOMException`](https://developer.mozilla.org/en-US/docs/Web/API/DOMException)                                             | Represents an error that occurs in the DOM                                                                                                                                                           |
-| [`encodeURI`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI)                   | Encodes a Uniform Resource Identifier (URI) by replacing each instance of certain characters by one, two, three, or four escape sequences representing the UTF-8 encoding of the character           |
-| [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) | Encodes a Uniform Resource Identifier (URI) component by replacing each instance of certain characters by one, two, three, or four escape sequences representing the UTF-8 encoding of the character |
-| [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)                           | Represents an error when trying to execute a statement or accessing a property                                                                                                                       |
-| [`EvalError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError)                   | Represents an error that occurs regarding the global function `eval()`                                                                                                                               |
-| [`Float32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array)             | Represents a typed array of 32-bit floating point numbers                                                                                                                                            |
-| [`Float64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array)             | Represents a typed array of 64-bit floating point numbers                                                                                                                                            |
-| [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)                     | Represents a function                                                                                                                                                                                |
-| [`Infinity`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity)                     | Represents the mathematical Infinity value                                                                                                                                                           |
-| [`Int8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array)                   | Represents a typed array of 8-bit signed integers                                                                                                                                                    |
-| [`Int16Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array)                 | Represents a typed array of 16-bit signed integers                                                                                                                                                   |
-| [`Int32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array)                 | Represents a typed array of 32-bit signed integers                                                                                                                                                   |
-| [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)                             | Provides access to internationalization and localization functionality                                                                                                                               |
-| [`isFinite`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isFinite)                     | Determines whether a value is a finite number                                                                                                                                                        |
-| [`isNaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN)                           | Determines whether a value is `NaN` or not                                                                                                                                                           |
-| [`JSON`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)                             | Provides functionality to convert JavaScript values to and from the JSON format                                                                                                                      |
-| [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)                               | Represents a collection of values, where each value may occur only once                                                                                                                              |
-| [`Math`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)                             | Provides access to mathematical functions and constants                                                                                                                                              |
-| [`Number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)                         | Represents a numeric value                                                                                                                                                                           |
-| [`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)                         | Represents the object that is the base of all JavaScript objects                                                                                                                                     |
-| [`parseFloat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat)                 | Parses a string argument and returns a floating point number                                                                                                                                         |
-| [`parseInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt)                     | Parses a string argument and returns an integer of the specified radix                                                                                                                               |
-| [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)                       | Represents the eventual completion (or failure) of an asynchronous operation, and its resulting value                                                                                                |
-| [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)                           | Represents an object that is used to define custom behavior for fundamental operations (e.g. property lookup, assignment, enumeration, function invocation, etc)                                     |
-| [`queueMicrotask`](https://developer.mozilla.org/en-US/docs/Web/API/queueMicrotask)                                         | Queues a microtask to be executed                                                                                                                                                                    |
-| [`RangeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError)                 | Represents an error when a value is not in the set or range of allowed values                                                                                                                        |
-| [`ReferenceError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError)         | Represents an error when a non-existent variable is referenced                                                                                                                                       |
-| [`Reflect`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)                       | Provides methods for interceptable JavaScript operations                                                                                                                                             |
-| [`RegExp`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)                         | Represents a regular expression, allowing you to match combinations of characters                                                                                                                    |
-| [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)                               | Represents a collection of values, where each value may occur only once                                                                                                                              |
-| [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval)                                               | Repeatedly calls a function, with a fixed time delay between each call                                                                                                                               |
-| [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)                                                 | Calls a function or evaluates an expression after a specified number of milliseconds                                                                                                                 |
-| [`SharedArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)   | Represents a generic, fixed-length raw binary data buffer                                                                                                                                            |
-| [`String`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)                         | Represents a sequence of characters                                                                                                                                                                  |
-| [`structuredClone`](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)            | Creates a deep copy of a value                                                                                                                                                                       |
-| [`Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)                         | Represents a unique and immutable data type that is used as the key of an object property                                                                                                            |
-| [`SyntaxError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError)               | Represents an error when trying to interpret syntactically invalid code                                                                                                                              |
-| [`TypeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError)                   | Represents an error when a value is not of the expected type                                                                                                                                         |
-| [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array)                 | Represents a typed array of 8-bit unsigned integers                                                                                                                                                  |
-| [`Uint8ClampedArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray)   | Represents a typed array of 8-bit unsigned integers clamped to 0-255                                                                                                                                 |
-| [`Uint32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array)               | Represents a typed array of 32-bit unsigned integers                                                                                                                                                 |
-| [`URIError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError)                     | Represents an error when a global URI handling function was used in a wrong way                                                                                                                      |
-| [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL)                                                               | Represents an object providing static methods used for creating object URLs                                                                                                                          |
-| [`URLPattern`](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern)                                                 | Represents a URL pattern                                                                                                                                                                             |
-| [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)                                       | Represents a collection of key/value pairs                                                                                                                                                           |
-| [`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)                       | Represents a collection of key/value pairs in which the keys are weakly referenced                                                                                                                   |
-| [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet)                       | Represents a collection of objects in which each object may occur only once                                                                                                                          |
-| [`WebAssembly`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly)               | Provides access to WebAssembly                                                                                                                                                                       |
+| [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)                                       | 원하는 순간에 하나 이상의 DOM 요청을 중단할 수 있습니다.|
+| [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)                           | 값의 배열을 나타냅니다.|
+| [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)               | 제네릭한 고정 길이의 원시 바이너리 데이터 버퍼를 나타냅니다.|
+| [`Atomics`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics)                       | 원자 연산을 정적 메서드로 제공합니다.|
+| [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)                         | 임의의 정밀한 숫자를 나타냅니다.|
+| [`BigInt64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt64Array)           | 64비트 부호 있는 정수의 배열을 나타냅니다.|
+| [`BigUint64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigUint64Array)         | 64비트 부호 없는 정수의 배열을 나타냅니다.|
+| [`Boolean`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)                       | 논리적 엔티티를 나타내며 `true`과 `false`의 두 가지 값을 가질 수 있습니다.|
+| [`clearInterval`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/clearInterval)                 | `setInterval()` 호출로 설정된 시간 반복 동작을 취소합니다.|
+| [`clearTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/clearTimeout)                   | `setTimeout()` 호출로 설정된 시간 반복 동작을 취소합니다.|
+| [`console`](https://developer.mozilla.org/en-US/docs/Web/API/Console)                                                       | 브라우저의 디버깅 콘솔에 대한 접근을 제공합니다.|
+| [`DataView`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView)                     | `ArrayBuffer`의 제네릭한 보기를 나타냅니다.|
+| [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)                             | 플랫폼에 독립적인 형식의 한 순간을 표현합니다.|
+| [`decodeURI`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURI)                   | `encodeURI` 또는 유사한 루틴에 의해 생성된 통합 자원 식별자(URI)를 디코딩합니다.|
+| [`decodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent) | `encodeURIComponent` 또는 유사한 루틴에 의해 생성된 통합 자원 식별자(URI) 컴포넌트를 디코딩합니다.|
+| [`DOMException`](https://developer.mozilla.org/en-US/docs/Web/API/DOMException)                                             | DOM에서 발생하는 오류를 나타냅니다.|
+| [`encodeURI`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI)                   | 통합 자원 식별자(URI)의 특정한 문자를 UTF-8로 인코딩해 하나, 둘, 셋, 혹은 네 개의 연속된 이스케이프 문자로 나타냅니다.|
+| [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) | 통합 자원 식별자(URI) 컴포넌트의 특정한 문자를 UTF-8로 인코딩해 하나, 둘, 셋, 혹은 네 개의 연속된 이스케이프 문자로 나타냅니다.|
+| [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)                           | 명령문을 실행하거나 속성에 접근하려고 할 때 발생하는 오류를 나타냅니다.|
+| [`EvalError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError)                   | 전역 함수 `eval()`과 관련하여 발생하는 오류를 나타냅니다.|
+| [`Float32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array)             | 32비트 부동 소수점 숫자 배열을 나타냅니다.|
+| [`Float64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array)             | 64비트 부동 소수점 숫자 배열을 나타냅니다.|
+| [`Function`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)                     | 함수를 나타냅니다.|
+| [`Infinity`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity)                     | 수학적 무한대 값을 나타냅니다.|
+| [`Int8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array)                   | 8비트 부호 있는 정수 배열을 나타냅니다.|
+| [`Int16Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array)                 | 16비트 부호 있는 정수 배열을 나타냅니다.|
+| [`Int32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array)                 | 32비트 부호 있는 정수 배열을 나타냅니다.|
+| [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)                             | 국제화 및 지역화 기능에 대한 접근을 제공합니다.|
+| [`isFinite`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isFinite)                     | 값이 유한 숫자인지 결정합니다.|
+| [`isNaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN)                           | 값이 `NaN`인지 아닌지를 결정합니다.|
+| [`JSON`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)                             | 자바스크립트 값과 JSON 형식 사이의 변환하는 기능을 제공합니다.|
+| [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)                               | 한 번만 나타날 수 있는 값으로 이루어진 컬렉션을 나타냅니다.|
+| [`Math`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)                             | 수학 함수 및 상수에 대한 접근을 제공합니다.|
+| [`Number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)                         | 숫자 값을 나타냅니다.|
+| [`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)                         | 모든 자바스크립트 객체의 기반이 되는 객체를 나타냅니다.|
+| [`parseFloat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat)                 | 문자열 인수를 구문 분석하고 부동 소수점 숫자를 반환합니다.|
+| [`parseInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt)                     | 문자열 인수를 구문 분석하고 지정된 기수의 정수를 반환합니다.|
+| [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)                       | 비동기 작업의 최종 완료(또는 실패)와 결과 값을 나타냅니다.|
+| [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)                           | 기본 연산(예: 속성 조회, 할당, 열거, 함수 호출 등)에 대한 사용자 지정 동작을 정의하는 데 사용되는 객체를 나타냅니다.|
+| [`queueMicrotask`](https://developer.mozilla.org/en-US/docs/Web/API/queueMicrotask)                                         | 실행할 마이크로태스크를 대기열에 추가합니다.|
+| [`RangeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError)                 | 값이 허용된 값의 집합 또는 범위에 없는 경우 오류를 나타냅니다.|
+| [`ReferenceError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError)         | 존재하지 않는 변수가 참조된 경우 오류를 나타냅니다.|
+| [`Reflect`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)                       | 가로채기 가능한 자바스크립트 연산을 위한 메서드를 제공합니다.|
+| [`RegExp`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)                         | 문자의 조합에 일치시킬 수 있는 정규 표현식을 나타냅니다.|
+| [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)                               | 한 번만 나타날 수 있는 값으로 이루어진 컬렉션을 나타냅니다.|
+| [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval)                                               | 각 호출 사이에 고정된 시간 지연을 두고 함수를 반복적으로 호출합니다.|
+| [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)                                                 | 지정된 시간(밀리초) 후에 함수를 호출하거나 표현식을 평가합니다.|
+| [`SharedArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)   | 제네릭한 고정 길이의 원시 바이너리 데이터 버퍼를 나타냅니다.|
+| [`String`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)                         | 연속된 문자들을 나타냅니다.|
+| [`structuredClone`](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)            | 값의 깊은 복사본을 만듭니다.|
+| [`Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)                         | 객체 속성의 키로 사용되는 고유하고 불변하는 데이터 유형을 나타냅니다.|
+| [`SyntaxError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError)               | 구문상 유효하지 않은 코드를 해석하려고 할 때 발생하는 오류를 나타냅니다.|
+| [`TypeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError)                   | 값이 예상 유형이 아닌 경우 오류를 나타냅니다.|
+| [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array)                 | 8비트 부호 없는 정수 배열을 나타냅니다.|
+| [`Uint8ClampedArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray)   | 0-255로 고정된 8비트 부호 없는 정수 배열을 나타냅니다.|
+| [`Uint32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array)               | 32비트 부호 없는 정수 배열을 나타냅니다.|
+| [`URIError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError)                     | 전역 URI 처리 함수가 잘못된 방식으로 사용된 경우 오류를 나타냅니다.|
+| [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL)                                                               | 객체 URL 생성에 사용되는 정적 메서드를 제공하는 객체를 나타냅니다.|
+| [`URLPattern`](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern)                                                 | URL 패턴을 나타냅니다.|
+| [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)                                       | 키/값 쌍의 컬렉션을 나타냅니다.|
+| [`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)                       | 키가 약하게 참조되는 키/값 쌍의 컬렉션을 나타냅니다.|
+| [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet)                       | 각 객체가 한 번만 나타날 수 있는 객체의 컬렉션을 나타냅니다.|
+| [`WebAssembly`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly)               | WebAssembly에 대한 접근을 제공합니다.|
 
-## Next.js Specific Polyfills
+## Next.js의 특정 폴리필
 
 - [`AsyncLocalStorage`](https://nodejs.org/api/async_context.html#class-asynclocalstorage)
 
-## Environment Variables
+## 환경 변수
 
-You can use `process.env` to access [Environment Variables](/docs/app/building-your-application/configuring/environment-variables) for both `next dev` and `next build`.
+`process.env`를 사용하여 `next dev`과 `next build` 모두에 대한 환경 변수에 접근할 수 있습니다.
 
-## Unsupported APIs
+## 미지원 API
 
-The Edge Runtime has some restrictions including:
+Edge 런타임에는 다음과 같은 몇 가지 제한 사항이 있습니다:
 
-- Native Node.js APIs **are not supported**. For example, you can't read or write to the filesystem.
-- `node_modules` _can_ be used, as long as they implement ES Modules and do not use native Node.js APIs.
-- Calling `require` directly is **not allowed**. Use ES Modules instead.
+- 네이티브 Node.js API는 **지원되지 않습니다**. 예를 들어 파일 시스템을 읽거나 쓸 수 없습니다.
+- ES 모듈을 구현하고 네이티브 Node.js API를 사용하지 않는 한 `node_modules`를 사용할 수 있습니다.
+- `require`를 직접 호출하는 것은 **허용되지 않습니다**. 대신 ES 모듈을 사용하세요.
 
-The following JavaScript language features are disabled, and **will not work:**
+다음 JavaScript 언어 기능은 비활성화되어 있으며 **작동하지 않습니다:**
 
-| API                                                                                                                                   | Description                                                         |
+| API                                                                                                                                   | 설명                                                                 |
 | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| [`eval`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval)                                       | Evaluates JavaScript code represented as a string                   |
-| [`new Function(evalString)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)               | Creates a new function with the code provided as an argument        |
-| [`WebAssembly.compile`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/compile)         | Compiles a WebAssembly module from a buffer source                  |
-| [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate) | Compiles and instantiates a WebAssembly module from a buffer source |
+| [`eval`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval)                                       | 문자열로 표현된 자바스크립트 코드를 평가합니다.|
+| [`new Function(evalString)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)               | 인자로 제공된 코드를 사용하여 새 함수를 생성합니다.|
+| [`WebAssembly.compile`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/compile)         | 버퍼 소스에서 WebAssembly 모듈을 컴파일합니다.|
+| [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate) | 버퍼 소스에서 WebAssembly 모듈을 컴파일하고 인스턴스화합니다.|
 
-In rare cases, your code could contain (or import) some dynamic code evaluation statements which _can not be reached at runtime_ and which can not be removed by treeshaking.
-You can relax the check to allow specific files with your Middleware or Edge API Route exported configuration:
+드물지만 코드에 런타임에 도달할 수 없고 트리셰이킹으로 제거할 수 없는 일부 동적 코드 평가문이 포함(또는 가져오기)되어 있을 수 있습니다.
+미들웨어 또는 Edge API Route 내보내기 설정으로 특정 파일을 허용하도록 검사를 완화할 수 있습니다:
 
 ```javascript
 export const config = {
-  runtime: 'edge', // for Edge API Routes only
+  runtime: 'edge', // Edge API Route 전용
   unstable_allowDynamic: [
-    // allows a single file
+    // 단일 파일 허용
     '/lib/utilities.js',
-    // use a glob to allow anything in the function-bind 3rd party module
+    // glob를 사용하여 함수 바인딩 서드파티 모듈의 모든 것을 허용합니다.
     '/node_modules/function-bind/**',
   ],
 }
 ```
 
-`unstable_allowDynamic` is a [glob](https://github.com/micromatch/micromatch#matching-features), or an array of globs, ignoring dynamic code evaluation for specific files. The globs are relative to your application root folder.
+`unstable_allowDynamic`은 특정 파일에 대한 동적 코드 평가를 무시하는 [glob](https://github.com/micromatch/micromatch#matching-features) 또는 glob의 배열입니다.
 
-Be warned that if these statements are executed on the Edge, _they will throw and cause a runtime error_.
+이러한 실행문이 Edge에서 실행되면 _런타임 오류가 발생하므로_ 주의하시기 바랍니다.
