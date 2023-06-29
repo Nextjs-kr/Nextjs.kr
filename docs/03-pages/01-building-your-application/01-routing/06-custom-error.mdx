@@ -21,13 +21,13 @@ export default function Custom404() {
 
 > **참고** : 빌드 시 데이터를 패칭하고 싶다면 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 를 사용하면 됩니다.
 
-## 500 Page
+## 500 페이지
 
 모든 접근마다 서버에서 에러페이지를 렌더링하게 되면 에러 응답에 대한 복잡도를 증가시킵니다. 사용자가 에러에 대해 가능한 빠른 응답을 얻도록 하기 위해 Next.js는 아무런 파일 추가 없이 500 정적 에러 페이지를 기본적으로 제공합니다.
 
-### Customizing The 500 Page
+### 500 페이지 커스텀하기
 
-사용자 404페이지를 만들기 위해서는 `pages/500.js` 파일을 만들어야합니다. 이 파일은 빌드 시 정적으로 생성됩니다.
+사용자 500 페이지를 만들기 위해서는 `pages/500.js` 파일을 만들어야합니다. 이 파일은 빌드 시 정적으로 생성됩니다.
 
 ```jsx filename="pages/500.js"
 export default function Custom500() {
@@ -95,4 +95,4 @@ export default function Page({ errorCode, stars }) {
 ### 주의사항
 
 - `Error`는 현재 Next.js의 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 또는 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)와 같은 [Data Fetching methods](/docs/pages/building-your-application/data-fetching)에서 제공되지 않습니다.
-- `_app` 처럼 `_error`는 예약 경로입니다. `_error`는 커스텀 레이아웃을 정의하고 에러 페이지 행동을 정의하는데 사용됩니다. `/_error` 는 [routing](/docs/pages/building-your-application/routing)를 통해 직접 접근하거나 [custom server](/docs/pages/building-your-application/configuring/custom-server) 안에서 렌더링이 일어날때 404를 렌더링합니다.
+- `_app` 처럼 `_error`는 예약 경로입니다. `_error`는 커스텀 레이아웃을 정의하고 에러 페이지 행동을 정의하는데 사용됩니다. `/_error` 는 [routing](/docs/pages/building-your-application/routing)를 통해 직접 접근하거나 [커스텀 서버](/docs/pages/building-your-application/configuring/custom-server) 안에서 렌더링이 일어날때 404를 렌더링합니다.
