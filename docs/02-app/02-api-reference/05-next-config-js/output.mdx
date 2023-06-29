@@ -1,9 +1,9 @@
 ---
 title: 출력
-description: 애플리케이션을 편리하게 배포할 수 있도록 Next.js는 각 페이지마다 어떤 파일이 필요한지를 자동으로 추적합니다. 이 문서를 통해 동작 방식을 알아봅시다.
+description: 애플리케이션을 편리하게 배포할 수 있도록 Next.js는 페이지마다 어떤 파일이 필요한지를 자동으로 추적합니다. 이 문서를 통해 동작 방식을 알아봅시다.
 ---
 
-빌드 과정에서 Next.js는 각 페이지와 해당 페이지의 의존성을 자동으로 추적하여 프로덕션 버전의 애플리케이션을 배포하는데 필요한 모든 파일을 결정합니다.
+빌드 과정에서 Next.js는 각 페이지와 해당 페이지의 의존성을 자동으로 추적하여 프로덕션 버전의 애플리케이션을 배포하는 데 필요한 모든 파일을 결정합니다.
 
 이러한 기능은 배포 크기를 대폭 줄이는 데 도움을 줍니다. 이전에는 도커로 배포할 때 패키지의 `dependencies`에 있는 모든 파일을 설치해야 `next start`를 실행할 수 있었습니다. Next.js 12부터는 `.next/` 디렉터리에서 출력 파일 추적(Output File Tracing)을 활용하여 필요한 파일만 포함할 수 있습니다.
 
@@ -31,11 +31,11 @@ module.exports = {
 
 해당 코드는 `.next/standalone`에 `node_modules` 설치 없이도 자체적으로 배포될 수 있는 폴더를 생성합니다.
 
-추가로 `next start` 대신에 사용할 수 있는 최소한의 `server.js` 파일도 출력합니다. `public`과 `.next/static` 폴더는 각각 `server.js` 파일이 자동으로 제공하는 `standalone/public`과 `standalone/.next/static` 폴더로 복사됩니다. 하지만 이 최소한의 서버는 이상적으로는 CDN이 대신 처리해야하는 `public` 또는 `.next/static` 폴더를 기본값으로 복사하지 않습니다.
+추가로 `next start` 대신에 사용할 수 있는 최소한의 `server.js` 파일도 출력합니다. `public`과 `.next/static` 폴더는 각각 `server.js` 파일이 자동으로 제공하는 `standalone/public`과 `standalone/.next/static` 폴더로 복사됩니다. 하지만 이 최소한의 서버는 이상적으로는 CDN이 대신 처리해야 하는 `public` 또는 `.next/static` 폴더를 기본값으로 복사하지 않습니다.
 
 > **참고**:
 >
-> - `next.config.js`는 `next build` 과정 중에 읽혀서 `server.js` 출력 파일로 직렬화됩니다. 이전 버전의 [`serverRuntimeConfig` 또는 `publicRuntimeConfig` 옵션](/docs/pages/api-reference/next-config-js/runtime-configuration)이 사용된 경우에 해당 값은 빌드 시점의 값에 따라 구체화됩니다.
+> - `next.config.js`는 `next build` 과정 중에 읽혀서 `server.js` 출력 파일로 직렬화됩니다. 이전 버전의 [`serverRuntimeConfig` 또는 `publicRuntimeConfig` 옵션](/docs/pages/api-reference/next-config-js/runtime-configuration)이 사용된 경우에 해당 값은 빌드 시점의 값에 따라 결정됩니다.
 
 > - 프로젝트에서 기본 `loader`를 사용하여 [이미지 최적화](/docs/pages/building-your-application/optimizing/images)를 사용한다면 `sharp`를 의존성으로 설치해야 합니다.
 
@@ -64,7 +64,7 @@ module.exports = {
 }
 ```
 
-- Next.js가 필요한 파일을 포함하지 못하거나 사용하지 않는 파일을 잘못 포함하는 경우가 있습니다. 이 경우에는 `next.config.js`에서 각각 `experimental.outputFileTracingExcludes`와 `experimental.outputFileTracingIncludes`를 활용할 수 있습니다. 각 설정은 특정 페이지와 일치할 키에 대해 [minimatch globs](https://www.npmjs.com/package/minimatch)로된 객체를 허용하고, 추적에 포함하거나 제외하기 위해서 프로젝트의 루트(root)를 기준으로한 globs로된 배열을 허용합니다.
+- Next.js가 필요한 파일을 포함하지 못하거나 사용하지 않는 파일을 잘못 포함하는 경우가 있습니다. 이 경우에는 `next.config.js`에서 각각 `experimental.outputFileTracingExcludes`와 `experimental.outputFileTracingIncludes`를 활용할 수 있습니다. 각 설정은 특정 페이지와 일치할 키에 대해 [minimatch globs](https://www.npmjs.com/package/minimatch)로된 객체를 허용하고, 추적에 포함하거나 제외하기 위해서 프로젝트의 루트(root)를 기준으로 한 globs로된 배열을 허용합니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -101,7 +101,7 @@ module.exports = {
       | 'note'
       | 'suggestions'
       | 'info',
-      // turbotrace의 로그가 분석 세부 정보를 포함해야하는지를 설정합니다. 기본값은 `false`
+      // turbotrace의 로그가 분석 세부 정보를 포함해야 하는지를 설정합니다. 기본값은 `false`
       logDetail?: boolean
       // 모든 로그 메세지를 제한 없이 보여줍니다
       // turbotrace는 기본적으로 각 카테고리당 로그 메세지를 1개만 보여줍니다
@@ -111,7 +111,7 @@ module.exports = {
       // `experimental.outputFileTracingRoot`를 설정하는 것과 동일한 효과입니다
       // `experimental.outputFileTracingRoot`와 이 옵션이 모두 설정된 경우, `experimental.turbotrace.contextDirectory`를 사용합니다
       contextDirectory?: string
-      // 코드 내에 `process.cwd()` 표현식이 있을 경우, 이 옵션을 설정하여 추적 중에 `turbotrace`에게 `process.cwd()`값을 전달할 수 있습니다
+      // 코드 내에 `process.cwd()` 표현식이 있으면 이 옵션을 설정하여 추적 중에 `turbotrace`에게 `process.cwd()`값을 전달할 수 있습니다
       // 예를 들어 require(process.cwd() + '/package.json')는 require('/path/to/cwd/package.json')로 추적됩니다
       processCwd?: string
       // `turbotrace`의 최대 메모리 사용량을 `MB` 단위로 설정합니다. 기본값은 `6000`
