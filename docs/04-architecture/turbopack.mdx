@@ -1,13 +1,13 @@
 ---
 title: Turbopack
-description: Turbopack is an incremental bundler optimized for JavaScript and TypeScript, written in Rust, and built into Next.js.
+description: Turbopack은 Rust로 작성되었고 Next.js에 내장되어있으며 JavaScript 및 TypeScript에 최적화된 점진적 번들러입니다.
 ---
 
-[Turbopack](https://turbo.build/pack) (beta) is an incremental bundler optimized for JavaScript and TypeScript, written in Rust, and built into Next.js.
+[Turbopack](https://turbo.build/pack) (베타) Rust로 작성되었고 Next.js에 내장되어있으며 JavaScript 및 TypeScript에 최적화된 점진적 번들러입니다.
 
-## Usage
+## 용법
 
-Turbopack can be used in Next.js in both the `pages` and `app` directories for faster local development. To enable Turbopack, use the `--turbo` flag when running the Next.js development server.
+Turbopack은 더 빠른 로컬 개발을 위해 `pages` 및 `app` 디렉토리의 Next.js에서 사용할 수 있습니다. Turbopack을 활성화하려면 Next.js 개발 서버를 실행할 때 `--turbo` 플래그를 사용하십시오.
 
 ```json filename="package.json" highlight={3}
 {
@@ -20,10 +20,10 @@ Turbopack can be used in Next.js in both the `pages` and `app` directories for f
 }
 ```
 
-## Supported Features
+## 지원되는 기능
 
-To learn more about the currently supported features for Turbopack, view the [documentation](https://turbo.build/pack/docs/features).
+Turbopack에 현재 지원되는 기능을 자세히 알아보려면 [문서](https://turbo.build/pack/docs/features)를 참조하세요.
 
-## Unsupported Features
+## 지원되지 않는 기능
 
-Turbopack currently only supports `next dev` and does not support `next build`. We are currently working on support for builds as we move closer towards stability.
+Turbopack은 현재 `next dev`만 지원하고 `next build`는 지원하지 않습니다. 우리는 현재 안정화에 가까워지고 있고 빌드를 지원하기 위해 노력하고 있습니다.
