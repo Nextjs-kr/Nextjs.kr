@@ -1,13 +1,13 @@
 ---
 title: redirect
-description: API Reference for the redirect function.
+description: 'redirect' 함수에 대한 API 렌퍼런스입니다.
 ---
 
-The `redirect` function allows you to redirect the user to another URL. If you need to redirect to a 404, you can use the [`notFound` function](/docs/app/api-reference/functions/not-found).
+`redirect` 함수는 사용자를 다른 URL로 리다이렉션 시킬 수 있습니다. 404페이지로 리다이렉션해야 하는 경우 [`notFound` 함수](/docs/app/api-reference/functions/not-found)를 사용할 수 있습니다.
 
 ## `redirect()`
 
-Invoking the `redirect()` function throws a `NEXT_REDIRECT` error and terminates rendering of the route segment in which it was thrown. `redirect()` can be called with a relative or an absolute URL.
+`redirect()` 함수를 호출하면 `NEXT_REDIRECT` 에러가 발생하고 에러가 발생한 경로 세그먼트의 렌더링이 종료됩니다. `redirect()` 함수는 상대 혹은 절대 경로를 사용하여 호출할 수 있습니다.
 
 ```jsx filename="app/team/[id]/page.js"
 import { redirect } from 'next/navigation'
@@ -28,8 +28,8 @@ export default async function Profile({ params }) {
 }
 ```
 
-> **Good to know**: `redirect()` does not require you to use `return redirect()` due to using the TypeScript [`never`](https://www.typescriptlang.org/docs/handbook/2/functions.html#never) type.
+> **알아두면 좋은 점**: `redirect()`는 타입스크립트의 [`never`](https://www.typescriptlang.org/docs/handbook/2/functions.html#never) 타입을 사용하기 때문에 `return redirect()`로 사용할 필요가 없습니다.
 
-| Version   | Changes                |
-| --------- | ---------------------- |
-| `v13.0.0` | `notFound` introduced. |
+| 버전      | 변경사항        |
+| --------- | --------------- |
+| `v13.0.0` | `notFound` 안내 |
