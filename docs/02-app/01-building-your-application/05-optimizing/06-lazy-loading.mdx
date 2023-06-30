@@ -1,27 +1,28 @@
 ---
-title: Lazy Loading
-description: Lazy load imported libraries and React Components to improve your application's loading performance.
+title: 지연 로딩
+nav_title: Lazy Loading
+description: 애플리케이션의 로딩 성능 개선을 위한 라이브러리들과 React 컴포넌트들의 지연된 가져오기.
 ---
 
-[Lazy loading](https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading) in Next.js helps improve the initial loading performance of an application by decreasing the amount of JavaScript needed to render a route.
+Next.js에서 [지연 로딩](https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading)은 라우트를 렌더링하는데 필요한 자바스크립트의 양을 줄임으로서 애플리케이션의 초기 로딩 성능의 개선을 도와줍니다.
 
-It allows you to defer loading of **Client Components** and imported libraries, and only include them in the client bundle when they're needed. For example, you might want to defer loading a modal until a user clicks to open it.
+이를 통해 **클라이언트 컴포넌트들**과 불러와진 라이브러리들의 로딩을 연기할 수 있고, 오직 클라이언트 번들에서 그것들이 필요할 때만 포함하도록 할 수 있습니다. 예를 들어, 사용자가 클릭해서 열기 전까지는 모델의 로딩을 지연하고 싶다고 해봅시다.
 
-There are two ways you can implement lazy loading in Next.js:
+Next.js에서 지연 로딩을 구현하는 데는 두 가지 방법이 있습니다:
 
-1. Using [Dynamic Imports](#nextdynamic) with `next/dynamic`
-2. Using [`React.lazy()`](https://react.dev/reference/react/lazy) with [Suspense](https://react.dev/reference/react/Suspense)
+1. [동적 가져오기](#nextdynamic)와 함께 `next/dynamic`를 사용하기
+2. [`React.lazy()`](https://react.dev/reference/react/lazy)와 함께 [Suspense](https://react.dev/reference/react/Suspense)를 사용하기
 
-By default, Server Components are automatically [code split](https://developer.mozilla.org/en-US/docs/Glossary/Code_splitting), and you can use [streaming](/docs/app/building-your-application/routing/loading-ui-and-streaming) to progressively send pieces of UI from the server to the client. Lazy loading applies to Client Components.
+기본적으로, 서버 컴포넌트는 [코드 분할](https://developer.mozilla.org/en-US/docs/Glossary/Code_splitting)이 자동으로 이루어지고, 서버에서 클라이언트로 UI 일부들을 점진적으로 보낼 수 있도록 [스트리밍](/docs/app/building-your-application/routing/loading-ui-and-streaming)을 사용할 수 있습니다. 지연 로딩은 클라이언트 컴포넌트들에 적용됩니다.
 
 ## `next/dynamic`
 
-`next/dynamic` is a composite of [`React.lazy()`](https://react.dev/reference/react/lazy) and [Suspense](https://react.dev/reference/react/Suspense). It behaves the same way in the `app` and `pages` directories to allow for incremental migration.
+`next/dynamic`은 [`React.lazy()`](https://react.dev/reference/react/lazy)와 [Suspense](https://react.dev/reference/react/Suspense)의 합성입니다. 이것은 `앱`과 `페이지들` 폴더들에서 동일하게 점진적인 마이그레이션이 가능하도록 동작합니다.
 
-## Examples
+## 예시들
 
 <AppOnly>
-### Importing Client Components
+### 클라이언트 컴포넌트들 가져오기
 
 ```jsx filename="app/page.js"
 'use client'
@@ -53,19 +54,19 @@ export default function ClientComponentExample() {
 }
 ```
 
-### Skipping SSR
+### SSR 건너뛰기
 
-When using `React.lazy()` and Suspense, Client Components will be pre-rendered (SSR) by default.
+`React.lazy()`와 Suspense를 사용하면, 클라이언트 컴포넌트들은 기본적으로 사전 렌더링 (SSR) 될 것입니다.
 
-If you want to disable pre-rendering for a Client Component, you can use the `ssr` option set to `false`:
+클라이언트 컴포넌트가 사전 렌더링 되지 않게 하기 위해서, `ssr` 옵션을 `false`로 설정할 수 있습니다:
 
 ```jsx
 const ComponentC = dynamic(() => import('../components/C'), { ssr: false })
 ```
 
-### Importing Server Components
+### 서버 컴포넌트들 가져오기
 
-If you dynamically import a Server Component, only the Client Components that are children of the Server Component will be lazy-loaded - not the Server Component itself.
+서버 컴포넌트를 동적으로 가져온다면, 서버 컴포넌트의 자식인 클라이언트 컴포넌트들만이 지연 로드될 것입니다 - 서버 컴포넌트 자체가 아니라.
 
 ```jsx filename="app/page.js"
 import dynamic from 'next/dynamic'
@@ -82,9 +83,9 @@ export default function ServerComponentExample() {
 }
 ```
 
-### Loading External Libraries
+### 외부 라이브러리들 로딩
 
-External libraries can be loaded on demand using the [`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) function. This example uses the external library `fuse.js` for fuzzy search. The module is only loaded on the client after the user types in the search input.
+외부 라이브러리들은 [`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) 함수를 사용함으로서 필요에 따라 로드될 수 있습니다. 이 예시는 퍼지 검색을 위해 `fuse.js` 라는 외부 라이브러리를 사용합니다. 모듈은 오직 사용자가 검색값을 입력할 때만 브라우저에서 로드됩니다.
 
 ```jsx filename="app/page.js"
 'use client'
@@ -116,7 +117,7 @@ export default function Page() {
 }
 ```
 
-### Adding a custom loading component
+### 커스텀 로딩 컴포넌트 추가하기
 
 ```jsx filename="app/page.js"
 import dynamic from 'next/dynamic'
@@ -138,9 +139,9 @@ export default function Page() {
 }
 ```
 
-### Importing Named Exports
+### 명명된 내보내기 가져오기
 
-To dynamically import a named export, you can return it from the Promise returned by [`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) function:
+명명된 내보내기를 동적으로 가져오기위해, [`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) 함수를 통해 반환된 Promise로부터 반환할 수 있습니다:
 
 ```jsx filename="components/hello.js"
 'use client'
@@ -162,7 +163,7 @@ const ClientComponent = dynamic(() =>
 
 <PagesOnly>
 
-By using `next/dynamic`, the header component will not be included in the page's initial JavaScript bundle. The page will render the Suspense `fallback` first, followed by the `Header` component when the `Suspense` boundary is resolved.
+`next/dynamic`을 사용함으로써, header 컴포넌트는 자바스크립트의 초기 페이지 번들에 포함되지 않을 것입니다. 페이지는 Suspense의 `fallback`을 먼저 렌더링 할 것이고, `Suspense` 경계가 해제될 때 `Header` 컴포넌트가 뒤따를 것입니다.
 
 ```jsx
 import dynamic from 'next/dynamic'
@@ -176,11 +177,11 @@ export default function Home() {
 }
 ```
 
-> **Good to know**: In `import('path/to/component')`, the path must be explicitly written. It can't be a template string nor a variable. Furthermore the `import()` has to be inside the `dynamic()` call for Next.js to be able to match webpack bundles / module ids to the specific `dynamic()` call and preload them before rendering. `dynamic()` can't be used inside of React rendering as it needs to be marked in the top level of the module for preloading to work, similar to `React.lazy`.
+> **알면 좋은 정보**: `import(’path/to/component’)`에서, path는 명시적으로 선언되어야 합니다. 문자열이나 변수가 될 수 없습니다. 또한 `import()` 는 Next.js가 웹펙 번들들과 / 모듈 id들을 특정 `dynamic()` 호출과 매칭시키고 렌더링 전에 그것들을 사전 로딩시키기 위해 `dynamic()` 호출 안에서 사용되어야 합니다. `React.lazy`와 유사하게 사전로딩이 되려면, 모듈의 최상단에 표시되어야 하므로 `dynamic()`은 React 렌더링 안에서 사용될 수 없습니다.
 
-## With named exports
+## 명명된 내보내기와 사용
 
-To dynamically import a named export, you can return it from the [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) returned by [`import()`](https://github.com/tc39/proposal-dynamic-import#example):
+명명된 내보내기를 동적으로 가져오려면, [`import()`](https://github.com/tc39/proposal-dynamic-import#example)에 의해 반환된 [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)에서 반환해 가져올 수 있습니다:
 
 ```jsx filename="components/hello.js"
 export function Hello() {
@@ -195,9 +196,9 @@ const DynamicComponent = dynamic(() =>
 )
 ```
 
-## With no SSR
+## SSR 없이 사용
 
-To dynamically load a component on the client side, you can use the `ssr` option to disable server-rendering. This is useful if an external dependency or component relies on browser APIs like `window`.
+클라이언트 사이드에서 컴포넌트를 동적으로 로드하기 위해, 서버 렌더링을 사용하지 못하도록 `ssr` 옵션을 사용할 수 있습니다. 만약 외부 의존성 또는 컴포넌트가 `window` 같은 브라우저 API들에 의존한다면 유용할 것입니다.
 
 ```jsx
 import dynamic from 'next/dynamic'
@@ -207,9 +208,9 @@ const DynamicHeader = dynamic(() => import('../components/header'), {
 })
 ```
 
-## With external libraries
+## 외부 라이브러리들과 사용
 
-This example uses the external library `fuse.js` for fuzzy search. The module is only loaded in the browser after the user types in the search input.
+이 예시는 퍼지 검색을 위해 `fuse.js` 라는 외부 라이브러리를 사용합니다. 모듈은 오직 사용자가 검색값을 입력할 때만 브라우저에서 로드됩니다.
 
 ```jsx
 import { useState } from 'react'
