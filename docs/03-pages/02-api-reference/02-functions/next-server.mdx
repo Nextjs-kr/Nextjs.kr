@@ -7,7 +7,7 @@ description: 미들웨어와 엣지 API Routes에서 사용하는 server-only �
 
 ## NextRequest
 
-`NextRequest` 객체는 네이티브 [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) 인터페이스의 확장된 버전이며, 다음과 같은 메소드와 프로퍼티가 추가되었습니다:
+`NextRequest` 객체는 네이티브 [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) 인터페이스의 확장된 버전이며, 다음과 같은 메소드와 프로퍼티가 추가되었습니다.
 
 - `cookies` - 쿠키와 함께 `Request`에 포함되어있는 [RequestCookies](https://edge-runtime.vercel.app/packages/cookies#for-request) 인스턴스입니다. 요청의 `Cookie` 헤더를 읽거나 수정합니다. [미들웨어에서 쿠키 사용하기](/docs/app/building-your-application/routing/middleware#using-cookies)를 참고하세요.
 
@@ -18,7 +18,7 @@ description: 미들웨어와 엣지 API Routes에서 사용하는 server-only �
   - `has` - 쿠키의 `name`을 입력 받고 일치하는 쿠키가 존재하는지 (`true`) 존재하지 않는지 (`false`) 여부를 `boolean`으로 반환합니다.
   - `clear` - 아무 인자를 받지 않으며 `Cookie` 헤더를 효율적으로 삭제하는 메소드입니다.
 
-- `nextUrl`: 확장되고 파싱된 URL 객체를 포함하고 있습니다. 이 객체는 `pathname`, `basePath`, `trailingSlash` 그리고 `i18n` 등과 같은 Next.js의 특정 프로퍼티를 포함하고 있으며 목록은 다음과 같습니다:
+- `nextUrl`: 확장되고 파싱된 URL 객체를 포함하고 있습니다. 이 객체는 `pathname`, `basePath`, `trailingSlash` 그리고 `i18n` 등과 같은 Next.js의 특정 프로퍼티를 포함하고 있으며 목록은 다음과 같습니다.
   - `basePath` (`string`)
   - `buildId` (`string || undefined`)
   - `defaultLocale` (`string || undefined`)
@@ -30,7 +30,7 @@ description: 미들웨어와 엣지 API Routes에서 사용하는 server-only �
   - `locale` (`string || undefined`)
   - `url` (`URL`)
 - `ip`: (`string || undefined`) - `Request`의 Ip 주소를 포함하고 있습니다. 이 정보는 호스팅 플랫폼에 의해 제공됩니다.
-- `geo` - `Request`의 지리학 상의 위치를 포함하고 있습니다. 이 정보는 호스팅 플랫폼에 의해 제공되며 다음과 같은 프로퍼티를 포함하고 있습니다:
+- `geo` - `Request`의 지리학 상의 위치를 포함하고 있습니다. 이 정보는 호스팅 플랫폼에 의해 제공되며 다음과 같은 프로퍼티를 포함하고 있습니다.
 
   - `city` (`string || undefined`)
   - `country` (`string || undefined`)
@@ -40,7 +40,7 @@ description: 미들웨어와 엣지 API Routes에서 사용하는 server-only �
 
 - `NextRequest` 객체는 요청을 다루는데 있어서 기본 `Request` 인터페이스보다 더 많은 제어를 할 수 있으므로, 기본 `Request` 인터페이스를 대체할 수 있습니다.
 
-`NextRequest`는 `next/server`에서 불러올 수 있습니다:
+`NextRequest`는 `next/server`에서 불러올 수 있습니다.
 
 ```typescript
 import type { NextRequest } from 'next/server'
@@ -68,7 +68,7 @@ export function middleware(req: NextRequest, event: NextFetchEvent) {
 }
 ```
 
-- `NextFetchEvent` 객체는 `next/server`에서 불러올 수 있습니다:
+- `NextFetchEvent` 객체는 `next/server`에서 불러올 수 있습니다.
 
 ```typescript
 import type { NextFetchEvent } from 'next/server'
@@ -76,11 +76,11 @@ import type { NextFetchEvent } from 'next/server'
 
 ## NextResponse
 
-- `NextResponse` 클래스는 기본 [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) 인터페이스를 확장하고 있으며, 다음의 항목을 포함하고 있습니다:
+- `NextResponse` 클래스는 기본 [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) 인터페이스를 확장하고 있으며, 다음의 항목을 포함하고 있습니다.
 
 ### Public Methods
 
-- `NextResponse` 클래스에서는 public 메소드를 사용할 수 있습니다. 사용하는 방식에 따라서, 인스턴스를 생성하고 변수에 할당한 후 다음과 같은 public 메소드에 접속할 수 있습니다:
+- `NextResponse` 클래스에서는 public 메소드를 사용할 수 있습니다. 사용하는 방식에 따라서, 인스턴스를 생성하고 변수에 할당한 후 다음과 같은 public 메소드에 접속할 수 있습니다.
 
 - `cookies` - `Response`에 있는 쿠키를 포함하고 있는 [ResponseCookies](https://edge-runtime.vercel.app/packages/cookies#for-response) 인스턴스 입니다. 응답의 `Set-Cookie` 헤더를 읽거나 수정합니다. [미들웨어에서 쿠키 사용하기](/docs/app/building-your-application/routing/middleware#using-cookies) 문서를 참고하세요.
   - `get` - 쿠키의 `name`을 입력 받은 후 `name`과 `value`로 이루어진 객체를 반환하는 메소드입니다. 입력 받은 `name`을 갖는 쿠키가 없을 경우 `undefined`를 반환합니다. 다수의 쿠키가 검색된 경우 제일 처음에 검색된 쿠키를 반환합니다.
@@ -96,7 +96,7 @@ import type { NextFetchEvent } from 'next/server'
 - `rewrite()` - `rewrite` 세트와 함꼐 `NextResponse`를 반환합니다.
 - `next()` - 미들웨어 체인으로 이어지는 `NextResponse`를 반환합니다.
 
-상위의 메소드를 사용하려면 **반드시 `NextResponse` 객체를 반환해야 합니다.** `NextResponse`는 `next/server`에서 불러올 수 있습니다:
+상위의 메소드를 사용하려면 **반드시 `NextResponse` 객체를 반환해야 합니다.** `NextResponse`는 `next/server`에서 불러올 수 있습니다.
 
 ```typescript
 import { NextResponse } from 'next/server'
@@ -104,7 +104,7 @@ import { NextResponse } from 'next/server'
 
 ## userAgent
 
-`userAgent` 헬퍼는 요청에 포함된 유저 에이전트 객체와 상호작용 할 수 있도록 도와줍니다. 기본 `Request` 객체로부터 추상화되었으며 선택적인 기능입니다. `userAgent` 헬퍼는 다음과 같은 프로퍼티를 갖고 있습니다:
+`userAgent` 헬퍼는 요청에 포함된 유저 에이전트 객체와 상호작용 할 수 있도록 도와줍니다. 기본 `Request` 객체로부터 추상화되었으며 선택적인 기능입니다. `userAgent` 헬퍼는 다음과 같은 프로퍼티를 갖고 있습니다.
 
 - `isBot`: (`boolean`) 요청이 알려진 봇으로부터 온 요청인지 여부
 - `browser`
@@ -112,18 +112,18 @@ import { NextResponse } from 'next/server'
   - `version`: (`string || undefined`) 브라우저의 버전. 동적으로 정해집니다.
 - `device`
   - `model`: (`string || undefined`) 기기 모델. 동적으로 정해집니다.
-  - `type`: (`string || undefined`) 브라우저의 타입. 다음의 값 중 하나일 수 있습니다: `console`, `mobile`, `tablet`, `smarttv`, `wearable`, `embedded` 또는 `undefined`
+  - `type`: (`string || undefined`) 브라우저의 타입. 다음의 값 중 하나일 수 있습니다. `console`, `mobile`, `tablet`, `smarttv`, `wearable`, `embedded` 또는 `undefined`
   - `vendor`: (`string || undefined`) 기기의 제조업체. 동적으로 정해집니다.
 - `engine`
-  - `name`: (`string || undefined`) 브라우저 엔진의 이름. 다음의 항목 중 하나일 수 있습니다: `Amaya`, `Blink`, `EdgeHTML`, `Flow`, `Gecko`, `Goanna`, `iCab`, `KHTML`, `Links`, `Lynx`, `NetFront`, `NetSurf`, `Presto`, `Tasman`, `Trident`, `w3m`, `WebKit` 또는 `undefined`
+  - `name`: (`string || undefined`) 브라우저 엔진의 이름. 다음의 항목 중 하나일 수 있습니다. `Amaya`, `Blink`, `EdgeHTML`, `Flow`, `Gecko`, `Goanna`, `iCab`, `KHTML`, `Links`, `Lynx`, `NetFront`, `NetSurf`, `Presto`, `Tasman`, `Trident`, `w3m`, `WebKit` 또는 `undefined`
   - `version`: (`string || undefined`) 브라우저 엔진의 버전. 동적으로 정해지거나 `undefined`일 수 있습니다.
 - `os`
   - `name`: (`string || undefined`) OS의 이름. `undefined`일 수 있습니다.
   - `version`: (`string || undefined`) OS의 버전. 동적으로 정해지거나 `undefined`일 수 있습니다.
 - `cpu`
-  - `architecture`: (`string || undefined`) CPU의 아키텍처. 다음의 항목 중 하나일 수 있습니다: `68k`, `amd64`, `arm`, `arm64`, `armhf`, `avr`, `ia32`, `ia64`, `irix`, `irix64`, `mips`, `mips64`, `pa-risc`, `ppc`, `sparc`, `sparc64` 또는 `undefined`
+  - `architecture`: (`string || undefined`) CPU의 아키텍처. 다음의 항목 중 하나일 수 있습니다. `68k`, `amd64`, `arm`, `arm64`, `armhf`, `avr`, `ia32`, `ia64`, `irix`, `irix64`, `mips`, `mips64`, `pa-risc`, `ppc`, `sparc`, `sparc64` 또는 `undefined`
 
-`userAgent`는 `next/server`에서 블러올 수 있습니다:
+`userAgent`는 `next/server`에서 블러올 수 있습니다.
 
 ```typescript
 import { userAgent } from 'next/server'
@@ -162,7 +162,7 @@ HTTP 리다이렉트에 대해 더 알고 싶다면 [이 곳](https://developer.
 
 ### 환경 변수에는 어떻게 접근하나요?
 
-엣지 미들웨어에서 `process.env`를 사용하면 [환경 변수](/docs/pages/building-your-application/configuring/environment-variables)에 접근할 수 있습니다. 환경 변수들은 `next build` 과정에서 계산됩니다:
+엣지 미들웨어에서 `process.env`를 사용하면 [환경 변수](/docs/pages/building-your-application/configuring/environment-variables)에 접근할 수 있습니다. 환경 변수들은 `next build` 과정에서 계산됩니다.
 
 | 동작함                                                       | 동작하지 **않음**                          |
 | ------------------------------------------------------------ | ------------------------------------------ |
