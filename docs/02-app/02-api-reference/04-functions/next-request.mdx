@@ -9,7 +9,7 @@ NextRequest는 편리한 메서드를 추가하여 [Web Request API](https://dev
 
 리퀘스트의 [`Set-Cookie`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) 헤더를 읽거나 변경할 수 있습니다.
 
-### `set(name, value)`
+### `set(이름, 값)`
 
 쿠키 이름이 주어지면 리퀘스트에서 주어진 값으로 쿠키를 설정합니다.
 
@@ -20,7 +20,7 @@ NextRequest는 편리한 메서드를 추가하여 [Web Request API](https://dev
 request.cookies.set('show-banner', 'false')
 ```
 
-### `get(name)`
+### `get(이름)`
 
 쿠키 이름이 주어지면 쿠키 이름에 맞는 쿠키 값을 반환합니다. 쿠키를 찾을 수 없다면 `undefined`를 반환합니다. 여러 개의 쿠키를 찾았다면 그 중 첫 번째로 찾은 쿠키를 반환합니다.
 
@@ -32,7 +32,7 @@ request.cookies.get('show-banner')
 
 ### `getAll()`
 
-쿠키 이름이 주어질 때 쿠키 이름에 맞는 모든 쿠키 값을 반환합니다. 쿠키 이름이 주어지지 않으면 리퀘스트에 포함된 모든 쿠키를 전부 반환합니다.
+쿠키 이름이 주어지면 쿠키 이름에 맞는 모든 쿠키 값을 반환합니다. 쿠키 이름이 주어지지 않으면 리퀘스트에 포함된 모든 쿠키를 전부 반환합니다.
 
 ```ts
 // /home이라는 수신 request가 주어질 때
@@ -45,18 +45,18 @@ request.cookies.getAll('experiments')
 request.cookies.getAll()
 ```
 
-### `delete(name)`
+### `delete(이름)`
 
-쿠키 **이름**이 주어질 때 request에서 쿠키를 지웁니다.
+쿠키 이름이 주어지면 request에서 쿠키를 지웁니다.
 
 ```ts
 // 삭제되었다면 true를 반환하고 삭제되지 않았다면 false를 반환
 request.cookies.delete('experiments')
 ```
 
-### `has(name)`
+### `has(이름)`
 
-쿠키 **이름**이 주어질 때 request에 쿠키가 존재한다면 true를 반환. 
+쿠키 이름이 주어지면 request에 쿠키가 존재한다면 true를 반환.
 
 ```ts
 // 쿠키가 존재하면 true를 반환하고 존재하지 않으면 false를 반환
@@ -84,6 +84,6 @@ request.nextUrl.searchParams
 
 ## 버전 히스토리
 
-| 버전       | 변경사항                       |
-| --------- | ----------------------------- |
-| `v13.0.0` | `useSearchParams` 추가.       |
+| 버전      | 변경사항                |
+| --------- | ----------------------- |
+| `v13.0.0` | `useSearchParams` 추가. |
