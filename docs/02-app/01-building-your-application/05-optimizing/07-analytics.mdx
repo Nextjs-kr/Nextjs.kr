@@ -1,20 +1,19 @@
 ---
 title: Analytics
-description: Measure and track page performance using Next.js Speed Insights
+description: Next.js Speed Insights를 사용하여 페이지의 성능을 측정하고 추적할 수 있습니다.
 ---
 
-[Next.js Speed Insights](https://nextjs.org/analytics) allows you to analyze and measure the performance of
-pages using different metrics.
+[Next.js Speed Insights](https://nextjs.org/analytics)를 사용하면 다양한 지표를 사용하여 페이지의 성능을 측정하고 분석할 수 있습니다. 
 
-You can start collecting your [Real Experience Score](https://vercel.com/docs/concepts/speed-insights#core-web-vitals-explained?utm_source=next-site&utm_medium=docs&utm_campaign=next-website) with zero-configuration on [Vercel deployments](https://vercel.com/docs/concepts/speed-insights?utm_source=next-site&utm_medium=docs&utm_campaign=next-website).
+[Vercel deployments](https://vercel.com/docs/concepts/speed-insights?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)에서는  별다른 설정 없이 [Real Experience Score(RES)](https://vercel.com/docs/concepts/speed-insights#core-web-vitals-explained?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)에 대한 정보를 수집할 수 있습니다.
 
-The rest of this documentation describes the built-in relayer Next.js Speed Insights uses.
+문서의 이후 내용은 Next.js의 Speed Insights에 기본적인 기능으로 사용하고 있는 `relayer`에 대하여 설명합니다. 
 
 <PagesOnly>
 
-## Build Your Own
+## 직접 구현해보기
 
-First, you will need to create a [custom App](/docs/pages/building-your-application/routing/custom-app) component and define a `reportWebVitals` function:
+먼저, [커스텀 앱](/docs/pages/building-your-application/routing/custom-app) 컴포넌트를 생성하고, `reportWebVitals` 함수를 정의합니다. 
 
 ```jsx filename="pages/_app.js"
 export function reportWebVitals(metric) {
@@ -27,19 +26,17 @@ function MyApp({ Component, pageProps }) {
 
 export default MyApp
 ```
+함수는 페이지에 존재하는 모든 매트릭의 최종적인 값에 대한 계산이 완료되었을 때 실행됩니다. 이에 대한 결과 일부를 콘솔에 기록하거나 특정 엔드포인트로 전송하는 데 사용할 수 있습니다.
 
-This function is fired when the final values for any of the metrics have finished calculating on
-the page. You can use to log any of the results to the console or send to a particular endpoint.
+`metric` 객체는 다음과 같이 여러 속성으로 구성됩니다.
 
-The `metric` object returned to the function consists of a number of properties:
+- `id`: 현재 로드된 페이지의 맥락 속에서 사용하는 매트릭의 고유 식별자입니다.
+- `name`: 매트릭의 이름
+- `startTime`: 성능 엔트리에서 첫 번째로 기록된 타임스탬프입니다. 이는 [밀리초](https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp) 단위입니다. (해당되는 경우)
+- `value`: 성능 엔트리의 값 또는 지속 시간입니다. 이는 [밀리초](https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp) 단위입니다.
+- `label`: 매트릭의 종류 (`web-vital` 또는 `custom`)
 
-- `id`: Unique identifier for the metric in the context of the current page load
-- `name`: Metric name
-- `startTime`: First recorded timestamp of the performance entry in [milliseconds](https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp) (if applicable)
-- `value`: Value, or duration in [milliseconds](https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp), of the performance entry
-- `label`: Type of metric (`web-vital` or `custom`)
-
-There are two types of metrics that are tracked:
+성능 추적에 사용할 수 있는 두 가지 유형의 매트릭입니다.
 
 - Web Vitals
 - Custom metrics
@@ -48,50 +45,48 @@ There are two types of metrics that are tracked:
 
 ## Web Vitals
 
-[Web Vitals](https://web.dev/vitals/) are a set of useful metrics that aim to capture the user
-experience of a web page. The following web vitals are all included:
+[Web Vitals](https://web.dev/vitals/)은 웹 페이지에 대한 사용자 경험(UX)을 측정하기 위하여 구성된 유용한 매트릭의 집합입니다. 다음과 같은 web vitals가 모두 포함됩니다. 
 
 - [Time to First Byte](https://developer.mozilla.org/en-US/docs/Glossary/Time_to_first_byte) (TTFB)
 - [First Contentful Paint](https://developer.mozilla.org/en-US/docs/Glossary/First_contentful_paint) (FCP)
 - [Largest Contentful Paint](https://web.dev/lcp/) (LCP)
 - [First Input Delay](https://web.dev/fid/) (FID)
 - [Cumulative Layout Shift](https://web.dev/cls/) (CLS)
-- [Interaction to Next Paint](https://web.dev/inp/) (INP) _(experimental)_
+- [Interaction to Next Paint](https://web.dev/inp/) (INP) _(실험적임)_
 
 <PagesOnly>
 
-You can handle all the results of these metrics using the `web-vital` label:
+`web-vital` 라벨을 사용하여 매트릭을 처리할 수 있습니다. 
 
 ```js
 export function reportWebVitals(metric) {
   if (metric.label === 'web-vital') {
-    console.log(metric) // The metric object ({ id, name, startTime, value, label }) is logged to the console
+    console.log(metric) // 매트릭 객체인 ({ id, name, startTiem, value, label })를 콘솔에 기록합니다. 
   }
 }
 ```
-
-There's also the option of handling each of the metrics separately:
+또한 매트릭을 개별적으로 처리할 수 있는 옵션이 존재합니다. 
 
 ```js
 export function reportWebVitals(metric) {
   switch (metric.name) {
     case 'FCP':
-      // handle FCP results
+      // FCP 결과를 처리합니다.
       break
     case 'LCP':
-      // handle LCP results
+      // LCP 결과를 처리합니다. 
       break
     case 'CLS':
-      // handle CLS results
+      // CLS 결과를 처리합니다. 
       break
     case 'FID':
-      // handle FID results
+      // FID 결과를 처리합니다. 
       break
     case 'TTFB':
-      // handle TTFB results
+      // TTFB 결과를 처리합니다.
       break
     case 'INP':
-      // handle INP results (note: INP is still an experimental metric)
+      // INP 결과를 처리합니다. (참고: INP는 아직 실험적인 매트릭스입니다.)
       break
     default:
       break
@@ -99,44 +94,40 @@ export function reportWebVitals(metric) {
 }
 ```
 
-A third-party library, [web-vitals](https://github.com/GoogleChrome/web-vitals), is used to measure
-these metrics. Browser compatibility depends on the particular metric, so refer to the [Browser
-Support](https://github.com/GoogleChrome/web-vitals#browser-support) section to find out which
-browsers are supported.
+이러한 매트릭을 측정하기 위하여 타 사가 제공하는  [web-vitals](https://github.com/GoogleChrome/web-vitals) 라이브러리를 사용합니다. 브라우저의 호환성은 매트릭스에 따라 다르게 작동하기 때문에 매트릭스가 지원되는 브라우저에 대하여 알아보기 위해서는 [Browser
+Support](https://github.com/GoogleChrome/web-vitals#browser-support)를 참고하세요.
 
-## Custom metrics
+## 사용자 정의 매트릭스
 
-In addition to the core metrics listed above, there are some additional custom metrics that
-measure the time it takes for the page to hydrate and render:
+위에서 언급한 기본적인 매트릭스 외에도, 페이지를 hydrate하고 랜더링하는 데 걸리는 시간을 측정하는 추가적인 사용자 정의 매트릭스가 있습니다. 
 
-- `Next.js-hydration`: Length of time it takes for the page to start and finish hydrating (in ms)
-- `Next.js-route-change-to-render`: Length of time it takes for a page to start rendering after a
-  route change (in ms)
-- `Next.js-render`: Length of time it takes for a page to finish render after a route change (in ms)
+- `Next.js-hydration`: 페이지가 hydrate를 시작하고 완료될 때까지 걸리는 시간입니다. (밀리초 단위)
+- `Next.js-route-change-to-render`: 페이지의 라우트가 변경된 이후 랜더링을 시작하는 데 걸리는 시간입니다. (밀리초 단위)
+- `Next.js-render`: 라우트가 변경된 이후 페이지가 랜더링을 완료하는 데 걸리는 시간입니다. (밀리초 단위)
 
-You can handle all the results of these metrics using the `custom` label:
+매트릭의 결과를 `custom` 라벨을 사용하여 처리할 수 있습니다.
 
 ```js
 export function reportWebVitals(metric) {
   if (metric.label === 'custom') {
-    console.log(metric) // The metric object ({ id, name, startTime, value, label }) is logged to the console
+    console.log(metric) // 매트릭 객체인 ({ id, name, startTiem, value, label })를 콘솔에 기록합니다. 
   }
 }
 ```
 
-There's also the option of handling each of the metrics separately:
+또한 매트릭을 개별적으로 처리할 수 있는 옵션이 존재합니다. 
 
 ```js
 export function reportWebVitals(metric) {
   switch (metric.name) {
     case 'Next.js-hydration':
-      // handle hydration results
+      // hydration 결과 처리
       break
     case 'Next.js-route-change-to-render':
-      // handle route-change to render results
+      // route-change to render 결과 처리
       break
     case 'Next.js-render':
-      // handle render results
+      // render 결과 처리
       break
     default:
       break
@@ -144,19 +135,17 @@ export function reportWebVitals(metric) {
 }
 ```
 
-These metrics work in all browsers that support the [User Timing API](https://caniuse.com/#feat=user-timing).
+이러한 매트릭은 [User Timing API](https://caniuse.com/#feat=user-timing)을 지원하는 모든 브러우저에서 동작합니다. 
 
-## Sending results to external systems
+## 외부 시스템으로 결과를 전송하기
 
-With the relay function, you can send results to any endpoint to measure and track
-real user performance on your site. For example:
+릴레이 함수를 사용한다면 결과를 원하는 엔드포인트로 전송하여 사이트에서 실제 사용자를 대상으로 한 성능을 측정하고 추적할 수 있습니다. 예를 들어
 
 ```js
 export function reportWebVitals(metric) {
   const body = JSON.stringify(metric)
   const url = 'https://example.com/analytics'
-
-  // Use `navigator.sendBeacon()` if available, falling back to `fetch()`.
+  // `navigator.sendBeacon()`을 사용할 수 있는 경우에는 해당 메서드를 이용하고, 그렇지 않은 경우에는 `fetch()`를 사용합니다. 
   if (navigator.sendBeacon) {
     navigator.sendBeacon(url, body)
   } else {
@@ -165,29 +154,28 @@ export function reportWebVitals(metric) {
 }
 ```
 
-> **Good to know**: If you use [Google Analytics](https://analytics.google.com/analytics/web/), using the
-> `id` value can allow you to construct metric distributions manually (to calculate percentiles,
-> etc.)
+> **알아두면 좋은 내용**: 만약 [Google Analytics](https://analytics.google.com/analytics/web/)을 사용한다면, `id` 값으로 매트릭에 대한 분포를 수동으로 생성할 수 있습니다. (백분위를 계산하는 등)
+> 
 >
 > ```js
 > export function reportWebVitals({ id, name, label, value }) {
->   // Use `window.gtag` if you initialized Google Analytics as this example:
+>   // 만약 Google Analytics를 해당 예시와 같이 초기화하였다면, `window.gtag`를 사용합니다.
 >   // https://github.com/vercel/next.js/blob/canary/examples/with-google-analytics/pages/_app.js
 >   window.gtag('event', name, {
 >     event_category:
 >       label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
->     value: Math.round(name === 'CLS' ? value * 1000 : value), // values must be integers
->     event_label: id, // id unique to current page load
->     non_interaction: true, // avoids affecting bounce rate.
+>     value: Math.round(name === 'CLS' ? value * 1000 : value), // 값은 정수로 지정합니다.
+>     event_label: id, // 페이지 로드에 고유한 id입니다.
+>     non_interaction: true, // 바운스 비율에 영향을 주지 않도록 합니다.
 >   })
 > }
 > ```
 >
-> Read more about [sending results to Google Analytics](https://github.com/GoogleChrome/web-vitals#send-the-results-to-google-analytics).
+> 더 많은 정보는 [Google Analytics에 결과 보내기](https://github.com/GoogleChrome/web-vitals#send-the-results-to-google-analytics)를 참고해주세요.
 
-## TypeScript
+## 타입스크립트
 
-If you are using TypeScript, you can use the built-in type `NextWebVitalsMetric`:
+타입스크립트를 사용하는 경우 내장된 타입인 `NextWebVitalsMetric`을 이용합니다.
 
 ```tsx filename="pages/_app.tsx" switcher
 import type { AppProps, NextWebVitalsMetric } from 'next/app'
