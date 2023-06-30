@@ -7,7 +7,7 @@ description: 점진적 정적 재생성을 사용하여 런타임에서 정적 �
   <summary>예시</summary>
 
 - [Next.js Commerce](https://nextjs.org/commerce)
-- [GitHub Reactionse 데모](https://reactions-demo.vercel.app/)
+- [GitHub Reactions 데모](https://reactions-demo.vercel.app/)
 - [Static Tweet 데모](https://static-tweet.vercel.app/)
 
 </details>
@@ -72,11 +72,11 @@ export default Blog
 - 초기 요청 이후 10초 동안 발생하는 페이지에 대한 모든 요청은 캐시되어 즉시 처리됩니다.
 - 10초 이후 다음 요청에는 여전히 캐시된(오래된) 페이지가 표시됩니다.
 - Next.js는 백그라운드에서 페이지를 재생성하는 작업을 시작합니다.
-- 페이지가 성공적으로 생성되면 Next.js는 캐시를 무효화하고 업데이트된 페이지를 표시합니다. 만약 백그라운드 재생성이 실패하면 이전 페이지는 여전히 변경되지 않은 채로 남아 있습니다.
+- 페이지가 성공적으로 생성되면 Next.js는 캐시를 무효화하고 업데이트된 페이지를 표시합니다. 백그라운드 재생성이 실패하면 이전 페이지는 여전히 변경되지 않은 채로 남아 있습니다.
 
 생성되지 않은 경로에 대한 요청이 발생하면, Next.js는 첫 번째 요청에 대해 페이지를 서버에서 렌더링합니다. 이후의 요청은 캐시된 정적 파일을 제공합니다. Vercel의 ISR은 [캐시를 전역적으로 유지하고 롤백을 처리합니다](https://vercel.com/docs/concepts/next.js/incremental-static-regeneration?utm_source=next-site&utm_medium=docs&utm_campaign=next-website).
 
-> **참고**: 업스트림 데이터 공급자가 기본적으로 캐싱을 활성화했는지 확인하세요. 필요에 따라 비활성화해야 할 수도 있습니다(예: useCdn: false). 그렇지 않으면 재검증 시 ISR 캐시 업데이트에 필요한 새로운 데이터를 가져올 수 없습니다. 캐싱은 `Cache-Control` 헤더를 반환할 때 CDN(요청 중인 엔드포인트용)에서 발생할 수 있습니다.
+> **참고**: 업스트림 데이터 공급자가 기본적으로 캐싱을 활성화했는지 확인하세요. 필요에 따라 비활성화해야 할 수도 있습니다(예: `useCdn: false`). 그렇지 않으면 재검증 시 ISR 캐시 업데이트에 필요한 새로운 데이터를 가져올 수 없습니다. 캐싱은 `Cache-Control` 헤더를 반환할 때 CDN(요청 중인 엔드포인트용)에서 발생할 수 있습니다.
 
 ## On-Demand 재검증
 
