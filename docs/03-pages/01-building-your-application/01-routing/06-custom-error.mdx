@@ -1,17 +1,17 @@
 ---
-title: Custom Errors
-description: Override and extend the built-in Error page to handle custom errors.
+title: 커스텀 Errors
+description: 기본적으로 내장된 에러페이지를 오버라이드하고 확장하여 커스텀 에러를 핸들링합니다.
 ---
 
-## 404 Page
+## 404 페이지
 
-A 404 page may be accessed very often. Server-rendering an error page for every visit increases the load of the Next.js server. This can result in increased costs and slow experiences.
+사용자는 404 페이지에 쉽게 접근할 수 있습니다. 사용자의 모든 접근마다 서버에서 에러페이지를 렌더링하게 되면 Next.js 서버 부하가 증가합니다. 이것은 비용 증가와 낮은 사용자 경험의 원인이 됩니다.
 
-To avoid the above pitfalls, Next.js provides a static 404 page by default without having to add any additional files.
+위의 오류를 방지하기 위해서 Next.js는 기본적으로 404 정적 에러페이지를 제공합니다.
 
-### Customizing The 404 Page
+### 404 페이지 커스텀하기
 
-To create a custom 404 page you can create a `pages/404.js` file. This file is statically generated at build time.
+커스텀 404 페이지를 만들기 위해서는 `pages/404.js` 파일을 만들어야 합니다. 이 파일은 빌드 시 정적으로 생성됩니다.
 
 ```jsx filename="pages/404.js"
 export default function Custom404() {
@@ -19,15 +19,15 @@ export default function Custom404() {
 }
 ```
 
-> **Good to know**: You can use [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) inside this page if you need to fetch data at build time.
+> **참고** : 빌드 시 데이터를 패칭하고 싶다면 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 를 사용하면 됩니다.
 
-## 500 Page
+## 500 페이지
 
-Server-rendering an error page for every visit adds complexity to responding to errors. To help users get responses to errors as fast as possible, Next.js provides a static 500 page by default without having to add any additional files.
+모든 접근마다 서버에서 에러페이지를 렌더링하게 되면 에러 응답에 대한 복잡도를 증가시킵니다. 사용자가 에러에 대해 가능한 빠른 응답을 얻도록 하기 위해 Next.js는 아무런 파일 추가 없이 500 정적 에러 페이지를 기본적으로 제공합니다.
 
-### Customizing The 500 Page
+### 500 페이지 커스텀하기
 
-To customize the 500 page you can create a `pages/500.js` file. This file is statically generated at build time.
+사용자 500 페이지를 만들기 위해서는 `pages/500.js` 파일을 만들어야합니다. 이 파일은 빌드 시 정적으로 생성됩니다.
 
 ```jsx filename="pages/500.js"
 export default function Custom500() {
@@ -35,11 +35,11 @@ export default function Custom500() {
 }
 ```
 
-> **Good to know**: You can use [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) inside this page if you need to fetch data at build time.
+> **참고** : 빌드 시 데이터를 패칭하고 싶다면 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 를 사용하면 됩니다.
 
-### More Advanced Error Page Customizing
+### 더 향상된 커스텀 에러페이지
 
-500 errors are handled both client-side and server-side by the `Error` component. If you wish to override it, define the file `pages/_error.js` and add the following code:
+500 에러는 `Error` 컴포넌트로 클라이언트 사이드와 서버 사이드 양쪽에서 핸들링할 수 있습니다. 만약 500 에러를 오버라이드 하고 싶다면, `pages/_error.js`를 정의하고 다음과 같은 코드를 추가하면 됩니다.
 
 ```jsx
 function Error({ statusCode }) {
@@ -60,11 +60,11 @@ Error.getInitialProps = ({ res, err }) => {
 export default Error
 ```
 
-> `pages/_error.js` is only used in production. In development you’ll get an error with the call stack to know where the error originated from.
+> `pages/_error.js`는 배포 시에만 사용됩니다. 개발 시에는 에러가 발생한 곳에서 콜스택 에러를 발생시킵니다.
 
-### Reusing the built-in error page
+### 기본적으로 제공하는 에러페이지 재사용하기
 
-If you want to render the built-in error page you can by importing the `Error` component:
+Next.js에서 기본적으로 제공하는 에러 페이지를 렌더링 하기 원한다면, `Error` 를 임포트하면 됩니다.
 
 ```jsx
 import Error from 'next/error'
@@ -88,11 +88,11 @@ export default function Page({ errorCode, stars }) {
 }
 ```
 
-The `Error` component also takes `title` as a property if you want to pass in a text message along with a `statusCode`.
+`statusCode`와 함께 텍스트 메시지를 보여주고 싶다면 `Error` 컴포넌트에 `title` 속성을 추가하면 됩니다.
 
-If you have a custom `Error` component be sure to import that one instead. `next/error` exports the default component used by Next.js.
+커스텀한 `Error` 컴포넌트를 가지고 있다면 그것을 임포트해야합니다. `next/error`는 Next.js에서 기본적으로 제공하는 컴포넌트를 익스포트합니다.
 
-### Caveats
+### 주의사항
 
-- `Error` does not currently support Next.js [Data Fetching methods](/docs/pages/building-your-application/data-fetching) like [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) or [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props).
-- `_error`, like `_app`, is a reserved pathname. `_error` is used to define the customized layouts and behaviors of the error pages. `/_error` will render 404 when accessed directly via [routing](/docs/pages/building-your-application/routing) or rendering in a [custom server](/docs/pages/building-your-application/configuring/custom-server).
+- `Error`는 현재 Next.js의 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 또는 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)와 같은 [Data Fetching methods](/docs/pages/building-your-application/data-fetching)에서 제공되지 않습니다.
+- `_app` 처럼 `_error`는 예약 경로입니다. `_error`는 커스텀 레이아웃을 정의하고 에러 페이지 행동을 정의하는데 사용됩니다. `/_error` 는 [routing](/docs/pages/building-your-application/routing)를 통해 직접 접근하거나 [커스텀 서버](/docs/pages/building-your-application/configuring/custom-server) 안에서 렌더링이 일어날때 404를 렌더링합니다.
