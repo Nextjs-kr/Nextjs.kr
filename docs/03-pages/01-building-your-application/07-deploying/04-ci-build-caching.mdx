@@ -7,9 +7,9 @@ description: Next.js 빌드를 캐싱하도록 CI를 구성하는 방법입니�
 
 CI (지속적 통합) 환경에서 캐시를 활용하려면, CI 워크플로우를 올바르게 구성하여 빌드 사이에 캐시를 올바르게 유지하도록 설정해야 합니다.
 
-> 만약 CI가 `.next/cache`를 빌드 사이에서 유지하지 않도록 설정되어 있다면, [No Cache Detected](/docs/messages/no-cache) 오류가 발생할 수 있습니다.
+> CI가 `.next/cache`를 빌드 사이에서 유지하지 않도록 설정되어 있다면, [No Cache Detected](/docs/messages/no-cache) 오류가 발생할 수 있습니다.
 
-다음은 일반적인 CI providers에 대한 캐시 구성 예시입니다:
+다음은 일반적인 CI providers에 대한 캐시 구성 예시입니다.
 
 ## Vercel
 
@@ -17,7 +17,7 @@ Next.js에서는 캐싱이 자동으로 구성됩니다. 사용자의 조치가 
 
 ## CircleCI
 
-`.circleci/config.yml` 파일의 `save_cache` 단계에서 `.next/cache`를 포함하도록 수정합니다.:
+`.circleci/config.yml` 파일의 `save_cache` 단계에서 `.next/cache`를 포함하도록 수정합니다.
 
 ```yaml
 steps:
@@ -28,7 +28,7 @@ steps:
         - ./.next/cache
 ```
 
-만약 `save_cache` 키가 없다면, CircleCI의 [빌드 캐싱 설정 문서](https://circleci.com/docs/2.0/caching/)를 따라 진행합니다.
+`save_cache` 키가 없다면, CircleCI의 [빌드 캐싱 설정 문서](https://circleci.com/docs/2.0/caching/)를 따라 진행합니다.
 
 ## Travis CI
 
@@ -44,7 +44,7 @@ cache:
 
 ## GitLab CI
 
-`.gitlab-ci.yml`파일에 다음 내용을 추가하거나 병합합니다.:
+`.gitlab-ci.yml`파일에 다음 내용을 추가하거나 병합합니다.
 
 ```yaml
 cache:
@@ -89,7 +89,7 @@ with:
 
 ## Bitbucket Pipelines
 
-Add or merge the following into your `bitbucket-pipelines.yml` at the top level (same level as `pipelines`):
+bitbucket-pipelines.yml 파일의 최상위 수준(pipelines와 동일한 수준)에 다음 내용을 추가하거나 병합하세요.
 
 ```yaml
 definitions:
