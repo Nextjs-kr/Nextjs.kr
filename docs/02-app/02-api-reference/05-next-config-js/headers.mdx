@@ -35,8 +35,8 @@ module.exports = {
 - `headers`는 `key` 와 `value` 프로퍼티를 가진 응답 헤더 객체들의 배열이다.
 - `basePath`: `false` 또는 `undefined` - 매칭할 때 false인 경우 `basePath`가 포함되지 않으며, 외부 재작성에만 사용할 수 있다.
 - `locale`: `false` 또는 `undefined` - 매칭할 때 `locale`을 포함하지 않아야 하는지 여부를 설정한다.
-- `has`는 `type`, `key`, `value` 프로퍼티를 가진 [has 객체](#헤더,-쿠키-및-쿼리-매칭) 배열이다.
-- `missing`은 `type`, `key`, `value` 프로퍼티를 가진 [missing 객체](#헤더,-쿠키-및-쿼리-매칭) 배열이다.
+- `has`는 `type`, `key`, `value` 프로퍼티를 가진 [has 객체](#header-cookie-and-query-matching) 배열이다.
+- `missing`은 `type`, `key`, `value` 프로퍼티를 가진 [missing 객체](#header-cookie-and-query-matching) 배열이다.
 
 Headers는 페이지와 `/public` 파일을 포함하는 파일 시스템보다 먼저 검사된다.
 
@@ -166,7 +166,7 @@ module.exports = {
 }
 ```
 
-## 헤더, 쿠키 및 쿼리 매칭
+## Header, Cookie, and Query Matching
 
 헤더, 쿠키 또는 쿼리 값도 `has` 필드와 일치하거나 `missing` 필드와 일치하지 않는 경우에만 헤더를 적용하려면 사용할 수 있다. `source` 및 모든 `has` 항목이 모두 일치해야 하며 모든 `missing` 항목이 일치하지 않아야 헤더가 적용된다.
 
