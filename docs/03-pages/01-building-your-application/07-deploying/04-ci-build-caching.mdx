@@ -1,23 +1,23 @@
 ---
-title: Continuous Integration (CI) Build Caching
-description: Learn how to configure CI to cache Next.js builds
+title: 지속적 통합 (CI) 빌드 캐싱
+description: Next.js 빌드를 캐싱하도록 CI를 구성하는 방법입니다.
 ---
 
-To improve build performance, Next.js saves a cache to `.next/cache` that is shared between builds.
+`.next/cache`빌드 성능을 향상시키기 위해 Next.js는 빌드 간에 공유되는 캐시를 저장합니다.
 
-To take advantage of this cache in Continuous Integration (CI) environments, your CI workflow will need to be configured to correctly persist the cache between builds.
+CI (지속적 통합) 환경에서 캐시를 활용하려면, CI 워크플로우를 올바르게 구성하여 빌드 사이에 캐시를 올바르게 유지하도록 설정해야 합니다.
 
-> If your CI is not configured to persist `.next/cache` between builds, you may see a [No Cache Detected](/docs/messages/no-cache) error.
+> 만약 CI가 `.next/cache`를 빌드 사이에서 유지하지 않도록 설정되어 있다면, [No Cache Detected](/docs/messages/no-cache) 오류가 발생할 수 있습니다.
 
-Here are some example cache configurations for common CI providers:
+다음은 일반적인 CI providers에 대한 캐시 구성 예시입니다:
 
 ## Vercel
 
-Next.js caching is automatically configured for you. There's no action required on your part.
+Next.js에서는 캐싱이 자동으로 구성됩니다. 사용자의 조치가 필요하지 않습니다.
 
 ## CircleCI
 
-Edit your `save_cache` step in `.circleci/config.yml` to include `.next/cache`:
+`.circleci/config.yml` 파일의 `save_cache` 단계에서 `.next/cache`를 포함하도록 수정합니다.:
 
 ```yaml
 steps:
@@ -28,11 +28,11 @@ steps:
         - ./.next/cache
 ```
 
-If you do not have a `save_cache` key, please follow CircleCI's [documentation on setting up build caching](https://circleci.com/docs/2.0/caching/).
+만약 `save_cache` 키가 없다면, CircleCI의 [빌드 캐싱 설정 문서](https://circleci.com/docs/2.0/caching/)를 따라 진행합니다.
 
 ## Travis CI
 
-Add or merge the following into your `.travis.yml`:
+'.travis.yml' 파일에 다음 내용을 추가하거나 병합합니다.
 
 ```yaml
 cache:
@@ -44,7 +44,7 @@ cache:
 
 ## GitLab CI
 
-Add or merge the following into your `.gitlab-ci.yml`:
+`.gitlab-ci.yml`파일에 다음 내용을 추가하거나 병합합니다.:
 
 ```yaml
 cache:
@@ -56,11 +56,11 @@ cache:
 
 ## Netlify CI
 
-Use [Netlify Plugins](https://www.netlify.com/products/build/plugins/) with [`@netlify/plugin-nextjs`](https://www.npmjs.com/package/@netlify/plugin-nextjs).
+[`@netlify/plugin-nextjs`](https://www.npmjs.com/package/@netlify/plugin-nextjs)와 함께[Netlify Plugins](https://www.netlify.com/products/build/plugins/)을 사용하세요.
 
 ## AWS CodeBuild
 
-Add (or merge in) the following to your `buildspec.yml`:
+`buildspec.yml`파일에 다음 내용을 추가하거나 병합합니다.:
 
 ```yaml
 cache:
@@ -71,7 +71,7 @@ cache:
 
 ## GitHub Actions
 
-Using GitHub's [actions/cache](https://github.com/actions/cache), add the following step in your workflow file:
+GitHub's [actions/cache](https://github.com/actions/cache)를 사용해, 다음 단계를 워크플로우 파일에 추가하세요.
 
 ```yaml
 uses: actions/cache@v3
@@ -97,7 +97,7 @@ definitions:
     nextcache: .next/cache
 ```
 
-Then reference it in the `caches` section of your pipeline's `step`:
+파이프라인의 `step`에서 `caches`섹션에 해당 캐시를 참조하세요.
 
 ```yaml
 - step:
@@ -109,7 +109,7 @@ Then reference it in the `caches` section of your pipeline's `step`:
 
 ## Heroku
 
-Using Heroku's [custom cache](https://devcenter.heroku.com/articles/nodejs-support#custom-caching), add a `cacheDirectories` array in your top-level package.json:
+Heroku의 [커스텀 캐시](https://devcenter.heroku.com/articles/nodejs-support#custom-caching)를 사용해, 상위의 package.json에 `cacheDirectories` 배열을 추가하세요.
 
 ```javascript
 "cacheDirectories": [".next/cache"]
@@ -117,7 +117,7 @@ Using Heroku's [custom cache](https://devcenter.heroku.com/articles/nodejs-suppo
 
 ## Azure Pipelines
 
-Using Azure Pipelines' [Cache task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/utility/cache), add the following task to your pipeline yaml file somewhere prior to the task that executes `next build`:
+Azure Pipelines의 [캐시 작업](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/utility/cache)을 사용해, `next build`를 실행하는 작업 전에 다음 작업을 파이프라인 YAML 파일에 추가하세요.
 
 ```yaml
 - task: Cache@2
