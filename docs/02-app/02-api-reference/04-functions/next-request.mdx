@@ -56,7 +56,7 @@ request.cookies.delete('experiments')
 
 ### `has(이름)`
 
-쿠키 이름이 주어지면 request에 쿠키가 존재한다면 true를 반환.
+쿠키 이름이 주어지면 request에 쿠키가 존재한다면 `true`를 반환.
 
 ```ts
 // 쿠키가 존재하면 true를 반환하고 존재하지 않으면 false를 반환
@@ -65,7 +65,7 @@ request.cookies.has('experiments')
 
 ### `clear()`
 
-리퀘스트에서 'Set-Cookie' 헤더를 제거.
+리퀘스트에서 `Set-Cookie` 헤더를 제거.
 
 ```ts
 request.cookies.clear()
