@@ -1,16 +1,16 @@
 ---
 title: turbo (실험적 기능)
 nav_title: turbo
-description: Turbopack-관련 옵션으로 Next.js 구성하기
+description: Turbopack 관련 옵션으로 Next.js 구성하기
 ---
 
-> **주의**: 해당 내용은 실험적인 기능이며 `next --turbo`로만 동작합니다.
+> **주의**: 해당 내용은 실험적인 기능이며 `next --turbo`에서만 동작합니다.
 
 ## webpack 로더
 
-현재, Turbopack은 webpack 로더 API의 일부분을 지원하기 때문에 몇 가지 webpack 로더를 사용하여 Turbopack 코드를 변환할 수 있습니다.
+현재 Turbopack은 webpack 로더 API의 일부분을 지원하기 때문에 일부 webpack 로더를 사용하여 Turbopack 코드를 변환할 수 있습니다.
 
-로더를 구성하기 위해서, 설치한 로더의 이름과 `next.config.js`옵션을 추가하여 파일 확장자로 로더 목록에 매핑하세요 :
+로더를 구성하려면 설치한 로더의 이름과 `next.config.js`옵션을 추가하고 파일 확장자를 로더 목록에 매핑하세요.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -34,7 +34,7 @@ module.exports = {
 }
 ```
 
-이후 주어진 위 구성을 적용하여 앱에서 변환된 코드를 사용할 수 있습니다:
+이후 주어진 위 구성을 적용하여 앱에서 변환된 코드를 사용할 수 있습니다.
 
 ```js
 import MyDoc from './my-doc.mdx'
@@ -44,11 +44,11 @@ export default function Home() {
 }
 ```
 
-## 분석 별칭
+## 모듈 분석 별칭
 
-Turbopack은 `next.config.js`을 통해 webpack의 [`resolve.alias`](https://webpack.js.org/configuration/resolve/#resolvealias)구성과 유사하게 모듈 분석 처리를 별칭으로 변경할 수 있습니다.
+Turbopack은 `next.config.js`를 통해 webpack의 [`resolve.alias`](https://webpack.js.org/configuration/resolve/#resolvealias) 구성과 유사하게 모듈 분석 처리를 별칭으로 수정하도록 구성할 수 있습니다.
 
-별칭을 구성하려면 모듈 가져오기 패턴을 `next.config.js`의 새로운 대상에 매핑하세요:
+별칭을 구성하려면 모듈 가져오기 패턴을 `next.config.js`의 새로운 대상에 매핑하세요.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -63,8 +63,8 @@ module.exports = {
 }
 ```
 
-이 별칭은 `underscore` 패키지를 `lodash`로 가져옵니다. 쉽게 말해 `import underscore from 'underscore'`는 `underscore`대신 `lodash`를 로드합니다.
+해당 별칭은 `underscore` 패키지를 `lodash`로 가져온다는 것을 의미합니다. 즉 `import underscore from 'underscore'`는 `underscore` 대신 `lodash`를 로드합니다.
 
-또한 Turbopack은 Node.js의 [conditional exports](https://nodejs.org/docs/latest-v18.x/api/packages.html#conditional-exports)과 유사하게 해당 필드를 통해 조건부 별칭을 지원합니다. 현재는 `browser`조건만 지원합니다. 위의 경우 Turbopack이 브라우저 환경을 대상으로 할 때 `mocha`모듈 가져오기는 `mocha/browser-entry.js`로 별칭처리됩니다.
+또한 Turbopack은 Node.js의 [조건부 내보내기](https://nodejs.org/docs/latest-v18.x/api/packages.html#conditional-exports)와 유사하게 해당 필드를 통해 조건부 별칭을 지원합니다. 현재는 `browser`조건만 지원됩니다. 위의 경우 Turbopack이 브라우저 환경을 대상으로 할 때 `mocha`모듈 가져오기는 `mocha/browser-entry.js`로 별칭이 지정됩니다.
 
-더 많은 정보와 webpack에서 Turbopack으로 app을 변경하는 가이드를 알고 싶다면, [Turbopack's documentation on webpack compatibility](https://turbo.build/pack/docs/migrating-from-webpack)를 참조하세요.
+webpack에서 Turbopack으로 앱을 마이그레이션하는 방법에 대한 자세한 내용과 지침은 [webpack 호환성에 대한 Turbopack 설명서](https://turbo.build/pack/docs/migrating-from-webpack)를 참조하세요.
