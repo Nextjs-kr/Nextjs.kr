@@ -1,23 +1,45 @@
 ---
 title: Environment Variables
+
+title: 환경 변수
+
 description: Learn to add and access environment variables in your Next.js application.
+
+description: Next.js 애플리케이션에서 환경 변수를 추가하고 액세스하는 방법에 대해 배웁니다.
 ---
 
 <details>
   <summary>Examples</summary>
 
+  <summary>예시</summary>
+
 - [Environment Variables](https://github.com/vercel/next.js/tree/canary/examples/environment-variables)
+환경 변수
 
 </details>
 
 Next.js comes with built-in support for environment variables, which allows you to do the following:
+Next.js는 환경 변수에 대한 내장 지원을 제공하므로 다음과 같은 작업을 수행할 수 있습니다.
 
-- [Use `.env.local` to load environment variables](#loading-environment-variables)
-- [Bundle environment variables for the browser by prefixing with `NEXT_PUBLIC_`](#bundling-environment-variables-for-the-browser)
+- [Loading Environment Variables](#loading-environment-variables)
+  - [Referencing Other Variables](#referencing-other-variables)
+- [Bundling Environment Variables for the Browser](#bundling-environment-variables-for-the-browser)
+- [Default Environment Variables](#default-environment-variables)
+- [기본 환경 변수](#기본-환경-변수)
+- [Environment Variables on Vercel](#environment-variables-on-vercel)
+- [버셀의 환경 변수](#버셀의-환경-변수)
+- [Test Environment Variables](#test-environment-variables)
+- [테스트 환경 변수](#테스트-환경-변수)
+- [Environment Variable Load Order](#environment-variable-load-order)
+- [환경 변수 로드 순서](#환경-변수-로드-순서)
+- [Good to know](#good-to-know)
+- [참고](#참고)
 
 ## Loading Environment Variables
+환경 변수 로드하기
 
 Next.js has built-in support for loading environment variables from `.env.local` into `process.env`.
+Next.js는 `.env.local`에서 환경 변수를 `process.env`로 자동으로 로드하는 기능을 내장하고 있습니다.
 
 ```txt filename=".env.local"
 DB_HOST=localhost
@@ -28,7 +50,11 @@ DB_PASS=mypassword
 <PagesOnly>
 This loads `process.env.DB_HOST`, `process.env.DB_USER`, and `process.env.DB_PASS` into the Node.js environment automatically allowing you to use them in [Next.js data fetching methods](/docs/pages/building-your-application/data-fetching) and [API routes](/docs/pages/building-your-application/routing/api-routes).
 
+이렇게 하면 `process.env.DB_HOST`, `process.env.DB_USER`, `process.env.DB_PASS`가 Node.js 환경에 자동으로 로드되어 [Next.js 데이터 가져오기 메서드](/docs/pages/building-your-application/data-fetching) 와 [API 라우트](/docs/pages/building-your-application/routing/api-routes)에서 사용할 수 있습니다.
+
 For example, using [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props):
+
+예를 들어 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props)를 사용하는 경우
 
 ```js filename="pages/index.js"
 export async function getStaticProps() {
@@ -46,13 +72,18 @@ export async function getStaticProps() {
 <AppOnly>
 This loads `process.env.DB_HOST`, `process.env.DB_USER`, and `process.env.DB_PASS` into the Node.js environment automatically allowing you to use them in Route Handlers.
 
+이렇게 하면 `process.env.DB_HOST`, `process.env.DB_USER`, `process.env.DB_PASS`가 Node.js에 자동으로 로드되어 라우트 핸들러에서 사용할 수 있습니다.
+
 {/* TODO: App Router Example */}
 
 </AppOnly>
 
 ### Referencing Other Variables
+다른 변수 참조하기
 
 Next.js will automatically expand variables that use `$` to reference other variables e.g. `$VARIABLE` inside of your `.env*` files. This allows you to reference other secrets. For example:
+
+Next.js는 `.env*` 파일 내에서 `$VARIABLE`처럼 `$`를 사용하는 변수를 자동으로 확장하여 다른 변수를 참조합니다. 이를 통해 다른 보안 정보를 참조할 수 있습니다. 다음 예제를 보세요.
 
 ```txt filename=".env"
 TWITTER_USER=nextjs
@@ -61,13 +92,22 @@ TWITTER_URL=https://twitter.com/$TWITTER_USER
 
 In the above example, `process.env.TWITTER_URL` would be set to `https://twitter.com/nextjs`.
 
+위 예제에서 `process.env.TWITTER_URL`은 `https://twitter.com/nextjs`로 설정됩니다.
+
 > **Good to know**: If you need to use variable with a `$` in the actual value, it needs to be escaped e.g. `\$`.
 
+>**참고**: 실제 값에 `$`가 있는 변수를 사용해야 하는 경우 `\$`와 같이 이스케이프 처리해야 합니다.
+
 ## Bundling Environment Variables for the Browser
+브라우저용 환경 변수 번들링하기
 
 Non-`NEXT_PUBLIC_` environment variables are only available in the Node.js environment, meaning they aren't accessible to the browser (the client runs in a different _environment_).
 
+`NEXT_PUBLIC_` 접두사가 없는 환경 변수는 Node.js 환경에서만 사용할 수 있으므로 브라우저에서 액세스할 수 없습니다(클라이언트는 다른 _환경_ 에서 실행됩니다).
+
 In order to make the value of an environment variable accessible in the browser, Next.js can "inline" a value, at build time, into the js bundle that is delivered to the client, replacing all references to `process.env.[variable]` with a hard-coded value. To tell it to do this, you just have to prefix the variable with `NEXT_PUBLIC_`. For example:
+
+브라우저에서 환경 변수의 값에 액세스할 수 있도록 Next.js는 빌드 시점에 클라이언트에 전달되는 js 번들에 값을 "인라인"하여 `process.env.[변수]`에 대한 모든 참조를 하드코딩된 값으로 대체할 수 있습니다. 이렇게 하도록 하려면 변수 앞에 `NEXT_PUBLIC_`을 붙이면 됩니다. 다음 예제를 보세요.
 
 ```txt filename="Terminal"
 NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk
@@ -75,13 +115,20 @@ NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk
 
 This will tell Next.js to replace all references to `process.env.NEXT_PUBLIC_ANALYTICS_ID` in the Node.js environment with the value from the environment in which you run `next build`, allowing you to use it anywhere in your code. It will be inlined into any JavaScript sent to the browser.
 
+이렇게 하면 Next.js에게 Node.js 환경에서 `process.env.NEXT_PUBLIC_ANALYTICS_ID`에 대한 모든 참조를 `next build`를 실행하는 환경에서의 값으로 바꾸도록 지시합니다. 이를 통해 해당 값을 코드 어디에서든 사용할 수 있게 됩니다.
+
 > **Note**: After being built, your app will no longer respond to changes to these environment variables. For instance, if you use a Heroku pipeline to promote slugs built in one environment to another environment, or if you build and deploy a single Docker image to multiple environments, all `NEXT_PUBLIC_` variables will be frozen with the value evaluated at build time, so these values need to be set appropriately when the project is built. If you need access to runtime environment values, you'll have to setup your own API to provide them to the client (either on demand or during initialization).
+
+참고: 빌드된 후에는 앱이 이러한 환경 변수의 변경에 응답하지 않습니다. 예를 들어 Heroku 파이프라인을 사용하여 한 환경에서 빌드한 슬러그를 다른 환경으로 전환하거나, 단일 Docker 이미지를 여러 환경에 빌드하고 배포하는 경우, 모든 `NEXT_PUBLIC_` 변수는 빌드 시점에 평가된 값으로 고정되므로 프로젝트를 빌드할 때 적절하게 설정해야 합니다. 런타임 환경 값에 액세스해야 하는 경우, 자체 API를 설정하여 클라이언트에 제공해야 합니다 (요청 시 또는 초기화 중에).
 
 ```js filename="pages/index.js"
 import setupAnalyticsService from '../lib/my-analytics-service'
 
 // 'NEXT_PUBLIC_ANALYTICS_ID' can be used here as it's prefixed by 'NEXT_PUBLIC_'.
 // It will be transformed at build time to `setupAnalyticsService('abcdefghijk')`.
+
+// 'NEXT_PUBLIC_ANALYTICS_ID'는 'NEXT_PUBLIC_'가 붙기 때문에 여기에서 사용할 수 있습니다.
+// 빌드 시점에 `setupAnalyticsService('abcdefghijk')`로 변환됩니다.
 setupAnalyticsService(process.env.NEXT_PUBLIC_ANALYTICS_ID)
 
 function HomePage() {
@@ -93,33 +140,57 @@ export default HomePage
 
 Note that dynamic lookups will _not_ be inlined, such as:
 
+동적 조회는 다음과 같이 인라인이 _아니_ 라는 점에 유의하세요.
+
 ```js
 // This will NOT be inlined, because it uses a variable
+
+// 변수를 사용하기 때문에 인라인이 되지 않습니다.
 const varName = 'NEXT_PUBLIC_ANALYTICS_ID'
 setupAnalyticsService(process.env[varName])
 
 // This will NOT be inlined, because it uses a variable
+
+// 변수를 사용하기 때문에 인라인이 되지 않습니다.
 const env = process.env
 setupAnalyticsService(env.NEXT_PUBLIC_ANALYTICS_ID)
 ```
 
 ## Default Environment Variables
 
+## 기본 환경 변수
+
 In general only one `.env.local` file is needed. However, sometimes you might want to add some defaults for the `development` (`next dev`) or `production` (`next start`) environment.
+
+일반적으로 `.env.local` 파일은 하나만 필요합니다. 그러나 `개발` (`next dev`) 또는 `운영` (`next start`) 환경에 대한 기본값을 추가하고 싶을 수도 있습니다.
 
 Next.js allows you to set defaults in `.env` (all environments), `.env.development` (development environment), and `.env.production` (production environment).
 
+Next.js는  `.env` (모든 환경), `.env.development` (개발 환경), `.env.production` (운영 환경)에 기본값을 설정할 수 있습니다.
+
 `.env.local` always overrides the defaults set.
+
+`.env.local`은 항상 설정된 기본값을 덮어씁니다.
 
 > **Good to know**: `.env`, `.env.development`, and `.env.production` files should be included in your repository as they define defaults. **`.env*.local` should be added to `.gitignore`**, as those files are intended to be ignored. `.env.local` is where secrets can be stored.
 
+> **참고**: `.env`, `.env.development`, `.env.production` 파일은 기본값을 정의하므로 저장소에 포함되어야합니다. **`.env*.local` 은 `.gitignore`에 추가해야 합니다.** 이러한 파일은 무시되어야 하는 파일이기 때문입니다. `.env.local`에는 보안 정보를 저장할 수 있습니다.
+
 ## Environment Variables on Vercel
+
+## 버셀의 환경 변수
 
 When deploying your Next.js application to [Vercel](https://vercel.com), Environment Variables can be configured [in the Project Settings](https://vercel.com/docs/concepts/projects/environment-variables?utm_source=next-site&utm_medium=docs&utm_campaign=next-website).
 
+Next.js 애플리케이션을 [Vercel](https://vercel.com)에서 배포할 때, [프로젝트 설정](https://vercel.com/docs/concepts/projects/environment-variables?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)에서 환경 변수를 설정할 수 있습니다.
+
 All types of Environment Variables should be configured there. Even Environment Variables used in Development – which can be [downloaded onto your local device](https://vercel.com/docs/concepts/projects/environment-variables#development-environment-variables?utm_source=next-site&utm_medium=docs&utm_campaign=next-website) afterwards.
 
+모든 유형의 환경 변수는 이곳에서 설정해야 합니다. 개발에 사용한 환경 변수도 [로컬 장치에 다운로드](https://vercel.com/docs/concepts/projects/environment-variables#development-environment-variables?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)할 수 있습니다.
+
 If you've configured [Development Environment Variables](https://vercel.com/docs/concepts/projects/environment-variables#development-environment-variables?utm_source=next-site&utm_medium=docs&utm_campaign=next-website) you can pull them into a `.env.local` for usage on your local machine using the following command:
+
+만약 [개발 환경 변수](https://vercel.com/docs/concepts/projects/environment-variables#development-environment-variables?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)를 구성했다면 다음 명령을 사용하여 해당 변수를 로컬 컴퓨터에서 사용할 수 있도록 `.env.local` 로 가져올 수 있습니다.
 
 ```bash filename="Terminal"
 vercel env pull .env.local
@@ -127,18 +198,32 @@ vercel env pull .env.local
 
 ## Test Environment Variables
 
+## 테스트 환경 변수
+
 Apart from `development` and `production` environments, there is a 3rd option available: `test`. In the same way you can set defaults for development or production environments, you can do the same with a `.env.test` file for the `testing` environment (though this one is not as common as the previous two). Next.js will not load environment variables from `.env.development` or `.env.production` in the `testing` environment.
+
+`개발`과 `운영` 환경 외에도 세 번째 옵션이 있습니다. `테스트`입니다. 개발 또는 운영 환경과 마찬가지로 `.env.test` 파일을 사용하여 `테스트` 환경에 대한 기본값을 설정할 수 있습니다 (이전 두 가지만큼 일반적이지는 않습니다.). Next.js는 `테스팅` 환경에서 `.env.development` 또는 `.env.production`의 환경 변수를 로드하지 않습니다.
 
 This one is useful when running tests with tools like `jest` or `cypress` where you need to set specific environment vars only for testing purposes. Test default values will be loaded if `NODE_ENV` is set to `test`, though you usually don't need to do this manually as testing tools will address it for you.
 
+이 기능은 `jest` 또는 `cypress`와 같은 도구로 테스트를 실행할 때 특정 테스트용 환경 변수를 설정해야하는 경우 유용합니다. `NODE_ENV`를 `test`로 설정하면 테스트 기본값이 로드되지만, 일반적으로 테스트 도구가 이를 자동으로 처리하므로 직접 설정할 필요는 없습니다.
+
 There is a small difference between `test` environment, and both `development` and `production` that you need to bear in mind: `.env.local` won't be loaded, as you expect tests to produce the same results for everyone. This way every test execution will use the same env defaults across different executions by ignoring your `.env.local` (which is intended to override the default set).
+
+`테스트` 환경과 `개발` 및 `운영` 환경 간에는 약간의 차이가 있으므로 이를 염두에 두어야 합니다. 모든 사용자가 동일한 결과를 얻기를 기대하기 때문에 `.env.local`은 로드되지 않습니다. 이렇게 하면 각 테스트 실행은 `.env.local`을 무시하고 서로 다른 실행 간에 동일한 환경 기본값을 사용합니다 (`.env.local`은 기본 설정을 덮어쓰기 위해 사용됩니다.).
 
 > **Good to know**: similar to Default Environment Variables, `.env.test` file should be included in your repository, but `.env.test.local` shouldn't, as `.env*.local` are intended to be ignored through `.gitignore`.
 
+> **참고**: 기본 환경 변수와 마찬가지로 `.env.test` 파일도 저장소에 포함해야 하지만, `.env*.local`은 `.gitignore`를 통해 무시하도록 되어있으므로 `.env.test.local`은 포함하지 않아야 합니다.
+
 While running unit tests you can make sure to load your environment variables the same way Next.js does by leveraging the `loadEnvConfig` function from the `@next/env` package.
+
+단위 테스트를 실행하는 동안 `@next/env` 패키지의 `loadEnvConfig` 함수를 사용하여 Next.js와 동일한 방식으로 환경 변수를 로드할 수 있습니다.
 
 ```js
 // The below can be used in a Jest global setup file or similar for your testing set-up
+
+// 아래는 테스트 설정을 위해 Jest 전역 설정 파일 또는 이와 유사한 파일에서 사용할 수 있습니다.
 import { loadEnvConfig } from '@next/env'
 
 export default async () => {
@@ -149,18 +234,31 @@ export default async () => {
 
 ## Environment Variable Load Order
 
+## 환경 변수 로드 순서
+
 Environment variables are looked up in the following places, in order, stopping once the variable is found.
 
+환경 변수는 다음 위치에서 순서대로 조회되며, 변수가 발견되면 중지됩니다.
+
 1. `process.env`
-1. `.env.$(NODE_ENV).local`
-1. `.env.local` (Not checked when `NODE_ENV` is `test`.)
-1. `.env.$(NODE_ENV)`
-1. `.env`
+2. `.env.$(NODE_ENV).local`
+3. `.env.local` (Not checked when `NODE_ENV` is `test`.)
+4. `.env.local` (`NODE_ENV`가 `test`일 때는 확인하지 않습니다.)
+5. `.env.$(NODE_ENV)`
+6. `.env`
 
 For example, if `NODE_ENV` is `development` and you define a variable in both `.env.development.local` and `.env`, the value in `.env.development.local` will be used.
 
+예를 들어 `NODE_ENV`가 `development`이고 `.env.development.local`과 `.env`에서 변수를 정의한 경우 `.env.development.lcocal`의 값이 사용됩니다.
+
 > **Good to know**: The allowed values for `NODE_ENV` are `production`, `development` and `test`.
+
+> **참고**: `NODE_ENV`에 허용되는 값은 `production`, `development`, `test`입니다.
 
 ## Good to know
 
+## 참고
+
 - If you are using a [`/src` directory](/docs/app/building-your-application/configuring/src-directory), `env.*` files should remain in the root of your project.
+
+- [`/src` 디렉토리](/docs/app/building-your-application/configuring/src-directory)를 사용하는 경우 `env.*` 파일은 프로젝트의 루트에 있어야 합니다.
