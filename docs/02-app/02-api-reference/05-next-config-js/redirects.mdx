@@ -50,7 +50,7 @@ module.exports = {
 
 `/old-blog/post-1?hello=world`으로 요청하면, 클라이언트는 `/blog/post-1?hello=world`로 리다이렉트 됩니다.
 
-## Path Matching
+## 경로 매칭
 
 경로 일치가 허용됩니다. 예를들어 `/old-blog/:slug`는 `/old-blog/hello-world`로 일치됩니다. (중첩된 경로 없음)
 
@@ -68,7 +68,7 @@ module.exports = {
 }
 ```
 
-### Wildcard Path Matching
+### 와일드 카드 경로 매칭
 
 와일드카드 경로를 일치시키기 위해서 매개변수 뒤에 `*`를 사용할 수 있습니다. 예를 들어 `/blog/:slug*`는 `/blog/a/b/c/d/hello-world`와 일치됩니다.
 
@@ -86,9 +86,9 @@ module.exports = {
 }
 ```
 
-### Regex Path Matching
+### 정규식 경로 매칭
 
-정규식 경로를 일치시키려면 정규 표현식을 매개변수 뒤에 괄호로 묶을 수 있습니다, 예를 들어, `/post/:slug(\\d{1,})`는 `/post/123`와는 일치하지만, `/post/abc`와는 일치하지 않습니다.
+정규식 경로를 일치시키려면 정규 표현식을 매개변수 뒤에 괄호로 묶을 수 있습니다. 예를 들어, `/post/:slug(\\d{1,})`는 `/post/123`와는 일치하지만, `/post/abc`와는 일치하지 않습니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -121,7 +121,7 @@ module.exports = {
 }
 ```
 
-## Header, Cookie, and Query Matching
+## 헤더, 쿠키, 쿼리 매칭
 
 header, cookie, query 값이 또한 `has` 필드와도 일치하거나 `missing` 필드와 일치하지 않는 경우에만 리다이렉트를 시킬 수 있습니다. 리다이렉트가 적용되려면 `source` 및 모든 `has` 항목이 모두 일치해야 하고 모든 `missing` 항목이 일치하지 않아야 합니다.
 
@@ -214,7 +214,7 @@ module.exports = {
 }
 ```
 
-### Redirects with basePath support
+### basePath 기능과 함께 사용하는 리다이렉트 활용
 
 리다이렉트와 함께 [`basePath` support](/docs/app/api-reference/next-config-js/basePath) 지원을 활용할 때는 각 `source`와 `destination`이 자동으로 `basePath`와 접두사로 추가됩니다. 그러나 리다이렉트에 `basePath: false`를 추가하지 않으면 기본적으로 `basePath`가 적용됩니다.
 
@@ -241,7 +241,7 @@ module.exports = {
 }
 ```
 
-### Redirects with i18n support
+### i18n 기능과 함께 사용하는 리다이렉트 활용
 
 리다이렉트와 함께 [`i18n` support](/docs/pages/building-your-application/routing/internationalization) 지원을 활용할 때는 `source`와 `destination`이 자동으로 구성된 `locales`을 처리하기 위해 접두사로 추가됩니다. 
 
@@ -293,7 +293,7 @@ module.exports = {
 
 일부 특수한 경우에는 이전의 HTTP 클라이언트에서 올바른 리다이렉트를 위해 사용자 정의 상태 코드를 지정해야 할 수도 있습니다. 이러한 경우 `permanent` 프로퍼티 대신 `statusCode` 프로퍼티를 사용할 수 있지만, 둘 다 동시에 사용할 수는 없습니다. 또한, IE11 호환성을 보장하기 위해 308 상태 코드에 대해 자동으로 `Refresh` 헤더가 추가됩니다.
 
-## Other Redirects
+## 다른 환경에서의 리다이렉트 활용
 
 - Inside  you can use .
 - [API Routes](/docs/pages/api-reference/functions/next-server)에서는 `res.redirect()`를 사용할 수 있습니다.
