@@ -1,13 +1,13 @@
 ---
 title: reactStrictMode
-description: 완전한 Next.js 런타임은 이제 Strice Mode를 준수합니다. 옵트인(opt-in) 설정 방법에 대해 배웁니다.
+description: 완전한 Next.js 런타임은 이제 Strict Mode를 준수합니다. 옵트인(opt-in) 설정 방법에 대해 배웁니다.
 ---
 
 > **제안**: 향후 React에 대비할 수 있도록 Next.js 애플리케이션에서 Strict Mode를 활성화하는 것이 좋습니다.
 
 React의 [Strict Mode](https://react.dev/reference/react/StrictMode)는 잠재적인 문제를 나타내기 위한 개발 모드 전용 기능입니다. 이는 안전하지 않은 라이프사이클, 레거시 API 사용 및 여러 기능을 식별하는 데에 도움을 줍니다.
 
-Next.js 런타임은 Strict Mode를 준수합니다. Strice Mode 옵트인(opt-in)을 위해 `next.config.js`에서 다음과 같이 설정합니다.
+Next.js 런타임은 Strict Mode를 준수합니다. Strict Mode 옵트인(opt-in)을 위해 `next.config.js`에서 다음과 같이 설정합니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -15,4 +15,4 @@ module.exports = {
 }
 ```
 
-개인이나 팀이 전체 애플리케이션에 Strict Mode를 사용할 준비가 안되었어도 괜찮습니다! `<React.StrictMode>`를 사용하여 페이지 단위로 점진적 마이그레이션이 가능합니다.
+개인이나 팀이 전체 애플리케이션에 Strict Mode를 사용할 준비가 안 되었어도 괜찮습니다! `<React.StrictMode>`를 사용하여 페이지 단위로 점진적 마이그레이션이 가능합니다.
