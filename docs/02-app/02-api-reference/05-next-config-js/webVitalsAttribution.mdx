@@ -4,9 +4,9 @@ description: webVitalsAttribution 옵션을 이용하여 Web Vitals 문제의 �
 ---
 
 Web Vitals와 관련된 이슈를 디버깅할 때, 문제의 정확한 원인을 파악할 수 있으면 도움이 되는 경우가 많습니다.
-예를 들어 누적 레이아웃 이동(CLS)의 경우, 우리는 가장 큰 단일 레이아웃의 이동이 발생했을 때에 첫 번째로 이동된 요소를 알고 싶을 수 있습니다.
-또는 최대 콘텐트풀 페인트(LCP)의 경우, 페이지의 LCP에 해당하는 요소를 식별하고 싶을 것입니다.
-LCP 요소가 이미지일 때는 이미지 리소스의 URL을 알면 최적화해야 하는 자원을 찾는 데 도움이 될 수 있습니다.
+예를 들어 누적 레이아웃 이동(CLS)의 경우, 우리는 가장 큰 단일 레이아웃의 이동이 발생했을 때에 첫 번째로 이동된 엘리먼트를 알고 싶을 수 있습니다.
+또는 최대 콘텐트풀 페인트(LCP)의 경우, 페이지의 LCP에 해당하는 엘리먼트를 식별하고 싶을 것입니다.
+LCP 엘리먼트가 이미지일 때는 이미지 리소스의 URL을 알면 최적화해야 하는 자원을 찾는 데 도움이 될 수 있습니다.
 
 Web Vitals 점수에 가장 큰 영향을 주는 항목([attribution](https://github.com/GoogleChrome/web-vitals/blob/4ca38ae64b8d1e899028c692f94d4c56acfc996c/README.md#attribution))을 정확히 파악하면, [PerformanceEventTiming](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceEventTiming), [PerformanceNavigationTiming](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming) 그리고 [PerformanceResourceTiming](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming)와 같은 심층적인 정보를 얻을 수 있습니다.
 
