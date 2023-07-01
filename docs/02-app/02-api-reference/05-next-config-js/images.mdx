@@ -1,9 +1,9 @@
 ---
-title: images
-description: Custom configuration for the next/image loader
+title: 이미지
+description: next/image loader를 위한 사용자 지정 구성 정의
 ---
 
-If you want to use a cloud provider to optimize images instead of using the Next.js built-in Image Optimization API, you can configure `next.config.js` with the following:
+Next.js 내장 이미지 최적화 API 대신 cloud provider를 사용하여 이미지를 최적화하고자 한다면, 다음과 같이 next.config.js를 구성할 수 있습니다
 
 ```js filename="next.config.js"
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
 }
 ```
 
-This `loaderFile` must point to a file relative to the root of your Next.js application. The file must export a default function that returns a string, for example:
+loaderFile은 Next.js 애플리케이션의 root를 기준으로 한 상대 경로를 지정해야 합니다. 해당 파일은 문자열을 반환하는 함수를 대표로 내보내야 합니다.
 
 ```js
 export default function myImageLoader({ src, width, quality }) {
@@ -22,9 +22,9 @@ export default function myImageLoader({ src, width, quality }) {
 }
 ```
 
-Alternatively, you can use the [`loader` prop](/docs/pages/api-reference/components/image#loader) to pass the function to each instance of `next/image`.
+또는 `next/image`의 각 인스턴스에 함수를 전달하는 [`loader` 속성](/docs/pages/api-reference/components/image#loader)을 사용할 수도 있습니다.
 
-## Example Loader Configuration
+## Loader 구성 예시
 
 - [Akamai](#akamai)
 - [Cloudinary](#cloudinary)
@@ -39,7 +39,7 @@ Alternatively, you can use the [`loader` prop](/docs/pages/api-reference/compone
 ### Akamai
 
 ```js
-// Docs: https://techdocs.akamai.com/ivm/reference/test-images-on-demand
+// 문서: https://techdocs.akamai.com/ivm/reference/test-images-on-demand
 export default function akamaiLoader({ src, width, quality }) {
   return `https://example.com/${src}?imwidth=${width}`
 }
@@ -48,7 +48,7 @@ export default function akamaiLoader({ src, width, quality }) {
 ### Cloudinary
 
 ```js
-// Demo: https://res.cloudinary.com/demo/image/upload/w_300,c_limit,q_auto/turtles.jpg
+// 데모: https://res.cloudinary.com/demo/image/upload/w_300,c_limit,q_auto/turtles.jpg
 export default function cloudinaryLoader({ src, width, quality }) {
   const params = ['f_auto', 'c_limit', `w_${width}`, `q_${quality || 'auto'}`]
   return `https://example.com/${params.join(',')}${src}`
@@ -58,7 +58,7 @@ export default function cloudinaryLoader({ src, width, quality }) {
 ### Cloudflare
 
 ```js
-// Docs: https://developers.cloudflare.com/images/url-format
+// 문서: https://developers.cloudflare.com/images/url-format
 export default function cloudflareLoader({ src, width, quality }) {
   const params = [`width=${width}`, `quality=${quality || 75}`, 'format=auto']
   return `https://example.com/cdn-cgi/image/${params.join(',')}/${src}`
@@ -68,7 +68,7 @@ export default function cloudflareLoader({ src, width, quality }) {
 ### Contentful
 
 ```js
-// Docs: https://www.contentful.com/developers/docs/references/images-api/
+// 문서: https://www.contentful.com/developers/docs/references/images-api/
 export default function contentfulLoader({ src, quality, width }) {
   const url = new URL(`https://example.com${src}`)
   url.searchParams.set('fm', 'webp')
@@ -81,7 +81,7 @@ export default function contentfulLoader({ src, quality, width }) {
 ### Fastly
 
 ```js
-// Docs: https://developer.fastly.com/reference/io/
+// 문서: https://developer.fastly.com/reference/io/
 export default function fastlyLoader({ src, width, quality }) {
   const url = new URL(`https://example.com${src}`)
   url.searchParams.set('auto', 'webp')
@@ -94,7 +94,7 @@ export default function fastlyLoader({ src, width, quality }) {
 ### Gumlet
 
 ```js
-// Docs: https://docs.gumlet.com/reference/image-transform-size
+// 문서: https://docs.gumlet.com/reference/image-transform-size
 export default function gumletLoader({ src, width, quality }) {
   const url = new URL(`https://example.com${src}`)
   url.searchParams.set('format', 'auto')
@@ -107,7 +107,7 @@ export default function gumletLoader({ src, width, quality }) {
 ### ImageEngine
 
 ```js
-// Docs: https://support.imageengine.io/hc/en-us/articles/360058880672-Directives
+// 문서: https://support.imageengine.io/hc/en-us/articles/360058880672-Directives
 export default function imageengineLoader({ src, width, quality }) {
   const compression = 100 - (quality || 50)
   const params = [`w_${width}`, `cmpr_${compression}`)]
@@ -118,7 +118,7 @@ export default function imageengineLoader({ src, width, quality }) {
 ### Imgix
 
 ```js
-// Demo: https://static.imgix.net/daisy.png?format=auto&fit=max&w=300
+// 데모: https://static.imgix.net/daisy.png?format=auto&fit=max&w=300
 export default function imgixLoader({ src, width, quality }) {
   const url = new URL(`https://example.com${src}`)
   const params = url.searchParams
@@ -133,7 +133,7 @@ export default function imgixLoader({ src, width, quality }) {
 ### Thumbor
 
 ```js
-// Docs: https://thumbor.readthedocs.io/en/latest/
+// 문서: https://thumbor.readthedocs.io/en/latest/
 export default function thumborLoader({ src, width, quality }) {
   const params = [`${width}x0`, `filters:quality(${quality || 75})`]
   return `https://example.com${params.join('/')}${src}`
