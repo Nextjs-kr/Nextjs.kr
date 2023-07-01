@@ -1,27 +1,27 @@
 ---
-title: Dynamic Routes
-description: Dynamic Routes are pages that allow you to add custom params to your URLs. Start creating Dynamic Routes and learn more here.
+title: 동적 라우팅
+description: 동적 라우팅은 사용자 정의 매개 변수를 URL에 추가할 수 있는 페이지입니다. 동적 라우팅을 생성하는 것은 여기서 자세히 알아볼 수 있습니다.
 related:
-  title: Next Steps
-  description: For more information on what to do next, we recommend the following sections
+  title: 다음 단계
+  description: 다음에 수행할 작업에 대한 자세한 내용은 다음 섹션을 참조합니다.
   links:
     - pages/building-your-application/routing/linking-and-navigating
     - pages/api-reference/functions/use-router
 ---
 
-When you don't know the exact segment names ahead of time and want to create routes from dynamic data, you can use Dynamic Segments that are filled in at request time or [prerendered](/docs/pages/building-your-application/data-fetching/get-static-paths) at build time.
+정확한 세그먼트 이름을 미리 알지 못하고 동적 데이터로 라우팅을 생성하는 경우, 요청 시 입력되거나 빌드 시 [미리 렌더링 되는](#generating-static-params) 되는 동적 세그먼트를 사용할 수 있습니다.
 
-## Convention
+## 컨벤션
 
-A Dynamic Segment can be created by wrapping a folder's name in square brackets: `[folderName]`. For example, `[id]` or `[slug]`.
+동적 세그먼트는 폴더 이름을 대괄호로 사용해 만들 수 있습니다: `[폴더 이름]`. 예: `[id]` 또는 `[slug]`.
 
-Dynamic Segments can be access from [`useRouter`](/docs/pages/api-reference/functions/use-router).
+동적 세그먼트는 [`useRouter`](/docs/pages/api-reference/functions/use-router)를 통해 사용할 수 있습니다.
 
-## Example
+## 예제
 
-For example, a blog could include the following route `pages/blog/[slug].js` where `[slug]` is the Dynamic Segment for blog posts.
+예를 들어 블로그에는 다음과 같은 `pages/blog/[slug].js` 경로가 포함될 수 있습니다. 여기서 `[slug]`는 블로그 게시물의 동적 세그먼트입니다.
 
-```jsx
+```tsx filename="pages/blog/[slug].tsx" switcher
 import { useRouter } from 'next/router'
 
 export default function Page() {
@@ -30,33 +30,42 @@ export default function Page() {
 }
 ```
 
-| Route                  | Example URL | `params`        |
-| ---------------------- | ----------- | --------------- |
-| `pages/blog/[slug].js` | `/blog/a`   | `{ slug: 'a' }` |
-| `pages/blog/[slug].js` | `/blog/b`   | `{ slug: 'b' }` |
-| `pages/blog/[slug].js` | `/blog/c`   | `{ slug: 'c' }` |
+```jsx filename="pages/blog/[slug].jsx" switcher
+import { useRouter } from 'next/router'
 
-## Catch-all Segments
+export default function Page() {
+  const router = useRouter()
+  return <p>Post: {router.query.slug}</p>
+}
+```
 
-Dynamic Segments can be extended to **catch-all** subsequent segments by adding an ellipsis inside the brackets `[...folderName]`.
+| 경로                   | 예시 URL  | `params`        |
+| ---------------------- | --------- | --------------- |
+| `pages/blog/[slug].js` | `/blog/a` | `{ slug: 'a' }` |
+| `pages/blog/[slug].js` | `/blog/b` | `{ slug: 'b' }` |
+| `pages/blog/[slug].js` | `/blog/c` | `{ slug: 'c' }` |
 
-For example, `pages/shop/[...slug].js` will match `/shop/clothes`, but also `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts`, and so on.
+## 모든 세그먼트 캡처하기
 
-| Route                     | Example URL   | `params`                    |
+동적 세그먼트는 괄호 안에 줄임표를 추가하여 `[...폴더이름]` 안에 모든 후속 세그먼트를 **포함하도록** 확장할 수 있습니다.
+
+예를 들어 `pages/shop/[...slug].js`는 `/shop/clothes` 뿐만 아니라 `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts` 등으로 매치될 수 있습니다.
+
+| 경로                      | 예시 URL      | `params`                    |
 | ------------------------- | ------------- | --------------------------- |
 | `pages/shop/[...slug].js` | `/shop/a`     | `{ slug: ['a'] }`           |
 | `pages/shop/[...slug].js` | `/shop/a/b`   | `{ slug: ['a', 'b'] }`      |
 | `pages/shop/[...slug].js` | `/shop/a/b/c` | `{ slug: ['a', 'b', 'c'] }` |
 
-## Optional Catch-all Segments
+## 선택적으로 모든 세그먼트 캡처하기
 
-Catch-all Segments can be made **optional** by including the parameter in double square brackets: `[[...folderName]]`.
+모든 세그먼트를 캡처하는 것은 이중 대괄호에 매개 변수를 포함하여 **선택적으로**로 생성할 수 있습니다. `[[...folderName]]`를 선택합니다.
 
-For example, `pages/shop/[[...slug]].js` will **also** match `/shop`, in addition to `/shop/clothes`, `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts`.
+예를 들어 `pages/shop/[[...slug]].js`는 `/shop/clothes`, `/shop/clothes/tops`, `/shop/clothes/tops/t-shop` 외에 `/shop` **또한** 매치될 수 있습니다.
 
-The difference between **catch-all** and **optional catch-all** segments is that with optional, the route without the parameter is also matched (`/shop` in the example above).
+**모든 세그먼트 캡처하기**와 **선택적으로 세그먼트 캡처하기**의 차이점은 선택적 세그먼트 캡처하기의 경우 매개 변수가 없는 경로에도 매치될 수 있다는 점입니다(위 예제의 `/shop`).
 
-| Route                       | Example URL   | `params`                    |
+| 경로                        | 예시 URL      | `params`                    |
 | --------------------------- | ------------- | --------------------------- |
 | `pages/shop/[[...slug]].js` | `/shop`       | `{}`                        |
 | `pages/shop/[[...slug]].js` | `/shop/a`     | `{ slug: ['a'] }`           |
