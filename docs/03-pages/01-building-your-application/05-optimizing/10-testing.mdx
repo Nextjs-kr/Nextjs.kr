@@ -13,7 +13,6 @@ description: Next.js에 널리 쓰이는 테스팅 도구 3가지 - Cypress, Pla
 
 </details>
 
-
 description: Next.js에 널리 쓰이는 테스팅 도구 3가지 - [Cypress](#cypress), [Playwright](#playwright), [Jest 와 React Testing Library](#jest-and-react-testing-library) - 를 셋업하는 방법을 배웁니다.
 
 ## Cypress
@@ -309,7 +308,7 @@ npm install --save-dev jest jest-environment-jsdom @testing-library/react @testi
 import nextJest from 'next/jest.js'
 
 const createJestConfig = nextJest({
-	// Next.js 앱의 경로를 입력해서, 테스트 환경에 next.config.js 와 .env 파일을 불러옵니다.
+  // Next.js 앱의 경로를 입력해서, 테스트 환경에 next.config.js 와 .env 파일을 불러옵니다.
   dir: './',
 })
 
@@ -377,7 +376,7 @@ module.exports = {
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   testEnvironment: 'jsdom',
   transform: {
-		// babel-jest 을 이용해서 테스트를 next/babel 프리셋으로 transpile 합니다.
+    // babel-jest 을 이용해서 테스트를 next/babel 프리셋으로 transpile 합니다.
     // https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
   },
