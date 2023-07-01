@@ -1,9 +1,9 @@
 ---
-title: Version 11
-description: Upgrade your Next.js Application from Version 10 to Version 11.
+title: 버전 11
+description: Next.js 10 버전 애플리케이션을 Next.js 11 버전으로 업그레이드할 수 있습니다.
 ---
 
-To upgrade to version 11, run the following command:
+Next.js 11 버전으로 업그레이드하려면 다음 명령어를 실행하세요.
 
 ```bash filename="Terminal"
 npm install next@11
@@ -13,27 +13,27 @@ yarn add next@11
 
 ### Webpack 5
 
-Webpack 5 is now the default for all Next.js applications. If you did not have a custom webpack configuration, your application is already using webpack 5. If you do have a custom webpack configuration, you can refer to the [Next.js webpack 5 documentation](/docs/messages/webpack5) for upgrade guidance.
+이제 Next.js는 Webpack 5를 기본으로 사용합니다. 별 다른 설정을 하지 않는다면 애플리케이션은 자동으로 webpack 5를 사용할 것입니다. webpack 설정을 변경해야 한다면 [Next.js webpack 5 documentation](/docs/messages/webpack5)을 참고하세요.
 
-### Cleaning the `distDir` is now a default
+### `distDir`는 이제 자동으로 제거됩니다.
 
-The build output directory (defaults to `.next`) is now cleared by default except for the Next.js caches. You can refer to [the cleaning `distDir` RFC](https://github.com/vercel/next.js/discussions/6009) for more information.
+빌드 결과물이 생성되는 디렉터리 (기본 설정은 `.next`입니다) 는 이제 Next.js 캐시를 제외하고 자동으로 제거됩니다. 더 자세한 정보는 [the cleaning `distDir` RFC](https://github.com/vercel/next.js/discussions/6009)를 참고하세요.
 
-If your application was relying on this behavior previously you can disable the new default behavior by adding the `cleanDistDir: false` flag in `next.config.js`.
+애플리케이션이 이 동작에 의존하고 있다면 `next.config.js` 에 `cleanDistDir: false` 플래그를 설정하여 기본 동작을 변경할 수 있습니다.
 
-### `PORT` is now supported for `next dev` and `next start`
+### `next dev`와 `next start`가 `PORT`를 지원합니다.
 
-Next.js 11 supports the `PORT` environment variable to set the port the application runs on. Using `-p`/`--port` is still recommended but if you were prohibited from using `-p` in any way you can now use `PORT` as an alternative:
+Next.js 11은 `PORT` 환경 변수로 애플리케이션이 실행될 포트를 지정할 수 있습니다. 아직 `-p`/`--port`의 사용이 권장되지만, `-p`를 사용할 수 없는 경우 대신 `PORT`를 사용할 수 있습니다.
 
-Example:
+예시:
 
 ```
 PORT=4000 next start
 ```
 
-### `next.config.js` customization to import images
+### 이미지 임포트를 위한 `next.config.js` 설정
 
-Next.js 11 supports static image imports with `next/image`. This new feature relies on being able to process image imports. If you previously added the `next-images` or `next-optimized-images` packages you can either move to the new built-in support using `next/image` or disable the feature:
+Next.js 11은 `next/image`를 사용한 정적 이미지 임포트를 지원합니다. 이 새로운 기능은 이미지 임포트를 최적화하기 위함입니다. `next-images` 또는 `next-optimized-images` 패키지를 사용하고 있었다면 Next.js 내장 `next/image`로 대체하거나 다음과 같이 기능을 사용하지 않도록 설정할 수 있습니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -43,45 +43,45 @@ module.exports = {
 }
 ```
 
-### Remove `super.componentDidCatch()` from `pages/_app.js`
+### `pages/_app.js`에서 `super.componentDidCatch()` 삭제
 
-The `next/app` component's `componentDidCatch` was deprecated in Next.js 9 as it's no longer needed and has since been a no-op. In Next.js 11, it was removed.
+`next/app` 컴포넌트의 `componentDidCatch`는 Next.js 9 버전 이후로 더 이상 사용되지 않습니다. 이는 Next.js 11 버전에서 제거되었습니다.
 
-If your `pages/_app.js` has a custom `componentDidCatch` method you can remove `super.componentDidCatch` as it is no longer needed.
+애플리케이션의 `pages/_app.js`이 커스텀 `componentDidCatch` 메소드를 사용하고 있다면 더 이상 필요하지 않은 `super.componentDidCatch`를 제거하세요.
 
-### Remove `Container` from `pages/_app.js`
+### `pages/_app.js`에서 `Container` 삭제
 
-This export was deprecated in Next.js 9 as it's no longer needed and has since been a no-op with a warning during development. In Next.js 11 it was removed.
+이 내보내기 기능은 Next.js 9 버전 이후로 더 이상 사용되지 않고 개발 도중 경고 메시지를 표시하게 되었습니다. 이는 Next.js 11 버전에서 제거되었습니다.
 
-If your `pages/_app.js` imports `Container` from `next/app` you can remove `Container` as it was removed. Learn more in [the documentation](/docs/messages/app-container-deprecated).
+`pages/_app.js`가 `next/app`에서 `Container`를 임포트하고 있다면, `Container`를 제거하세요. [문서](/docs/messages/app-container-deprecated)에 더 자세한 내용이 있습니다.
 
-### Remove `props.url` usage from page components
+### 페이지 컴포넌트에서의 `props.url` 사용을 삭제
 
-This property was deprecated in Next.js 4 and has since shown a warning during development. With the introduction of `getStaticProps` / `getServerSideProps` these methods already disallowed the usage of `props.url`. In Next.js 11, it was removed completely.
+이 프로퍼티는 Next.js 4 버전 이후로 더 이상 사용되지 않고 개발 도중 경고 메시지를 표시하게 되었습니다. `getStaticProps` / `getServerSideProps`의 등장과 함께 `props.url`의 사용은 이미 허용하지 않습니다. 이는 Next.js 11 버전에서 완전히 제거되었습니다.
 
-You can learn more in [the documentation](/docs/messages/url-deprecated).
+[문서](/docs/messages/url-deprecated)에 더 자세한 내용이 있습니다.
 
-### Remove `unsized` property on `next/image`
+### `next/image` 에서 `unsized` 프로퍼티 삭제
 
-The `unsized` property on `next/image` was deprecated in Next.js 10.0.1. You can use `layout="fill"` instead. In Next.js 11 `unsized` was removed.
+`next/image`의 `unsized` 프로퍼티는 Next.js 10.0.1 버전 이후로 더 이상 사용되지 않습니다. 대신에 `layout="fill"`을 사용할 수 있습니다. `unsized`는 Next.js 11 버전에서 제거되었습니다.
 
-### Remove `modules` property on `next/dynamic`
+### `next/dynamic`에서 `modules` 프로퍼티 삭제
 
-The `modules` and `render` option for `next/dynamic` were deprecated in Next.js 9.5. This was done in order to make the `next/dynamic` API closer to `React.lazy`. In Next.js 11, the `modules` and `render` options were removed.
+`next/dynamic`의 `modules`와 `render` 옵션은 Next.js 9.5 버전 이후로 더 이상 사용되지 않습니다. 이는 `next/dynamic` API가 `React.lazy`와 더 가까워지면서 생긴 변화입니다. Next.js 11 버전에서 `modules`와 `render` 옵션은 제거되었습니다.
 
-This option hasn't been mentioned in the documentation since Next.js 8 so it's less likely that your application is using it.
+이 옵션은 Next.js 8 버전의 문서부터 언급되지 않아 왔기 때문에 애플리케이션이 옵션을 사용하고 있는 경우는 적을 것입니다.
 
-If your application does use `modules` and `render` you can refer to [the documentation](/docs/messages/next-dynamic-modules).
+만약 애플리케이션이 `modules`와 `render`를 사용하고 있다면 [이 문서](/docs/messages/next-dynamic-modules)를 참고하세요.
 
-### Remove `Head.rewind`
+### `Head.rewind` 삭제
 
-`Head.rewind` has been a no-op since Next.js 9.5, in Next.js 11 it was removed. You can safely remove your usage of `Head.rewind`.
+`Head.rewind`는 Next.js 9.5 버전 이후로 아무런 동작도 수행하지 않기 때문에 Next.js 11 버전에서 제거되었습니다. 다른 대체 없이 `Head.rewind`를 제거해도 안전합니다.
 
-### Moment.js locales excluded by default
+### Moment.js locale는 기본적으로 제외됩니다.
 
-Moment.js includes translations for a lot of locales by default. Next.js now automatically excludes these locales by default to optimize bundle size for applications using Moment.js.
+Moment.js는 많은 지역을 위한 번역을 기본적으로 포함합니다. Next.js는 번들 크기를 최적화하기 위해 기본적으로 Moment.js를 사용하는 애플리케이션에서 이러한 언어 지원을 자동으로 제외합니다.
 
-To load a specific locale use this snippet:
+다음과 같이 특정 언어의 지원을 포함할 수 있습니다.
 
 ```js
 import moment from 'moment'
@@ -90,11 +90,11 @@ import 'moment/locale/ja'
 moment.locale('ja')
 ```
 
-You can opt-out of this new default by adding `excludeDefaultMomentLocales: false` to `next.config.js` if you do not want the new behavior, do note it's highly recommended to not disable this new optimization as it significantly reduces the size of Moment.js.
+이러한 기본 설정을 원하지 않는 경우 `next.config.js`에 `excludeDefaultMomentLocales: false`를 추가하여 변경할 수 있지만, 이 기본 동작이 Moment.js의 용량을 크게 줄일 수 있기 때문에 비활성화하지 않을 것을 강력히 권장합니다.
 
-### Update usage of `router.events`
+### `router.events`의 사용 방식 변경
 
-In case you're accessing `router.events` during rendering, in Next.js 11 `router.events` is no longer provided during pre-rendering. Ensure you're accessing `router.events` in `useEffect`:
+Next.js 11 버전에서는 더 이상 사전 렌더링 도중 `router.events`를 제공하지 않습니다. 만약 렌더링 도중 `router.events`에 접근하고 있다면 `useEffect` 내에서 사용하도록 변경이 필요합니다.
 
 ```js
 useEffect(() => {
@@ -108,29 +108,29 @@ useEffect(() => {
 
   router.events.on('routeChangeStart', handleRouteChange)
 
-  // If the component is unmounted, unsubscribe
-  // from the event with the `off` method:
+  // 컴포넌트가 마운트 해제될 때,
+  // `off` 메서드를 사용하여 구독을 취소합니다.
   return () => {
     router.events.off('routeChangeStart', handleRouteChange)
   }
 }, [router])
 ```
 
-If your application uses `router.router.events` which was an internal property that was not public please make sure to use `router.events` as well.
+만약 외부에서 사용할 수 없는 내부 프로퍼티인 `router.router.events`를 사용하고 있다면 `router.events`로 변경해야 합니다.
 
-## React 16 to 17
+## React 16에서 17로
 
-React 17 introduced a new [JSX Transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) that brings a long-time Next.js feature to the wider React ecosystem: Not having to `import React from 'react'` when using JSX. When using React 17 Next.js will automatically use the new transform. This transform does not make the `React` variable global, which was an unintended side-effect of the previous Next.js implementation. A [codemod is available](/docs/pages/building-your-application/upgrading/codemods#add-missing-react-import) to automatically fix cases where you accidentally used `React` without importing it.
+React 17은 Next.js에서 오랫동안 JSX를 사용하기 위해 필요로 했던 `import React from 'react'`를 필요하지 않게 만드는 새로운 [JSX 변환](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)을 적용했습니다. React 17을 사용하면 Next.js는 자동으로 새로운 변환을 사용할 것입니다. 이 변환은 `React` 전역 변수를 생성하던 Next.js의 부작용을 해결합니다. 실수로 임포트 없이 사용된 `React` 전역 변수를 자동으로 수정하기 위해 [codemod를 사용할 수 있습니다](/docs/pages/building-your-application/upgrading/codemods#add-missing-react-import).
 
-Most applications already use the latest version of React, with Next.js 11 the minimum React version has been updated to 17.0.2.
+Next.js 11 버전에서 요구하는 React의 최소 버전이 17.0.2이기 때문에, 대부분의 애플리케이션은 이미 최신 버전의 React를 사용합니다.
 
-To upgrade you can run the following command:
+업그레이드하기 위해 다음 커맨드를 실행합니다.
 
 ```
 npm install react@latest react-dom@latest
 ```
 
-Or using `yarn`:
+`yarn`을 사용하는 경우에는 다음과 같습니다.
 
 ```
 yarn add react@latest react-dom@latest
