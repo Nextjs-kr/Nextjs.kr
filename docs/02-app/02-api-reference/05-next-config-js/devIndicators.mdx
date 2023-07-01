@@ -1,15 +1,15 @@
 ---
 title: devIndicators
-description: Optimized pages include an indicator to let you know if it's being statically optimized. You can opt-out of it here.
+description: 최적화된 페이지는 사용자에게 정적으로 최적화되고 있는지 알려주는 인디케이터를 포함합니다. 사용자는 인디케이터를 비활성화할 수 있습니다.
 ---
 
 <AppOnly>
 
-When you edit your code, and Next.js is compiling the application, a compilation indicator appears in the bottom right corner of the page.
+사용자가 코드를 편집하거나 Next.js가 애플리케이션을 컴파일할 때 페이지 오른쪽 하단에 컴파일 인디케이터가 나타납니다.
 
-> **Good to know**: This indicator is only present in development mode and will not appear when building and running the app in production mode.
+> **참고**: 인디케이터는 개발 모드에서만 나타나며 운영 모드로 앱을 빌드하고 실행할 때는 나타나지 않습니다.
 
-In some cases this indicator can be misplaced on your page, for example, when conflicting with a chat launcher. To change its position, open `next.config.js` and set the `buildActivityPosition` in the `devIndicators` object to `bottom-right` (default), `bottom-left`, `top-right` or `top-left`:
+때에 따라 인디케이터가 페이지에 잘못 표시될 수 있습니다, 예를 들어 채팅 런처와 충돌하는 경우입니다. 인디케이터의 위치를 변경하려면 `next.config.js` 파일을 열고 `devIndicators` 객체의 `buildActivityPosition`을 `bottom-right` (기본값), `bottom-left`, `top-right` 또는 `top-left`로 설정하세요.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
 }
 ```
 
-In some cases this indicator might not be useful for you. To remove it, open `next.config.js` and disable the `buildActivity` config in `devIndicators` object:
+때에 따라 인디케이터가 유용하지 않을 수 있습니다. 인디케이터를 제거하려면 `next.config.js` 파일을 열고 `devIndicators` 객체의 `buildActivity`를 비활성화하세요.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -33,13 +33,16 @@ module.exports = {
 
 <PagesOnly>
 
-> **Good to know**: This indicator was removed in Next.js version 10.0.1. We recommend upgrading to the latest version of Next.js.
+> **참고**:
+>
+> - 인디케이터는 Next.js 10.0.1 버전에서 제거되었습니다.
+> - 최신 버전의 Next.js로 업그레이드하는 것을 권장합니다.
 
-When a page qualifies for [Automatic Static Optimization](/docs/pages/building-your-application/rendering/automatic-static-optimization) we show an indicator to let you know.
+페이지가 [자동 정적 최적화](/docs/pages/building-your-application/rendering/automatic-static-optimization)에 충족한 경우 사용자에게 이를 알려주는 인디케이터를 표시합니다.
 
-This is helpful since automatic static optimization can be very beneficial and knowing immediately in development if the page qualifies can be useful.
+개발 중 페이지가 자동 정적 최적화에 충족하는지 즉시 알 수 있다는 것은 매우 유용할 수 있기 때문에 인디케이터는 도움이 됩니다.
 
-In some cases this indicator might not be useful, like when working on electron applications. To remove it open `next.config.js` and disable the `autoPrerender` config in `devIndicators`:
+때에 따라 인디케이터는 Electron 애플리케이션에서 작업할 때와 같이 유용하지 않을 수 있습니다. 인디케이터를 제거하려면 `next.config.js` 파일을 열고 `devIndicators`에서 `autoPrerender`를 비활성화하세요.
 
 ```js filename="next.config.js"
 module.exports = {
