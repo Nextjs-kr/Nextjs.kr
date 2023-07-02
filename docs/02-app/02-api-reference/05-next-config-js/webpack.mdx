@@ -2,10 +2,10 @@
 title: Custom Webpack Config
 nav_title: webpack
 description: Learn how to customize the webpack config used by Next.js
-Next.js에서 웹팩 설정을 자신의 의도에 따라 다양하게 바꾸는 방법에 대해 알아봅니다.
+Next.js에서 웹팩 설정을 개발자의 의도에 따라 다양하게 바꾸는 방법에 대해 알아봅니다.
 ---
 
-> **알아두기**: 웹팩 설정에 대한 변경은 [유의적 버전 명세](https://semver.org/lang/ko/)에 포함되지 않으므로, 이와 관련된 부분은 개발을 하는 당신이 직접 스스로 책임지고 관리하도록 합니다.
+> **알아두기**: 웹팩 설정에 대한 변경은 [유의적 버전 명세](https://semver.org/lang/ko/)에 포함되지 않으므로, 이와 관련된 부분은 개발자가 직접 스스로 책임지고 관리하도록 합니다.
 
 웹팩 설정 내용에 어떠한 내용을 추가하기 전에, 먼저 추가하고자 하는 설정 내용이 Next.js에서 이미 기본으로 지원되고 있는지 여부를 살펴보세요.
 
@@ -20,8 +20,6 @@ Next.js에서 웹팩 설정을 자신의 의도에 따라 다양하게 바꾸는
 
 - [@next/mdx](https://github.com/vercel/next.js/tree/canary/packages/next-mdx)
 - [@next/bundle-analyzer](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)
-
-In order to extend our usage of `webpack`, you can define a function that extends its config inside `next.config.js`, like so:
 
 웹팩 사용을 확장하기 위해 다음과 같이 next.config.js 내부에 webpack 설정을 확장하는 함수를 정의할 수 있습니다.
 
