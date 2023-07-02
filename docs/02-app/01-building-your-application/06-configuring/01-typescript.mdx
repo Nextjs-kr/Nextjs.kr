@@ -82,6 +82,7 @@ TypeScript 플러그인은 다음과 같은 기능을 지원합니다.
 Next.js는 `next/link`를 사용할 때 오타 및 기타 오류를 방지하기 위해 링크의 정적 타입화를 지원하기 때문에 페이지 간 탐색 시 타입 안전성이 향상됩니다.
 
 이 기능을 사용하려면 `experimental.typedRoutes`를 활성화하고 프로젝트에서 TypeScript를 사용해야 합니다.
+
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -278,7 +279,7 @@ module.exports = nextConfig
 module.exports = {
   typescript: {
     // !! 주의 !!
-    // 프로젝트에 타입 오류가 있는 경우에도 
+    // 프로젝트에 타입 오류가 있는 경우에도
     // 프로덕션 빌드가 성공적으로 완료되도록 허용합니다.
     // !! 주의 !!
     ignoreBuildErrors: true,
@@ -288,8 +289,8 @@ module.exports = {
 
 ## 버전 변경 사항
 
-| 버전       | 변경 사항                                                                                                                              |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `v13.2.0` | 정적으로 타입이 부여된 링크는 베타 버전에서 사용할 수 있습니다.                                                                                     |
-| `v12.0.0` | 빌드 속도를 높이기 위해 TypeScript 및 TSX 컴파일에 [SWC](/docs/architecture/nextjs-compiler)가 기본으로 사용됩니다.                                |
-| `v10.2.1` | [점진적 타입 검사](https://www.typescriptlang.org/tsconfig#incremental) 지원은 `tsconfig.json`에서 활성화하면 추가됩니다.                          |
+| 버전      | 변경 사항                                                                                                                 |
+| --------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `v13.2.0` | 정적으로 타입이 부여된 링크는 베타 버전에서 사용할 수 있습니다.                                                           |
+| `v12.0.0` | 빌드 속도를 높이기 위해 TypeScript 및 TSX 컴파일에 [SWC](/docs/architecture/nextjs-compiler)가 기본으로 사용됩니다.       |
+| `v10.2.1` | [점진적 타입 검사](https://www.typescriptlang.org/tsconfig#incremental) 지원은 `tsconfig.json`에서 활성화하면 추가됩니다. |
