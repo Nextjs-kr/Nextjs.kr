@@ -62,12 +62,12 @@ export default function Page({ repo }) {
 
 ### `props`
 
-The `props` object is a key-value pair, where each value is received by the page component. It should be a [serializable object](https://developer.mozilla.org/en-US/docs/Glossary/Serialization) so that any props passed, could be serialized with [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
+`props` 객체는 페이지 컴포넌트에서 각 값을 받는 key-값 쌍입니다. 전달된 모든 props가 [`JSON.stringify`](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)로 직렬화될 수 있도록 [직렬화 가능한 객체](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)여야 합니다.
 
 ```jsx
 export async function getStaticProps(context) {
   return {
-    props: { message: `Next.js is awesome` }, // will be passed to the page component as props
+    props: { message: `Next.js is awesome` }, // 페이지 컴포넌트에 props로 전달됩니다.
   }
 }
 ```
