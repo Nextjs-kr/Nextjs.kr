@@ -419,7 +419,7 @@ function ExampleClientComponent({ id }) {
 
 #### 인자로 넘겨받기
 
-Server Actions는 [불러오기](#불러오기)를 통해 사용되는 것이 권장되지만, 특정 상황에서 Server Actions를 클라이언트 컴포넌트의 인자로 받아와 사용해야 할 수 있습니다.
+Server Actions는 [불러오기](#invocation)를 통해 사용되는 것이 권장되지만, 특정 상황에서 Server Actions를 클라이언트 컴포넌트의 인자로 받아와 사용해야 할 수 있습니다.
 
 예시로, action을 통해 동적으로 생성된 값을 사용하고 싶을 수 있습니다. 이런 경우 Server Action을 컴포넌트의 인자로 받아오는 것이 해결책이 될 수 있습니다.
 
@@ -558,7 +558,7 @@ Actions는 요소 내부의 `action` 인자를 통해 정의됩니다. 일반적
 
 [Server Functions](#server-functions)은 action으로 불립니다.
 
-Server Actions는 [`form` 요소의`action` 속성](#불러오기)을 통해 점진적으로 향상될 수 있습니다. 이 form은 클라이언트 단의 Javascript가 로딩되기 전에 작동합니다. 이는 이 form의 제출에 리액트의 수화가 필요하지 않음을 뜻합니다.
+Server Actions는 [`form` 요소의`action` 속성](#invocation)을 통해 점진적으로 향상될 수 있습니다. 이 form은 클라이언트 단의 Javascript가 로딩되기 전에 작동합니다. 이는 이 form의 제출에 리액트의 수화가 필요하지 않음을 뜻합니다.
 
 ### Server Mutations
 

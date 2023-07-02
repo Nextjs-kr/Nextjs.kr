@@ -12,6 +12,7 @@ https://github.com/reactjs/ko.react.dev
 -->
 
 ## Progress
+
 - [ ] `pnpm prettier-fix`
 - [ ] 번역 초안 작성 (Draft translation)
 - [ ] [공통 스타일 가이드 확인 (Check the common style guide)](https://github.com/reactjs/ko.reactjs.org/blob/master/UNIVERSAL-STYLE-GUIDE.md)
