@@ -1,17 +1,18 @@
 ---
-title: Client-side Fetching
-description: Learn about client-side data fetching, and how to use SWR, a data fetching React hook library that handles caching, revalidation, focus tracking, refetching on interval and more.
+title: 클라이언트 측 fetching
+description: 클라이언트 측 데이터 가져오기에 대해 알아보고 SWR, 캐싱, 재검증, 포커스 추적, 간격에 따른 다시 가져오기 등을 처리하는 데이터 가져오기 React Hook library를 사용하는 방법을 알아보세요.
 ---
 
-Client-side data fetching is useful when your page doesn't require SEO indexing, when you don't need to pre-render your data, or when the content of your pages needs to update frequently. Unlike the server-side rendering APIs, you can use client-side data fetching at the component level.
+클라이언트-측 데이터 가져오기는 페이지에 SEO 인덱싱이 필요하지 않거나, 데이터를 사전 렌더링할 필요가 없거나, 페이지 콘텐츠를 자주 업데이트해야 하는 경우에 유용함.
+서버 측 렌더링하는 API와 달리 컴포넌트 수준에서 클라이언트 측 데이터 가져오기를 사용할 수 있습니다.
 
-If done at the page level, the data is fetched at runtime, and the content of the page is updated as the data changes. When used at the component level, the data is fetched at the time of the component mount, and the content of the component is updated as the data changes.
+페이지 수준에서 수행되는 경우, 런타임에 데이터를 가져오고 데이터가 변경되면 페이지 콘텐츠가 업데이트됨. 컴포넌트 수준에서 사용하는 경우 컴포넌트가 마운트될 때 데이터를 가져오고 컴포넌트의 내용은 데이터가 변경됨에 따라 업데이트됩니다.
 
-It's important to note that using client-side data fetching can affect the performance of your application and the load speed of your pages. This is because the data fetching is done at the time of the component or pages mount, and the data is not cached.
+클라이언트 측 데이터 가져오기를 사용하면 애플리케이션의 성능과 페이지의 로드 속도에 영향을 미칠 수 있다는 점이 중요합니다! 이는 컴포넌트 또는 페이지가 마운트될 때 데이터 가져오기가 수행되고 데이터가 캐시되지 않기 때문입니다.
 
-## Client-side data fetching with useEffect
+## useEffect를 통한 클라이언트 측 데이터 가져오기
 
-The following example shows how you can fetch data on the client side using the useEffect hook.
+useEffect 훅을 사용하여 클라이언트 측에서 데이터를 가져오는 방법을 보여줍니다.
 
 ```jsx
 import { useState, useEffect } from 'react'
@@ -42,13 +43,19 @@ function Profile() {
 }
 ```
 
-## Client-side data fetching with SWR
+## SWR를 통한 Client-side 데이터 가져오기
 
 The team behind Next.js has created a React hook library for data fetching called [**SWR**](https://swr.vercel.app/). It is **highly recommended** if you are fetching data on the client-side. It handles caching, revalidation, focus tracking, refetching on intervals, and more.
 
+Next.js 팀은 [**SWR**](https://swr.vercel.app/)이라는 데이터 가져오기를 위한 React 훅 라이브러리를 만들었음. 클라이언트 측에서 데이터를 가져오기 경우 **매우 권장됩니다**. 캐싱, 유효성 재검사, 포커스 추적, 일정 간격으로 다시 가져오기 등을 처리
+
 Using the same example as above, we can now use SWR to fetch the profile data. SWR will automatically cache the data for us and will revalidate the data if it becomes stale.
 
+위와 동일한 예시를 사용하여, 이제 SWR을 사용하여 프로필 데이터를 가져올 수 있습니다. SWR은 자동으로 데이터를 캐시하고 데이터가 오래되면 유효성을 다시 검사함.
+
 For more information on using SWR, check out the [SWR docs](https://swr.vercel.app/docs/getting-started).
+
+SWR 사용에 대한 자세한 내용은 [**SWR 문서**](https://swr.vercel.app/docs/getting-started)를 확인하세요.
 
 ```jsx
 import useSWR from 'swr'
