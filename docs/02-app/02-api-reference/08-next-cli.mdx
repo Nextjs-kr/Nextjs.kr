@@ -1,19 +1,19 @@
 ---
 title: Next.js CLI
-description: The Next.js CLI allows you to start, build, and export your application. Learn more about it here.
+description: Next.js CLI로 애플리케이션을 실행하고, 빌드하고, 내보낼 수 있습니다. 이 문서는 이에 대해 자세히 설명합니다.
 ---
 
-The Next.js CLI allows you to start, build, and export your application.
+Next.js CLI로 애플리케이션을 시작하고, 빌드하고, 내보낼 수 있습니다.
 
-To get a list of the available CLI commands, run the following command inside your project directory:
+사용할 수 있는 CLI 명령어 목록을 얻으려면, 프로젝트 디렉토리 내에서 다음 명령어를 실행하세요.
 
 ```bash filename="Terminal"
 npx next -h
 ```
 
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher)_
+_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b)는 npm 5.2+ 이상에서 사용 가능합니다.)_
 
-The output should look like this:
+출력 결과는 아래와 같습니다.
 
 ```bash filename="Terminal"
 Usage
@@ -30,7 +30,7 @@ For more information run a command with the --help flag
   $ next build --help
 ```
 
-You can pass any [node arguments](https://nodejs.org/api/cli.html#cli_node_options_options) to `next` commands:
+`next` 명령어에 어떤 [node 인수](https://nodejs.org/api/cli.html#cli_node_options_options)]든 전달할 수 있습니다.
 
 ```bash filename="Terminal"
 NODE_OPTIONS='--throw-deprecation' next
@@ -38,121 +38,118 @@ NODE_OPTIONS='-r esm' next
 NODE_OPTIONS='--inspect' next
 ```
 
-> **Good to know**: Running `next` without a command is the same as running `next dev`
+> **참고**: `next`를 명령어 없이 실행하는 것은 `next dev`를 실행하는 것과 같습니다.
 
-## Build
+## 빌드
 
-`next build` creates an optimized production build of your application. The output displays information about each route.
+`next build`는 애플리케이션의 최적화된 프로덕션 빌드를 생성합니다. 각 경로에 대한 정보가 출력됩니다.
 
-- **Size** – The number of assets downloaded when navigating to the page client-side. The size for each route only includes its dependencies.
-- **First Load JS** – The number of assets downloaded when visiting the page from the server. The amount of JS shared by all is shown as a separate metric.
+- **Size** - 클라이언트 사이드의 페이지로 이동할 때 다운로드 되는 에셋의 수입니다. 각 경로의 크기는 의존성만 포함됩니다.
+- **First Load JS** - 서버에서 페이지를 방문할 때 다운로드 되는 에셋의 수입니다. 모두가 공유하는 JS의 양은 별도의 지표로 표시됩니다.
 
-Both of these values are **compressed with gzip**. The first load is indicated by green, yellow, or red. Aim for green for performant applications.
+이 두 값은 **gzip으로 압축**됩니다. first load는 초록, 노랑, 빨강으로 표시됩니다. 효율적인 성능을 위해 초록색을 목표로 합니다.
 
-You can enable production profiling for React with the `--profile` flag in `next build`. This requires [Next.js 9.5](https://nextjs.org/blog/next-9-5):
+`next build`의 `--profile` 플래그를 사용해 React에 대한 프로덕션 프로파일링을 활성화할 수 있습니다. 이는 [Next.js 9.5](https://nextjs.org/blog/next-9-5)가 필요합니다.
 
 ```bash filename="Terminal"
 next build --profile
 ```
 
-After that, you can use the profiler in the same way as you would in development.
+그 후에는 개발할 때와 동일한 방식으로 프로파일러를 사용할 수 있습니다.
 
-You can enable more verbose build output with the `--debug` flag in `next build`. This requires Next.js 9.5.3:
+`next build`의 `--debug` 플래그를 사용해 더 자세한 빌드 출력을 활성화합니다. 이는 Next.js 9.5.3이 필요합니다.
 
 ```bash filename="Terminal"
 next build --debug
 ```
 
-With this flag enabled additional build output like rewrites, redirects, and headers will be shown.
+이 플래그를 사용하면 다시 쓰기, 리디렉션 및 헤더와 같은 추가 빌드 출력이 표시됩니다.
 
-## Development
+## 개발
 
-`next dev` starts the application in development mode with hot-code reloading, error reporting, and more:
+`next dev`는 핫-코드 리로딩, 에러 보고 등을 포함하여 개발 모드로 애플리케이션을 실행합니다.
 
-The application will start at `http://localhost:3000` by default. The default port can be changed with `-p`, like so:
+애플리케이션은 기본적으로 `http://localhost:3000`에서 실행됩니다. 아래처럼 `-p`를 사용해 기본 포트를 변경할 수 있습니다.
 
 ```bash filename="Terminal"
 npx next dev -p 4000
 ```
 
-Or using the `PORT` environment variable:
+혹은 `PORT 환경변수를 사용합니다.
 
 ```bash filename="Terminal"
 PORT=4000 npx next dev
 ```
 
-> **Good to know**: `PORT` cannot be set in `.env` as booting up the HTTP server happens before any other code is initialized.
+> **참고**: HTTP 서버는 코드가 초기화되기 전에 실행되므로, `.env`에 `PORT`를 설정할 수 없습니다.
 
-You can also set the hostname to be different from the default of `0.0.0.0`, this can be useful for making the application available for other devices on the network. The default hostname can be changed with `-H`, like so:
+기본값인 `0.0.0.0`과 다른 호스트 이름을 설정하면, 네트워크 상의 다른 장치에서 애플리케이션을 사용하도록 할 수 있습니다. 아래처럼 `-H`를 사용하여 기본 호스트 이름을 변경할 수 있습니다.
 
 ```bash filename="Terminal"
 npx next dev -H 192.168.1.2
 ```
 
-## Production
+## 프로덕션
 
-`next start` starts the application in production mode. The application should be compiled with [`next build`](#build) first.
+`next start`는 애플리케이션을 프로덕션 모드로 실행합니다. 애플리케이션은 [`next build`](#build)로 먼저 컴파일되어야 합니다.
 
-The application will start at `http://localhost:3000` by default. The default port can be changed with `-p`, like so:
+애플리케이션은 기본적으로 `http://localhost:3000`에서 실행됩니다. 아래처럼 `-p`를 사용해 기본 포트를 변경할 수 있습니다.
 
 ```bash filename="Terminal"
 npx next start -p 4000
 ```
 
-Or using the `PORT` environment variable:
+혹은 `PORT` 환경변수를 사용합니다.
 
 ```bash filename="Terminal"
 PORT=4000 npx next start
 ```
 
-> **Good to know**:
+> **참고**
 >
-> -`PORT` cannot be set in `.env` as booting up the HTTP server happens before any other code is initialized.
+> - HTTP 서버는 코드가 초기화되기 전에 실행되므로, `.env`에 `PORT`를 설정할 수 없습니다.
 >
-> - `next start` cannot be used with `output: 'standalone'` or `output: 'export'`.
+> - `next start`는 `output: 'standalone'` 혹은 `output: 'export'`와 함께 사용할 수 없습니다.
 
-### Keep Alive Timeout
+### Keep Alive 타임아웃
 
-When deploying Next.js behind a downstream proxy (e.g. a load-balancer like AWS ELB/ALB) it's important to configure Next's underlying HTTP server with [keep-alive timeouts](https://nodejs.org/api/http.html#http_server_keepalivetimeout) that are _larger_ than the downstream proxy's timeouts. Otherwise, once a keep-alive timeout is reached for a given TCP connection, Node.js will immediately terminate that connection without notifying the downstream proxy. This results in a proxy error whenever it attempts to reuse a connection that Node.js has already terminated.
+Next.js를 다운스트림 프록시 (e.g. AWS ELB/ALB 같은 로드 밸런서) 뒤에 배포할 때, Next의 기본 HTTP 서버의 [keep-alive 타임아웃](https://nodejs.org/api/http.html#http_server_keepalivetimeout)를 다운스트림 프록시의 타임아웃보다 크게 설정하는 것이 중요합니다. 그렇지 않으면, 주어진 TCP 연결에 대해 keep-alive 타임아웃이 도달할 때, Node.js는 다운스트림 프록시에 알림 없이 즉시 연결을 종료합니다. 프록시가 Node.js에서 이미 종료한 연결을 재사용하려 시도할 때마다 프록시 에러가 발생합니다.
 
-To configure the timeout values for the production Next.js server, pass `--keepAliveTimeout` (in milliseconds) to `next start`, like so:
+프로덕션 Next.js 서버의 타임아웃 값을 설정하려면, `next start`에 `-keepAliveTimeout` (밀리초 단위)를 전달하면 됩니다.
 
 ```bash filename="Terminal"
 npx next start --keepAliveTimeout 70000
 ```
 
-## Lint
+## 린트
 
-`next lint` runs ESLint for all files in the `pages/`, `app` (only if the experimental `appDir` feature is enabled), `components/`, `lib/`, and `src/` directories. It also
-provides a guided setup to install any required dependencies if ESLint is not already configured in
-your application.
+`next lint`는 `pages/`, `app` (`appDir` 기능이 활성화되어 있을 경우), `components/`, `lib/`, `src/` 디렉토리 내 모든 파일에 대해 ESLint를 실행합니다. 또한 ESLint가 애플리케이션에 설정되어 있지 않은 경우 필요한 의존성을 설치하는 가이드를 제공합니다.
 
-If you have other directories that you would like to lint, you can specify them using the `--dir`
-flag:
+다른 디렉토리에서 린트를 하고 싶다면, `--dir` 플래그를 사용해 지정할 수 있습니다.
 
 ```bash filename="Terminal"
 next lint --dir utils
 ```
 
-## Telemetry
+## 텔레메트리
 
-Next.js collects **completely anonymous** telemetry data about general usage.
-Participation in this anonymous program is optional, and you may opt-out if you'd not like to share any information.
+Next.js는 일반적인 사용에 대해 **완전히 익명*** 텔레메트리 데이터를 수집합니다.
+이 익명 프로그램에 참여하는 것은 선택이며, 정보를 공유하고 싶지 않다면 선택을 해제할 수 있습니다.
 
-To learn more about Telemetry, [please read this document](https://nextjs.org/telemetry/).
+텔레메트리에 더 알아보려면 [이 문서를 참고하세요](https://nextjs.org/telemetry/).
 
-## Next Info
+## Next 정보
 
-`next info` prints relevant details about the current system which can be used to report Next.js bugs.
-This information includes Operating System platform/arch/version, Binaries (Node.js, npm, Yarn, pnpm) and npm package versions (`next`, `react`, `react-dom`).
+`next info`는 현재 시스템에 대한 관련 세부 정보를 출력하며, Next.js 버그를 보고하는 데 사용될 수 있습니다.
+이 정보는 운영체제 플랫폼/아키텍처/버전, 이진 파일 (Node.js, npm, Yarn, pnpm) 및 패키지 버전(`next`, `react`, `react-dom`)이 포함됩니다.
 
-Running the following in your project's root directory:
+프로젝트의 최상위 디렉토리에서 다음 명령을 실행하세요.
 
 ```bash filename="Terminal"
 next info
 ```
 
-will give you information like this example:
+다음 예시와 같은 정보를 얻을 수 있습니다.
 
 ```bash filename="Terminal"
 
@@ -172,4 +169,4 @@ will give you information like this example:
 
 ```
 
-This information should then be pasted into GitHub Issues.
+그리고 이 정보를 Github Issues에 붙여넣으면 됩니다.
