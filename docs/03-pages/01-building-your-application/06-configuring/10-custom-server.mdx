@@ -11,14 +11,14 @@ description: Start a Next.js app programmatically using a custom server.
 
 </details>
 
-기본적으로, Next.js에는 `next start`로 실행시킬 수 있는 서버를 포함하고 있습니다. 만약 백엔드 서버가 있다면, Next.js와 함께 사용할 수 있습니다.(이것은 사용자 정의 서버가 아닙니다). Next.js 사용사 정의 서버는 사용자 정의 서버 패턴을 사용하기 위해 100% 프로그래밍 방식으로 서버를 실행할 수 있도록 해줍니다. 대부분의 경우, 이것이 필요하지 않습니다. - 그러나 완전한 사용자 지정이 가능합니다.
+기본적으로, Next.js에는 `next start`로 실행시킬 수 있는 서버를 포함하고 있습니다. 백엔드 서버가 있다면, Next.js와 함께 사용할 수 있습니다.(이것은 사용자 정의 서버가 아닙니다). Next.js 사용사 정의 서버는 사용자 정의 서버 패턴을 사용하기 위해 100% 프로그래밍 방식으로 서버를 실행할 수 있도록 해줍니다. 대부분의 경우 이 기능이 필요하지 않습니다. - 그러나 완전한 사용자 지정이 가능합니다.
 
-> **알아두면 좋은 점**:
+> **알아두면 좋은 점**.
 >
-> - 사용자 지정 서버를 사용하기로 결정하기 전에, 통합 앱 라우터가 당신의 앱의 요구사항을 충족하지 못할 경우에만 사용해야 한다는 것을 명심하세요. 사용자 지정 서버는  **서버리스 기능** 과 **[자동 정적 최적화](/docs/pages/building-your-application/rendering/automatic-static-optimization)** 처럼 중요한 성능 최적화를 없앱니다.
+> - 사용자 지정 서버를 사용하기로 결정하기 전에, 통합 앱 라우터가 당신의 앱의 요구사항을 충족하지 못할 경우에만 사용해야 한다는 것을 명심하세요. 사용자 지정 서버는  **서버리스 기능** 과 **[자동 정적 최적화](/docs/pages/building-your-application/rendering/automatic-static-optimization)** 처럼 중요한 성능 최적화를 제거합니다.
 > - 사용자 지정 서버는 [Vercel](https://vercel.com/solutions/nextjs)에 배포할 수 **없습니다**.
 
-사용자 지정 서버의 예시:
+사용자 지정 서버의 예시.
 
 ```js filename="server.js"
 const { createServer } = require('http')
@@ -63,9 +63,9 @@ app.prepare().then(() => {
 })
 ```
 
-> `server.js`는 웹팩이나 바벨을 통과하지 않습니다. 실행 중인 노드의 버전과 파일에 있는 문법과 근원(source)이 호환이 되는지 확인하세요.
+> `server.js`는 웹팩이나 바벨을 통과하지 않습니다. 실행 중인 노드의 버전과 파일에 있는 문법과 원본이 호환되는지 확인하세요.
 
-사용자 지정 서버를 실행하려면 `package.json`에 있는 `scripts` 다음과 같이 수정해야 합니다 :
+사용자 지정 서버를 실행하려면 `package.json`에 있는 `scripts` 다음과 같이 수정해야 합니다.
 
 ```json filename="package.json"
 {
@@ -79,14 +79,14 @@ app.prepare().then(() => {
 
 ---
 
-사용자 정의 서버는 다음 import를 사용하여 Next.js 앱과 서버를 연결합니다 :
+사용자 정의 서버는 다음 import를 사용하여 Next.js 앱과 서버를 연결합니다.
 
 ```js
 const next = require('next')
 const app = next({})
 ```
 
-위 `next` 가져오기는 아래 옵션의 객체를 받는 함수입니다:
+위 `next` 가져오기는 아래 옵션의 객체를 받는 함수입니다.
 
 - `dev`: `Boolean` - 개발모드에서 Next.js를 실행할 지에 대한 여부입니다. 기본값은 `false` 입니다.
 - `dir`: `String` - Next.js 프로젝트의 경로입니다. 기본값은 `'.'` 입니다.
@@ -99,7 +99,7 @@ const app = next({})
 
 기본적으로, `Next`는 `pages`폴더 아래에 있는 각각의 파일 이름과 같은 경로 이름으로 제공합니다. 만약 사용자 정의 서버를 사용한다면, 여러 경로에서 동일한 콘텐츠가 제공될 수 있고 SEO 및 UX에 문제를 일으킬 수 있습니다.
 
-To disable this behavior and prevent routing based on files in `pages`, open `next.config.js` and disable the `useFileSystemPublicRoutes` config:
+위 동작을 비활성화 하고 `pages`의 파일 기반 라우팅을 막으려면, `next.config.js`을 열고 `useFileSystemPublicRoutes`설정을 비활성화 하세요.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -107,6 +107,6 @@ module.exports = {
 }
 ```
 
-> Note that `useFileSystemPublicRoutes` disables filename routes from SSR; client-side routing may still access those paths. When using this option, you should guard against navigation to routes you do not want programmatically.
+> `useFileSystemPublicRoutes`는 SSR에서 파일 이름 경로를 비활성화 합니다; 클라이언트 측의 라우팅은 여전히 비활성화된 경로들에 접근할 수 있습니다. 이 옵션을 사용할 때는 원하지 않는 경로로 이동하지 않게 프로그래밍적으로 방지해야 합니다.
 
-> You may also wish to configure the client-side router to disallow client-side redirects to filename routes; for that refer to [`router.beforePopState`](/docs/pages/api-reference/functions/use-router#routerbeforepopstate).
+> 또한 파일 이름 경로에 대한 클라이언트 측의 리다이렉트를 허용하지 않도록 클라이언트 측 라우터를 구성할 수 있습니다. [`router.beforePopState`](/docs/pages/api-reference/functions/use-router#routerbeforepopstate)를 참조하세요.
