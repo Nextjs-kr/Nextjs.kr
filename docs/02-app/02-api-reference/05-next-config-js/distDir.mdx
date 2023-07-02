@@ -1,11 +1,11 @@
 ---
 title: distDir
-description: Set a custom build directory to use instead of the default .next directory.
+description: 기본적인 .next 디렉토리 대신 사용할 커스텀 빌드 디렉토리를 설정합니다.
 ---
 
-You can specify a name to use for a custom build directory to use instead of `.next`.
+커스텀 빌드 디렉토리에 `.next` 대신 사용할 이름을 지정할 수 있습니다.
 
-Open `next.config.js` and add the `distDir` config:
+`next.config.js`를 열고 `distDir` 설정을 추가합니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -13,6 +13,7 @@ module.exports = {
 }
 ```
 
-Now if you run `next build` Next.js will use `build` instead of the default `.next` folder.
+이제 `next build`를 실행하면 Next.js는 기본적인 `.next` 폴더 대신 `build`를 사용합니다.
 
-> `distDir` **should not** leave your project directory. For example, `../build` is an **invalid** directory.
+> `distDir`는 프로젝트 디렉토리를 **벗어나지 않아야** 합니다.
+> 예를 들어, `../build`는 **유효하지 않은** 디렉토리입니다.
