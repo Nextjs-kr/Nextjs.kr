@@ -5,12 +5,12 @@ description: Next.js는 React 애플리케이션을 구축하기 위한 TypeScri
 
 Next.js는 React 애플리케이션을 구축하기 위한 TypeScript 우선 개발 환경을 제공합니다.
 
-필요한 패키지를 자동으로 설치하고 적절한 설정을 구성하기 위한 TypeScript 지원이 기본적으로 내장되어 제공됩니다.
+필요한 패키지를 자동으로 설치하고 적절한 설정을 구성하기 위한 TypeScript 지원이 내장되어 있습니다.
 
 <AppOnly>
 코드 에디터용 [TypeScript 플러그인](#typescript-plugin)도 있습니다.
 
-> **🎥 보기:** 내장된 TypeScript 플러그인에 대해 알아보기 → [YouTube (3분)](https://www.youtube.com/watch?v=pqMqn9fKEf8)
+> **🎥 참고:** 내장된 TypeScript 플러그인에 대해 알아보기 → [YouTube (3분)](https://www.youtube.com/watch?v=pqMqn9fKEf8)
 
 </AppOnly>
 
@@ -96,7 +96,7 @@ module.exports = nextConfig
 
 Next.js는 애플리케이션의 모든 기존 경로에 대한 정보를 포함하는 링크의 정의를 `.next/types`에 생성합니다. 그런 다음 TypeScript는 이를 이용하여 잘못된 링크에 대한 피드백을 에디터에서 제공할 수 있습니다.
 
-현재 실험적 기능에는 동적 세그먼트를 포함한 모든 문자열 리터럴을 지원합니다. 리터럴이 아닌 문자열의 경우 현재 `as Route`를 사용하여 `href`를 수동으로 타입 캐스팅해야 합니다.
+현재 실험적 기능에서는 동적 세그먼트를 포함한 모든 문자열 리터럴을 지원합니다. 리터럴이 아닌 문자열의 경우 현재 `as Route`를 사용하여 `href`를 수동으로 타입 캐스팅해야 합니다.
 
 ```tsx
 import type { Route } from 'next';
