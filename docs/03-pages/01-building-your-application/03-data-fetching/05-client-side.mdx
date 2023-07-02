@@ -45,15 +45,9 @@ function Profile() {
 
 ## SWR를 통한 Client-side 데이터 가져오기
 
-The team behind Next.js has created a React hook library for data fetching called [**SWR**](https://swr.vercel.app/). It is **highly recommended** if you are fetching data on the client-side. It handles caching, revalidation, focus tracking, refetching on intervals, and more.
-
 Next.js 팀은 [**SWR**](https://swr.vercel.app/)이라는 데이터 가져오기를 위한 React 훅 라이브러리를 만들었음. 클라이언트 측에서 데이터를 가져오기 경우 **매우 권장됩니다**. 캐싱, 유효성 재검사, 포커스 추적, 일정 간격으로 다시 가져오기 등을 처리
 
-Using the same example as above, we can now use SWR to fetch the profile data. SWR will automatically cache the data for us and will revalidate the data if it becomes stale.
-
 위와 동일한 예시를 사용하여, 이제 SWR을 사용하여 프로필 데이터를 가져올 수 있습니다. SWR은 자동으로 데이터를 캐시하고 데이터가 오래되면 유효성을 다시 검사함.
-
-For more information on using SWR, check out the [SWR docs](https://swr.vercel.app/docs/getting-started).
 
 SWR 사용에 대한 자세한 내용은 [**SWR 문서**](https://swr.vercel.app/docs/getting-started)를 확인하세요.
 
