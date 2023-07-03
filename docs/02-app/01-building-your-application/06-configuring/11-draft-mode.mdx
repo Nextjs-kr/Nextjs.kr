@@ -3,14 +3,13 @@ title: 초안 모드
 description: Next.js에는 정적 페이지와 동적 페이지 사이를 전환할 수 있는 초안 모드가 있습니다. 이 문서에서 App Router와 함께 작동하는 방법을 알아볼 수 있습니다.
 ---
 
-정적 렌더링은 페이지가 Headless CMS에서 데이터를 가져올 때 유용합니다. 
-하지만 Headless CMS에서 초안을 작성하고 페이지에서 초안을 바로 확인하려는 경우에는 이런 방식이 적합하지 않습니다. 
+정적 렌더링은 페이지가 Headless CMS에서 데이터를 가져올 때 유용합니다.
+하지만 Headless CMS에서 초안을 작성하고 페이지에서 초안을 바로 확인하려는 경우에는 이런 방식이 적합하지 않습니다.
 이러한 경우에는 페이지를 빌드 시간이 아닌 **요청 시간**에 렌더링하고,
-게시된 콘텐츠 대신 초안 콘텐츠를 가져오는 것이 Next.js에게 필요한 기능일 것입니다. 
+게시된 콘텐츠 대신 초안 콘텐츠를 가져오는 것이 Next.js에게 필요한 기능일 것입니다.
 또한 이러한 특정 경우에만 Next.js가 [동적 렌더링](/docs/app/building-your-application/rendering/static-and-dynamic-rendering)으로 전환하기를 원할 것입니다.
 
 Next.js에는 이 문제를 해결하는 **초안 모드(Draft Mode)**라는 기능이 있습니다. 이제부터 사용 방법에 대해 알려드리겠습니다.
-
 
 ## 1단계: 라우트 핸들러 생성 및 접근
 
@@ -40,7 +39,7 @@ export async function GET(request) {
 
 이렇게 하면 **쿠키**가 설정되어 초안 모드를 활성화합니다. 이 쿠키가 포함된 이후의 요청은 **초안 모드**를 실행하여, 정적으로 생성된 페이지의 동작을 변경합니다(자세한 내용은 아래에서 설명합니다).
 
-`/api/draft` 주소로 접근한 뒤, 브라우저의 개발자 도구를 통해 수동으로 테스트할 수 있습니다. '__prerender_bypass'라는 쿠키가 있는 `Set-Cookie` 응답 헤더를 확인하세요.
+`/api/draft` 주소로 접근한 뒤, 브라우저의 개발자 도구를 통해 수동으로 테스트할 수 있습니다. '\_\_prerender_bypass'라는 쿠키가 있는 `Set-Cookie` 응답 헤더를 확인하세요.
 
 ### Headless CMS에서 안전하게 접근하기
 
@@ -60,7 +59,7 @@ https://<your-site>/api/draft?secret=<token>&slug=<path>
 - `<token>`은 생성해둔 비밀 토큰으로 대체해야 합니다.
 - `<path>` 는 보려는 페이지의 경로여야 합니다. `posts/foo`를 보려면 `&slug=/posts/foo`를 사용해야 합니다.
 
-Headless CMS를 사용하면 초안 URL에 변수를 포함시켜 `<path>`를 `&slug=/posts/{entry.fields.slug}`와 같이 CMS의 데이터에 따라 동적으로 설정할 수 있습니다: 
+Headless CMS를 사용하면 초안 URL에 변수를 포함시켜 `<path>`를 `&slug=/posts/{entry.fields.slug}`와 같이 CMS의 데이터에 따라 동적으로 설정할 수 있습니다:
 
 **마지막으로**, 라우트 핸들러에서:
 
@@ -205,7 +204,7 @@ export default async function Page() {
 ```
 
 끝입니다! 이제 Headless CMS를 통하거나 수동으로 초안 모드가 활성화된 라우트 핸들러에 접근하면(비밀 토큰과 `slug` 필요) 초안 컨텐츠를 볼 수 있습니다.
-그리고 게시하지 않고도 업데이트된 초안 내용을 볼 수 있게 됩니다. 
+그리고 게시하지 않고도 업데이트된 초안 내용을 볼 수 있게 됩니다.
 
 Headless CMS에서 초안 URL을 아래처럼 설정하거나 직접 접근하면 초안을 볼 수 있습니다.
 
