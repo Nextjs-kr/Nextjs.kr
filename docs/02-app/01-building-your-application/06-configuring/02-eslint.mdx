@@ -57,7 +57,7 @@ yarn lint
 
 이제 ESLint를 실행할 때마다 `next lint`를 실행하여 오류를 포착할 수 있습니다. ESLint가 설정되면 모든 빌드(`next build`) 시에도 자동으로 실행됩니다. 오류는 빌드에 실패하지만 경고는 실패하지 않습니다.
 
-> 'next build' 중에 ESLint가 실행되지 않도록 하려면 [ESLint 무시하기](/docs/pages/api-reference/next-config-js/eslint) 설명서를 참조하세요.
+> `next build` 중에 ESLint가 실행되지 않도록 하려면 [ESLint 무시하기](/docs/pages/api-reference/next-config-js/eslint) 설명서를 참조하세요.
 
 개발 중에 코드 편집기에서 직접 경고 및 오류를 확인하려면 적절한 [통합](https://eslint.org/docs/user-guide/integrations#editors)을 사용하는 것이 좋습니다.
 
@@ -65,7 +65,7 @@ yarn lint
 
 기본 설정(`eslint-config-next`)에는 Next.js에서 최적의 린팅 환경을 구현하는 데 필요한 모든 것이 포함되어 있습니다. 애플리케이션에 ESLint가 아직 설정되지 않은 경우, 이 설정과 함께 `next lint`를 사용하여 ESLint를 설정하는 것을 권장합니다.
 
-> 다른 ESLint 설정과 함께 `eslint-config-next`를 사용하려면 [추가 설정]([#additional-configrations]) 섹션을 참조하여 충돌을 일으키지 않고 설정하는 방법을 알아보세요.
+> 다른 ESLint 설정과 함께 `eslint-config-next`를 사용하려면 [추가 설정]([#additional-configurations]) 섹션을 참조하여 충돌을 일으키지 않고 설정하는 방법을 알아보세요.
 
 다음 ESLint 플러그인의 권장 규칙 세트는 모두 `eslint-config-next` 내에서 사용됩니다.
 
@@ -101,7 +101,7 @@ Next.js는 기본 설정에 이미 번들로 제공되는 ESLint 플러그인 [`
 | <Check size={18} /> | [@next/next/no-styled-jsx-in-document](/docs/messages/no-styled-jsx-in-document)                                         | `pages/_document.js`에서 `styled-jsx`를 사용하지 않도록 합니다.                                                           |
 | <Check size={18} /> | [@next/next/no-sync-scripts](/docs/messages/no-sync-scripts)                                                             | 동기 스크립트를 방지합니다.                                                                                     |
 | <Check size={18} /> | [@next/next/no-title-in-document-head](/docs/messages/no-title-in-document-head)                                         | `next/document`에서 `Head` 컴포넌트와 함께 `<title>`을 사용하지 못하도록 합니다.                                           |
-| <Check size={18} /> | @next/next/no-typos                                                                                                      | [Next.js의 data-fetching](/docs/pages/building-your-application/data-fetching)에서 흔히 발생하는 오타를 방지합니다. |
+| <Check size={18} /> | @next/next/no-typos                                                                                                      | [Next.js의 data fetching](/docs/pages/building-your-application/data-fetching)에서 흔히 발생하는 오타를 방지합니다. |
 | <Check size={18} /> | [@next/next/no-unwanted-polyfillio](/docs/messages/no-unwanted-polyfillio)                                               | Polyfill.io에서 중복된 폴리필을 방지합니다.                                                                    |
 
 애플리케이션에 이미 ESLint가 설정되어 있는 경우, 몇 가지 조건이 충족되지 않는 한 `eslint-config-next`를 포함하지 말고 이 플러그인에서 직접 확장하는 것이 좋습니다. 자세한 내용은 [권장 플러그인 규칙 집합](/docs/pages/building-your-application/configuring/eslint#recommended-plugin-ruleset)을 참조하세요.
