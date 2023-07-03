@@ -5,7 +5,7 @@ description: Next.js에는 정적 페이지와 동적 페이지 사이를 전환
 
 정적 렌더링은 페이지가 Headless CMS에서 데이터를 가져올 때 유용합니다.
 하지만 Headless CMS에서 초안을 작성하고 페이지에서 초안을 바로 확인하려는 경우에는 이런 방식이 적합하지 않습니다.
-이러한 경우에는 페이지를 빌드 시간이 아닌 **요청 시간**에 렌더링하고,
+이럴 때는 페이지를 빌드 시간이 아닌 **요청 시간**에 렌더링하고,
 게시된 콘텐츠 대신 초안 콘텐츠를 가져오는 것이 Next.js에게 필요한 기능일 것입니다.
 또한 이러한 특정 경우에만 Next.js가 [동적 렌더링](/docs/app/building-your-application/rendering/static-and-dynamic-rendering)으로 전환하기를 원할 것입니다.
 
@@ -37,17 +37,17 @@ export async function GET(request) {
 }
 ```
 
-이렇게 하면 **쿠키**가 설정되어 초안 모드를 활성화합니다. 이 쿠키가 포함된 이후의 요청은 **초안 모드**를 실행하여, 정적으로 생성된 페이지의 동작을 변경합니다(자세한 내용은 아래에서 설명합니다).
+이렇게 **쿠키**를 설정해 초안 모드를 활성화합니다. 이 쿠키가 포함된 이후의 요청은 **초안 모드**를 실행하여, 정적으로 생성된 페이지의 동작을 변경합니다(자세한 내용은 아래에서 설명합니다).
 
 `/api/draft` 주소로 접근한 뒤, 브라우저의 개발자 도구를 통해 수동으로 테스트할 수 있습니다. '\_\_prerender_bypass'라는 쿠키가 있는 `Set-Cookie` 응답 헤더를 확인하세요.
 
 ### Headless CMS에서 안전하게 접근하기
 
-실제 작업에서는 Headless CMS에서 이 라우트 핸들러를 _안전하게_ 호출하고 싶을 것입니다. 구체적인 절차는 사용 중인 Headless CMS에 따라 다르지만 다음은 몇 가지 일반적인 방법입니다.
+실제 작업에서는 Headless CMS에서 이 라우트 핸들러를 _안전하게_ 호출하고 싶을 것입니다. 구체적인 절차는 사용 중인 Headless CMS에 따라 다르지만, 다음은 몇 가지 일반적인 방법입니다.
 
 이 단계에서는 사용 중인 Headless CMS가 **커스텀 초안 URL** 설정을 지원한다고 가정합니다. 지원하지 않는 경우에도 이 방법을 사용하여 초안 URL을 보호할 수 있지만, 그럴 경우엔 직접 초안 URL을 생성해 접근해야 합니다.
 
-**첫째** 원하는 토큰 생성기를 사용하여 **비밀 토큰 문자열**을 생성해야 합니다. 이 비밀 토큰은 Next.js 앱과 Headless CMS만 알 수 있습니다. 이 비밀 토큰은 CMS에 접근할 수 없는 사람들이 초안 URL에 접근하는 것을 방지합니다.
+**첫째** 원하는 토큰 생성기를 사용하여 **비밀 토큰 문자열**을 생성해야 합니다. 이 비밀 토큰은 Next.js 앱과 Headless CMS만 알 수 있습니다. 이 비밀 토큰은 CMS에 접근할 수 없는 사람이 초안 URL에 접근하는 것을 방지합니다.
 
 **둘째** Headless CMS가 커스텀 초안 URL 설정을 지원하는 경우, 초안 URL을 다음과 같이 지정합니다. 여기서는 라우트 핸들러가 `app/api/draft/route.ts`에 있다고 가정합니다.
 
@@ -56,10 +56,10 @@ https://<your-site>/api/draft?secret=<token>&slug=<path>
 ```
 
 - `<your-site>`는 배포한 도메인이 되어야 합니다.
-- `<token>`은 생성해둔 비밀 토큰으로 대체해야 합니다.
+- `<token>`은 생성해 둔 비밀 토큰으로 대체해야 합니다.
 - `<path>` 는 보려는 페이지의 경로여야 합니다. `posts/foo`를 보려면 `&slug=/posts/foo`를 사용해야 합니다.
 
-Headless CMS를 사용하면 초안 URL에 변수를 포함시켜 `<path>`를 `&slug=/posts/{entry.fields.slug}`와 같이 CMS의 데이터에 따라 동적으로 설정할 수 있습니다:
+Headless CMS를 사용하면 초안 URL에 변수를 포함해 `<path>`를 `&slug=/posts/{entry.fields.slug}`와 같이 CMS의 데이터에 따라 동적으로 설정할 수 있습니다:
 
 **마지막으로**, 라우트 핸들러에서:
 
@@ -88,7 +88,7 @@ export async function GET(request: Request) {
   // getPostBySlug는 Headless CMS에 필요한 데이터를 가져오는 로직을 구현합니다
   const post = await getPostBySlug(slug)
 
-  // 만약 slug 경로가 존재하지 않는다면 초안 모드를 활성화하지 않습니다
+  // slug 경로가 존재하지 않는다면 초안 모드를 활성화하지 않습니다
   if (!post) {
     return new Response('Invalid slug', { status: 401 })
   }
@@ -97,7 +97,7 @@ export async function GET(request: Request) {
   draftMode().enable()
 
   // 가져온 게시물의 경로로 리다이렉트합니다
-  // 리다이렉트 도중 취약점이 노출될 수 있으므로 searchParams.slug로 리디렉션하지 않습니다.
+  // 리다이렉트 도중 취약점이 노출될 수 있으므로 searchParams.slug로 리다이렉트하지 않습니다.
   redirect(post.slug)
 }
 ```
@@ -123,7 +123,7 @@ export async function GET(request) {
   // getPostBySlug는 Headless CMS에 필요한 데이터를 가져오는 로직을 구현합니다
   const post = await getPostBySlug(slug)
 
-  // 만약 slug 경로가 존재하지 않는다면 초안 모드를 활성화하지 않습니다
+  // slug 경로가 존재하지 않는다면 초안 모드를 활성화하지 않습니다
   if (!post) {
     return new Response('Invalid slug', { status: 401 })
   }
@@ -132,7 +132,7 @@ export async function GET(request) {
   draftMode().enable()
 
   // 가져온 게시물의 경로로 리다이렉트합니다
-  // 리다이렉트 도중 취약점이 노출될 수 있으므로 searchParams.slug로 리디렉션하지 않습니다.
+  // 리다이렉트 도중 취약점이 노출될 수 있으므로 searchParams.slug로 리다이렉트하지 않습니다.
   redirect(post.slug)
 }
 ```
@@ -203,7 +203,7 @@ export default async function Page() {
 }
 ```
 
-끝입니다! 이제 Headless CMS를 통하거나 수동으로 초안 모드가 활성화된 라우트 핸들러에 접근하면(비밀 토큰과 `slug` 필요) 초안 컨텐츠를 볼 수 있습니다.
+끝입니다! 이제 Headless CMS를 통하거나 수동으로 초안 모드가 활성화된 라우트 핸들러에 접근하면(비밀 토큰과 `slug` 필요) 초안의 내용을 볼 수 있습니다.
 그리고 게시하지 않고도 업데이트된 초안 내용을 볼 수 있게 됩니다.
 
 Headless CMS에서 초안 URL을 아래처럼 설정하거나 직접 접근하면 초안을 볼 수 있습니다.
@@ -238,11 +238,11 @@ export async function GET(request) {
 }
 ```
 
-그런 다음 `/api/disable-draft`로 요청을 보내 라우트 핸들러를 호출합니다. [`next/link`](/docs/pages/api-reference/components/link)를 사용하여 이 경로를 호출하는 경우, 프리페치로 쿠키가 실수로 삭제되는 것을 방지하기 위해 `prefetch={false}`를 전달해야 합니다.
+그런 다음 `/api/disable-draft`로 요청을 보내 라우트 핸들러를 호출합니다. [`next/link`](/docs/pages/api-reference/components/link)를 사용하여 이 경로를 호출하는 경우, 실수로 프리페치로 쿠키를 삭제하는 것을 방지하기 위해 `prefetch={false}`를 전달해야 합니다.
 
 ### `next build` 마다 새롭게
 
-`next build`를 실행할 때마다 새로운 우회 쿠키 값이 생성됩니다.
+`next build`를 실행할 때마다 새로운 우회 쿠키값이 생성됩니다.
 
 이렇게 하면 우회 쿠키를 추측할 수 없습니다.
 
