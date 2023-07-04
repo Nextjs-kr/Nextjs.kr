@@ -8,7 +8,7 @@ function Todo({ name, done, toggleComplete, deleteTodo }) {
         <span className={done ? 'text-gray-500' : ''}>{name}</span>
         <button
           type="button"
-          className="mx-4 p-1 rounded bg-purple-400 text-white font-bold"
+          className="mx-4 rounded bg-purple-400 p-1 font-bold text-white"
           onClick={(e) => {
             e.preventDefault()
             toggleComplete()
@@ -22,7 +22,7 @@ function Todo({ name, done, toggleComplete, deleteTodo }) {
             e.preventDefault()
             deleteTodo()
           }}
-          className=" p-1 bg-red-500 text-white rounded font-bold"
+          className=" rounded bg-red-500 p-1 font-bold text-white"
         >
           delete
         </button>
@@ -102,7 +102,7 @@ function TodoForm() {
   }
 
   return (
-    <form className="bg-white shadow-md rounded p-8" onSubmit={addTodo}>
+    <form className="rounded bg-white p-8 shadow-md" onSubmit={addTodo}>
       <ul>
         {todos.map((todo) => (
           <Todo
@@ -114,12 +114,12 @@ function TodoForm() {
           />
         ))}
       </ul>
-      <div className="flex my-4">
+      <div className="my-4 flex">
         <input
           type="text"
           onChange={handleNewTodo}
           value={newTodo}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
         />
         <button disabled={disabled} className="btn-yellow mx-4" type="submit">
           add

@@ -47,41 +47,41 @@ export default async function Index() {
   }
 
   return (
-    <div className="flex-1 flex flex-col max-w-3xl mt-72">
-      <h1 className="text-2xl mb-2 flex justify-between">
+    <div className="mt-72 flex max-w-3xl flex-1 flex-col">
+      <h1 className="mb-2 flex justify-between text-2xl">
         Hey, {user.email}
-        <form action={signOut} className="inline ml-2">
+        <form action={signOut} className="ml-2 inline">
           <button className="text-sm text-gray-400">Logout</button>
         </form>
       </h1>
 
       <hr />
 
-      <p className="text-gray-300 mt-16 mb-16">
+      <p className="mt-16 mb-16 text-gray-300">
         Here are some helpful resources to get you started! 👇
       </p>
 
-      <div className="flex gap-4 h-60 mb-16">
+      <div className="mb-16 flex h-60 gap-4">
         {resources.map(({ title, subtitle, url }) => (
           <a
-            className="flex-1 border border-gray-400 rounded-md p-6 hover:bg-gray-800"
+            className="flex-1 rounded-md border border-gray-400 p-6 hover:bg-gray-800"
             href={url}
           >
-            <h2 className="font-bold mb-2">{title}</h2>
+            <h2 className="mb-2 font-bold">{title}</h2>
             <p className="text-sm text-gray-400">{subtitle}</p>
           </a>
         ))}
       </div>
 
-      <p className="text-gray-300 mb-16">
+      <p className="mb-16 text-gray-300">
         Ready to build your app? Head over to `app/page.tsx` 👉
       </p>
 
-      <div className="bg-gray-800 rounded-md p-8 text-gray-300">
-        <p className="font-semibold mb-2 text-gray-200">
+      <div className="rounded-md bg-gray-800 p-8 text-gray-300">
+        <p className="mb-2 font-semibold text-gray-200">
           We have also included examples for creating a Supabase client in:
         </p>
-        <ul className="list-disc ml-8">
+        <ul className="ml-8 list-disc">
           <li>Client Components - `app/client-component-example/page.tsx`</li>
           <li>Server Components - `app/server-component-example/page.tsx`</li>
           <li>Server Actions - `app/server-action-example/page.tsx`</li>

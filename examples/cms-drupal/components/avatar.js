@@ -11,11 +11,11 @@ export default function Avatar({ author }) {
     <>
       {author && (
         <div className="flex items-center">
-          <div className="w-12 h-12 relative mr-4">
+          <div className="relative mr-4 h-12 w-12">
             <Image
               src={author.avatar.url}
               layout="fill"
-              className="w-12 h-12 rounded-full mr-4"
+              className="mr-4 h-12 w-12 rounded-full"
               alt={name}
             />
           </div>

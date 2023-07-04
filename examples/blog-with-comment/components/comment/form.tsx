@@ -16,7 +16,7 @@ export default function CommentForm({
   return (
     <form onSubmit={onSubmit}>
       <textarea
-        className="flex w-full max-h-40 p-3 rounded resize-y bg-gray-200 text-gray-900 placeholder-gray-500"
+        className="flex max-h-40 w-full resize-y rounded bg-gray-200 p-3 text-gray-900 placeholder-gray-500"
         rows={2}
         placeholder={
           isAuthenticated
@@ -28,10 +28,10 @@ export default function CommentForm({
         disabled={!isAuthenticated}
       />
 
-      <div className="flex items-center mt-4">
+      <div className="mt-4 flex items-center">
         {isAuthenticated ? (
           <div className="flex items-center space-x-6">
-            <button className="py-2 px-4 rounded bg-blue-600 text-white disabled:opacity-40 hover:bg-blue-700">
+            <button className="rounded bg-blue-600 py-2 px-4 text-white hover:bg-blue-700 disabled:opacity-40">
               Send
             </button>
             <button
@@ -44,7 +44,7 @@ export default function CommentForm({
         ) : (
           <button
             type="button"
-            className="py-2 px-4 rounded bg-blue-600 text-white disabled:opacity-40 hover:bg-blue-700"
+            className="rounded bg-blue-600 py-2 px-4 text-white hover:bg-blue-700 disabled:opacity-40"
             onClick={() => loginWithPopup()}
           >
             Log In

@@ -10,10 +10,10 @@ const Text = ({ slice }: TextProps) => {
         field={slice.primary.text}
         components={{
           heading2: ({ children }) => (
-            <h2 className="text-3xl mt-12 mb-4 leading-snug">{children}</h2>
+            <h2 className="mt-12 mb-4 text-3xl leading-snug">{children}</h2>
           ),
           heading3: ({ children }) => (
-            <h2 className="text-2xl mt-8 mb-4 leading-snug">{children}</h2>
+            <h2 className="mt-8 mb-4 text-2xl leading-snug">{children}</h2>
           ),
           paragraph: ({ children }) => <p className="my-6">{children}</p>,
           list: ({ children }) => <ul className="my-6">{children}</ul>,

@@ -25,7 +25,7 @@ export default function Hero({
           </div>
           {image && (
             <div className="col-xxl-6 col-xl-6 col-lg-6">
-              <div className="hero-image text-center text-lg-end">
+              <div className="hero-image text-lg-end text-center">
                 <Image
                   src={image}
                   layout="responsive"

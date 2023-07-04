@@ -20,7 +20,7 @@ function HomePage() {
         </div>
       </Container>
 
-      <div className="container max-w-4xl m-auto px-4 mt-20">
+      <div className="container m-auto mt-20 max-w-4xl px-4">
         <Image
           src="/desk.jpg"
           alt="my desk"

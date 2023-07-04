@@ -14,7 +14,7 @@ export default function TwoColumnWithImage({
       <div className="container">
         <div className="row">
           {image && imagePosition === 'left' && (
-            <div className="col-lg-6 order-last order-lg-first">
+            <div className="col-lg-6 order-lg-first order-last">
               <div className="left-image cta-image ">
                 <Image
                   src={image}

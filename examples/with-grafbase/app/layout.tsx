@@ -33,17 +33,17 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       </head>
       <body>
         <div className="flex">
-          <nav className="w-[350px] flex flex-col justify-between h-screen overflow-y-auto bg-gray-100">
-            <ul className="p-8 space-y-2">
+          <nav className="flex h-screen w-[350px] flex-col justify-between overflow-y-auto bg-gray-100">
+            <ul className="space-y-2 p-8">
               <li className="mb-6">
                 <Link
                   href="/"
-                  className="py-2 rounded-md shadow-sm block px-3 text-gray-600 hover:text-gray-800 transition bg-white"
+                  className="block rounded-md bg-white py-2 px-3 text-gray-600 shadow-sm transition hover:text-gray-800"
                 >
                   Home
                 </Link>
               </li>
-              <li className="px-3 py-2 uppercase text-xs text-gray-800 font-semibold">
+              <li className="px-3 py-2 text-xs font-semibold uppercase text-gray-800">
                 Posts
               </li>
               {postCollection?.edges?.map((edge) =>
@@ -51,7 +51,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
                   <li key={edge.node.id}>
                     <Link
                       href={`/posts/${edge.node.slug}`}
-                      className="py-2 rounded-md shadow-sm block px-3 text-gray-600 hover:text-gray-800 transition bg-white"
+                      className="block rounded-md bg-white py-2 px-3 text-gray-600 shadow-sm transition hover:text-gray-800"
                     >
                       {edge.node.title}
                     </Link>
@@ -61,7 +61,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
               <li>
                 <Link
                   href="/posts/not-found"
-                  className="py-2 rounded-md shadow-sm block px-3 text-gray-600 hover:text-gray-800 transition bg-white"
+                  className="block rounded-md bg-white py-2 px-3 text-gray-600 shadow-sm transition hover:text-gray-800"
                 >
                   Show 404 page
                 </Link>
@@ -69,7 +69,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
             </ul>
           </nav>
           <main className="flex-1 p-6 md:p-24">
-            <div className="max-w-3xl mx-auto">
+            <div className="mx-auto max-w-3xl">
               <div className="prose max-w-none">{children}</div>
             </div>
           </main>

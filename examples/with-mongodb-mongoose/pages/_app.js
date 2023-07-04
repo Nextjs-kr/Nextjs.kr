@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }) {
           alt="pet care logo"
         ></img>
       </div>
-      <div className="grid wrapper">
+      <div className="wrapper grid">
         <Component {...pageProps} />
       </div>
     </>

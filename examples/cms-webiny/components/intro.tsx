@@ -2,22 +2,22 @@ import { CMS_NAME, CMS_URL } from '../lib/constants'
 
 export default function Intro() {
   return (
-    <section className="flex flex-col items-center mt-16 mb-16 md:flex-row md:justify-between md:mb-12">
-      <h1 className="text-6xl font-bold leading-tight tracking-tighter md:text-8xl md:pr-8">
+    <section className="mt-16 mb-16 flex flex-col items-center md:mb-12 md:flex-row md:justify-between">
+      <h1 className="text-6xl font-bold leading-tight tracking-tighter md:pr-8 md:text-8xl">
         Blog.
       </h1>
-      <h4 className="mt-5 text-lg text-center md:text-left md:pl-8">
+      <h4 className="mt-5 text-center text-lg md:pl-8 md:text-left">
         A statically generated blog example using{' '}
         <a
           href="https://nextjs.org/"
-          className="underline transition-colors duration-200 hover:text-success"
+          className="hover:text-success underline transition-colors duration-200"
         >
           Next.js
         </a>{' '}
         and{' '}
         <a
           href={CMS_URL}
-          className="underline transition-colors duration-200 hover:text-success"
+          className="hover:text-success underline transition-colors duration-200"
         >
           {CMS_NAME}
         </a>

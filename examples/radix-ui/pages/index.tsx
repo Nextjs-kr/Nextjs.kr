@@ -20,7 +20,7 @@ function DropdownMenuItem({ children, ...props }) {
     <DropdownMenu.Item
       {...props}
       className={
-        'group bg-white hover:bg-gray-700 hover:text-gray-200 text-xs rounded flex items-center h-6 px-1 pl-6 relative select-none' +
+        'group relative flex h-6 select-none items-center rounded bg-white px-1 pl-6 text-xs hover:bg-gray-700 hover:text-gray-200' +
         (props.disabled ? ' text-gray-500' : '')
       }
     >
@@ -33,7 +33,7 @@ function DropdownMenuCheckboxItem({ children, ...props }) {
   return (
     <DropdownMenu.CheckboxItem
       {...props}
-      className="group bg-white hover:bg-gray-700 hover:text-gray-200 text-xs rounded flex items-center h-6 px-1 pl-6 relative select-none"
+      className="group relative flex h-6 select-none items-center rounded bg-white px-1 pl-6 text-xs hover:bg-gray-700 hover:text-gray-200"
     >
       {children}
     </DropdownMenu.CheckboxItem>
@@ -44,7 +44,7 @@ function DropdownMenuItemIndicator({ children, ...props }) {
   return (
     <DropdownMenu.ItemIndicator
       {...props}
-      className="absolute left-0 w-6 inline-flex items-center justify-center"
+      className="absolute left-0 inline-flex w-6 items-center justify-center"
     >
       {children}
     </DropdownMenu.ItemIndicator>
@@ -52,7 +52,7 @@ function DropdownMenuItemIndicator({ children, ...props }) {
 }
 
 function Separator() {
-  return <DropdownMenu.Separator className="h-[1px] bg-gray-300 m-1" />
+  return <DropdownMenu.Separator className="m-1 h-[1px] bg-gray-300" />
 }
 
 function DropdownMenuRadioItem({
@@ -65,7 +65,7 @@ function DropdownMenuRadioItem({
   return (
     <DropdownMenu.RadioItem
       {...props}
-      className="bg-white hover:bg-gray-700 hover:text-gray-200 text-xs rounded flex items-center h-6 px-1 pl-6 relative select-none"
+      className="relative flex h-6 select-none items-center rounded bg-white px-1 pl-6 text-xs hover:bg-gray-700 hover:text-gray-200"
     >
       {children}
     </DropdownMenu.RadioItem>
@@ -77,20 +77,20 @@ export default function Home() {
   const [urlsChecked, setUrlsChecked] = useState(false)
   const [person, setPerson] = useState('pedro')
   return (
-    <div className="h-screen w-full flex flex-col space-y-4 items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500">
-      <h1 className="text-6xl text-white font-semibold">
+    <div className="flex h-screen w-full flex-col items-center justify-center space-y-4 bg-gradient-to-r from-cyan-500 to-blue-500">
+      <h1 className="text-6xl font-semibold text-white">
         Radix UI + Tailwind CSS
       </h1>
-      <h1 className="text-4xl text-white font-semibold">Click me!</h1>
+      <h1 className="text-4xl font-semibold text-white">Click me!</h1>
 
       <DropdownMenu.Root>
         <DropdownMenu.Trigger
           asChild
-          className="bg-white text-xs rounded-3xl flex items-center h-8 px-2 relative select-none"
+          className="relative flex h-8 select-none items-center rounded-3xl bg-white px-2 text-xs"
         >
           <button
             aria-label="Customise options"
-            className="h-8 w-8 inline-flex items-center justify-center shadow-lg"
+            className="inline-flex h-8 w-8 items-center justify-center shadow-lg"
           >
             <HamburgerMenuIcon />
           </button>
@@ -98,7 +98,7 @@ export default function Home() {
 
         <DropdownMenu.Content
           sideOffset={5}
-          className="bg-white rounded p-1 shadow-lg"
+          className="rounded bg-white p-1 shadow-lg"
         >
           <DropdownMenuItem>
             New Tab <RightSlot>⌘+T</RightSlot>
@@ -110,7 +110,7 @@ export default function Home() {
             New Private Window <RightSlot>⇧+⌘+N</RightSlot>
           </DropdownMenuItem>
           <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger className="group bg-white hover:bg-gray-700 hover:text-gray-200 hover:border-0 text-xs rounded flex items-center h-6 px-1 pl-6 relative select-none">
+            <DropdownMenu.SubTrigger className="group relative flex h-6 select-none items-center rounded bg-white px-1 pl-6 text-xs hover:border-0 hover:bg-gray-700 hover:text-gray-200">
               More Tools
               <RightSlot>
                 <ChevronRightIcon />
@@ -119,7 +119,7 @@ export default function Home() {
             <DropdownMenu.SubContent
               sideOffset={2}
               alignOffset={-5}
-              className="bg-white rounded p-1 shadow-lg"
+              className="rounded bg-white p-1 shadow-lg"
             >
               <DropdownMenuItem>
                 Save Page As… <RightSlot>⌘+S</RightSlot>
@@ -150,7 +150,7 @@ export default function Home() {
             Show Full URLs
           </DropdownMenuCheckboxItem>
           <Separator />
-          <DropdownMenu.Label className="pl-6 leading-6 text-xs text-gray-700">
+          <DropdownMenu.Label className="pl-6 text-xs leading-6 text-gray-700">
             Contributors
           </DropdownMenu.Label>
 

@@ -16,17 +16,17 @@ const PostHeader = (props: PostHeaderProps) => {
   return (
     <>
       <PostTitle>{title}</PostTitle>
-      <div className="hidden md:block md:mb-12">
+      <div className="hidden md:mb-12 md:block">
         <Avatar
           name={author.title}
           picture={author.metadata.picture.imgix_url}
         />
       </div>
-      <div className="mb-8 md:mb-16 sm:mx-0">
+      <div className="mb-8 sm:mx-0 md:mb-16">
         <CoverImage title={title} url={coverImage.imgix_url} slug={''} />
       </div>
-      <div className="max-w-2xl mx-auto">
-        <div className="block md:hidden mb-6">
+      <div className="mx-auto max-w-2xl">
+        <div className="mb-6 block md:hidden">
           <Avatar
             name={author.title}
             picture={author.metadata.picture.imgix_url}

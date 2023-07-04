@@ -48,16 +48,16 @@ function LoginModal({ toggle, modalType, setUser }) {
   }
 
   return (
-    <form className="bg-white shadow-md rounded p-8">
+    <form className="rounded bg-white p-8 shadow-md">
       <div className="mb-4">
         <label
-          className="block text-purple-700 text-sm font-bold mb-2"
+          className="mb-2 block text-sm font-bold text-purple-700"
           htmlFor="username"
         >
           Username
         </label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
           id="username"
           type="text"
           placeholder="Username"
@@ -67,13 +67,13 @@ function LoginModal({ toggle, modalType, setUser }) {
       </div>
       <div className="mb-4">
         <label
-          className="block text-purple-700 text-sm font-bold mb-2"
+          className="mb-2 block text-sm font-bold text-purple-700"
           htmlFor="password"
         >
           Password
         </label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
           id="password"
           type="password"
           placeholder="*******"
@@ -83,7 +83,7 @@ function LoginModal({ toggle, modalType, setUser }) {
       </div>
       <div className="flex items-center justify-between">
         <span
-          className="font-bold cursor-pointer"
+          className="cursor-pointer font-bold"
           onClick={() => toggle(false)}
         >
           Cancel
@@ -106,7 +106,7 @@ function LoginModal({ toggle, modalType, setUser }) {
           </button>
         )}
       </div>
-      <p className="text-red-500 font-bold">{error}</p>
+      <p className="font-bold text-red-500">{error}</p>
     </form>
   )
 }

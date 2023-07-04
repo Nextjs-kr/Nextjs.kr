@@ -2,7 +2,7 @@ import { A } from './a'
 import { P } from './p'
 
 export const FootNotes = ({ children }) => (
-  <div className="text-base before:w-[200px] before:m-auto before:content[''] before:border-t before:border-gray-300 dark:before:border-[#444] before:block before:my-10">
+  <div className="before:content[''] text-base before:m-auto before:my-10 before:block before:w-[200px] before:border-t before:border-gray-300 dark:before:border-[#444]">
     {children}
   </div>
 )
@@ -11,7 +11,7 @@ export const Ref = ({ id }) => (
   <a
     href={`#f${id}`}
     id={`s${id}`}
-    className="relative text-xs top-[-5px] no-underline"
+    className="relative top-[-5px] text-xs no-underline"
   >
     [{id}]
   </a>
