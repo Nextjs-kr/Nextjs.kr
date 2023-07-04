@@ -40,7 +40,7 @@ export default function Page({ repo }) {
 }
 ```
 
-최상위 범위에서 모듈을 가져와 `getServerSideProps`에서 사용할 수 있습니다. 사용한 임포트는 클라이언트 사이드에 번들로 제공되지 않습니다. 즉, 데이터베이스에서 데이터를 가져오는 등의 서버 사이드 코드를 `getServerSideProps`에서 직접 작성할 수 있습니다.
+최상위 범위에서 모듈을 가져와 `getServerSideProps`에서 사용할 수 있습니다. 사용한 임포트는 **클라이언트 사이드에 번들로 제공되지 않습니다**. 즉, 데이터베이스에서 데이터를 가져오는 등의 **서버 사이드 코드를 `getServerSideProps`에서 직접 작성할 수 있습니다.**
 
 ## Context 매개변수
 
@@ -62,7 +62,7 @@ export default function Page({ repo }) {
 
 ## getServerSideProps 반환 값
 
-`getServerSideProps` 함수는 다음 props 중 하나를 가진 객체를 반환해야 합니다.
+`getServerSideProps` 함수는 **다음 속성들 중 하나를 가진** 객체를 반환해야 합니다.
 
 ### `props`
 
@@ -92,7 +92,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { data }, // will be passed to the page component as props
+    props: { data }, // 페이지 컴포넌트에 프로퍼티로 전달됩니다.
   }
 }
 ```
@@ -116,7 +116,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {}, // will be passed to the page component as props
+    props: {}, // 페이지 컴포넌트에 프로퍼티로 전달됩니다.
   }
 }
 ```
