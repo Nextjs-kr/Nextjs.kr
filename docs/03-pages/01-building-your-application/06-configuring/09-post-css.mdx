@@ -38,7 +38,7 @@ IE11용 [CSS 그리드 레이아웃](https://developer.mozilla.org/en-US/docs/We
 더 자세한 정보는 ["플러그인 커스터마이징"](#customizing-plugins)에서 확인해주세요.
 
 <details>
-  <summary>Click to view the configuration to enable CSS Grid Layout</summary>
+  <summary>CSS 그리드 레이아웃을 지원하기 위한 config 파일 설정을 보려면 클릭하세요.</summary>
 
 ```json filename="postcss.config.json"
 {
@@ -63,14 +63,15 @@ IE11용 [CSS 그리드 레이아웃](https://developer.mozilla.org/en-US/docs/We
 
 </details>
 
-CSS variables are not compiled because it is [not possible to safely do so](https://github.com/MadLittleMods/postcss-css-variables#caveats).
-If you must use variables, consider using something like [Sass variables](https://sass-lang.com/documentation/variables) which are compiled away by [Sass](https://sass-lang.com/).
 
-## Customizing Target Browsers
+CSS 변수는 [안전하게 컴파일할 수 없기 때문에](https://github.com/MadLittleMods/postcss-css-variables#caveats) 컴파일되지 않습니다.
+변수를 꼭 사용해야 한다면 [Sass](https://sass-lang.com/)로 컴파일 되는 [Sass 변수](https://sass-lang.com/documentation/variables)를 고려해보세요.
 
-Next.js allows you to configure the target browsers (for [Autoprefixer](https://github.com/postcss/autoprefixer) and compiled css features) through [Browserslist](https://github.com/browserslist/browserslist).
+## 브라우저 대상 커스터마이징
 
-To customize browserslist, create a `browserslist` key in your `package.json` like so:
+Next.js에서 [Browserslist](https://github.com/browserslist/browserslist)를 통해 대상 브라우저에 대해 설정할 수 있습니다.([Autoprefixer](https://github.com/postcss/autoprefixer)와 컴파일된 CSS 기능들을 위함)
+
+ browserslist를 설정하려면 다음과 같이 `package.json` 파일에  `browserslist` 키 값을 생성하세요:
 
 ```json filename="package.json"
 {
@@ -78,11 +79,12 @@ To customize browserslist, create a `browserslist` key in your `package.json` li
 }
 ```
 
-You can use the [browsersl.ist](https://browsersl.ist/?q=%3E0.3%25%2C+not+ie+11%2C+not+dead%2C+not+op_mini+all) tool to visualize what browsers you are targeting.
+[browsersl.ist](https://browsersl.ist/?q=%3E0.3%25%2C+not+ie+11%2C+not+dead%2C+not+op_mini+all) 도구를 사용하면 대상 브라우저를 시각화 할 수도 있습니다.
 
-## CSS Modules
+## CSS 모듈
 
 No configuration is needed to support CSS Modules. To enable CSS Modules for a file, rename the file to have the extension `.module.css`.
+CSS 모듈 지원을 위한 설정이 따로 필요하지 않습니다. 파일에서 CSS 모듈을 사용하고 싶다면 파일 이름을 확장자 `.module.css`로 변경합니다.
 
 You can learn more about [Next.js' CSS Module support here](/docs/pages/building-your-application/styling).
 
