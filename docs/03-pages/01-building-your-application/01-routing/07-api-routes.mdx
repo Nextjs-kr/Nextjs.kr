@@ -62,7 +62,7 @@ API 엔드포인트를 가져오려면 이 섹션의 시작 부분에 제공된 
 
 ## 주의 사항
 
-- API 라우트는 [CORS 헤더를 지정하지 않습니다](https://developer.mozilla.org/ko/docs/Web/HTTP/CORS). 이는 기본적으로 **동일 출처 전용**임을 의미합니다.
+- API 라우트는 [CORS 헤더를 지정하지 않습니다](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS). 이는 기본적으로 **동일 출처 전용**임을 의미합니다.
   이러한 동작은 [CORS 요청 헬퍼](https://github.com/vercel/next.js/tree/canary/examples/api-routes-cors)를 사용하여 요청 핸들러를 래핑함으로써 사용자 정의할 수 있습니다.
 - API 라우트는 [`output: 'export'`](/docs/pages/building-your-application/deploying/static-exports)와 함께 사용할 수 없습니다.
 
@@ -92,7 +92,7 @@ export const config = {
 
 `bodyParser`는 자동으로 활성화됩니다. 본문을 `Stream`으로 소비하거나 [`raw-body`](https://www.npmjs.com/package/raw-body)를 사용하려면 이를 `false`로 설정할 수 있습니다.
 
-자동 `bodyParsing`을 비활성화하는 사용 사례는 **웹훅** 요청의 원시 본문을 확인하려는 경우입니다. 예를 들어 [GitHub으로부터의 웹훅](https://docs.github.com/ko/webhooks-and-events/webhooks/securing-your-webhooks) 요청을 받을 수 있습니다.
+자동 `bodyParsing`을 비활성화하는 사용 사례는 **웹훅** 요청의 원시 본문을 확인하려는 경우입니다. 웹훅의 예시로는 [Github 웹훅](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks#validating-payloads-from-github)이 있습니다.
 
 ```js
 export const config = {
@@ -115,7 +115,7 @@ export const config = {
 }
 ```
 
-`externalResolver`는 이 라우트가 _express_ 또는 *connect*와 같은 외부 리졸버(resolver)에 의해 처리되고 있음을 서버에 명시적으로 알려주는 플래그입니다. 이 옵션을 활성화하면 미해결 요청에 대한 경고가 비활성화됩니다.
+`externalResolver`는 이 라우트가 _express_ 또는 _connect_와 같은 외부 리졸버(resolver)에 의해 처리되고 있음을 서버에 명시적으로 알려주는 플래그입니다. 이 옵션을 활성화하면 미해결 요청에 대한 경고가 비활성화됩니다.
 
 ```js
 export const config = {
@@ -137,7 +137,7 @@ export const config = {
 }
 ```
 
-`responseLimit`은 바이트 수 또는 `bytes`가 지원하는 어떤 문자열 형식도 받을 수 있습니다. 예를 들어 `1000`, `500kb` 또는 `3mb` 등이 가능합니다.
+`responseLimit`은 바이트 수 또는 `bytes`가 지원하는 어떤 문자열 형식도 받을 수 있습니다. 예를 들어 `1000` 또는 `'500kb'`, `'3mb'` 등이 가능합니다.
 이 값은 경고가 표시되기 전의 최대 응답 크기가 됩니다. 기본값은 4MB입니다. (위 참조)
 
 ```js
@@ -260,10 +260,10 @@ export default withFoo(handler)
 
 포함된 여러 헬퍼는 다음과 같습니다.
 
-- `res.status(code)` - 상태 코드를 설정하는 함수입니다. `code`는 유효한 [HTTP 상태 코드](https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C)여야 합니다.
+- `res.status(code)` - 상태 코드를 설정하는 함수입니다. `code`는 유효한 [HTTP 상태 코드](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)여야 합니다.
 - `res.json(body)` - JSON 응답을 보냅니다. `body`는 [직렬화할 수 있는 객체](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)여야 합니다.
 - `res.send(body)` - HTTP 응답을 보냅니다. `body`는 `string`, `object` 또는 `Buffer`일 수 있습니다.
-- `res.redirect([status,] path)` - 지정된 경로 또는 URL로 리다이렉트합니다. `status`는 유효한 [HTTP 상태 코드](https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C)여야 합니다.
+- `res.redirect([status,] path)` - 지정된 경로 또는 URL로 리다이렉트합니다. `status`는 유효한 [HTTP 상태 코드](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)여야 합니다.
   지정하지 않는다면 `status`의 기본값은 "307" 즉, "임시 리다이렉트(Temporary redirect)"입니다.
 - `res.revalidate(urlPath)` - `getStaticProps`를 사용하여 [요청 시 페이지 재검증](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation)을 수행합니다. `urlPath`는 `string`여야 합니다.
 
@@ -439,9 +439,9 @@ export default function handler(req, res) {
   - `pages/api/post/[pid].js` - `/api/post/1`, `/api/post/abc` 등과 일치합니다. 하지만 `/api/post/create`와는 일치하지 않습니다.
   - `pages/api/post/[...slug].js` - `/api/post/1/2`, `/api/post/a/b/c` 등과 일치합니다. 하지만 `/api/post/create`, `/api/post/abc`와는 일치하지 않습니다
 
-## 에지 API 라우트
+## 엣지 API 라우트
 
-에지 API 라우트를 사용하면 Next.js로 고성능 API를 만들 수 있습니다. [에지 런타임](/docs/pages/api-reference/edge)을 사용하기 때문에, 종종 Node.js 기반 API 라우트보다 빠릅니다. 이러한 성능 개선은 기본 Node.js API에 접근할 수 없는 [제약사항](/docs/pages/api-reference/edge#unsupported-apis)이 따르지만, 대신 에지 API 라우트는 표준 웹 API를 기반으로 합니다.
+엣지 API 라우트를 사용하면 Next.js로 고성능 API를 만들 수 있습니다. [엣지 런타임](/docs/pages/api-reference/edge)을 사용하기 때문에, 종종 Node.js 기반 API 라우트보다 빠릅니다. 이러한 성능 개선은 기본 Node.js API에 접근할 수 없는 [제약사항](/docs/pages/api-reference/edge#unsupported-apis)이 따르지만, 대신 엣지 API 라우트는 표준 웹 API를 기반으로 합니다.
 
 `pages/api` 폴더 내의 모든 파일은 `api/*`로 대응되며, 페이지가 아닌 API 엔드포인트로 처리됩니다. 이는 서버 측 전용 번들이며 클라이언트 측 번들 크기는 증가하지 않습니다.
 
@@ -545,7 +545,7 @@ export default async function handler(req: NextRequest) {
 
 #### 지역 설정 (배포를 위한)
 
-배포할 때 에지 함수를 특정 지역으로 제한하고 싶을 수 있습니다. 이렇게 하면 데이터 소스와 가까운 곳에 서버를 위치시켜 응답 시간을 줄일 수 있습니다. 이는 아래와 같이 구현할 수 있습니다.
+배포할 때 엣지 함수를 특정 지역으로 제한하고 싶을 수 있습니다. 이렇게 하면 데이터 소스와 가까운 곳에 서버를 위치시켜 응답 시간을 줄일 수 있습니다. 이는 아래와 같이 구현할 수 있습니다.
 
 > **참고**: 이 설정은 Next.js `v12.3.2` 이상에서 사용할 수 있습니다.
 
@@ -564,10 +564,10 @@ export default async function handler(req: NextRequest) {
 
 ## API 라우트와의 차이점
 
-에지 API 라우트는 [에지 런타임](/docs/pages/api-reference/edge)을 사용하며, API 라우트는 [Node.js 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)을 사용합니다.
+엣지 API 라우트는 [엣지 런타임](/docs/pages/api-reference/edge)을 사용하며, API 라우트는 [Node.js 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)을 사용합니다.
 
-에지 API 라우트는 서버로부터 [응답을 스트림](/docs/pages/api-reference/edge#stream-apis)할 수 있으며, 캐시된 여러 파일(예: HTML, CSS, JavaScript)에 접근한 *이후*에 실행됩니다. 서버 측 스트리밍은 더 빠른 [Time To First Byte (TTFB)](https://web.dev/ttfb/)로 성능을 향상할 수 있습니다.
+엣지 API 라우트는 서버로부터 [응답을 스트림](/docs/pages/api-reference/edge#stream-apis)할 수 있으며, 캐시된 여러 파일(예: HTML, CSS, JavaScript)에 접근한 _이후_에 실행됩니다. 서버 측 스트리밍은 더 빠른 [Time To First Byte (TTFB)](https://web.dev/ttfb/)로 성능을 향상할 수 있습니다.
 
-> **참고**: `getServerSideProps`와 함께 [에지 런타임](/docs/pages/api-reference/edge)을 사용하면 응답 객체에 접근할 수 없습니다. `res`에 접근이 필요하다면 `runtime: 'nodejs'`를 설정하여 [Node.js 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)을 사용해야 합니다.
+> **참고**: `getServerSideProps`와 함께 [엣지 런타임](/docs/pages/api-reference/edge)을 사용하면 응답 객체에 접근할 수 없습니다. `res`에 접근이 필요하다면 `runtime: 'nodejs'`를 설정하여 [Node.js 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)을 사용해야 합니다.
 
-에지 런타임에서 [지원하는 API](/docs/pages/api-reference/edge)와 [지원하지 않는 API](/docs/pages/api-reference/edge#unsupported-apis)를 확인해 보세요.
+엣지 런타임에서 [지원하는 API](/docs/pages/api-reference/edge)와 [지원하지 않는 API](/docs/pages/api-reference/edge#unsupported-apis)를 확인해 보세요.
