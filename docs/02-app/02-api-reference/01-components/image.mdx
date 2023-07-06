@@ -12,11 +12,11 @@ description: `next/image` 컴포넌트를 사용하여 Next.js 애플리케이�
 
 <PagesOnly>
 
-> **참고**: Next.js 13 버전부터 컴포넌트의 이름이 변경되었으므로 [next/legacy/image](/docs/pages/api-reference/components/image-legacy) 문서를 보는 것이 좋습니다.
+> **참고**: > **참고**: 컴포넌트의 이름이 변경되었으므로 Next.js 13 이전의 버전을 사용하신다면 [next/legacy/image](/docs/pages/api-reference/components/image-legacy) 문서를 보는 것이 좋습니다.
 
 </PagesOnly>
 
-이 API 레퍼런스는 Image 컴포넌트에서 사용할 수 있는 [props](#props)와 [구성 옵션](#configuration-options)의 사용법을 이해하는 데 도움이 됩니다. 기능 및 사용법은 이미지 [컴포넌트 페이지](/docs/app/building-your-application/optimizing/images)를 참조하세요.
+이 API 레퍼런스는 Image 컴포넌트에서 사용할 수 있는 [props](#props)와 [구성 옵션](#구성-옵션)의 사용법을 이해하는 데 도움이 됩니다. 기능 및 사용법은 이미지 [컴포넌트 페이지](/docs/app/building-your-application/optimizing/images)를 참조하세요.
 
 ```jsx filename="app/page.js"
 import Image from 'next/image'
@@ -114,7 +114,7 @@ export default function Page() {
 
 ## 선택 Props
 
-`<Image />` 컴포넌트는 필수 속성 외에도 여러 가지 추가 속성을 사용할 수 있습니다. 이 섹션에서는 Image 컴포넌트에서 일반적으로 사용되는 속성에 관해 설명합니다. 자주 사용되지 않는 속성에 대한 자세한 내용은 [고급 Props](#advanced-props) 섹션에서 확인할 수 있습니다.
+`<Image />` 컴포넌트는 필수 속성 외에도 여러 가지 추가 속성을 사용할 수 있습니다. 이 섹션에서는 Image 컴포넌트에서 일반적으로 사용되는 속성에 관해 설명합니다. 자주 사용되지 않는 속성에 대한 자세한 내용은 [고급 Props](#고급-props) 섹션에서 확인할 수 있습니다.
 
 ### `loader`
 
@@ -245,9 +245,9 @@ placeholder = 'empty' // {empty} | {blur}
 
 A placeholder to use while the image is loading. Possible values are `blur` or `empty`. Defaults to `empty`.
 
-`blur`인 경우 `blurDataURL` 프로퍼티는 플레이스홀더로 사용됩니다. `src`가 [정적으로 가져온](/docs/app/building-your-application/optimizing/images#local-images) 이미지이고 `.jpg`, `.png`, `.webp`, 또는 `.avif`인 경우 `blurDataURL`은 자동으로 채워집니다.
+`blur`인 경우 [`blurDataURL`](#blurdataurl) 프로퍼티는 플레이스홀더로 사용됩니다. `src`가 [정적으로 가져온](/docs/app/building-your-application/optimizing/images#local-images) 이미지이고 `.jpg`, `.png`, `.webp`, 또는 `.avif`인 경우 `blurDataURL`은 자동으로 채워집니다.
 
-동적 이미지의 경우 `blurDataURL` 프로퍼티를 제공해야 합니다. [Plaiceholder](https://github.com/joe-bell/plaiceholder) 와 같은 솔루션은 `base64` 생성에 도움이 될 수 있습니다.
+동적 이미지의 경우 [`blurDataURL`](#blurdataurl) 프로퍼티를 제공해야 합니다. [Plaiceholder](https://github.com/joe-bell/plaiceholder) 와 같은 솔루션은 `base64` 생성에 도움이 될 수 있습니다.
 
 `empty`인 경우 이미지가 로드되는 동안 플레이스홀더가 표시되지 않고 빈 공간만 표시됩니다.
 
@@ -353,6 +353,7 @@ base64로 인코딩된 이미지여야 합니다. 이미지가 확대되고 흐�
 - [`blur` 플레이스홀더 데모](https://image-component.nextjs.gallery/placeholder)
 - [`blurDataURL` prop으로 쉬머 효과를 적용한 데모](https://image-component.nextjs.gallery/shimmer)
 - [`blurDataURL` prop으로 색상 효과를 적용한 데모](https://image-component.nextjs.gallery/color)
+- 이미지와 일치하는 [단색 데이터 URL을 생성](https://png-pixel.com)할 수도 있습니다.
 
 ### `unoptimized`
 
@@ -483,9 +484,7 @@ export default function myImageLoader({ src, width, quality }) {
 
 <AppOnly>
 
-> **참고**: Customizing the image loader file, which accepts a function, require using [Client Components](/docs/getting-started/react-essentials#client-components) to serialize the provided function.
-
-함수를 전달받는 이미지 로더 파일을 커스텀하는 경우 제공된 함수를 직렬화하기 위해 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components)를 사용해야 합니다.
+> **참고**: 함수를 전달받는 이미지 로더 파일을 커스텀하는 경우 제공된 함수를 직렬화하기 위해 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components)를 사용해야 합니다.
 
 </AppOnly>
 
@@ -509,7 +508,7 @@ module.exports = {
 
 ### `imageSizes`
 
-`next.config.js` 파일에서 `images.imageSizes` 프로퍼티를 사용하면 이미지 너비 목록을 지정할 수 있습니다. 너비는 [디바이스 크기](#devicesizes) 배열과 연결되어 이미지 [소스셋](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset)을 생성하는데 사용되는 전체 크기 배열을 형성합니다.
+`next.config.js` 파일에서 `images.imageSizes` 프로퍼티를 사용하면 이미지 너비 목록을 지정할 수 있습니다. 너비는 [디바이스 크기](#devicesizes) 배열과 연결되어 이미지 [srcset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset)을 생성하는데 사용되는 전체 크기 배열을 형성합니다.
 
 이미지가 화면의 전체 너비보다 작다는 것을 나타내는 [`size`](#sizes) 속성을 제공하는 이미지에만 imageSizes가 사용되기 때문에 두 개의 별도 목록이 존재합니다. **따라서 imageSizes의 크기는 모두 deviceSizes의 가장 작은 크기보다 작아야 합니다.**
 
@@ -527,7 +526,7 @@ module.exports = {
 
 기본 [이미지 최적화 API](#loader)는 요청 헤더의 `Accept`를 통해 브라우저에 지원되는 이미지 형식을 자동으로 감지합니다.
 
-`Accept` 헤드가 구성된 포맷 중 둘 이상과 일치하는 경우 첫 번째로 일치하는 항목이 사용됩니다. 따라서 배열 순서가 중요합니다. 일치하는 항목이 없거나 소스 이미지가 [애니메이션](#animated-images)인 경우 최적화 API는 원본 이미지의 형식으로 폴백합니다.
+`Accept` 헤드가 구성된 포맷 중 둘 이상과 일치하는 경우 첫 번째로 일치하는 항목이 사용됩니다. 따라서 배열 순서가 중요합니다. 일치하는 항목이 없거나 소스 이미지가 [애니메이션](#애니메이션-이미지)인 경우 최적화 API는 원본 이미지의 형식으로 폴백합니다.
 
 구성을 제공하지 않으면 아래의 기본 값이 사용됩니다.
 
@@ -574,7 +573,7 @@ module.exports = {
 
 ### `minimumCacheTTL`
 
-캐싱과 최적화된 이미지의 TTL(Time to Live)을 초 단위로 구성할 수 있습니다. 대부분의 경우 파일 내용을 자동으로 해시하고 `Cache-Control` 헤더를 `불변`으로 설정하여 이미지를 영구적으로 캐시 하는 정적 이미지 가져오기를 사용하는 것이 좋습니다.
+캐싱과 최적화된 이미지의 TTL(Time to Live)을 초 단위로 구성할 수 있습니다. 대부분의 경우 파일 내용을 자동으로 해시하고 `Cache-Control` 헤더를 `immutable`(불변)로 설정하여 이미지를 영구적으로 캐시 하는 정적 이미지 가져오기를 사용하는 것이 좋습니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -584,11 +583,11 @@ module.exports = {
 }
 ```
 
-최적화된 이미지의 만료(또는 MaxAge)는 `minimumCacheTTL` 또는 업스트림 이미지 `Cache-Control` 헤더 중 더 큰 값으로 정의됩니다.
+최적화된 이미지의 만료(또는 Max Age)는 `minimumCacheTTL` 또는 업스트림 이미지 `Cache-Control` 헤더 중 더 큰 값으로 정의됩니다.
 
-이미지별로 캐싱 동작을 변경해야 하는 경우, 업스트림 이미지(예: `/_next/image` 자체가 아닌 `/some-asset.jpg`)에 [`헤더`](/docs/app/api-reference/next-config-js/headers)를 구성하여 `Cache-Control` 헤더를 설정할 수 있습니다.
+이미지 별로 캐싱 동작을 변경해야 하는 경우, 업스트림 이미지(예: `/_next/image` 자체가 아닌 `/some-asset.jpg`)에 [`headers`](/docs/app/api-reference/next-config-js/headers)를 구성하여 `Cache-Control` 헤더를 설정할 수 있습니다.
 
-현재로서는 캐시를 무효화하는 메커니즘이 없으므로 `minimumCacheTTL`을 낮게 유지하는 것이 가장 좋습니다. 그렇지 않으면 `src` 프로퍼티를 수동으로 변경하거나 `<distDir>/cache/images`를 삭제해야 할 수 있습니다.
+현재로서는 캐시를 무효화하는 메커니즘이 없으므로 `minimumCacheTTL`을 낮게 유지하는 것이 가장 좋습니다. 그렇지 않으면 [`src`](#src) 프로퍼티를 수동으로 변경하거나 `<distDir>/cache/images`를 삭제해야 할 수 있습니다.
 
 ### `disableStaticImages`
 
@@ -643,19 +642,19 @@ module.exports = {
 
 ## Version History
 
-| Version   | Changes                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `v13.2.0` | `contentDispositionType` 구성이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `v13.0.6` | `ref` prop이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| `v13.0.0` | `next/image` 가져오기 이름이 `next/legacy/image`로 변경되었습니다. `next/future/image` 가져오기 이름이 `next/image`로 변경되었습니다. codemod를 사용하면 가져오기 이름을 안전하게 자동으로 변경할 수 있습니다. `<span>` 래퍼가 제거되었습니다. `layout`, `objectFit`, `objectPosition`, `lazyBoundary`, `lazyRoot` prop이 제거되었습니다. `alt`는 필수입니다. `onLoadingComplete`는 `img` 요소에 대한 참조를 받습니다. 내장 로더 구성이 제거되었습니다. |
-| `v12.3.0` | `remotePatterns` 및 `unoptimized` 구성이 안정화 되었습니다.                                                                                                                                                                                                                                                                                                                                                                                             |
-| `v12.2.0` | 실험적인 `remotePatterns` 및 `unoptimized` 구성이 추가되었습니다. `layout="raw"`이 제거되었습니다.                                                                                                                                                                                                                                                                                                                                                      |
-| `v12.1.1` | `style` prop이 추가되었습니다. `layout="raw"`에 대한 실험적 지원이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                      |
-| `v12.1.0` | `dangerouslyAllowSVG` 및 `contentSecurityPolicy` 구성이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                 |
-| `v12.0.9` | `lazyRoot` prop이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| `v12.0.0` | `formats` 구성이 추가되었습니다.<br/>AVIF 포맷을 지원합니다.<br/>래퍼 `<div>`가 `<span>`로 변경되었습니다.                                                                                                                                                                                                                                                                                                                                              |
-| `v11.1.0` | `onLoadingComplete` 및 `lazyBoundary` props가 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                           |
-| `v11.0.0` | 정적 가져오기를 위한 `src` prop을 지원합니다.<br/>`placeholder` prop이 추가되었습니다.<br/>`blurDataURL` prop이 추가되었습니다.                                                                                                                                                                                                                                                                                                                         |
-| `v10.0.5` | `loader` prop이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `v10.0.1` | `layout` prop이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `v10.0.0` | `next/image`가 도입되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Version   | Changes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `v13.2.0` | `contentDispositionType` 구성이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `v13.0.6` | `ref` prop이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `v13.0.0` | `next/image` 가져오기 이름이 `next/legacy/image`로 변경되었습니다. `next/future/image` 가져오기 이름이 `next/image`로 변경되었습니다. [codemod를 사용](/docs/app/building-your-application/upgrading/codemods#next-image-to-legacy-image)하면 가져오기 이름을 안전하게 자동으로 변경할 수 있습니다. `<span>` 래퍼가 제거되었습니다. `layout`, `objectFit`, `objectPosition`, `lazyBoundary`, `lazyRoot` prop이 제거되었습니다. `alt`는 필수입니다. `onLoadingComplete`는 `img` 요소에 대한 참조를 받습니다. 내장 로더 구성이 제거되었습니다. |
+| `v12.3.0` | `remotePatterns` 및 `unoptimized` 구성이 안정화 되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `v12.2.0` | 실험적인 `remotePatterns` 및 `unoptimized` 구성이 추가되었습니다. `layout="raw"`이 제거되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `v12.1.1` | `style` prop이 추가되었습니다. `layout="raw"`에 대한 실험적 지원이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `v12.1.0` | `dangerouslyAllowSVG` 및 `contentSecurityPolicy` 구성이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `v12.0.9` | `lazyRoot` prop이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `v12.0.0` | `formats` 구성이 추가되었습니다.<br/>AVIF 포맷을 지원합니다.<br/>래퍼 `<div>`가 `<span>`로 변경되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `v11.1.0` | `onLoadingComplete` 및 `lazyBoundary` props가 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `v11.0.0` | 정적 가져오기를 위한 `src` prop을 지원합니다.<br/>`placeholder` prop이 추가되었습니다.<br/>`blurDataURL` prop이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `v10.0.5` | `loader` prop이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `v10.0.1` | `layout` prop이 추가되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `v10.0.0` | `next/image`가 도입되었습니다.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
