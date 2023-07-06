@@ -1,9 +1,9 @@
 ---
 title: ESLint
-description: Next.js provides an integrated ESLint experience by default. These conformance rules help you use Next.js in an optimal way.
+description: Next.js는 기본적으로 통합 ESLint 환경을 제공합니다. 이러한 적합성 규칙은 Next.js를 최적의 방식으로 사용하는 데 도움이 됩니다.
 ---
 
-Next.js provides an integrated [ESLint](https://eslint.org/) experience out of the box. Add `next lint` as a script to `package.json`:
+Next.js는 통합된 [ESLint](https://eslint.org/) 환경을 즉시 제공합니다. package.json`에 `next lint`를 스크립트로 추가합니다.
 
 ```json filename="package.json"
 {
@@ -13,19 +13,19 @@ Next.js provides an integrated [ESLint](https://eslint.org/) experience out of t
 }
 ```
 
-Then run `npm run lint` or `yarn lint`:
+그런 다음 `npm run lint` 또는 `yarn lint`를 실행합니다.
 
 ```bash filename="Terminal"
 yarn lint
 ```
 
-If you don't already have ESLint configured in your application, you will be guided through the installation and configuration process.
+애플리케이션에 ESLint가 아직 설정되지 않은 경우 설치 및 설정 프로세스를 안내합니다.
 
 ```bash filename="Terminal"
 yarn lint
 ```
 
-> You'll see a prompt like this:
+> 다음과 같은 메시지가 표시됩니다.
 >
 > ? How would you like to configure ESLint?
 >
@@ -33,9 +33,9 @@ yarn lint
 > Base  
 > Cancel
 
-One of the following three options can be selected:
+다음 세 가지 옵션 중 하나를 선택할 수 있습니다.
 
-- **Strict**: Includes Next.js' base ESLint configuration along with a stricter [Core Web Vitals rule-set](/docs/pages/building-your-application/configuring/eslint#core-web-vitals). This is the recommended configuration for developers setting up ESLint for the first time.
+- **Strict**: 보다 엄격한 [핵심 웹 바이탈 규칙 세트](/docs/pages/building-your-application/configuring/eslint#core-web-vitals)와 함께 Next.js의 기본 ESLint 설정을 포함합니다. 이 설정은 ESLint를 처음 설정하는 개발자에게 권장되는 설정입니다.
 
   ```json filename=".eslintrc.json"
   {
@@ -43,7 +43,7 @@ One of the following three options can be selected:
   }
   ```
 
-- **Base**: Includes Next.js' base ESLint configuration.
+- **Base**: Next.js의 기본 ESLint 설정을 포함합니다.
 
   ```json filename=".eslintrc.json"
   {
@@ -51,66 +51,66 @@ One of the following three options can be selected:
   }
   ```
 
-- **Cancel**: Does not include any ESLint configuration. Only select this option if you plan on setting up your own custom ESLint configuration.
+- **Cancel**: ESLint 설정을 포함하지 않습니다. 사용자 지정 ESLint 설정을 직접 설정하려는 경우에만 이 옵션을 선택합니다.
 
-If either of the two configuration options are selected, Next.js will automatically install `eslint` and `eslint-config-next` as development dependencies in your application and create an `.eslintrc.json` file in the root of your project that includes your selected configuration.
+두 가지 설정 옵션 중 하나를 선택하면, Next.js가 애플리케이션에 개발 의존성 요소로 `eslint` 및 `eslint-config-next`를 자동으로 설치하고 프로젝트 루트에 선택한 설정이 포함된 `.eslintrc.json` 파일을 생성합니다.
 
-You can now run `next lint` every time you want to run ESLint to catch errors. Once ESLint has been set up, it will also automatically run during every build (`next build`). Errors will fail the build, while warnings will not.
+이제 ESLint를 실행할 때마다 `next lint`를 실행하여 오류를 포착할 수 있습니다. ESLint가 설정되면 모든 빌드(`next build`) 시에도 자동으로 실행됩니다. 오류는 빌드에 실패하지만 경고는 실패하지 않습니다.
 
-> If you do not want ESLint to run during `next build`, refer to the documentation for [Ignoring ESLint](/docs/pages/api-reference/next-config-js/eslint).
+> `next build` 중에 ESLint가 실행되지 않도록 하려면 [ESLint 무시하기](/docs/pages/api-reference/next-config-js/eslint) 설명서를 참조하세요.
 
-We recommend using an appropriate [integration](https://eslint.org/docs/user-guide/integrations#editors) to view warnings and errors directly in your code editor during development.
+개발 중에 코드 편집기에서 직접 경고 및 오류를 확인하려면 적절한 [통합](https://eslint.org/docs/user-guide/integrations#editors)을 사용하는 것이 좋습니다.
 
-## ESLint Config
+## ESLint 설정
 
-The default configuration (`eslint-config-next`) includes everything you need to have an optimal out-of-the-box linting experience in Next.js. If you do not have ESLint already configured in your application, we recommend using `next lint` to set up ESLint along with this configuration.
+기본 설정(`eslint-config-next`)에는 Next.js에서 최적의 린팅 환경을 구현하는 데 필요한 모든 것이 포함되어 있습니다. 애플리케이션에 ESLint가 아직 설정되지 않은 경우, 이 설정과 함께 `next lint`를 사용하여 ESLint를 설정하는 것을 권장합니다.
 
-> If you would like to use `eslint-config-next` along with other ESLint configurations, refer to the [Additional Configurations](#additional-configurations) section to learn how to do so without causing any conflicts.
+> 다른 ESLint 설정과 함께 `eslint-config-next`를 사용하려면 [추가 설정]([#additional-configurations]) 섹션을 참조하여 충돌을 일으키지 않고 설정하는 방법을 알아보세요.
 
-Recommended rule-sets from the following ESLint plugins are all used within `eslint-config-next`:
+다음 ESLint 플러그인의 권장 규칙 세트는 모두 `eslint-config-next` 내에서 사용됩니다.
 
 - [`eslint-plugin-react`](https://www.npmjs.com/package/eslint-plugin-react)
 - [`eslint-plugin-react-hooks`](https://www.npmjs.com/package/eslint-plugin-react-hooks)
 - [`eslint-plugin-next`](https://www.npmjs.com/package/@next/eslint-plugin-next)
 
-This will take precedence over the configuration from `next.config.js`.
+이 설정은 `next.config.js`의 설정보다 우선합니다.
 
-## ESLint Plugin
+## ESLint 플러그인
 
-Next.js provides an ESLint plugin, [`eslint-plugin-next`](https://www.npmjs.com/package/@next/eslint-plugin-next), already bundled within the base configuration that makes it possible to catch common issues and problems in a Next.js application. The full set of rules is as follows:
+Next.js는 기본 설정에 이미 번들로 제공되는 ESLint 플러그인 [`eslint-plugin-next`](https://www.npmjs.com/package/@next/eslint-plugin-next)를 제공하여 Next.js 애플리케이션의 일반적인 이슈와 문제를 포착할 수 있도록 합니다. 전체 규칙 세트는 다음과 같습니다.
 
-<Check size={18} /> Enabled in the recommended configuration
+<Check size={18} /> 권장 설정에서 사용
 
 |                     | Rule                                                                                                                     | Description                                                                                                      |
 | :-----------------: | ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| <Check size={18} /> | [@next/next/google-font-display](/docs/messages/google-font-display)                                                     | Enforce font-display behavior with Google Fonts.                                                                 |
-| <Check size={18} /> | [@next/next/google-font-preconnect](/docs/messages/google-font-preconnect)                                               | Ensure `preconnect` is used with Google Fonts.                                                                   |
-| <Check size={18} /> | [@next/next/inline-script-id](/docs/messages/inline-script-id)                                                           | Enforce `id` attribute on `next/script` components with inline content.                                          |
-| <Check size={18} /> | [@next/next/next-script-for-ga](/docs/messages/next-script-for-ga)                                                       | Prefer `next/script` component when using the inline script for Google Analytics.                                |
-| <Check size={18} /> | [@next/next/no-assign-module-variable](/docs/messages/no-assign-module-variable)                                         | Prevent assignment to the `module` variable.                                                                     |
-| <Check size={18} /> | [@next/next/no-before-interactive-script-outside-document](/docs/messages/no-before-interactive-script-outside-document) | Prevent usage of `next/script`'s `beforeInteractive` strategy outside of `pages/_document.js`.                   |
-| <Check size={18} /> | [@next/next/no-css-tags](/docs/messages/no-css-tags)                                                                     | Prevent manual stylesheet tags.                                                                                  |
-| <Check size={18} /> | [@next/next/no-document-import-in-page](/docs/messages/no-document-import-in-page)                                       | Prevent importing `next/document` outside of `pages/_document.js`.                                               |
-| <Check size={18} /> | [@next/next/no-duplicate-head](/docs/messages/no-duplicate-head)                                                         | Prevent duplicate usage of `<Head>` in `pages/_document.js`.                                                     |
-| <Check size={18} /> | [@next/next/no-head-element](/docs/messages/no-head-element)                                                             | Prevent usage of `<head>` element.                                                                               |
-| <Check size={18} /> | [@next/next/no-head-import-in-document](/docs/messages/no-head-import-in-document)                                       | Prevent usage of `next/head` in `pages/_document.js`.                                                            |
-| <Check size={18} /> | [@next/next/no-html-link-for-pages](/docs/messages/no-html-link-for-pages)                                               | Prevent usage of `<a>` elements to navigate to internal Next.js pages.                                           |
-| <Check size={18} /> | [@next/next/no-img-element](/docs/messages/no-img-element)                                                               | Prevent usage of `<img>` element due to slower LCP and higher bandwidth.                                         |
-| <Check size={18} /> | [@next/next/no-page-custom-font](/docs/messages/no-page-custom-font)                                                     | Prevent page-only custom fonts.                                                                                  |
-| <Check size={18} /> | [@next/next/no-script-component-in-head](/docs/messages/no-script-component-in-head)                                     | Prevent usage of `next/script` in `next/head` component.                                                         |
-| <Check size={18} /> | [@next/next/no-styled-jsx-in-document](/docs/messages/no-styled-jsx-in-document)                                         | Prevent usage of `styled-jsx` in `pages/_document.js`.                                                           |
-| <Check size={18} /> | [@next/next/no-sync-scripts](/docs/messages/no-sync-scripts)                                                             | Prevent synchronous scripts.                                                                                     |
-| <Check size={18} /> | [@next/next/no-title-in-document-head](/docs/messages/no-title-in-document-head)                                         | Prevent usage of `<title>` with `Head` component from `next/document`.                                           |
-| <Check size={18} /> | @next/next/no-typos                                                                                                      | Prevent common typos in [Next.js's data fetching functions](/docs/pages/building-your-application/data-fetching) |
-| <Check size={18} /> | [@next/next/no-unwanted-polyfillio](/docs/messages/no-unwanted-polyfillio)                                               | Prevent duplicate polyfills from Polyfill.io.                                                                    |
+| <Check size={18} /> | [@next/next/google-font-display](/docs/messages/google-font-display)                                                     | Google 폰트로 표시 동작을 적용합니다.                                                                 |
+| <Check size={18} /> | [@next/next/google-font-preconnect](/docs/messages/google-font-preconnect)                                               | Google 폰트에 `preconnect`이 사용되었는지 확인합니다.                                                                   |
+| <Check size={18} /> | [@next/next/inline-script-id](/docs/messages/inline-script-id)                                                           | 인라인 콘텐츠가 있는 `next/script` 컴포넌트에 `id` 속성을 적용합니다.                                          |
+| <Check size={18} /> | [@next/next/next-script-for-ga](/docs/messages/next-script-for-ga)                                                       | Google 애널리틱스에 인라인 스크립트를 사용할 때 `next/script` 설정 요소를 선호합니다.                                |
+| <Check size={18} /> | [@next/next/no-assign-module-variable](/docs/messages/no-assign-module-variable)                                         | `module` 변수에 대한 할당을 방지합니다.                                                                     |
+| <Check size={18} /> | [@next/next/no-before-interactive-script-outside-document](/docs/messages/no-before-interactive-script-outside-document) | `next/script`의 `beforeInteractive` 전략이 `pages/_document.js` 외부에서 사용되지 않도록 합니다.                   |
+| <Check size={18} /> | [@next/next/no-css-tags](/docs/messages/no-css-tags)                                                                     | 수동 스타일시트 태그를 방지합니다.                                                                                  |
+| <Check size={18} /> | [@next/next/no-document-import-in-page](/docs/messages/no-document-import-in-page)                                       | `pages/_document.js` 외부에서 `next/document` 가져오기를 방지합니다.                                               |
+| <Check size={18} /> | [@next/next/no-duplicate-head](/docs/messages/no-duplicate-head)                                                         | `pages/_document.js`에서 `<Head>`의 중복 사용을 방지합니다.                                                     |
+| <Check size={18} /> | [@next/next/no-head-element](/docs/messages/no-head-element)                                                             | `<head>` 요소의 사용을 방지합니다.                                                                               |
+| <Check size={18} /> | [@next/next/no-head-import-in-document](/docs/messages/no-head-import-in-document)                                       | `pages/_document.js`에서 `next/head`의 사용을 방지합니다.                                                            |
+| <Check size={18} /> | [@next/next/no-html-link-for-pages](/docs/messages/no-html-link-for-pages)                                               | 내부 Next.js 페이지로 이동하는 데 `<a>` 요소를 사용하지 않도록 합니다.                                           |
+| <Check size={18} /> | [@next/next/no-img-element](/docs/messages/no-img-element)                                                               | LCP가 느려지고 대역폭이 높아지므로 `<img>` 요소의 사용을 방지합니다.                                         |
+| <Check size={18} /> | [@next/next/no-page-custom-font](/docs/messages/no-page-custom-font)                                                     | 페이지 전용 사용자 정의 글꼴을 방지합니다.                                                                                  |
+| <Check size={18} /> | [@next/next/no-script-component-in-head](/docs/messages/no-script-component-in-head)                                     | `next/head` 컴포넌트에서 `next/script`를 사용하지 않도록 합니다.                                                         |
+| <Check size={18} /> | [@next/next/no-styled-jsx-in-document](/docs/messages/no-styled-jsx-in-document)                                         | `pages/_document.js`에서 `styled-jsx`를 사용하지 않도록 합니다.                                                           |
+| <Check size={18} /> | [@next/next/no-sync-scripts](/docs/messages/no-sync-scripts)                                                             | 동기 스크립트를 방지합니다.                                                                                     |
+| <Check size={18} /> | [@next/next/no-title-in-document-head](/docs/messages/no-title-in-document-head)                                         | `next/document`에서 `Head` 컴포넌트와 함께 `<title>`을 사용하지 못하도록 합니다.                                           |
+| <Check size={18} /> | @next/next/no-typos                                                                                                      | [Next.js의 data fetching](/docs/pages/building-your-application/data-fetching)에서 흔히 발생하는 오타를 방지합니다. |
+| <Check size={18} /> | [@next/next/no-unwanted-polyfillio](/docs/messages/no-unwanted-polyfillio)                                               | Polyfill.io에서 중복된 폴리필을 방지합니다.                                                                    |
 
-If you already have ESLint configured in your application, we recommend extending from this plugin directly instead of including `eslint-config-next` unless a few conditions are met. Refer to the [Recommended Plugin Ruleset](/docs/pages/building-your-application/configuring/eslint#recommended-plugin-ruleset) to learn more.
+애플리케이션에 이미 ESLint가 설정되어 있는 경우, 몇 가지 조건이 충족되지 않는 한 `eslint-config-next`를 포함하지 말고 이 플러그인에서 직접 확장하는 것이 좋습니다. 자세한 내용은 [권장 플러그인 규칙 집합](/docs/pages/building-your-application/configuring/eslint#recommended-plugin-ruleset)을 참조하세요.
 
-### Custom Settings
+### 사용자 지정 설정
 
 #### `rootDir`
 
-If you're using `eslint-plugin-next` in a project where Next.js isn't installed in your root directory (such as a monorepo), you can tell `eslint-plugin-next` where to find your Next.js application using the `settings` property in your `.eslintrc`:
+Next.js가 루트 디렉터리에 설치되지 않은 프로젝트(예: 모노레포)에서 `eslint-plugin-next`를 사용하는 경우, `.eslintrc`의 `settings` 속성을 사용하여 Next.js 애플리케이션을 찾을 위치를 `eslint-plugin-next`에 지정할 수 있습니다.
 
 ```json filename=".eslintrc.json"
 {
@@ -123,11 +123,11 @@ If you're using `eslint-plugin-next` in a project where Next.js isn't installed 
 }
 ```
 
-`rootDir` can be a path (relative or absolute), a glob (i.e. `"packages/*/"`), or an array of paths and/or globs.
+`rootDir`은 경로(상대 또는 절대), 전역(예: `"packages/*/"`) 또는 경로 또는 전역의 배열이거나, 경로와 전역의 배열일 수 있습니다.
 
-## Linting Custom Directories and Files
+## 사용자 지정 디렉터리 및 파일 린팅
 
-By default, Next.js will run ESLint for all files in the `pages/`, `app/`, `components/`, `lib/`, and `src/` directories. However, you can specify which directories using the `dirs` option in the `eslint` config in `next.config.js` for production builds:
+기본적으로 Next.js는 `pages/`, `app/`, `components/`, `lib/` 및 `src/` 디렉터리에 있는 모든 파일에 대해 ESLint를 실행합니다. 그러나 프로덕션 빌드의 경우 `next.config.js`의 `eslint` 설정에서 `dirs` 옵션을 사용하여 디렉터리를 지정할 수 있습니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -137,23 +137,23 @@ module.exports = {
 }
 ```
 
-Similarly, the `--dir` and `--file` flags can be used for `next lint` to lint specific directories and files:
+마찬가지로 `--dir` 및 `--file` 플래그를 `next lint`에 사용하여 특정 디렉터리 및 파일을 린트할 수 있습니다.
 
 ```bash filename="Terminal"
 next lint --dir pages --dir utils --file bar.js
 ```
 
-## Caching
+## 캐싱
 
-To improve performance, information of files processed by ESLint are cached by default. This is stored in `.next/cache` or in your defined [build directory](/docs/pages/api-reference/next-config-js/distDir). If you include any ESLint rules that depend on more than the contents of a single source file and need to disable the cache, use the `--no-cache` flag with `next lint`.
+성능 향상을 위해 ESLint가 처리한 파일 정보는 기본적으로 캐시됩니다. 이는 `.next/cache` 또는 정의한 [빌드 디렉토리](/docs/pages/api-reference/next-config-js/distDir)에 저장됩니다. 단일 소스 파일의 내용보다 더 많은 것에 의존하는 ESLint 규칙을 포함하고 캐시를 비활성화해야 하는 경우 `--no-cache` 플래그와 함께 `next lint`를 사용하세요.
 
 ```bash filename="Terminal"
 next lint --no-cache
 ```
 
-## Disabling Rules
+## 규칙 비활성화
 
-If you would like to modify or disable any rules provided by the supported plugins (`react`, `react-hooks`, `next`), you can directly change them using the `rules` property in your `.eslintrc`:
+지원되는 플러그인(`react`, `react-hook`, `next`)에서 제공하는 규칙을 수정하거나 비활성화하려면 `.eslintrc`의 `rules` 속성을 사용하여 직접 변경할 수 있습니다.
 
 ```json filename=".eslintrc.json"
 {
@@ -165,9 +165,9 @@ If you would like to modify or disable any rules provided by the supported plugi
 }
 ```
 
-### Core Web Vitals
+### 핵심 웹 바이탈
 
-The `next/core-web-vitals` rule set is enabled when `next lint` is run for the first time and the **strict** option is selected.
+`next/core-web-vitals` 규칙 세트는 `next lint`가 처음 실행되고 **strict** 옵션이 선택되면 활성화됩니다.
 
 ```json filename=".eslintrc.json"
 {
@@ -175,17 +175,17 @@ The `next/core-web-vitals` rule set is enabled when `next lint` is run for the f
 }
 ```
 
-`next/core-web-vitals` updates `eslint-plugin-next` to error on a number of rules that are warnings by default if they affect [Core Web Vitals](https://web.dev/vitals/).
+`next/core-web-vitals`은 [Core Web Vitals](https://web.dev/vitals/)에 영향을 미치는 경우 기본적으로는 경고인 여러 규칙에 오류를 발생시키도록 `eslint-plugin-next`을 업데이트합니다.
 
-> The `next/core-web-vitals` entry point is automatically included for new applications built with [Create Next App](/docs/app/api-reference/create-next-app).
+> [Create Next App](/docs/app/api-reference/create-next-app)로 빌드한 새 애플리케이션에는 `next/core-web-vitals` 엔트리 포인트가 자동으로 포함됩니다.
 
-## Usage With Other Tools
+## 다른 도구와 함께 사용
 
 ### Prettier
 
-ESLint also contains code formatting rules, which can conflict with your existing [Prettier](https://prettier.io/) setup. We recommend including [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) in your ESLint config to make ESLint and Prettier work together.
+ESLint에는 코드 서식 지정 규칙이 포함되어 있어 기존 [Prettier](https://prettier.io/) 설정과 충돌할 수 있습니다. ESLint와 Prettier가 함께 작동하도록 하려면 ESLint 설정에 [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier)를 포함할 것을 권장합니다.
 
-First, install the dependency:
+우선 종속성을 설치합니다.
 
 ```bash filename="Terminal"
 npm install --save-dev eslint-config-prettier
@@ -193,7 +193,7 @@ npm install --save-dev eslint-config-prettier
 yarn add --dev eslint-config-prettier
 ```
 
-Then, add `prettier` to your existing ESLint config:
+그런 다음 기존 ESLint 설정에 `prettier`를 추가합니다.
 
 ```json filename=".eslintrc.json"
 {
@@ -203,7 +203,7 @@ Then, add `prettier` to your existing ESLint config:
 
 ### lint-staged
 
-If you would like to use `next lint` with [lint-staged](https://github.com/okonet/lint-staged) to run the linter on staged git files, you'll have to add the following to the `.lintstagedrc.js` file in the root of your project in order to specify usage of the `--file` flag.
+`next lint`를 [lint-staged](https://github.com/okonet/lint-staged)와 함께 사용하여 스테이징된 git 파일에서 린트를 실행하려면 프로젝트 루트에 있는 `.lintstagedrc.js` 파일에 다음을 추가하여 `--file` 플래그의 사용을 지정해야 합니다.
 
 ```js filename=".lintstagedrc.js"
 const path = require('path')
@@ -218,21 +218,21 @@ module.exports = {
 }
 ```
 
-## Migrating Existing Config
+## 기존 설정 마이그레이션
 
-### Recommended Plugin Ruleset
+### 권장 플러그인 규칙 세트
 
-If you already have ESLint configured in your application and any of the following conditions are true:
+애플리케이션에 이미 ESLint가 설정되어 있고 다음 조건 중 하나라도 해당되는 경우:
 
-- You have one or more of the following plugins already installed (either separately or through a different config such as `airbnb` or `react-app`):
+- 다음 플러그인 중 하나 이상이 이미 설치되어 있는 경우(개별적으로 또는 `airbnb` 또는 `react-app`과 같은 다른 설정을 통해):
   - `react`
   - `react-hooks`
   - `jsx-a11y`
   - `import`
-- You've defined specific `parserOptions` that are different from how Babel is configured within Next.js (this is not recommended unless you have [customized your Babel configuration](/docs/pages/building-your-application/configuring/babel))
-- You have `eslint-plugin-import` installed with Node.js and/or TypeScript [resolvers](https://github.com/benmosher/eslint-plugin-import#resolvers) defined to handle imports
+- 바벨이 Next.js 내에서 설정되는 방식과 다른 특정 `parserOptions`을 정의한 경우([바벨 설정을 사용자 정의](/docs/pages/building-your-application/configuring/babel)하지 않은 경우 권장하지 않음)
+- 가져오기를 처리하도록 정의된 Node.js 및/또는 TypeScript [resolvers](https://github.com/benmosher/eslint-plugin-import#resolvers)와 함께 `eslint-plugin-import`가 설치되어 있는 경우
 
-Then we recommend either removing these settings if you prefer how these properties have been configured within [`eslint-config-next`](https://github.com/vercel/next.js/blob/canary/packages/eslint-config-next/index.js) or extending directly from the Next.js ESLint plugin instead:
+그렇다면 이러한 속성이 [`eslint-config-next`](https://github.com/vercel/next.js/blob/canary/packages/eslint-config-next/index.js) 내에서 설정되는 방식을 선호하는 경우 이러한 설정을 제거하거나 대신 Next.js ESLint 플러그인에서 직접 확장할 것을 권장합니다.
 
 ```js
 module.exports = {
@@ -243,7 +243,7 @@ module.exports = {
 }
 ```
 
-The plugin can be installed normally in your project without needing to run `next lint`:
+플러그인은 `next lint`를 실행할 필요 없이 프로젝트에 정상적으로 설치할 수 있습니다.
 
 ```bash filename="Terminal"
 npm install --save-dev @next/eslint-plugin-next
@@ -251,11 +251,13 @@ npm install --save-dev @next/eslint-plugin-next
 yarn add --dev @next/eslint-plugin-next
 ```
 
-This eliminates the risk of collisions or errors that can occur due to importing the same plugin or parser across multiple configurations.
+이렇게 하면 여러 설정에서 동일한 플러그인이나 구문 분석기(parser)를 가져올 때 발생할 수 있는 충돌이나 오류의 위험이 사라집니다.
 
-### Additional Configurations
+### 추가 설정
 
-If you already use a separate ESLint configuration and want to include `eslint-config-next`, ensure that it is extended last after other configurations. For example:
+이미 별도의 ESLint 설정을 사용하고 있고 `eslint-config-next`를 포함하려는 경우 다른 설정 다음에 마지막으로 확장해야 합니다.
+
+예시:
 
 ```json filename=".eslintrc.json"
 {
@@ -263,6 +265,6 @@ If you already use a separate ESLint configuration and want to include `eslint-c
 }
 ```
 
-The `next` configuration already handles setting default values for the `parser`, `plugins` and `settings` properties. There is no need to manually re-declare any of these properties unless you need a different configuration for your use case.
+`next` 설정은 이미 `parser`, `plugins` 및 `settings` 속성에 대한 기본값 설정을 처리합니다. 사용 사례에 따라 다른 설정이 필요한 경우가 아니라면 이러한 속성을 수동으로 다시 선언할 필요가 없습니다.
 
-If you include any other shareable configurations, **you will need to make sure that these properties are not overwritten or modified**. Otherwise, we recommend removing any configurations that share behavior with the `next` configuration or extending directly from the Next.js ESLint plugin as mentioned above.
+다른 공유 가능한 설정을 포함하는 경우 **이 속성을 덮어쓰거나 수정하지 않았는지 확인해야 합니다**. 아니면 위에서 언급한 대로 `next` 설정과 동작을 공유하는 모든 설정을 제거하거나 Next.js ESLint 플러그인에서 직접 확장하는 것이 좋습니다.
