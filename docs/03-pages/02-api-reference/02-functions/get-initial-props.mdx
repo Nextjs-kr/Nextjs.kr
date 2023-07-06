@@ -1,11 +1,11 @@
 ---
 title: getInitialProps
-description: getInitialProps를 사용하여 React 컴포넌트에 동적 데이터를 서버에서 가져옵니다.
+description: getInitialProps를 사용하여 서버에서 React 컴포넌트를 위한 동적 데이터를 가져옵니다.
 ---
 
-> **참고**: `getInitialProps`는 레거시 API입니다. [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 또는 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)을 사용하는 것이 좋습니다.
+> **참고**: `getInitialProps`는 레거시 API입니다. 대신에 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 또는 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)를 사용하는 것이 좋습니다.
 
-`getInitialProps`는 기본적으로 내보내는 페이지의 React 컴포넌트에 추가할 수 있는 비동기 함수입니다. 이 함수는 페이지 전환 시 서버 측과 클라이언트 측에서 모두 실행됩니다. 함수의 결과는 React 컴포넌트에 `props`로 전달됩니다.
+`getInitialProps`는 페이지에 대해 기본적으로 내보낸 React 컴포넌트에 추가할 수 있는 `async` 함수입니다. 이 함수는 페이지 전환 시 서버 측과 클라이언트 측에서 모두 실행됩니다. 함수의 결과는 React 컴포넌트에 `props`로 전달됩니다.
 
 ```tsx filename="pages/index.tsx" switcher
 import { NextPageContext } from 'next'
@@ -55,4 +55,4 @@ export default function Page({ stars }) {
 ## 주의 사항
 
 - `getInitialProps`는 `pages/` 최상위 파일에서만 사용할 수 있으며 중첩된 컴포넌트에서는 사용할 수 없습니다. 컴포넌트 수준에서 중첩된 데이터를 가져오려면 [App Router](/docs/app/building-your-application/data-fetching)를 확인해 보세요.
-- 정적인 경로인지 동적인 경로인지와 관계없이, `getInitialProps`에서 `props`로 반환된 모든 데이터는 초기 HTML에서 클라이언트 측에서 확인할 수 있습니다. 이는 페이지가 올바르게 [hydrate](https://react.dev/reference/react-dom/hydrate) 되도록 하기 위한 것입니다. 클라이언트에서 사용하면 안 되는 민감한 정보를 `props`에 전달하지 않도록 주의하세요.
+- 정적인 경로인지 동적인 경로인지와 관계없이, `getInitialProps`에서 `props`로 반환된 모든 데이터는 클라이언트 측에서 초기 HTML을 통해 확인할 수 있습니다. 이는 페이지가 올바르게 [hydrate](https://react.dev/reference/react-dom/hydrate) 되도록 하기 위한 것입니다. 클라이언트에서 사용하면 안 되는 민감한 정보를 `props`에 전달하지 않도록 주의하세요.
