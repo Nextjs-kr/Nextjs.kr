@@ -37,7 +37,7 @@ export async function getStaticProps() {
     host: process.env.DB_HOST,
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
-  });
+  })
   // ...
 }
 ```
@@ -78,29 +78,29 @@ NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk
 > **참고**: 앱이 빌드된 후에는 이러한 환경 변수의 변경에 더 이상 응답하지 않습니다. 예를 들어 Heroku 파이프라인을 사용하여 한 환경에서 빌드한 슬러그를 다른 환경으로 전환하거나, 단일 Docker 이미지를 여러 환경에 빌드 및 배포하는 경우, 모든 `NEXT_PUBLIC_` 변수는 빌드 시점에 평가된 값으로 고정되므로 이 값들은 프로젝트를 빌드할 때 적절하게 설정해야 합니다. 런타임 환경 값에 액세스해야 하는 경우, 자체 API를 설정하여 클라이언트에 제공해야 합니다 (요청 시 또는 초기화 중에).
 
 ```js filename="pages/index.js"
-import setupAnalyticsService from '../lib/my-analytics-service';
+import setupAnalyticsService from '../lib/my-analytics-service'
 
 // 'NEXT_PUBLIC_ANALYTICS_ID'는 'NEXT_PUBLIC_' 접두사가 붙기 때문에 여기에서 사용할 수 있습니다.
 // 빌드 시점에 `setupAnalyticsService('abcdefghijk')`로 변환됩니다.
-setupAnalyticsService(process.env.NEXT_PUBLIC_ANALYTICS_ID);
+setupAnalyticsService(process.env.NEXT_PUBLIC_ANALYTICS_ID)
 
 function HomePage() {
-  return <h1>Hello World</h1>;
+  return <h1>Hello World</h1>
 }
 
-export default HomePage;
+export default HomePage
 ```
 
 다음과 같은 동적 조회는 인라인되지 _않습니다_.
 
 ```js
 // 변수를 사용하기 때문에 인라인되지 않습니다.
-const varName = 'NEXT_PUBLIC_ANALYTICS_ID';
-setupAnalyticsService(process.env[varName]);
+const varName = 'NEXT_PUBLIC_ANALYTICS_ID'
+setupAnalyticsService(process.env[varName])
 
 // 변수를 사용하기 때문에 인라인되지 않습니다.
-const env = process.env;
-setupAnalyticsService(env.NEXT_PUBLIC_ANALYTICS_ID);
+const env = process.env
+setupAnalyticsService(env.NEXT_PUBLIC_ANALYTICS_ID)
 ```
 
 ## 기본 환경 변수
@@ -139,12 +139,12 @@ vercel env pull .env.local
 
 ```js
 // 아래는 테스트 설정을 위해 Jest 전역 설정 파일 또는 이와 유사한 파일에서 사용할 수 있습니다.
-import { loadEnvConfig } from '@next/env';
+import { loadEnvConfig } from '@next/env'
 
 export default async () => {
-  const projectDir = process.cwd();
-  loadEnvConfig(projectDir);
-};
+  const projectDir = process.cwd()
+  loadEnvConfig(projectDir)
+}
 ```
 
 ## 환경 변수 로드 순서
