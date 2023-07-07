@@ -16,9 +16,9 @@ Next.js는 [내장된 CSS 지원](/docs/pages/building-your-application/styling)
 
 Next.js는 다음과 같이 별도의 구성 없이 CSS를 변환하여 컴파일합니다.
 
-- [Autoprefixer](https://github.com/postcss/autoprefixer) 는 자동으로 CSS 규칙에 접두사(vendor prefixes)를 추가합니다. (IE11 호환)
-- [Cross-browser Flexbox bugs](https://github.com/philipwalton/flexbugs) 는 [사양](https://www.w3.org/TR/css-flexbox-1/)에 맞게 동작하도록 수정되었습니다.
-- Internet Explorer 11과의 호환성을 위해 새로운 CSS 기능들이 자동으로 컴파일 됩니다:
+- [Autoprefixer](https://github.com/postcss/autoprefixer)는 자동으로 CSS 규칙에 접두사(vendor prefixes)를 추가합니다. (IE11 호환)
+- [Cross-browser Flexbox bugs](https://github.com/philipwalton/flexbugs)는 [사양](https://www.w3.org/TR/css-flexbox-1/)에 맞게 동작하도록 수정되었습니다.
+- Internet Explorer 11과의 호환성을 위해 새로운 CSS 기능들이 자동으로 컴파일됩니다:
   - [`all` 속성](https://developer.mozilla.org/en-US/docs/Web/CSS/all)
   - [Break 속성들](https://developer.mozilla.org/en-US/docs/Web/CSS/break-after)
   - [`font-variant` 속성](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant)
@@ -28,12 +28,13 @@ Next.js는 다음과 같이 별도의 구성 없이 CSS를 변환하여 컴파�
 기본적으로 IE11 지원을 위해 [CSS 그리드](https://www.w3.org/TR/css-grid-1/)와 [커스텀 속성들](https://developer.mozilla.org/en-US/docs/Web/CSS/var)(CSS 변수들)은 **컴파일하지 않습니다.**
 
 IE11용 [CSS 그리드 레이아웃](https://developer.mozilla.org/en-US/docs/Web/CSS/grid)을 컴파일하려면 CSS 파일 상단에 다음 주석을 추가할 수 있습니다.
+
 ```css
 /* autoprefixer grid: autoplace */
 ```
 
-또한 아래와 같이 config 파일에 autoprefixer를 추가하여 전체 프로젝트에 IE11에서의 [CSS 그리드 레이아웃](https://developer.mozilla.org/en-US/docs/Web/CSS/grid) 지원을 활성화 할 수 있습니다.(접힌 글)
-더 자세한 정보는 ["플러그인 커스터마이징"](#customizing-plugins)에서 확인해주세요.
+또한 아래와 같이 config 파일에 autoprefixer를 추가하여 전체 프로젝트에 IE11에서의 [CSS 그리드 레이아웃](https://developer.mozilla.org/en-US/docs/Web/CSS/grid) 지원을 활성화할 수 있습니다. (접힌 글)
+더 자세한 정보는 ["플러그인 커스터마이징"](#customizing-plugins)에서 확인해 주세요.
 
 <details>
   <summary>CSS 그리드 레이아웃을 지원하기 위한 config 파일 설정을 보려면 클릭하세요.</summary>
@@ -61,15 +62,14 @@ IE11용 [CSS 그리드 레이아웃](https://developer.mozilla.org/en-US/docs/We
 
 </details>
 
-
 CSS 변수는 [안전하게 컴파일할 수 없기 때문에](https://github.com/MadLittleMods/postcss-css-variables#caveats) 컴파일되지 않습니다.
-변수를 꼭 사용해야 한다면 [Sass](https://sass-lang.com/)로 컴파일 되는 [Sass 변수](https://sass-lang.com/documentation/variables)를 고려해보세요.
+변수를 꼭 사용해야 한다면 [Sass](https://sass-lang.com/)로 컴파일되는 [Sass 변수](https://sass-lang.com/documentation/variables)를 고려해 보세요.
 
 ## 브라우저 대상 커스터마이징
 
-Next.js에서 [Browserslist](https://github.com/browserslist/browserslist)를 통해 대상 브라우저에 대해 설정할 수 있습니다.([Autoprefixer](https://github.com/postcss/autoprefixer)와 컴파일된 CSS 기능들을 위함)
+Next.js에서 [Browserslist](https://github.com/browserslist/browserslist)를 통해 대상 브라우저에 대해 설정할 수 있습니다. ([Autoprefixer](https://github.com/postcss/autoprefixer)와 컴파일된 CSS 기능들을 위함)
 
- browserslist를 설정하려면 다음과 같이 `package.json` 파일에  `browserslist` 키 값을 생성하세요:
+browserslist를 설정하려면 다음과 같이 `package.json` 파일에 `browserslist` 키값을 생성하세요:
 
 ```json filename="package.json"
 {
@@ -77,7 +77,7 @@ Next.js에서 [Browserslist](https://github.com/browserslist/browserslist)를 �
 }
 ```
 
-[browsersl.ist](https://browsersl.ist/?q=%3E0.3%25%2C+not+ie+11%2C+not+dead%2C+not+op_mini+all) 도구를 사용하면 대상 브라우저를 시각화 할 수도 있습니다.
+[browsersl.ist](https://browsersl.ist/?q=%3E0.3%25%2C+not+ie+11%2C+not+dead%2C+not+op_mini+all) 도구를 사용하면 대상 브라우저를 시각화할 수도 있습니다.
 
 ## CSS 모듈
 
@@ -88,8 +88,8 @@ Next.js의 CSS 모듈 지원에 대해 자세히 알고 싶다면 [여기](/docs
 ## 커스터마이징 플러그인
 
 > **경고**: PostCSS config 파일을 정의하면 Next.js는 [기본 동작](#default-behavior)을 **완전히 비활성화**합니다.
-> [Autoprefixer](https://github.com/postcss/autoprefixer)를 포함하여 컴파일해야 하는 모든 기능을 수동으로 구성해야합니다.
-> 또한 커스텀한 구성에 포함된 모든 플로그인을 수동으로 설치해야 합니다. `npm install postcss-flexbugs-fixes postcss-preset-env`.
+> [Autoprefixer](https://github.com/postcss/autoprefixer)를 포함하여 컴파일해야 하는 모든 기능을 수동으로 구성해야 합니다.
+> 또한 커스텀한 구성에 포함된 모든 플러그인을 수동으로 설치해야 합니다. `npm install postcss-flexbugs-fixes postcss-preset-env`.
 
 PostCSS 구성을 커스텀하려면 `postcss.config.json` 파일을 프로젝트 루트 경로에 만듭니다.
 Next.js에서 사용하는 기본 구성은 다음과 같습니다:
@@ -145,9 +145,9 @@ module.exports = {
 
 > **알아두면 좋은 점**: Next.js는 파일이름을 `.postcssrc.js`로 지정하는 것을 허용합니다.
 
-PostCSS 플러그인을 불러올 때 **`require()`을 사용하지 마세요.** 플러그인은 문자열로 받아와야 합니다.
+PostCSS 플러그인을 불러올 때 **`require()`를 사용하지 마세요.** 플러그인은 문자열로 받아와야 합니다.
 
-> **알아두면 좋은 점**: 같은 프로젝트에서 non-Next.js 도구를 지원하려면 상호운용되는 객체 기반 형식을 사용해야합니다:
+> **알아두면 좋은 점**: 같은 프로젝트에서 non-Next.js 도구를 지원하려면 상호운용되는 객체 기반 형식을 사용해야 합니다:
 >
 > ```js
 > module.exports = {
