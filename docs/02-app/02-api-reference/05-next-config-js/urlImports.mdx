@@ -1,14 +1,14 @@
 ---
-title: urlImports
-description: Configure Next.js to allow importing modules from external URLs (experimental).
+title: URL 가져오기
+description: 외부 URL에서 모듈을 가져올 수 있도록 Next.js를 구성합니다.
 ---
 
-URL imports are an experimental feature that allows you to import modules directly from external servers (instead of from the local disk).
+URL 가져오기는 (로컬 디스크가 아닌) 외부 서버에서 직접 모듈을 가져올 수 있는 실험적 기능입니다.
 
-> **Warning**: This feature is experimental. Only use domains that you trust to download and execute on your machine. Please exercise
-> discretion, and caution until the feature is flagged as stable.
+> **경고**: 실험적인 기능입니다. 신뢰할 수 있는 도메인만 사용하여 다운로드하고 실행하십시오.
+> 기능이 안정될 때까지 신중히 사용하십시오.
 
-To opt-in, add the allowed URL prefixes inside `next.config.js`:
+사용을 위해 'next.config.js' 내에 허용할 URL을 추가합니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -18,33 +18,33 @@ module.exports = {
 }
 ```
 
-Then, you can import modules directly from URLs:
+그러면 URL에서 모듈을 직접 가져올 수 있습니다.
 
 ```js
 import { a, b, c } from 'https://example.com/assets/some/module.js'
 ```
 
-URL Imports can be used everywhere normal package imports can be used.
+URL 가져오기는 일반적인 패키지 가져오기를 사용하는 모든 곳에서 사용할 수 있습니다.
 
-## Security Model
+## 보안 모델
 
-This feature is being designed with **security as the top priority**. To start, we added an experimental flag forcing you to explicitly allow the domains you accept URL imports from. We're working to take this further by limiting URL imports to execute in the browser sandbox using the [Edge Runtime](/docs/app/api-reference/edge).
+이 기능은 **보안**을 최우선으로 설계되었습니다. URL 가져오기를 허용한 도메인의 명시적 사용을 강제하는 실험 플래그를 추가했습니다. [Edge Runtime](/docs/app/api-reference/edge)를 사용해 브라우저 샌드박스에서 실행할 URL 가져오기를 제한함으로써 더욱 보안을 위해 노력했습니다.
 
-## Lockfile
+## 잠금 파일
 
-When using URL imports, Next.js will create a `next.lock` directory containing a lockfile and fetched assets.
-This directory **must be committed to Git**, not ignored by `.gitignore`.
+URL 가져오기를 사용할 때 Next.js는 잠금 파일과 불러온 에셋을 포함하는 'next.lock' 디렉터리를 만듭니다.
+이 디렉터리는 **Git에 커밋되어야 하며** ".gitignore"에 의해 무시되어서는 안 됩니다.
 
-- When running `next dev`, Next.js will download and add all newly discovered URL Imports to your lockfile
-- When running `next build`, Next.js will use only the lockfile to build the application for production
+- 'next dev'를 실행하면 Next.js가 새로 검색된 모든 URL 가져오기를 잠금 파일에 다운로드하고 추가합니다.
+- 'next build'를 실행할 때 Next.js는 잠금 파일만 사용하여 애플리케이션을 빌드합니다.
 
-Typically, no network requests are needed and any outdated lockfile will cause the build to fail.
-One exception is resources that respond with `Cache-Control: no-cache`.
-These resources will have a `no-cache` entry in the lockfile and will always be fetched from the network on each build.
+일반적으로 네트워크 요청이 필요하지 않으며 오래된 잠금 파일로 인해 빌드가 실패합니다.
+한 가지 예외는 'Cache-Control: no-cache'로 응답하는 리소스입니다.
+이러한 리소스는 잠금 파일에 'no-cache' 항목이 있으며 각 빌드의 네트워크에서 항상 불러옵니다.
 
-## Examples
+## 예시
 
-### Skypack
+### 스카이팩
 
 ```js
 import confetti from 'https://cdn.skypack.dev/canvas-confetti'
@@ -58,7 +58,7 @@ export default () => {
 }
 ```
 
-### Static Image Imports
+### 정적 이미지 가져오기
 
 ```js
 import Image from 'next/image'
@@ -71,7 +71,7 @@ export default () => (
 )
 ```
 
-### URLs in CSS
+### CSS 내 URL
 
 ```css
 .className {
@@ -79,7 +79,7 @@ export default () => (
 }
 ```
 
-### Asset Imports
+### 에셋 가져오기
 
 ```js
 const logo = new URL('https://example.com/assets/file.txt', import.meta.url)
