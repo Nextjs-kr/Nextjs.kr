@@ -21,11 +21,11 @@ I **love** using [Next.js](https://nextjs.org/)
 
 Next.js는 애플리케이션 내에 있는 로컬 MDX 콘텐츠와 서버에서 동적으로 가져온 원격 MDX를 모두 지원하고 있습니다. Next.js 플러그인은 `app` 디렉토리에선 기본값인 서버 컴포넌트에서의 사용 지원을 포함하여 마크다운과 리액트 컴포넌트를 HTML로 변환하는 작업을 처리합니다.
 
-## [`@next/mdx`](#nextmdx)
+## `@next/mdx`
 
 `@next/mdx` 패키지는 프로젝트의 최상단에 있는 `next.config.js` 파일에서 설정할 수 있습니다. **@next/mdx 패키지는 로컬 파일에서 데이터 소스를 생성하여** `/pages` 혹은 `/app` 디렉토리에서 바로 `.mdx` 확장자를 가진 페이지를 만들 수 있게 해줍니다.
 
-## [시작하기](#getting-started)
+## 시작하기
 
 <AppOnly>
 
@@ -175,7 +175,7 @@ Checkout my React component:
 
 </PagesOnly>
 
-## [원격 MDX](#remote-mdx)
+## 원격 MDX
 
 마크다운 혹은 MDX 파일이 우리의 애플리케이션에 존재하지 _않는다면_, 동적으로 서버에서 가져와 사용할 수 있습니다. 이 방법은 CMS 혹은 다른 데이터 소스에서 콘텐츠를 가져오는 데 유용합니다.
 
@@ -203,7 +203,7 @@ export default async function Home() {
 }
 ```
 
-## [레이아웃](#layouts)
+## 레이아웃
 
 <AppOnly>
 
@@ -230,7 +230,7 @@ export default Page({ children }) => (
 
 </PagesOnly>
 
-## [Remark 와 Rehype 플러그인](#remark-and-rehype-plugins)
+## Remark 와 Rehype 플러그인
 
 필요에따라 `remark` 와 `rehype` 플러그인을 사용하여 MDX 콘텐츠를 변형시킬 수 있습니다. 예를 들어 `remark-gfm`를 사용하여 깃허브스러운 마크다운을 지원할 수 있습니다.
 
@@ -256,7 +256,7 @@ const withMDX = require('@next/mdx')({
 module.exports = withMDX(nextConfig)
 ```
 
-## [Frontmatter](#frontmatter)
+## Frontmatter
 
 Frontmatter는 페이지에 대한 정보를 저장하기 위해 사용할 수 있는 YAML 같은 키/밸류 쌍입니다. [gray-matter](https://github.com/jonschlinkert/gray-matter) 같은 MDX 콘텐츠에 frontmatter를 추가 할 수 있는 수많은 해결책들이 존재하지만 `@next/mdx`는 기본적으로 frontmatter를 지원하지 **않습니다**.
 
@@ -270,7 +270,7 @@ export const meta = {
 # My MDX page
 ```
 
-## [사용자 지정 엘리먼트](#custom-elements)
+## 사용자 지정 엘리먼트
 
 마크다운을 사용할 때의 즐거운 측면중 하나는 네이티브 `HTML` 엘리먼트에 대응되어 빠르고 직관적으로 작성 할 수 있다는 점입니다.
 
@@ -339,7 +339,7 @@ export default function Post(props) {
 
 사이트 전반적으로 사용한다면 프로바이더를 `_app.js`에 추가합니다. 이렇게 하면 모든 MDX 페이지들은 커스텀 엘리먼트 설정에 접근할 수 있습니다.
 
-## [심층 분석: 어떻게 마크다운을 HTML로 변형시킬 수 있나요?](#deep-dive-how-do-you-transform-markdown-into-html)
+## 심층 분석: 어떻게 마크다운을 HTML로 변형시킬 수 있나요?
 
 리액트는 자체적으로 마크다운을 이해하지 못합니다. 일반적인 마크다운 텍스트는 먼저 HTML로 변형되어야 합니다. 이는 `remark` 와 `rehype`를 통해 이뤄낼 수 있습니다.
 
@@ -370,7 +370,7 @@ async function main() {
 
 이전에 봤던 `@next/mdx`를 사용하고 있다면 `@next/mdx`가 알아서 처리하기 때문에 `remark` 혹은 `rehype`를 직접적으로 사용할 필요가 **없습니다.**
 
-## [러스트 기반 MDX 컴파일러 사용하기 (실험단계)](#using-the-rust-based-mdx-compiler-experimental)
+## 러스트 기반 MDX 컴파일러 사용하기 (실험단계)
 
 Next.js는 러스트로 작성된 새로운 MDX 컴파일러를 지원하고 있습니다. 이 컴파일러는 아직 실험단계이고 프로덕션을 위해 사용하는 걸 추천하지 않습니다. 이 새로운 컴파일러를 사용하기 위해선 `withMDX`에 전달할 때 `next.config.js`를 다음과 같이 수정해야 합니다.
 
@@ -382,7 +382,7 @@ module.exports = withMDX({
 })
 ```
 
-## [도움 되는 링크](#helpful-links)
+## 도움 되는 링크
 
 - [MDX](https://mdxjs.com)
 - [`@next/mdx`](https://www.npmjs.com/package/@next/mdx)
