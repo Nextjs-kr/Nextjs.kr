@@ -1,22 +1,22 @@
 ---
-title: Edge and Node.js Runtimes
+title: Edge와 Node.js 런타임
 description: Next.js에서 전환할 수 있는 런타임(Edge 및 Node.js)에 대해 알아봅니다.
 ---
 
 Next.js의 "런타임"이란 코드가 실행되는 동안 사용할 수 있는 라이브러리, API, 그리고 일반적인 기능 집합을 의미합니다.
 
-Next.js에는 애플리케이션 코드의 일부를 렌더링할 수 있는 두 가지 서버 런타임이 있습니다:
+Next.js에는 애플리케이션 코드의 일부를 렌더링할 수 있는 두 가지 서버 런타임이 있습니다.
 
 - [Node.js 런타임](#nodejs-runtime)
 - [Edge 런타임](#edge-runtime)
 
-각 런타임은 자체적인 API 집합을 가지고 있습니다. 사용 가능한 API의 전체 목록은 [Node.js 문서](https://nodejs.org/docs/latest/api/) 및 [Edge 문서](/docs/app/api-reference/edge)를 참조하십시오. 두 런타임 모두 배포 인프라에 따라 [스트리밍](/docs/app/building-your-application/routing/loading-ui-and-streaming)을 지원할 수 있습니다.
+각 런타임은 자체적인 API 집합을 가지고 있습니다. 사용 가능한 API의 전체 목록은 [Node.js 문서](https://nodejs.org/docs/latest/api/) 및 [Edge 문서](/docs/app/api-reference/edge)를 참조하세요. 두 런타임 모두 배포 인프라에 따라 [스트리밍](/docs/app/building-your-application/routing/loading-ui-and-streaming)을 지원할 수 있습니다.
 
-기본적으로 app 디렉터리는 Node.js 런타임을 사용합니다. 그러나 라우트별로 다른 런타임(예: Edge)을 선택할 수 있습니다.
+기본적으로 `app` 디렉터리는 Node.js 런타임을 사용합니다. 그러나 라우트별로 다른 런타임(예: Edge)을 선택할 수 있습니다.
 
 ## 런타임 차이점
 
-런타임을 선택할 때 고려해야 할 많은 사항이 있습니다. 이 표는 주요 차이점을 한눈에 보여줍니다. 차이점에 대한 더 깊은 분석을 원하신다면 아래 섹션을 확인하십시오.
+런타임을 선택할 때 고려해야 할 많은 사항이 있습니다. 이 표는 주요 차이점을 한눈에 보여줍니다. 차이점에 대한 더 깊은 분석은 아래 섹션을 확인하세요.
 
 |                                                                                                                                                     | Node | Serverless | Edge          |
 | --------------------------------------------------------------------------------------------------------------------------------------------------- | ---- | ---------- | ------------- |
@@ -30,7 +30,7 @@ Next.js에는 애플리케이션 코드의 일부를 렌더링할 수 있는 두
 
 ### Edge 런타임
 
-Next.js에서, 가벼운 Edge 런타임은 사용 가능한 Node.js API의 부분집합입니다.
+Next.js에서 가벼운 Edge 런타임은 사용 가능한 Node.js API의 부분집합입니다.
 
 Edge 런타임은 작고 간단한 기능을 사용하여 짧은 지연 시간에 동적이고 개인화된 콘텐츠를 제공해야 하는 경우에 이상적입니다. Edge 런타임의 속도는 최소한의 리소스 사용에서 비롯되지만 많은 시나리오에서 제한적일 수 있습니다.
 
