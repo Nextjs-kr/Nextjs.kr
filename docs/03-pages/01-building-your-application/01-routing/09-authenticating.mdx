@@ -7,7 +7,7 @@ description: Next.js 앱에서 인증 패턴을 알아보고 몇 가지 예제�
 
 ## 인증 패턴
 
-어떤 인증 패턴이 필요한지 파악하기 위해 먼저 [데이터 가져오기 전략](/docs/pages/building-your-application/data-fetching) 을 이해해야 합니다. 그런 다음 이 전략을 지원하는 인증 공급자를 결정할 수 있습니다. 주요 패턴은 다음과 같습니다.
+어떤 인증 패턴이 필요한지 파악하기 위해 먼저 [data-fetching 전략](/docs/pages/building-your-application/data-fetching) 을 이해해야 합니다. 그런 다음 이 전략을 지원하는 인증 공급자를 결정할 수 있습니다. 주요 패턴은 다음과 같습니다.
 
 - [정적 생성](/docs/pages/building-your-application/rendering/static-site-generation)을 사용하여 로딩 상태를 서버 렌더링한 다음 클라이언트 측에서 사용자 데이터를 가져옵니다.
 - 인증되지 않은 콘텐츠의 깜빡임을 없애기 위해[서버 사이드](/docs/pages/building-your-application/rendering/server-side-rendering) 에서 사용자 데이터를 가져옵니다.
@@ -16,7 +16,7 @@ description: Next.js 앱에서 인증 패턴을 알아보고 몇 가지 예제�
 
 Next.js는 데이터 요구 사항이 없는 경우 페이지가 정적임을 자동으로 결정합니다. 즉, 페이지에[`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props) 와 `getInitialProps` 가 없는 경우입니다. 대신 페이지는 서버에서 로딩 상태를 렌더링한 다음 사용자를 클라이언트 측에서 가져올 수 있습니다.
 
-이 패턴의 장점 중 하나는 전역 CDN에서 페이지를 제공하고 [`next/link`](/docs/pages/api-reference/components/link) 를 사용하여 사전로드할 수 있다는 것입니다. 실제로 이렇게 하면 더 빠른 TTI ([Time to Interactive](https://web.dev/interactive/)).
+이 패턴의 장점 중 하나는 전역 CDN에서 페이지를 제공하고 [`next/link`](/docs/pages/api-reference/components/link) 를 사용하여 사전로드할 수 있다는 것입니다. 실제로 이렇게 하면 더 빠른 TTI를 만들 수 있습니다.
 
 프로필 페이지를 예제로 살펴보겠습니다. 이 페이지는 처음에 로딩 스켈레톤을 렌더링합니다. 사용자에 대한 요청이 완료되면 사용자의 이름을 표시합니다.
 
