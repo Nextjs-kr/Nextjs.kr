@@ -1,9 +1,9 @@
 ---
 title: Linking과 Navigating
-description: Next.js에서 네비게이션이 작동하는 방식과 Link Component와 `useRouter` hook을 사용하는 방법을 배워보세요.
+description: Next.js에서 내비게이션이 작동하는 방식과 Link Component와 `useRouter` hook을 사용하는 방법을 배워보세요.
 ---
 
-Next.js 라우터는 [클라이언트 사이드 네비게이션](#how-navigation-works)을 사용하는 [서버 중심 라우팅](/docs/app/building-your-application/routing#server-centric-routing-with-client-side-navigation)을 사용합니다. 이는 네비게이션이 클라이언트 사이드 상태를 유지하고 값비싼 재렌더링을 피하며, 중단 가능하며, 경쟁 상태를 발생시키지 않는다는 것을 의미합니다.
+Next.js 라우터는 [클라이언트 사이드 내비게이션](#how-navigation-works)을 사용하는 [서버 중심 라우팅](/docs/app/building-your-application/routing#server-centric-routing-with-client-side-navigation)을 사용합니다. 이는 내비게이션이 클라이언트 사이드 상태를 유지하고 값비싼 재렌더링을 피하며, 중단할 수 있으며, 경쟁 상태를 발생시키지 않는다는 것을 의미합니다.
 
 라우트 사이를 이동하는 방법에는 두 가지가 있습니다.
 
@@ -12,23 +12,23 @@ Next.js 라우터는 [클라이언트 사이드 네비게이션](#how-navigation
   - [동적 세그먼트에 링크 걸기](#동적-세그먼트에-링크-걸기)
   - [활성 링크 확인하기](#활성-링크-확인하기)
   - [`id`로 스크롤하기](#id로-스크롤하기)
-- [`useRouter()` 훅](#userouter-훅)
-- [네비게이션의 작동 방식](#네비게이션의-작동-방식)
-  - [렌더링된 서버 컴포넌트의 클라이언트 측 캐시](#렌더링된-서버-컴포넌트의-클라이언트-측-캐시)
-  - [캐시 무효화하기](#캐시-무효화하기)
+- [`useRouter()` Hook](#userouter-hook)
+- [내비게이션의 작동 방식](#내비게이션의-작동-방식)
+  - [렌더링 된 서버 컴포넌트의 클라이언트 측 캐시](#렌더링-된-서버-컴포넌트의-클라이언트-측-캐시)
+  - [캐시 무효로 하기](#캐시-무효로-하기)
   - [Prefetching](#prefetching)
-  - [소프트 네비게이션](#소프트-네비게이션)
-  - [소프트 네비게이션의 조건](#소프트-네비게이션의-조건)
-  - [하드 네비게이션](#하드-네비게이션)
-  - [뒤로 가기/앞으로 가기 네비게이션](#뒤로-가기앞으로-가기-네비게이션)
+  - [소프트 내비게이션](#소프트-내비게이션)
+  - [소프트 내비게이션의 조건](#소프트-내비게이션의-조건)
+  - [하드 내비게이션](#하드-내비게이션)
+  - [뒤로 가기/앞으로 가기 내비게이션](#뒤로-가기앞으로-가기-내비게이션)
   - [포커스와 스크롤 관리](#포커스와-스크롤-관리)
 
-이 페이지에서는 `<Link>`, `useRouter()`를 사용하는 방법과 네비게이션이 작동하는 방식에 대해 자세히 알아보겠습니다.
+이 페이지에서는 `<Link>`, `useRouter()`를 사용하는 방법과 내비게이션이 작동하는 방식에 대해 자세히 알아보겠습니다.
 ## `<Link>` 컴포넌트
 
-`<Link>`는 [prefetching](#prefetching) 그리고 라우트 사이의 클라이언트 사이드 네비게이션을 제공하는 HTML `<a>` element를 확장한 React 컴포넌트입니다. Next.js에서 라우트 사이를 이동하는 주요한 방법입니다.
+`<Link>`는 [prefetching](#prefetching) 그리고 라우트 사이의 클라이언트 사이드 내비게이션을 제공하는 HTML `<a>` element를 확장한 React 컴포넌트입니다. Next.js에서 라우트 사이를 이동하는 주요한 방법입니다.
 
-`<Link>`를 사용하려면 `next/link`를 import하고, `href` prop을 컴포넌트에 전달하세요:
+`<Link>`를 사용하려면 `next/link`를 import하고, `href` props를 컴포넌트에 전달하세요:
 
 ```tsx filename="app/page.tsx" switcher
 import Link from 'next/link'
@@ -46,7 +46,7 @@ export default function Page() {
 }
 ```
 
-`<Link>`에 전달할 수 있는 옵션 prop들이 있습니다. 더 많은 정보는 [API reference](/docs/app/api-reference/components/link)를 참고하세요.
+`<Link>`에 전달할 수 있는 옵션 props가 있습니다. 더 많은 정보는 [API 레퍼런스](/docs/app/api-reference/components/link)를 참고하세요.
 
 ## 예시
 
@@ -115,12 +115,12 @@ export function Navigation({ navLinks }) {
 </Link>
 ```
 
-## `useRouter()` 훅
+## `useRouter()` Hook
 
 The hook allows you to programmatically change routes inside [Client Components](/docs/getting-started/react-essentials).
-`useRouter` 훅은 [클라이언트 컴포넌트](/docs/getting-started/react-essentials) 내부에서 라우트를 프로그래밍 방식으로 변경할 수 있게 해줍니다.
+`useRouter` Hook은 [클라이언트 컴포넌트](/docs/getting-started/react-essentials) 내부에서 라우트를 프로그래밍 방식으로 변경할 수 있게 해줍니다.
 
-`useRouter`를 사용하려면 `next/navigation`에서 import하고, 클라이언트 컴포넌트 내부에서 훅을 호출하세요:
+`useRouter`를 사용하려면 `next/navigation`에서 import하고, 클라이언트 컴포넌트 내부에서 Hook을 호출하세요:
 
 ```jsx filename="app/page.js"
 'use client'
@@ -142,27 +142,27 @@ export default function Page() {
 
 > **추천:** `useRouter`를 사용하라는 특별한 요구사항이 없는 한, 라우트 간에 이동할 때 `<Link>` 컴포넌트를 사용하는 것이 좋습니다.
 
-## 네비게이션의 작동 방식
+## 내비게이션의 작동 방식
 
 - 라우트 전환은 `<Link>`를 사용하거나 `router.push()`를 호출하여 시작됩니다.
 - 라우터는 브라우저의 주소 표시줄에 URL을 업데이트합니다.
 - 라우터는 [클라이언트 측 캐시](#client-side-caching-of-rendered-server-components)에서 변경되지 않은 세그먼트(예: 공유된 레이아웃)를 재사용하여 불필요한 작업을 피합니다. 이것은 [부분 렌더링](/docs/app/building-your-application/routing#partial-rendering)이라고도 합니다.
-- 만약 [소프트 네비게이션의 조건](#conditions-for-soft-navigation)이 충족되면, 라우터는 서버가 아닌 캐시에서 새로운 세그먼트를 가져옵니다. 그렇지 않으면, 라우터는 [하드 네비게이션](#hard-navigation)을 수행하고 서버로부터 서버 컴포넌트 페이로드를 가져옵니다.
+- 만약 [소프트 내비게이션의 조건](#conditions-for-soft-navigation)이 충족되면, 라우터는 서버가 아닌 캐시에서 새로운 세그먼트를 가져옵니다. 그렇지 않으면, 라우터는 [하드 내비게이션](#hard-navigation)을 수행하고 서버로부터 서버 컴포넌트 페이로드를 가져옵니다.
 - If created, [loading UI](/docs/app/building-your-application/routing/loading-ui-and-streaming) is shown from the server while the payload is being fetched.
 - 생성된 경우, [로딩 UI](/docs/app/building-your-application/routing/loading-ui-and-streaming)는 페이로드가 fetched되는 동안 서버로부터 표시됩니다.
-- 라우터는 캐시된 또는 신선한 페이로드를 사용하여 클라이언트에서 새로운 세그먼트를 렌더링합니다.
+- 라우터는 캐시된 또는 신선한 페이로드를 사용하여 클라이언트에서 새로운 세그먼트를 렌더링 합니다.
 
-### 렌더링된 서버 컴포넌트의 클라이언트 측 캐시
+### 렌더링 된 서버 컴포넌트의 클라이언트 측 캐시
 
 > **알아두면 좋은 것:** 이 클라이언트 측 캐시는 서버 측 [Next.js HTTP 캐시](/docs/app/building-your-application/data-fetching#caching-data)와 다릅니다.
 
-새로운 라우터는 서버 컴포넌트의 **렌더링된 결과**를 저장하는 **인메모리 클라이언트 측 캐시**를 가지고 있습니다. 캐시는 라우트 세그먼트로 분할되어 어느 수준에서든 무효화할 수 있으며, 동시 렌더링 간 일관성을 보장합니다.
+새로운 라우터는 서버 컴포넌트의 **렌더링 된 결과**를 저장하는 **인메모리 클라이언트 측 캐시**를 가지고 있습니다. 캐시는 라우트 세그먼트로 분할되어 어느 수준에서든 무효로 될 수 있으며, 동시 렌더링 간 일관성을 보장합니다.
 
 유저가 앱 내에서 이동을 하면, 라우터는 이전에 fetched된 세그먼트의 페이로드 **그리고** [prefetch된](#prefetching) 세그먼트를 캐시에 저장합니다.
 
-이는, 특정 경우에 라우터가 서버에 새 요청을 보내지 않고 캐시를 재사용할 수 있음을 의미합니다. 이는 데이터를 다시 가져오고 컴포넌트를 불필요하게 다시 렌더링하는 것을 피함으로써 성능을 향상시킵니다.
+이는, 특정 경우에 라우터가 서버에 새 요청을 보내지 않고 캐시를 재사용할 수 있음을 의미합니다. 이는 데이터를 다시 가져오고 컴포넌트를 불필요하게 다시 렌더링 하는 것을 피함으로써 성능을 향상시킵니다.
 
-### 캐시 무효화하기
+### 캐시 무효로 하기
 
 [서버 액션](/docs/app/building-your-application/data-fetching/server-actions)은 경로([`revalidatePath`](/docs/app/api-reference/functions/revalidatePath)) 또는 캐시 태그([`revalidateTag`](/docs/app/api-reference/functions/revalidateTag))로 데이터를 필요에 따라 다시 유효성 검사하는 데 사용될 수 있습니다.
 
@@ -170,7 +170,7 @@ export default function Page() {
 
 Prefetching은 라우트를 방문하기 전에 백그라운드에서 라우트를 미리 로드하는 방법입니다. prefetch된 라우트의 렌더링 결과는 라우터의 클라이언트 측 캐시에 추가됩니다. 이렇게 하면 prefetch된 라우트로 이동하는 것이 거의 즉시 가능합니다.
 
-기본적으로 `<Link>` 컴포넌트를 사용할 때 라우트가 뷰포트에 표시되면 prefetch됩니다. 이는 페이지가 처음 로드되거나 스크롤을 통해 발생할 수 있습니다. 라우트는 [`useRouter()` 훅](/docs/app/api-reference/functions/use-router#userouter)의 `prefetch` 메서드를 사용하여 프로그래밍 방식으로 prefetch될 수도 있습니다.
+기본적으로 `<Link>` 컴포넌트를 사용할 때 라우트가 뷰포트에 표시되면 prefetch됩니다. 이는 페이지가 처음 로드되거나 스크롤을 통해 발생할 수 있습니다. 라우트는 [`useRouter()` Hook](/docs/app/api-reference/functions/use-router#userouter)의 `prefetch` 메서드를 사용하여 프로그래밍 방식으로 prefetch될 수도 있습니다.
 
 **정적 및 동적 라우트**:
 
@@ -182,24 +182,24 @@ Prefetching은 라우트를 방문하기 전에 백그라운드에서 라우트�
 > - Prefetching은 프로덕션에서만 활성화됩니다.
 > - Prefetching은 `<Link>`에 `prefetch={false}`를 전달하여 비활성화할 수 있습니다.
 
-### 소프트 네비게이션
+### 소프트 내비게이션
 
-네비게이션 시, 변경된 세그먼트의 캐시가 재사용되며, 데이터를 위해 서버에 새로운 요청이 전송되지 않습니다.
+내비게이션 시, 변경된 세그먼트의 캐시가 재사용되며, 데이터를 위해 서버에 새로운 요청이 전송되지 않습니다.
 
-### 소프트 네비게이션의 조건
+### 소프트 내비게이션의 조건
 
-네비게이션 시, Next.js는 네비게이션할 라우트가 [**prefetched**](#prefetching)되었고, [동적 세그먼트](/docs/app/building-your-application/routing/dynamic-routes)를 포함하지 않**거나** 현재 라우트와 동일한 동적 파라미터를 가지고 있으면 소프트 네비게이션을 사용합니다.
+내비게이션 시, Next.js는 내비게이션할 라우트가 [**prefetched**](#prefetching)되었고, [동적 세그먼트](/docs/app/building-your-application/routing/dynamic-routes)를 포함하지 않**거나** 현재 라우트와 동일한 동적 파라미터를 가지고 있으면 소프트 내비게이션을 사용합니다.
 
-- `/dashboard/team-red/*`에서 `/dashboard/team-red/*`로 네비게이션될 때는 소프트 네비게이션을 사용합니다.
-- `/dashboard/team-red/*`에서 `/dashboard/team-blue/*`로 네비게이션될 때는 하드 네비게이션을 사용합니다.
+- `/dashboard/team-red/*`에서 `/dashboard/team-red/*`로 내비게이션될 때는 소프트 내비게이션을 사용합니다.
+- `/dashboard/team-red/*`에서 `/dashboard/team-blue/*`로 내비게이션될 때는 하드 내비게이션을 사용합니다.
 
-### 하드 네비게이션
+### 하드 내비게이션
 
-네비게이션 시 캐시가 무효화되고 서버가 데이터를 다시 가져오고 변경된 세그먼트를 다시 렌더링합니다.
+내비게이션 시 캐시가 무효로 되고 서버가 데이터를 다시 가져오고 변경된 세그먼트를 다시 렌더링 합니다.
 
-### 뒤로 가기/앞으로 가기 네비게이션
+### 뒤로 가기/앞으로 가기 내비게이션
 
-뒤로 가기/앞으로 가기 네비게이션([popstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event))은 소프트 네비게이션 동작을 가집니다. 이는 클라이언트 측 캐시가 재사용되고 네비게이션이 거의 즉시 진행된다는 것을 의미합니다.
+뒤로 가기/앞으로 가기 내비게이션([popstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event))은 소프트 내비게이션 동작을 가집니다. 이는 클라이언트 측 캐시가 재사용되고 내비게이션이 거의 즉시 진행된다는 것을 의미합니다.
 
 ### 포커스와 스크롤 관리
 
