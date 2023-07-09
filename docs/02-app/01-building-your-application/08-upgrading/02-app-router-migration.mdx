@@ -1,6 +1,6 @@
 ---
-title: App Router 점진적 도입 가이드
-nav_title: App Router 마이그레이션
+title: 앱 라우터 점진적 도입 가이드
+nav_title: 앱 라우터 마이그레이션
 description: 기존 Next.js 애플리케이션을 페이지 라우터에서 앱 라우터로 업그레이드하는 방법을 배워보세요.
 ---
 
@@ -32,7 +32,7 @@ ESLint를 사용 중인 경우 ESLint 버전을 업그레이드해야 합니다.
 npm install -D eslint-config-next@latest
 ```
 
-> **알아두면 좋을 정보**: ESLint 변경 사항을 적용하기 위해 VS Code에서 ESLint 서버를 다시 시작해야 할 수 있습니다. 그 때 Command Palette (`cmd+shift+p` on Mac; `ctrl+shift+p` on Windows)를 열고 `ESLint: Restart ESLint Server`를 검색하세요.
+> **참고**: ESLint 변경 사항을 적용하기 위해 VS Code에서 ESLint 서버를 다시 시작해야 할 수 있습니다. 그 때 Command Palette (`cmd+shift+p` on Mac; `ctrl+shift+p` on Windows)를 열고 `ESLint: Restart ESLint Server`를 검색하세요.
 
 ## 다음 단계
 
@@ -43,9 +43,9 @@ npm install -D eslint-config-next@latest
 
 ## 새로운 기능 업그레이드
 
-Next.js 13에서는 새로운 기능과 규칙이 적용된 새로운 [App Router](/docs/app/building-your-application/routing)가 도입되었습니다. 새로운 라우터는 `app` 디렉토리에서 사용할 수 있으며 `pages` 디렉토리와 같이 존재합니다.
+Next.js 13에서는 새로운 기능과 규칙이 적용된 새로운 [앱 라우터](/docs/app/building-your-application/routing)가 도입되었습니다. 새로운 라우터는 `app` 디렉토리에서 사용할 수 있으며 `pages` 디렉토리와 같이 존재합니다.
 
-Next.js 13으로 업그레이드하고 꼭 새로운 [App Router](/docs/app/building-your-application/routing#the-app-router)를 **사용하지 않아도 됩니다.** `pages` 디렉토리에서도 [Image component](#image-component), [Link component](#link-component), [Script component](#script-component), 그리고 [Font optimization](#font-optimization) 등 새로운 기능들을 두 디렉토리 모두에서 사용할 수 있습니다.
+Next.js 13으로 업그레이드하고 꼭 새로운 [앱 라우터](/docs/app/building-your-application/routing#the-app-router)를 **사용하지 않아도 됩니다.** `pages` 디렉토리에서도 [이미지 컴포넌트](#image-component), [링크 컴포넌트](#link-component), [스크립트 컴포넌트](#script-component), 그리고 [폰트 최적화](#font-optimization) 등 새로운 기능들을 두 디렉토리 모두에서 사용할 수 있습니다.
 
 ### `<Image/>` 컴포넌트
 
@@ -98,7 +98,7 @@ Next.js 13의 링크로 업그레이드 하려면 [`new-link` 코드 모드](/do
 
 ## `pages`에서 `app`으로 마이그레이션 하기
 
-App Router로 전환하면 서버 컴포넌트, Suspense 등과 같이 Next.js에서 빌드되는 React 기능을 처음으로 사용할 수 있습니다. [special files](/docs/app/building-your-application/routing#file-conventions)이나 [layouts](/docs/app/building-your-application/routing/pages-and-layouts#layouts)과 같은 새로운 Next.js 기능과 결합하면, 마이그레이션은 새로운 개념, 사고 모델 및 학습해야 할 행동 변화를 의미합니다.
+앱 라우터로 전환하면 서버 컴포넌트, Suspense 등과 같이 Next.js에서 빌드되는 React 기능을 처음으로 사용할 수 있습니다. [special files](/docs/app/building-your-application/routing#file-conventions)이나 [layouts](/docs/app/building-your-application/routing/pages-and-layouts#layouts)과 같은 새로운 Next.js 기능과 결합하면, 마이그레이션은 새로운 개념, 사고 모델 및 학습해야 할 행동 변화를 의미합니다.
 
 마이그레이션을 더 작은 단계로 나누어 업데이트의 복합적인 복잡성을 줄이는 것이 좋습니다. `app` 디렉토리는 페이지 단위로 점진적인 마이그레이션을 할 수 있도록 `pages` 디렉토리와 동시에 작동할 수 있게 의도적으로 설계되었습니다.
 
@@ -188,7 +188,7 @@ export const metadata = {
 
 React 컨텍스트 프로바이더를 사용하는 경우, 해당 프로바이더를 [클라이언트 컴포넌트](/docs/getting-started/react-essentials)로 해야 합니다.
 
-#### Migrating the `getLayout()` pattern to Layouts (Optional)
+#### `getLayout()` 패턴을 레이아웃으로 마이그레이션하기 (선택 사항)
 
 Next.js는 [페이지 구성 요소에 프로퍼티](/docs/pages/building-your-application/routing/pages-and-layouts#layout-pattern#per-page-layouts)를 추가하여 `pages` 디렉토리에서 페이지별 레이아웃을 구현할 것을 권장합니다. 이 패턴은 `app` 디렉토리에서 [중첩 레이아웃](/docs/app/building-your-application/routing/pages-and-layouts#layouts)에 대한 기본 지원으로 대체될 수 있습니다.
 
@@ -257,7 +257,7 @@ Page.getLayout = function getLayout(page) {
   }
   ```
 
-- `DashboardLayout.js` (Client Component)의 상호작용하지 않는 부분을 `layout.js` (Server Component)로 점진적으로 전환하여 클라이언트에 전송하는 컴포넌트 자바스크립트의 양을 줄일 수 있습니다.
+- `DashboardLayout.js` (클라이언트 컴포넌트)의 상호작용하지 않는 부분을 `layout.js` (서버 컴포넌트)로 점진적으로 전환하여 클라이언트에 전송하는 컴포넌트 자바스크립트의 양을 줄일 수 있습니다.
 
 </details>
 
