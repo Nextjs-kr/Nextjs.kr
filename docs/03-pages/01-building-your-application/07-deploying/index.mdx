@@ -1,13 +1,11 @@
 ---
 title: Deploying
 description: 관리형 또는 자체 호스팅으로 Next.js 앱 배포 방법 배우기
-Learn how to deploy your Next.js app to production, either managed or self-hosted.
 source: app/building-your-application/deploying
 ---
 
 {/* DO NOT EDIT. The content of this doc is generated from the source above. To edit the content of this page, navigate to the source page in your editor. You can use the `<PagesOnly>Content</PageOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-<PagesOnly>
 
 축하합니다! Next.js 어플리케이션 배포할 준비가 끝났습니다! 이 페이지를 통해서 [Next.js Build API](https://nextjs.org/docs/pages/building-your-application/deploying#nextjs-build-api)를 이용하여 관리형 환경 또는 자체 호스팅 환경으로 배포하는 방법을 배우게 될 것입니다.
 
@@ -29,20 +27,20 @@ source: app/building-your-application/deploying
 - `.next/server/chunks` - 어플리케이션 여러곳에서 사용되는 자바스크립트 파일 모음입니다.
 - `.next/cache` - 빌드 캐시 및 캐시 이미지, 응답과 페이지에 대한 Next.js 서버 출력입니다. 캐시를 이용하여 빌드 시간을 단축시키고, 이미지를 로딩 성능을 개선시킬 수 있습니다.
 
-`.next` 내의 모든 자바스크립트 코드는 컴파일되고 브라우저 번들은 최소화되어 최고의 성능 달성하며, [모든 최신 브라우저](/docs/architecture/supported-browsers)를 지원할 수 있습니다.
+`.next` 내의 모든 자바스크립트 코드는 컴파일되고 최소화된 브라우저 번들은 최고의 성능 달성하며, [모든 최신 브라우저](/docs/architecture/supported-browsers)를 지원할 수 있습니다.
 
 ## 관리형 - Vercel에서 관리되고 있는 Next.js 배포
 
-[Vercel](https://vercel.com?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)은 단 하나의 설정 없이도 Next.js 어플리케이션을 가장 빠르게 배포할 수 있는 방법입니다.
+[Vercel](https://vercel.com?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)은 단 하나의 설정 없이도 Next.js 어플리케이션을 배포할 수 있는 가장 즉각적인 방법입니다.
 
 Vercel로 배포 시 플랫폼이 [자동으로 Next.js를 감지](https://vercel.com/solutions/nextjs?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)하고, `next build`를 실행하며, 사용자를 위해 빌드 출력을 최적화 합니다. 포함되는 내용은 아래와 같습니다:
 
-- 변화되지 않은 경우 배포 시 전반에 걸쳐 캐시된 자산 유지
+- 배포 시 변화가 없는 경우, 캐시된 자산 유지
 - 매 커밋마다 유니크한 URL을 통해서 [영구 배포](https://vercel.com/features/previews?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)
 - 가능한 경우 자동으로 정적 최적화를 시켜주는 [페이지](/docs/pages/building-your-application/rendering/automatic-static-optimization)
-- [Global Edge Network](https://vercel.com/features/infrastructure?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)으로 부터 압축되어 제공되는 정적파일(Javascript, CSS, images, fonts)
-- 무한대로 확장 할 수 있는 독립된 [서버리스 함수](https://vercel.com/features/infrastructure?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)로 [API 라우터](/docs/pages/building-your-application/routing/api-routes)를 자동으로 최적화 함
-- [미들웨어](/docs/pages/building-your-application/routing/middleware)는 cold start가 전혀 없고, 즉시 부팅되는 [Edge Functions](https://vercel.com/features/edge-functions?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)을 통해서 자동으로 최적화 됨
+- [Global Edge Network](https://vercel.com/features/infrastructure?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)으로부터 압축되어 제공되는 정적파일(Javascript, CSS, images, fonts)
+- 무한으로 확장 할 수 있는 독립된 [서버리스 함수](https://vercel.com/features/infrastructure?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)로 [API 라우터](/docs/pages/building-your-application/routing/api-routes)를 자동 최적화
+- [미들웨어](/docs/pages/building-your-application/routing/middleware)는 cold start가 전혀 없고, 즉시 부팅되는 [Edge Functions](https://vercel.com/features/edge-functions?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)을 통해 자동 최적화
 
 더해서, Vervel은 아래와 같은 기능을 제공합니다:
 
@@ -59,8 +57,6 @@ Next.js 애플리케이션을 무료로 [Vercel에 배포](https://vercel.com/ne
 ## 자체 호스팅
 
 Node.js 또는 Docker를 사용하여 모든 기능을 지원하는 Next.js를 자체 호스팅 할 수 있습니다. 몇가지 제한 사항이 있는 정적 HTML 내보내기를 수행할 수도 있습니다.
-
-### Node.js Server
 
 ### Node.js 서버
 
@@ -160,7 +156,7 @@ Next.js는 라우팅할 때 백그라운드에서 애플리케이션의 최신 �
 
 ```js filename="pages/_document.js"
 if (process.env.NEXT_MANUAL_SIG_HANDLE) {
-  // this should be added in your custom _document
+  // 사용자 지정 _document에 추가되어야 합니다.
   process.on('SIGTERM', () => {
     console.log('Received SIGTERM: ', 'cleaning up')
     process.exit(0)
