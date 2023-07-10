@@ -1,11 +1,11 @@
 ---
 title: rewrites
-description: Next.js 어플리케이션에 rewrites를 사용하세요.
+description: Next.js 애플리케이션에 rewrites를 사용하세요.
 ---
 
 Rewrites는 들어오는 요청 경로를 다른 목적지 경로로 매핑해줍니다.
 
-Rewrites는 URL 프록시처럼 기능하며 목적 경로를 가려주어 유저가 사이트의 주소를 바꾸지 않은 것처럼 보이게 합니다. 반면, [redirects](/docs/pages/api-reference/next-config-js/redirects) 새로운 페이지로 다시 라우팅해주며 URL 변화를 보여줍니다.
+Rewrites는 URL 프록시처럼 기능하며 목적 경로를 가려주어 사용자가 사이트의 주소를 바꾸지 않은 것처럼 보이게 합니다. 반면, [redirects](/docs/pages/api-reference/next-config-js/redirects) 새로운 페이지로 다시 라우팅해 주며 URL 변화를 보여줍니다.
 
 rewrite를 사용하기 위해 `next.config.js`에 `rewrites` 함수를 사용할 수 있습니다:
 
@@ -76,13 +76,13 @@ Next.js에서 경로가 확인되는 순서:
 1. [headers](/docs/pages/api-reference/next-config-js/headers) 가 확인 및 적용됩니다
 2. [redirects](/docs/pages/api-reference/next-config-js/redirects) 가 확인 및 적용됩니다
 3. `beforeFiles` 의 rewrites가 가 확인 및 적용됩니다
-4. static files from the [public directory](/docs/pages/building-your-application/optimizing/static-assets) 의 정적인 파일들, `_next/static` 파일들, 그리고 동적이지 않은 페이지들이 확인되고 제공됩니다
-5. `afterFiles` rewrites가 확인되고 적용됩니다. 만약 이들 rewrites 중 하나가 매치되면 각 매칭 후 동적인 경로들/정적인 파일들을 확인합니다
-6. `fallback` rewrites 가 확인 및 적용됩니다. 이들은 동적인 경로들과 모든 정적인 assets들이 확인된 후, 그리고 404 페이지가 렌더링 되기 전에 적용됩니다 만약 당신이 `getStaticPaths` 에서 [fallback: true/'blocking'](/docs/pages/api-reference/functions/get-static-paths#fallback-true) 를 사용한다면, 당신의 `next.config.js` 에 정의된 fallback `rewrites` 는 동작하지 _않습니다_.
+4. [public directory](/docs/pages/building-your-application/optimizing/static-assets) 의 정적인 파일, `_next/static` 파일, 그리고 동적이지 않은 페이지가 확인 및 제공됩니다
+5. `afterFiles` rewrites가 확인되고 적용됩니다. 만약 이들 rewrites 중 하나가 매치되면 각 매칭 후 동적인 경로/정적인 파일을 확인합니다
+6. `fallback` rewrites 가 확인 및 적용됩니다. 이들은 동적인 경로와 모든 정적인 assets이 확인된 후, 404 페이지가 렌더링 되기 전에 적용됩니다. `getStaticPaths` 에서 [fallback: true/'blocking'](/docs/pages/api-reference/functions/get-static-paths#fallback-true) 를 사용한다면, `next.config.js` 에 정의된 fallback `rewrites` 는 동작하지 _않습니다_.
 
-## Rewrite 파라미터들
+## Rewrite 매개변수들
 
-rewirte에서 파라미터를 사용할 때, 파라미터 중 어느것도 `destinaion`에 사용되지 않으면 그 파라미터들은 쿼리에 기본값으로 전달됩니다. 
+rewirte에서 매개변수를 사용할 때, 그 중 어느 것도 `destinaion`에 사용되지 않으면 그 매개변수들은 쿼리에 기본값으로 전달됩니다. 
 
 ```js filename="next.config.js"
 module.exports = {
@@ -90,14 +90,14 @@ module.exports = {
     return [
       {
         source: '/old-about/:path*',
-        destination: '/about', // :path 파라미터는 여기에 사용되지 않기 때문에 쿼리에 자동으로 전달됩니다.
+        destination: '/about', // :path 매개변수가 여기에 사용되지 않기 때문에 쿼리에 자동으로 전달됩니다.
       },
     ]
   },
 }
 ```
 
-만약 파라미터가 destination에 사용된다면 파라미터 중 어느 것도 쿼리에 자동으로 전달되지 않습니다. 
+만약 매개변수가 destination에 사용된다면 매개변수 중 어느 것도 쿼리에 자동으로 전달되지 않습니다. 
 
 ```js filename="next.config.js"
 module.exports = {
@@ -105,14 +105,14 @@ module.exports = {
     return [
       {
         source: '/docs/:path*',
-        destination: '/:path*', // :path 파라미터는 여기에 사용되므로 쿼리에 자동으로 전달되지 않습니다
+        destination: '/:path*', // :path 매개변수는 여기에 사용되므로 쿼리에 자동으로 전달되지 않습니다
       },
     ]
   },
 }
 ```
 
-만약 파라미터가 이미 목적지에 사용되고 있다면 `destination` 에 쿼리를 명시함으로써 파라미터들을 직접 쿼리에 전달할 수 있습니다. 
+만약 매개변수가 이미 목적지에 사용되고 있다면 `destination` 에 쿼리를 명시함으로써 매개변수들을 직접 쿼리에 전달할 수 있습니다. 
 
 ```js filename="next.config.js"
 module.exports = {
@@ -121,8 +121,8 @@ module.exports = {
       {
         source: '/:first/:second',
         destination: '/:first?second=:second',
-        // 첫번째(:first) 파라미터가 목적지에 사용되었기 떄문에 
-        // 두번째(:second) 파라미터는 자동적으로 쿼리에 더해지지 않습니다
+        // 첫 번째(:first) 매개변수가 목적지에 사용되었기 때문에 
+        // 두 번째(:second) 매개변수는 자동으로 쿼리에 더해지지 않습니다
         // 하지만 위에 보이는 것처럼 개발자가 직접 추가할 수 있습니다
       },
     ]
@@ -130,7 +130,7 @@ module.exports = {
 }
 ```
 
-> **알아두면 좋은 것**: [Automatic Static Optimization](/docs/pages/building-your-application/rendering/automatic-static-optimization) 의 정적인 페이지들 또는 rewrites로부터 온 [prerendering](/docs/pages/building-your-application/data-fetching/get-static-props) 파라미터들은 하이드레이션과 쿼리에 제공된 이후 클라이언트측에 파싱됩니다. 
+> **알아두면 좋은 것**: [Automatic Static Optimization](/docs/pages/building-your-application/rendering/automatic-static-optimization) 의 정적인 페이지들 또는 rewrites로부터 온 [prerendering](/docs/pages/building-your-application/data-fetching/get-static-props) 매개변수들은 하이드레이션과 쿼리에 제공된 이후 클라이언트 측에 파싱됩니다. 
 
 ## 경로 매칭
 
@@ -142,7 +142,7 @@ module.exports = {
     return [
       {
         source: '/blog/:slug',
-        destination: '/news/:slug', // 매치된 파라미터들은 목적지에 사용될 수 있습니다
+        destination: '/news/:slug', // 매치된 매개변수들은 목적지에 사용될 수 있습니다
       },
     ]
   },
@@ -151,7 +151,7 @@ module.exports = {
 
 ### 와일드카드 경로 매칭
 
-와일드카드 경로를 매칭하기 위해, 당신은 파라미터 뒤에 `*` 을 사용할 수 있습니다. 예를 들어 `/blog/:slug*` 는 `/blog/a/b/c/d/hello-world`에 매칭됩니다:
+와일드카드 경로를 매칭하기 위해, 매개변수 뒤에 `*` 을 사용할 수 있습니다. 예를 들어 `/blog/:slug*` 는 `/blog/a/b/c/d/hello-world`에 매칭됩니다:
 
 ```js filename="next.config.js"
 module.exports = {
@@ -159,7 +159,7 @@ module.exports = {
     return [
       {
         source: '/blog/:slug*',
-        destination: '/news/:slug*', // 매치된 파라미터들은 목적지에 사용될 수 있습니다
+        destination: '/news/:slug*', // 매치된 매개변수들은 목적지에 사용될 수 있습니다
       },
     ]
   },
@@ -168,7 +168,7 @@ module.exports = {
 
 ### 정규식 경로 매칭
 
-정규식 경로를 매칭하기 위해 당신은 정규식을 파라미터 뒤, parenthsis에 정규식을 감쌀 수 있습니다. 예를 들어 `/blog/:slug(\\d{1,})` 는 `/blog/123` 에 매칭되지만 `/blog/abc` 에는 매칭되지 않습니다:
+정규식 경로를 매칭하기 위해 정규식을 매개변수 뒤, parenthsis에 정규식을 감쌀 수 있습니다. 예를 들어 `/blog/:slug(\\d{1,})` 는 `/blog/123` 에 매칭되지만 `/blog/abc` 에는 매칭되지 않습니다:
 
 ```js filename="next.config.js"
 module.exports = {
@@ -176,7 +176,7 @@ module.exports = {
     return [
       {
         source: '/old-blog/:post(\\d{1,})',
-        destination: '/blog/:post', // 매치된 파라미터들은 목적지에 사용될 수 있습니다
+        destination: '/blog/:post', // 매치된 매개변수들은 목적지에 사용될 수 있습니다
       },
     ]
   },
@@ -201,13 +201,13 @@ module.exports = {
 
 ## 헤더, 쿠키, 그리고 쿼리 매칭
 
-오직 헤더, 쿠키, 쿼리 값들이 `has` 필드와 매치되거나 `missing` 필드와 매치되지 않을 때에만 rewrites를 사용할 수 있습니다. rewrite가 적용되기 위해 `source` 와 모든 `has` 아이템들은 모두 매치되어야 하며 모든  `missing` 아이템들은 매치되지 않아야 합니다. 
+오직 헤더, 쿠키, 쿼리 값들이 `has` 필드와 매치되거나, `missing` 필드와 매치되지 않을 때만 rewrites를 사용할 수 있습니다. rewrite가 적용되기 위해 `source` 와 모든 `has` 아이템들은 모두 매치되어야 하며 모든  `missing` 아이템들은 매치되지 않아야 합니다. 
 
 `has` 와 `missing` 항목들은 다음의 필드를 가질 수 있습니다:
 
 - `type`: `String` - `header`, `cookie`, `host`, `query` 중 하나여야만 합니다.
 - `key`: `String` - 비교하기로 선택한 유형의 키.
-- `value`: `String` or `undefined` - 확인해야 할 값, 만약 undefined라면 어떤 값이든 매치됩니다. 문자열과 같은 정규식은 값의 특정한 부분을 포착하는 데에 사용될 수 있습니다. 예를 들어 만약  `first-(?<paramName>.*)` 가 `first-second` 를 위해 사용되었다면 `second` 는 도착 경로에 `:paramName` 와 함께 사용가능합니다. 
+- `value`: `String` or `undefined` - 확인해야 할 값, 만약 undefined라면 어떤 값이든 매치됩니다. 문자열과 같은 정규식은 값의 특정한 부분을 포착하는 데에 사용될 수 있습니다. 예를 들어 만약  `first-(?<paramName>.*)` 가 `first-second` 를 위해 사용되었다면 `second` 는 도착 경로에 `:paramName` 와 함께 사용할 수 있습니다. 
 
 ```js filename="next.config.js"
 module.exports = {
@@ -246,7 +246,7 @@ module.exports = {
             type: 'query',
             key: 'page',
             // 이 페이지는 destination에 사용할 수 없습니다 
-            // 왜냐하면 value가 제공되지만 지정된 캡쳐 그룹 (?<page>home) 을 사용하지 않기 떄문입니다. 
+            // 왜냐하면 value가 제공되지만 지정된 캡처 그룹 (?<page>home) 을 사용하지 않기 떄문입니다. 
             value: 'home',
           },
           {
@@ -297,7 +297,7 @@ module.exports = {
 
 </details>
 
-Rewrites는 당신이 외부 url로 고쳐쓸 수 있게 합니다. 이는 특히 Next.js를 점진적으로 적용할 때 유용합니다. 다음 예제는 당신의 메인 어플의 `/blog` 경로를 외부 사이트로 리다이렉팅하기 위해 rewrite를 사용합니다. 
+Rewrites는 외부 url로 고쳐 쓸 수 있게 합니다. 이는 특히 Next.js를 점차 적용할 때 유용합니다. 다음 예제는 메인 앱의 `/blog` 경로를 외부 사이트로 리다이렉팅하기 위해 rewrite를 사용합니다. 
 
 ```js filename="next.config.js"
 module.exports = {
@@ -309,14 +309,14 @@ module.exports = {
       },
       {
         source: '/blog/:slug',
-        destination: 'https://example.com/blog/:slug', // 매치된 파라미터는 destination에 사용될 수 있습니다
+        destination: 'https://example.com/blog/:slug', // 매치된 매개변수는 destination에 사용될 수 있습니다
       },
     ]
   },
 }
 ```
 
-만약 당신이 `trailingSlash: true` 를 사용하고 있다면, 당신은 또한 후행 슬래쉬를 `source` 파라미터에 삽입해야 합니다. 만약 목적지 서버가 후행 슬래쉬를 필요로 한다면 이를 `destination` 파라미터에도 포함해야 합니다. 
+만약 `trailingSlash: true` 를 사용하고 있다면 후행 슬래쉬를 `source` 매개변수에 삽입해야 합니다. 목적지 서버가 후행 슬래쉬를 필요로 한다면 이를 `destination` 매개변수에도 포함해야 합니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -357,7 +357,7 @@ module.exports = {
 
 ### rewrites의 basePath 지원
 
-[`basePath` support](/docs/app/api-reference/next-config-js/basePath) 를 rewrites와 함께 사용할 때, rewrite에 `basePath: false` 를 추가하지 않으면 각 `source` 와 `destination` 에 자동적으로 `basePath` 접두사가 붙습니다. 
+[`basePath` support](/docs/app/api-reference/next-config-js/basePath) 를 rewrites와 함께 사용할 때, rewrite에 `basePath: false` 를 추가하지 않으면 각 `source` 와 `destination` 에 자동으로 `basePath` 접두사가 붙습니다. 
 
 ```js filename="next.config.js"
 module.exports = {
@@ -366,8 +366,8 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/with-basePath', // 자동적으로 /docs/with-basePath 가 됩니다
-        destination: '/another', // 자동적으로 /docs/another 가 됩니다
+        source: '/with-basePath', // 자동으로 /docs/with-basePath 가 됩니다
+        destination: '/another', // 자동으로 /docs/another 가 됩니다
       },
       {
         //  basePath: false가 설정되어 있으므로 /without-basePath 에 /docs 를 추가하지 않습니다 
@@ -383,7 +383,7 @@ module.exports = {
 
 ### rewrites의 i18n 지원 
 
-[`i18n` support](/docs/pages/building-your-application/routing/internationalization) 를 rewrites와 사용할 때, rewrite에 `locale: false`를 추가하지 않으면 구성된 `locales` 를 처리하기 위해 각 `source` 와 `destination` 에 자동적으로 접두사가 붙습니다. 만약 `locale: false` 를 사용한다면 정확하게 매치되게 하기 위해 locale로 `source` and `destination` 에 접두사를 붙여야 합니다. 
+[`i18n` support](/docs/pages/building-your-application/routing/internationalization) 를 rewrites와 사용할 때, rewrite에 `locale: false`를 추가하지 않으면 구성된 `locales` 를 처리하기 위해 각 `source` 와 `destination` 에 자동으로 접두사가 붙습니다. `locale: false` 를 사용한다면 정확하게 매치되게 하기 위해 locale로 `source` and `destination` 에 접두사를 붙여야 합니다. 
 
 ```js filename="next.config.js"
 module.exports = {
@@ -395,11 +395,11 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/with-locale', // 자동적으로 모든 locales를 제어합니다
-        destination: '/another', // 자동적으로 locale을 전달합니다 
+        source: '/with-locale', // 자동으로 모든 locales를 제어합니다
+        destination: '/another', // 자동으로 locale을 전달합니다 
       },
       {
-        // locale: false 로 설정되었기 때문에 자동적으로 locales 를 제어하지 않습니다
+        // locale: false 로 설정되었기 때문에 자동으로 locales 를 제어하지 않습니다
         source: '/nl/with-locale-manual',
         destination: '/nl/another',
         locale: false,
@@ -411,7 +411,7 @@ module.exports = {
         locale: false,
       },
       {
-        // locale: false로 설정되어 있을 때에도 모든 locales를 매치하는 것은 불가능합니다
+        // locale: false로 설정되어 있을 때도 모든 locales를 매치하는 것은 불가능합니다
         source: '/:locale/api-alias/:path*',
         destination: '/api/:path*',
         locale: false,
