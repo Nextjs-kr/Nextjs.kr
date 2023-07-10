@@ -1,138 +1,150 @@
 ---
-title: App Router Incremental Adoption Guide
-nav_title: App Router Migration
-description: Learn how to upgrade your existing Next.js application from the Pages Router to the App Router.
+title: 앱 라우터 점진적 적용 가이드
+nav_title: 앱 라우터 마이그레이션
+description: Next.js 어플리케이션을 페이지 라우터에서 앱 라우터로 업그레이드하는 방법을 배웁니다.
 ---
 
-This guide will help you:
+이 가이드는 당신을 도와줄 것입니다.
 
-- [Update your Next.js application from version 12 to version 13](#nextjs-version)
-- [Upgrade features that work in both the `pages` and the `app` directories](#upgrading-new-features)
-- [Incrementally migrate your existing application from `pages` to `app`](#migrating-from-pages-to-app)
+- [Next.js 어플리케이션을 12 버전에서 13 버전으로 업데이트하세요.](#nextjs-version)
+- [`pages` 디렉토리와 `app` 디렉토리 모두에서 작동하는 기능을 업그레이드하기](#upgrading-new-features)
+- [기존 애플리케이션을 `pages`에서 `app`으로 점진적으로 마이그레이션하기](#migrating-from-pages-to-app)
 
-## Upgrading
+## 업그레이드하기
 
-### Node.js Version
+### Node.js 버전
 
-The minimum Node.js version is now **v16.8**. See the [Node.js documentation](https://nodejs.org/docs/latest-v16.x/api/) for more information.
+현재 최소 Node.js 버전은 **v16.8**입니다. 자세한 내용은 [Node.js 문서](https://nodejs.org/docs/latest-v16.x/api/) 를 참조하세요.
 
-### Next.js Version
+### Next.js 버전
 
-To update to Next.js version 13, run the following command using your preferred package manager:
+Next.js 버전 13으로 업데이트하려면 기본 패키지 관리자를 사용하여 다음 명령을 실행합니다.
 
 ```bash filename="Terminal"
 npm install next@latest react@latest react-dom@latest
 ```
 
-### ESLint Version
+### ESLint 버전
 
-If you're using ESLint, you need to upgrade your ESLint version:
+ESLint를 사용하는 경우 ESLint 버전을 업그레이드해야 합니다.
 
 ```bash filename="Terminal"
 npm install -D eslint-config-next@latest
 ```
 
-> **Good to know**: You may need to restart the ESLint server in VS Code for the ESLint changes to take effect. Open the Command Palette (`cmd+shift+p` on Mac; `ctrl+shift+p` on Windows) and search for `ESLint: Restart ESLint Server`.
+> **참고**: ESLint 변경 사항을 적용하려면 VS Code에서 ESLint 서버를 다시 시작해야 할 수 있습니다. 명령 팔레트(Mac의 경우 `cmd+shift+p`, Windows의 경우 `ctrl+shift+p`)를 열고 `ESLint: ESLint 서버 다시 시작`을 검색합니다.
 
-## Next Steps
+## 다음 단계
 
-After you've updated, see the following sections for next steps:
+업데이트한 후 다음 단계는 다음 섹션을 참조하세요.
 
-- [Upgrade new features](#upgrading-new-features): A guide to help you upgrade to new features such as the improved Image and Link Components.
-- [Migrate from the `pages` to `app` directory](#migrating-from-pages-to-app): A step-by-step guide to help you incrementally migrate from the `pages` to the `app` directory.
+- [새로운 기능 업그레이드](#upgrading-new-features): 향상된 이미지 및 링크 컴포넌트
+  와 같은 새로운 기능으로 업그레이드하는 데 도움이 되는 안내서입니다.
+- [`pages`에서 `app` 디렉토리로 마이그레이션](#migrating-from-pages-to-app): `pages`에서 `app` 디렉토리
+  로 단계적으로 마이그레이션하는 데 도움이 되는 단계별 가이드입니다.
 
-## Upgrading New Features
+## 새 기능 업그레이드
 
-Next.js 13 introduced the new [App Router](/docs/app/building-your-application/routing) with new features and conventions. The new Router is available in the `app` directory and co-exists with the `pages` directory.
+Next.js 13은 새로운 기능과 규약을 갖춘 새로운 [앱 라우터](/docs/app/building-your-application/routing)을 소개했습니다. 새 라우터는 `app` 디렉토리에서 사용할 수 있으며 `pages` 디렉토리와 공존합니다.
 
-Upgrading to Next.js 13 does **not** require using the new [App Router](/docs/app/building-your-application/routing#the-app-router). You can continue using `pages` with new features that work in both directories, such as the updated [Image component](#image-component), [Link component](#link-component), [Script component](#script-component), and [Font optimization](#font-optimization).
+Next.js 13으로 업그레이드하려면 새로운 [앱 라우터](/docs/app/building-your-application/routing#the-app-router)를 사용할 필요가 없습니다. 업데이트된 [이미지 컴포넌트](#image-component), [링크 컴포넌트](#link-component), [스크립트 컴포넌트](#script-component), [폰트 최적화](#font-optimization)과 같은 두 디렉토리 모두에서 작동하는 새로운 기능과 함께 `pages`를 계속 사용할 수 있습니다.
 
-### `<Image/>` Component
+### `<Image/>` 컴포넌트
 
-Next.js 12 introduced new improvements to the Image Component with a temporary import: `next/future/image`. These improvements included less client-side JavaScript, easier ways to extend and style images, better accessibility, and native browser lazy loading.
+Next.js 12는 `next/future/image`라는 임시의 import를 통해 이미지 컴포넌트
+에 새로운 개선 사항을 도입했습니다. 이러한 향상된 기능에는 클라이언트 측 JavaScript 감소, 이미지 확장 및 스타일 지정이 용이한 방법, 향상된 접근성, 네이티브 브라우저의 lazy loading 등이 포함되었습니다.
 
-In version 13, this new behavior is now the default for `next/image`.
+버전 13에서 이 새로운 동작은 이제 `next/image`의 기본값입니다.
 
-There are two codemods to help you migrate to the new Image Component:
+새 이미지 컴포넌트
+로 마이그레이션하는 데 도움이 되는 두 가지 코드 방법이 있습니다.
 
-- [**`next-image-to-legacy-image` codemod**](/docs/app/building-your-application/upgrading/codemods#next-image-to-legacy-image): Safely and automatically renames `next/image` imports to `next/legacy/image`. Existing components will maintain the same behavior.
-- [**`next-image-experimental` codemod**](/docs/app/building-your-application/upgrading/codemods#next-image-experimental): Dangerously adds inline styles and removes unused props. This will change the behavior of existing components to match the new defaults. To use this codemod, you need to run the `next-image-to-legacy-image` codemod first.
+- [**`next-image-to-legacy-image` codemod**](/docs/app/building-your-application/upgrading/codemods#next-image-to-legacy-image): `next/image` 가져오기 이름을 `next/legacy/image`로 안전하고 자동으로 변경합니다. 기존 컴포넌트
+  는 동일한 동작을 유지합니다.
+- [**`next-image-experimental` codemod**](/docs/app/building-your-application/upgrading/codemods#next-image-experimental): 인라인 스타일을 위험하게 추가하고 사용하지 않는 props를 제거합니다. 기존 컴포넌트
+  의 동작이 새 기본값과 일치하도록 변경됩니다. 이 코드 모드를 사용하려면 먼저 `next-image-to-legacy-image` 코드 모드를 실행해야 합니다.
 
-### `<Link>` Component
+### `<Link>` 컴포넌트
 
-The [`<Link>` Component](/docs/app/building-your-application/routing/linking-and-navigating#link-component) no longer requires manually adding an `<a>` tag as a child. This behavior was added as an experimental option in [version 12.2](https://nextjs.org/blog/next-12-2) and is now the default. In Next.js 13, `<Link>` always renders `<a>` and allows you to forward props to the underlying tag.
+[`<Link>` 컴포넌트](/docs/app/building-your-application/routing/linking-and-navigating#link-component)는 더 이상 수동으로 `<a>` 태그를 자식으로 추가할 필요가 없습니다. 이 동작은 [버전 12.2](https://nextjs.org/blog/next-12-2)에서 실험 옵션으로 추가되었으며 현재 기본값입니다. Next.js 13에서 `<Link>`는 항상 `<a>`를 렌더링하고 기본 태그로 소품을 전달할 수 있습니다.
 
-For example:
+예시:
 
 ```jsx
 import Link from 'next/link'
 
-// Next.js 12: `<a>` has to be nested otherwise it's excluded
+// Next.js 12: `<a>`는 중첩되어야 합니다. 그렇지 않으면 제외됩니다
 <Link href="/about">
   <a>About</a>
 </Link>
 
-// Next.js 13: `<Link>` always renders `<a>` under the hood
+// Next.js 13: `<Link>`는 항상 후드 아래에 `<a>`를 렌더링합니다
 <Link href="/about">
   About
 </Link>
 ```
 
-To upgrade your links to Next.js 13, you can use the [`new-link` codemod](/docs/app/building-your-application/upgrading/codemods#new-link).
+Next.js 13에 대한 링크를 업그레이드하려면 [`new-link` codemod](/docs/app/building-your-application/upgrading/codemods#new-link)를 사용하면 됩니다.
 
-### `<Script>` Component
+### `<Script>` 컴포넌트
 
-The behavior of [`next/script`](/docs/app/api-reference/components/script) has been updated to support both `pages` and `app`, but some changes need to be made to ensure a smooth migration:
+[`next/script`](/docs/app/api-reference/components/script)의 동작이 `pages`와 `app`을 모두 지원하도록 업데이트되었지만 원활한 마이그레이션을 위해 다음과 같이 일부 변경해야 합니다.
 
-- Move any `beforeInteractive` scripts you previously included in `_document.js` to the root layout file (`app/layout.tsx`).
-- The experimental `worker` strategy does not yet work in `app` and scripts denoted with this strategy will either have to be removed or modified to use a different strategy (e.g. `lazyOnload`).
-- `onLoad`, `onReady`, and `onError` handlers will not work in Server Components so make sure to move them to a [Client Component](/docs/getting-started/react-essentials) or remove them altogether.
+- 실험적인 `worker` 전략은 `app`에서 아직 작동하지 않으며 이 전략으로 표시된 스크립트는 다른 전략(예: `lazyOnload`)을 사용하기 위해 제거되거나 수정되어야 합니다.
+- `onLoad`, `onReady` 및 `onError` 핸들러는 서버 컴포넌트에서 작동하지 않으므로 [클라이언트 컴포넌트](/docs/getting-started/react-essentials)로 이동하거나 모두 제거해야 합니다.
+- 이전에 `_document.js`에 포함 되었던 모든`beforeInteractive` 스크립트를 루트 레이아웃 파일(`app/layout.tsx`)로 이동합니다.
 
-### Font Optimization
+### 폰트 최적화
 
-Previously, Next.js helped you optimize fonts by [inlining font CSS](/docs/app/building-your-application/optimizing/fonts). Version 13 introduces the new [`next/font`](/docs/app/building-your-application/optimizing/fonts) module which gives you the ability to customize your font loading experience while still ensuring great performance and privacy. `next/font` is supported in both the `pages` and `app` directories.
+이전에 Next.js는 [인라인 폰트 CSS](/docs/app/building-your-application/optimizing/fonts)를 사용하여 폰트를 최적화하는 데 도움을 주었습니다. 버전 13에는 새로운 [`next/font`](/docs/app/building-your-application/optimizing/fonts) 모듈이 도입되어 뛰어난 성능과 개인 보안성을 보장하면서 폰트 로드 환경을 사용자가 지정할 수 있습니다. `next/filename`은 `pages` 및 `app` 디렉토리에서 모두 지원됩니다.
 
-While [inlining CSS](/docs/app/building-your-application/optimizing/fonts) still works in `pages`, it does not work in `app`. You should use [`next/font`](/docs/app/building-your-application/optimizing/fonts) instead.
+[CSS 인라인처리](/docs/app/building-your-application/optimizing/fonts)는 여전히 `pages`에서는 작동하지만 `app`에서는 작동하지 않습니다. 대신 [`next/font`](/docs/app/building-your-application/optimizing/fonts)를 사용해야 합니다.
 
-See the [Font Optimization](/docs/app/building-your-application/optimizing/fonts) page to learn how to use `next/font`.
+`next/font` 사용 방법에 대한 자세한 내용은 [폰트 최적화](/docs/app/building-your-application/optimizing/fonts) 페이지를 참조하세요.
 
-## Migrating from `pages` to `app`
+## `pages`에서 `app`으로 마이그레이션
 
-Moving to the App Router may be the first time using React features that Next.js builds on top of such as Server Components, Suspense, and more. When combined with new Next.js features such as [special files](/docs/app/building-your-application/routing#file-conventions) and [layouts](/docs/app/building-your-application/routing/pages-and-layouts#layouts), migration means new concepts, mental models, and behavioral changes to learn.
+앱 라우터로 이동하는 것은 서버 컴포넌트, 서스펜스 등과 같은 리액트 기능을 Next.js에 처음으로 사용하는 것일 수 있습니다. [특별한 파일](/docs/app/building-your-application/routing#file-conventions) 및 [layouts](/docs/app/building-your-application/routing/pages-and-layouts#layouts)과 같은 새로운 Next.js 기능과 결합된 마이그레이션은 새로운 개념, 정신적 모델 및 학습해야 할 행동 변화를 의미합니다.
 
-We recommend reducing the combined complexity of these updates by breaking down your migration into smaller steps. The `app` directory is intentionally designed to work simultaneously with the `pages` directory to allow for incremental page-by-page migration.
+마이그레이션을 더 작은 단계로 세분화하여 이러한 업데이트의 결합 복잡성을 줄이는 것이 좋습니다. `app` 디렉토리는 한페이지씩 점진적인 마이그레이션이 가능하도록 `pages` 디렉토리와 동시에 작동하도록 설계되었습니다.
 
-- The `app` directory supports nested routes _and_ layouts. [Learn more](/docs/app/building-your-application/routing).
-- Use nested folders to [define routes](/docs/app/building-your-application/routing/defining-routes) and a special `page.js` file to make a route segment publicly accessible. [Learn more](#step-4-migrating-pages).
-- [Special file conventions](/docs/app/building-your-application/routing#file-conventions) are used to create UI for each route segment. The most common special files are `page.js` and `layout.js`.
-  - Use `page.js` to define UI unique to a route.
-  - Use `layout.js` to define UI that is shared across multiple routes.
-  - `.js`, `.jsx`, or `.tsx` file extensions can be used for special files.
-- You can colocate other files inside the `app` directory such as components, styles, tests, and more. [Learn more](/docs/app/building-your-application/routing).
-- Data fetching functions like `getServerSideProps` and `getStaticProps` have been replaced with [a new API](/docs/app/building-your-application/data-fetching) inside `app`. `getStaticPaths` has been replaced with [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params).
-- `pages/_app.js` and `pages/_document.js` have been replaced with a single `app/layout.js` root layout. [Learn more](/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required).
-- `pages/_error.js` has been replaced with more granular `error.js` special files. [Learn more](/docs/app/building-your-application/routing/error-handling).
-- `pages/404.js` has been replaced with the [`not-found.js`](/docs/app/api-reference/file-conventions/not-found) file.
-- `pages/api/*` currently remain inside the `pages` directory.
+- `app` 디렉토리는 중첩된 경로 _and_ 레이아웃을 지원합니다. [자세히 알아보기](/docs/app/building-your-application/routing).
+- 중첩된 폴더를 사용하여 [경로 정의](/docs/app/building-your-application/routing/definition-routes) 및 특수 `page.js` 파일을 사용하여 경로 세그먼트에 공개적으로 액세스할 수 있도록 합니다. [자세히 보기](#step-4-migrating-pages).
+- [특수 파일 규칙](/docs/app/building-your-application/routing#file-conventions)을 사용하여 각 경로 세그먼트에 대한 UI를 생성합니다. 가장 일반적인 특수 파일은 `page.js`와 `layout.js`입니다.
+- 경로에 고유한 UI를 정의하려면 `page.js`를 사용합니다.
+- 여러 경로에서 공유되는 UI를 정의하려면 `layout.js`를 사용합니다.
+- 특수 파일에는 `.js`, `.jsx` 또는 `.tsx` 파일 확장자를 사용할 수 있습니다.
+- 컴포넌트
+  , 스타일, 테스트 등과 같은 다른 파일을 `app` 디렉토리 내에 배치할 수 있습니다. [자세히 알아보기](/docs/app/building-your-application/routing).
+- `getServerSideProps`와 `getStaticProps`와 같은 data fetching
+  기능이 `app` 내부의 [새로운 API](/docs/app/building-your-application/data-fetching)로 대체되었습니다. `getStaticPaths`가 [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params)로 대체되었습니다.
+- `pages/_app.js` 및 `pages/_pages.js`가 단일 `app/pages.js` 루트 레이아웃으로 대체되었습니다. [자세히 보기](/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required).
+- `pages/_error.js`가 보다 세분화된 `error.js` 특수 파일로 대체되었습니다. [자세히 보기](/docs/app/building-your-application/routing/error-handling).
+- `pages/404.js`가 [`not-found.js`](/docs/app/api-reference/file-conventions/not-found) 파일로 대체되었습니다.
+- `pages/api/*`는 현재 `pages` 디렉토리
+  안에 남아 있습니다.
 
-### Step 1: Creating the `app` directory
+### Step 1: `app` 디렉토리
 
-Update to the latest Next.js version (requires 13.4 or greater):
+생성하기
+
+최신 Next.js 버전으로 업데이트하세요.(13.4 이상 필요).
 
 ```bash
 npm install next@latest
 ```
 
-Then, create a new `app` directory at the root of your project (or `src/` directory).
+그런 다음 프로젝트의 루트(또는 `src/` 디렉토리)에 새 `app` 디렉토리를 만듭니다.
 
-### Step 2: Creating a Root Layout
+### Step 2: 루트 레이아웃 생성하기
 
-Create a new `app/layout.tsx` file inside the `app` directory. This is a [root layout](/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required) that will apply to all routes inside `app`.
+`app` 디렉토리
+에 새 `app/layout.tsx` 파일을 만듭니다. 이것은 `app` 내부의 모든 경로에 적용되는 [루트 레이이웃](/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required)입니다.
 
 ```tsx filename="app/layout.tsx" switcher
 export default function RootLayout({
-  // Layouts must accept a children prop.
-  // This will be populated with nested layouts or pages
+  // 레이아웃은 하위 prop을 사용할 수 있어야 합니다.
+  // 중첩된 레이아웃 또는 페이지로 채워집니다.
   children,
 }: {
   children: React.ReactNode
@@ -147,8 +159,8 @@ export default function RootLayout({
 
 ```jsx filename="app/layout.js" switcher
 export default function RootLayout({
-  // Layouts must accept a children prop.
-  // This will be populated with nested layouts or pages
+  // 레이아웃은 하위 prop을 사용할 수 있어야 합니다.
+  // 중첩된 레이아웃 또는 페이지로 채워집니다.
   children,
 }) {
   return (
@@ -159,12 +171,12 @@ export default function RootLayout({
 }
 ```
 
-- The `app` directory **must** include a root layout.
-- The root layout must define `<html>`, and `<body>` tags since Next.js does not automatically create them
-- The root layout replaces the `pages/_app.tsx` and `pages/_document.tsx` files.
-- `.js`, `.jsx`, or `.tsx` extensions can be used for layout files.
+- `app` 디렉토리에는 **반드시** 루트 레이아웃이 포함되어 있어야합니다.
+- Next.js는 `<html>` 및 `<body>` 태그를 자동으로 생성하지 않으므로 루트 레이아웃에서 반드시 정의해야 합니다.
+- 루트 레이아웃은 `pages/_app.tsx` 및 `pages/_document.tsx` 파일을 대체합니다.
+- 레이아웃 파일에는 `.js`, `.jsx` 또는 `.tsx` 확장자를 사용할 수 있습니다.
 
-To manage `<head>` HTML elements, you can use the [built-in SEO support](/docs/app/building-your-application/optimizing/metadata):
+`<head>` HTML 요소를 관리하려면 [내장 SEO 지원](/docs/app/building-your-application/optimizing/metadata)를 사용할 수 있습니다.
 
 ```tsx filename="app/layout.tsx" switcher
 import { Metadata } from 'next'
@@ -182,29 +194,32 @@ export const metadata = {
 }
 ```
 
-#### Migrating `_document.js` and `_app.js`
+#### `_document.js` 및 `_app.js` 마이그레이션
 
-If you have an existing `_app` or `_document` file, you can copy the contents (e.g. global styles) to the root layout (`app/layout.tsx`). Styles in `app/layout.tsx` will _not_ apply to `pages/*`. You should keep `_app`/`_document` while migrating to prevent your `pages/*` routes from breaking. Once fully migrated, you can then safely delete them.
+기존 `_app` 또는 `_document` 파일이 있는 경우 내용(예: 전역 스타일)을 루트 레이아웃(`app/layout.tsx`)에 복사할 수 있습니다. `app/layout.tsx`의 스타일은 `pages/*`에 적용되지 _않습니다_. `_app`/`_document`를 마이그레이션하는 동안 `pages/*` 경로가 끊어지지 않도록 유지해야 합니다. 완전히 마이그레이션된 후에는 안전하게 삭제할 수 있습니다.
 
-If you are using any React Context providers, they will need to be moved to a [Client Component](/docs/getting-started/react-essentials).
+React Context Provider를 사용하는 경우 [클라이언트 컴포넌트](/docs/getting-started/react-essentials)로 이동해야 합니다.
 
-#### Migrating the `getLayout()` pattern to Layouts (Optional)
+#### `getLayout()` 패턴을 레이아웃으로 마이그레이션(선택 사항)
 
-Next.js recommended adding a [property to Page components](/docs/pages/building-your-application/routing/pages-and-layouts#layout-pattern#per-page-layouts) to achieve per-page layouts in the `pages` directory. This pattern can be replaced with native support for [nested layouts](/docs/app/building-your-application/routing/pages-and-layouts#layouts) in the `app` directory.
+Next.js는 `pages` 디렉토리에서 페이지 단위 레이아웃을 달성하기 위해 [페이지 컴포넌트의 속성](/docs/pages/building-your-application/routing/pages-and-layouts#layout-pattern#per-page-layouts)을 추가할 것을 권장했습니다. 이 패턴은 `app` 디렉토리
+에서 [중첩된 레이아웃](/docs/app/building-your-application/routing/pages-and-layouts#layouts)에 대한 기본 지원으로 대체할 수 있습니다.
 
 <details>
-  <summary>See before and after example</summary>
+    <summary>Before 예시와 After 예시를 봅시다.</summary>
 
-**Before**
+    **Before**
 
-```jsx filename="components/DashboardLayout.js"
-export default function DashboardLayout({ children }) {
-  return (
+    ```jsx filename="components/DashboardLayout.js"
+    export default function DashboardLayout({ children }) {
+    return (
     <div>
-      <h2>My Dashboard</h2>
-      {children}
-    </div>
-  )
+    <h2>My Dashboard</h2>
+
+{children}
+
+</div>
+)
 }
 ```
 
@@ -222,50 +237,53 @@ Page.getLayout = function getLayout(page) {
 
 **After**
 
-- Remove the `Page.getLayout` property from `pages/dashboard/index.js` and follow the [steps for migrating pages](#step-4-migrating-pages) to the `app` directory.
+- `pages/dashboard/index.js`에서 `Page.getLayout` 속성을 제거하고 [페이지 마이그레이션 단계](#step-4-migrating-pages)를 따라 `app` 디렉토리
+  로 이동합니다.
 
-  ```jsx filename="app/dashboard/page.js"
-  export default function Page() {
-    return <p>My Page</p>
-  }
-  ```
+```jsx filename="app/dashboard/page.js"
+export default function Page() {
+  return <p>My Page</p>
+}
+```
 
-- Move the contents of `DashboardLayout` into a new [Client Component](/docs/getting-started/react-essentials#client-components) to retain `pages` directory behavior.
+- `대시보드 레이아웃`의 내용을 새 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components)로 이동하여 `pages` 디렉토리
+  동작을 유지합니다.
 
-  ```jsx filename="app/dashboard/DashboardLayout.js"
-  'use client' // this directive should be at top of the file, before any imports.
+```jsx filename="app/dashboard/DashboardLayout.js"
+'use client' // 이 지침은 imports 전에 파일의 맨 위에 있어야 합니다.
 
-  // This is a Client Component
-  export default function DashboardLayout({ children }) {
-    return (
-      <div>
-        <h2>My Dashboard</h2>
-        {children}
-      </div>
-    )
-  }
-  ```
+// 이것은 클라이언트 컴포넌트입니다.
+export default function DashboardLayout({ children }) {
+  return (
+    <div>
+      <h2>My Dashboard</h2>
+      {children}
+    </div>
+  )
+}
+```
 
-- Import the `DashboardLayout` into a new `layout.js` file inside the `app` directory.
+- `Dashboard Layout`을 `app` 디렉토리
+  에 있는 새 `layout.js` 파일로 가져옵니다.
 
-  ```jsx filename="app/dashboard/layout.js"
-  import DashboardLayout from './DashboardLayout'
+```jsx filename="app/dashboard/layout.js"
+import DashboardLayout from './DashboardLayout'
 
-  // This is a Server Component
-  export default function Layout({ children }) {
-    return <DashboardLayout>{children}</DashboardLayout>
-  }
-  ```
+// 이것은 서버 컴포넌트입니다.
+export default function Layout({ children }) {
+  return <DashboardLayout>{children}</DashboardLayout>
+}
+```
 
-- You can incrementally move non-interactive parts of `DashboardLayout.js` (Client Component) into `layout.js` (Server Component) to reduce the amount of component JavaScript you send to the client.
+- 대화형이 아닌 부분인 DashboardLayout.js(클라이언트 컴포넌트)를 `layout.js`(서버 컴포넌트)로 점진적으로 이동하여 클라이언트로 보내는 컴포넌트 자바스크립트의 양을 줄일 수 있습니다.
 
 </details>
 
-### Step 3: Migrating `next/head`
+### Step 3: `next/head` 마이그레이션
 
-In the `pages` directory, the `next/head` React component is used to manage `<head>` HTML elements such as `title` and `meta` . In the `app` directory, `next/head` is replaced with the new [built-in SEO support](/docs/app/building-your-application/optimizing/metadata).
+`pages` 디렉토리에서 `next/head` React 컴포넌트는 `title`, `meta`와 같은 `<head>` HTML 요소를 관리하는 데 사용됩니다. `app` 디렉토리에서 `next/head`가 새 [내장 SEO 지원](/docs/app/building-your-application/optimizing/metadata)으로 바뀝니다.
 
-**Before:**
+**이전:**
 
 ```tsx filename="pages/index.tsx" switcher
 import Head from 'next/head'
@@ -295,7 +313,7 @@ export default function Page() {
 }
 ```
 
-**After:**
+**이후:**
 
 ```tsx filename="app/page.tsx" switcher
 import { Metadata } from 'next'
@@ -319,37 +337,39 @@ export default function Page() {
 }
 ```
 
-[See all metadata options](/docs/app/api-reference/functions/generate-metadata).
+[메타데이터의 모든 옵션보기](/docs/app/api-reference/functions/generate-metadata).
 
-### Step 4: Migrating Pages
+### Step 4: Pages 마이그레이션
 
-- Pages in the [`app` directory](/docs/app/building-your-application/routing) are [Server Components](/docs/getting-started/react-essentials) by default. This is different from the `pages` directory where pages are [Client Components](/docs/getting-started/react-essentials).
-- [Data fetching](/docs/app/building-your-application/data-fetching) has changed in `app`. `getServerSideProps`, `getStaticProps` and `getInitialProps` have been replaced for a simpler API.
-- The `app` directory uses nested folders to [define routes](/docs/app/building-your-application/routing/defining-routes) and a special `page.js` file to make a route segment publicly accessible.
-- | `pages` Directory | `app` Directory       | Route          |
-  | ----------------- | --------------------- | -------------- |
-  | `index.js`        | `page.js`             | `/`            |
-  | `about.js`        | `about/page.js`       | `/about`       |
-  | `blog/[slug].js`  | `blog/[slug]/page.js` | `/blog/post-1` |
+- [`app` 디렉토리](/docs/app/building-your-application/routing)의 페이지는 기본적으로 [서버 컴포넌트](/docs/getting-started/react-essentials)입니다. 페이지가 [클라이언트 컴포넌트](/docs/getting-started/react-essentials)인 `pages` 디렉토리와는 다릅니다.
+- [data fetching](/docs/app/building-your-application/data-fetching)가 `app`에서 변경되었습니다. `getServerSideProps`, `getStaticProps` 및 `getInitialProps`는 보다 단순한 API로 대체되었습니다.
+- `app` 디렉토리는 중첩된 폴더를 사용하여 [경로 정의](/docs/app/building-your-application/routing/defining-routes)하고 특수한 `page.js` 파일을 사용하여 경로 세그먼트에 공개적으로 액세스할 수 있도록 합니다.
+- | `pages` 디렉토리 | `app` 디렉토리        | 라우트         |
+  | ---------------- | --------------------- | -------------- |
+  | `index.js`       | `page.js`             | `/`            |
+  | `about.js`       | `about/page.js`       | `/about`       |
+  | `blog/[slug].js` | `blog/[slug]/page.js` | `/blog/post-1` |
 
-We recommend breaking down the migration of a page into two main steps:
+페이지 마이그레이션을 두 가지 주요 단계로 나누는 것이 좋습니다.
 
-- Step 1: Move the default exported Page Component into a new Client Component.
-- Step 2: Import the new Client Component into a new `page.js` file inside the `app` directory.
+- 1단계: 내보낸 기본 페이지 컴포넌트를 새 클라이언트 컴포넌트로 이동합니다.
+- 2단계: 새 클라이언트 컴포넌트를 `app` 디렉토리
+  에 있는 새 `page.js` 파일로 가져옵니다.
 
-> **Good to know**: This is the easiest migration path because it has the most comparable behavior to the `pages` directory.
+> **참고**: `pages` 디렉토리와 가장 유사한 동작을 하기 때문에 가장 쉬운 마이그레이션 경로입니다.
 
-**Step 1: Create a new Client Component**
+**1단계: 새 클라이언트 컴포넌트 생성**
 
-- Create a new separate file inside the `app` directory (i.e. `app/home-page.tsx` or similar) that exports a Client Component. To define Client Components, add the `'use client'` directive to the top of the file (before any imports).
-- Move the default exported page component from `pages/index.js` to `app/home-page.tsx`.
+- 클라이언트 컴포넌트를 내보내는 `app` 디렉토리
+  (예: `app/home-page.tsx` 또는 유사한 파일) 내에 별도의 새 파일을 만듭니다. 클라이언트 컴포넌트를 정의하려면 파일의 맨 위에(가져오기 전에) `use client` 지시어를 추가합니다.
+- 내보낸 기본 페이지 컴포넌트
+  를 `pages/index.js`에서 `app/home-page.tsx`로 이동합니다.
 
 ```tsx filename="app/home-page.tsx" switcher
 'use client'
 
-// This is a Client Component. It receives data as props and
-// has access to state and effects just like Page components
-// in the `pages` directory.
+// 이것은 클라이언트 컴포넌트입니다.
+// 데이터를 속성으로 수신하고 `pages`디렉토리의 페이지 컴포넌트처럼 상태 및 이펙트에 접근할 수 있습니다.
 export default function HomePage({ recentPosts }) {
   return (
     <div>
@@ -364,9 +384,8 @@ export default function HomePage({ recentPosts }) {
 ```jsx filename="app/home-page.js" switcher
 'use client'
 
-// This is a Client Component. It receives data as props and
-// has access to state and effects just like Page components
-// in the `pages` directory.
+// 이것은 클라이언트 컴포넌트입니다.
+// 데이터를 속성으로 수신하고 `pages`디렉토리의 페이지 컴포넌트처럼 상태 및 이펙트에 접근할 수 있습니다.
 export default function HomePage({ recentPosts }) {
   return (
     <div>
@@ -378,63 +397,68 @@ export default function HomePage({ recentPosts }) {
 }
 ```
 
-**Step 2: Create a new page**
+**2단계: 새 페이지 만들기**
 
-- Create a new `app/page.tsx` file inside the `app` directory. This is a Server Component by default.
-- Import the `home-page.tsx` Client Component into the page.
-- If you were fetching data in `pages/index.js`, move the data fetching logic directly into the Server Component using the new [data fetching APIs](/docs/app/building-your-application/data-fetching/fetching). See the [data fetching upgrade guide](#step-6-migrating-data-fetching-methods) for more details.
+- `app` 디렉토리
+  에 새 `app/page.tsx` 파일을 만듭니다. 기본적으로 서버 컴포넌트입니다.
+- `home-page.tsx` 클라이언트 컴포넌트를 페이지로 가져옵니다.
+- `pages/index.js`에서 데이터를 가져오는 경우 새로운 [data fetching API](/docs/app/building-your-application/data-fetching/fetching)을 사용하여 data fetching 로직을 서버 컴포넌트로 직접 이동합니다. 자세한 내용은 [data fetching 업그레이드 가이드](#step-6-migrating-data-fetching-methods)를 참조하십시오.
 
-  ```tsx filename="app/page.tsx" switcher
-  // Import your Client Component
-  import HomePage from './home-page'
+```tsx filename="app/page.tsx" switcher
+// 클라이언트 컴포넌트 가져오기
+import HomePage from './home-page'
 
-  async function getPosts() {
-    const res = await fetch('https://...')
-    const posts = await res.json()
-    return posts
-  }
+async function getPosts() {
+  const res = await fetch('https://...')
+  const posts = await res.json()
+  return posts
+}
 
-  export default async function Page() {
-    // Fetch data directly in a Server Component
-    const recentPosts = await getPosts()
-    // Forward fetched data to your Client Component
-    return <HomePage recentPosts={recentPosts} />
-  }
-  ```
+export default async function Page() {
+  // 서버 컴포넌트에서 직접 data fetching
 
-  ```jsx filename="app/page.js" switcher
-  // Import your Client Component
-  import HomePage from './home-page'
+  const recentPosts = await getPosts()
+  // 가져온 데이터를 클라이언트 컴포넌트로 전달
+  return <HomePage recentPosts={recentPosts} />
+}
+```
 
-  async function getPosts() {
-    const res = await fetch('https://...')
-    const posts = await res.json()
-    return posts
-  }
+```jsx filename="app/page.js" switcher
+// 클라이언트 컴포넌트 가져오기
+import HomePage from './home-page'
 
-  export default async function Page() {
-    // Fetch data directly in a Server Component
-    const recentPosts = await getPosts()
-    // Forward fetched data to your Client Component
-    return <HomePage recentPosts={recentPosts} />
-  }
-  ```
+async function getPosts() {
+  const res = await fetch('https://...')
+  const posts = await res.json()
+  return posts
+}
 
-- If your previous page used `useRouter`, you'll need to update to the new routing hooks. [Learn more](/docs/app/api-reference/functions/use-router).
-- Start your development server and visit [`http://localhost:3000`](http://localhost:3000). You should see your existing index route, now served through the app directory.
+export default async function Page() {
+  // 서버 컴포넌트에서 직접 data fetching
 
-### Step 5: Migrating Routing Hooks
+  const recentPosts = await getPosts()
+  // 가져온 데이터를 클라이언트 컴포넌트로 전달
+  return <HomePage recentPosts={recentPosts} />
+}
+```
 
-A new router has been added to support the new behavior in the `app` directory.
+- 이전 페이지에서 `useRouter`를 사용했다면 새 라우팅 훅으로 업데이트해야 합니다. [자세히 보기](/docs/app/api-reference/functions/use-router).
+- 개발 서버를 시작하고 [`http://localhost:3000`](http://localhost:3000)을 방문합니다. 앱 디렉토리
+  를 통해 제공되는 기존 인덱스 경로를 확인해야 합니다.
 
-In `app`, you should use the three new hooks imported from `next/navigation`: [`useRouter()`](/docs/app/api-reference/functions/use-router), [`usePathname()`](/docs/app/api-reference/functions/use-pathname), and [`useSearchParams()`](/docs/app/api-reference/functions/use-search-params).
+### 5단계: 라우팅 훅 마이그레이션
 
-- The new `useRouter` hook is imported from `next/navigation` and has different behavior to the `useRouter` hook in `pages` which is imported from `next/router`.
-  - The [`useRouter` hook imported from `next/router`](/docs/pages/api-reference/functions/use-router) is not supported in the `app` directory but can continue to be used in the `pages` directory.
-- The new `useRouter` does not return the `pathname` string. Use the separate `usePathname` hook instead.
-- The new `useRouter` does not return the `query` object. Use the separate `useSearchParams` hook instead.
-- You can use `useSearchParams` and `usePathname` together to listen to page changes. See the [Router Events](/docs/app/api-reference/functions/use-router#router-events) section for more details.
-- These new hooks are only supported in Client Components. They cannot be used in Server Components.
+`app` 디렉토리
+의 새 동작을 지원하기 위해 새 라우터가 추가되었습니다.
+
+`app`에서는 `next/navigation`에서 가져온 세 개의 새 훅인 [`useRouter()`(/docs/app/api-reference/functions/use-router), [`usePathname()`](/docs/app/api-reference/functions/use-pathname) 및 [`useSearchParams()`](/docs/app/api-reference/functions/use-search-params)에서 가져온 새 훅을 사용해야 합니다.
+
+- 새로운 `useRouter` 훅은 `next/navigation`에서 가져온 것과 `next/router`에서 가져온 `pages`의 `useRouter` 훅의 동작이 다릅니다.
+- [`next/router` 에서 가져온 `useRouter`](/docs/pages/api-reference/functions/use-router) 훅은 `app` 디렉토리에서 지원되지 않지만 `pages` 디렉토리에서 계속 사용할 수 있습니다.
+- 새 `useRouter`는 `pathname` 문자열을 반환하지 않습니다. 대신 별도의 `usePathname` 훅을 사용합니다.
+- 새 `useRouter`는 쿼리 객체를 반환하지 않습니다. 대신 별도의 `useSearchParams` 훅을 사용합니다.
+- `useSearchParams`와 `usePathname`을 함께 사용하면 페이지 변경 내용을 추적할 수 있습니다. 자세한 내용은 [라우터 이벤트](/docs/app/api-reference/functions/use-router#router-events) 섹션을 참조하십시오.
+- 이러한 새 훅은 클라이언트 컴포넌트에서만 지원됩니다. 서버 컴포넌트에서 사용할 수 없습니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher
 'use client'
@@ -464,33 +488,37 @@ export default function ExampleClientComponent() {
 }
 ```
 
-In addition, the new `useRouter` hook has the following changes:
+또한 새로운 `useRouter` 훅에는 다음과 같은 변경 사항이 있습니다.
 
-- `isFallback` has been removed because `fallback` has [been replaced](#replacing-fallback).
-- The `locale`, `locales`, `defaultLocales`, `domainLocales` values have been removed because built-in i18n Next.js features are no longer necessary in the `app` directory. [Learn more about i18n](/docs/pages/building-your-application/routing/internationalization).
-- `basePath` has been removed. The alternative will not be part of `useRouter`. It has not yet been implemented.
-- `asPath` has been removed because the concept of `as` has been removed from the new router.
-- `isReady` has been removed because it is no longer necessary. During [static rendering](/docs/app/building-your-application/rendering#static-rendering), any component that uses the [`useSearchParams()`](/docs/app/api-reference/functions/use-params) hook will skip the prerendering step and instead be rendered on the client at runtime.
+- `isFallback`이 제거된 이유는 `fallback`이 [교체 되었기](#replacing-fallback) 때문입니다.
+- `locale`, `locales`, `defaultLocales`, `domainLocales` 값은 `app` 디렉토리
+  에 내장된 i18nNext.js 기능이 더 이상 필요하지 않기 때문에 제거되었습니다. [i18n에 대해 자세히 알아보기](/docs/pages/building-your-application/routing/internationalization).
+- `basePath`가 제거되었습니다. 대체 방법은 `useRouter`에 포함되지 않습니다. 아직 구현되지 않았습니다.
+- `asPath`는 새 라우터에서 `as`의 개념이 제거되었기 때문에 제거되었습니다.
+- `isReady`는 더 이상 필요하지 않기 때문에 제거되었습니다. [정적 렌더링](/docs/app/building-your-application/rendering#static-rendering) 동안 [`useSearchParams()`](/docs/app/api-reference/functions/use-params) 훅을 사용하는 컴포넌트는 사전 렌더링 단계를 건너뛰는 대신 런타임에 클라이언트에 렌더링됩니다.
 
-[View the `useRouter()` API reference](/docs/app/api-reference/functions/use-router).
+[`useRouter()` API 레퍼런스 보기](/docs/app/api-reference/functions/use-router).
 
-### Step 6: Migrating Data Fetching Methods
+### 6단계: data fetching
 
-The `pages` directory uses `getServerSideProps` and `getStaticProps` to fetch data for pages. Inside the `app` directory, these previous data fetching functions are replaced with a [simpler API](/docs/app/building-your-application/data-fetching) built on top of `fetch()` and `async` React Server Components.
+방법 마이그레이션
+
+`pages` 디렉토리는 `getServerSideProps`와 `getStaticProps`를 사용하여 페이지 데이터를 가져옵니다.
+`app` 디렉토리 내에서 이러한 이전의 data fetching 기능은 `fetch()` 및 `async` React Server Components 위에 구축된 [간단한 API](/docs/app/building-your-application/data-fetching)로 대체됩니다.
 
 ```tsx filename="app/page.tsx" switcher
 export default async function Page() {
-  // This request should be cached until manually invalidated.
-  // Similar to `getStaticProps`.
-  // `force-cache` is the default and can be omitted.
+  // 이 요청은 수동으로 무효화될 때까지 캐시되어야 합니다.
+  // `getStaticProps`와 유사합니다.
+  // `force-cache`가 기본값이며 생략할 수 있습니다.
   const staticData = await fetch(`https://...`, { cache: 'force-cache' })
 
-  // This request should be refetched on every request.
-  // Similar to `getServerSideProps`.
+  // 이 요청은 모든 요청에 대해 다시 가져와야 합니다.
+  // `getServerSideProps`와 유사합니다.
   const dynamicData = await fetch(`https://...`, { cache: 'no-store' })
 
-  // This request should be cached with a lifetime of 10 seconds.
-  // Similar to `getStaticProps` with the `revalidate` option.
+  // 이 요청은 10초의 수명으로 캐시되어야 합니다.
+  // `revalidate` 옵션이 있는 `getStaticProps`와 유사합니다.
   const revalidatedData = await fetch(`https://...`, {
     next: { revalidate: 10 },
   })
@@ -501,17 +529,17 @@ export default async function Page() {
 
 ```jsx filename="app/page.js" switcher
 export default async function Page() {
-  // This request should be cached until manually invalidated.
-  // Similar to `getStaticProps`.
-  // `force-cache` is the default and can be omitted.
+  // 이 요청은 수동으로 무효화될 때까지 캐시되어야 합니다.
+  // `getServerSideProps`와 유사합니다.
+  // `force-cache`가 기본값이며 생략할 수 있습니다.
   const staticData = await fetch(`https://...`, { cache: 'force-cache' })
 
-  // This request should be refetched on every request.
-  // Similar to `getServerSideProps`.
+  // 이 요청은 모든 요청에 대해 다시 가져와야 합니다.
+  // `getServerSideProps`와 유사합니다.
   const dynamicData = await fetch(`https://...`, { cache: 'no-store' })
 
-  // This request should be cached with a lifetime of 10 seconds.
-  // Similar to `getStaticProps` with the `revalidate` option.
+  // 이 요청은 10초의 수명으로 캐시되어야 합니다.
+  // `revalidate` 옵션이 있는 `getStaticProps`와 유사합니다.
   const revalidatedData = await fetch(`https://...`, {
     next: { revalidate: 10 },
   })
@@ -520,12 +548,13 @@ export default async function Page() {
 }
 ```
 
-#### Server-side Rendering (`getServerSideProps`)
+#### 서버 사이드 렌더링 (`getServerSideProps`)
 
-In the `pages` directory, `getServerSideProps` is used to fetch data on the server and forward props to the default exported React component in the file. The initial HTML for the page is prerendered from the server, followed by "hydrating" the page in the browser (making it interactive).
+`pages` 디렉토리에서 `getServerSideProps`는 서버에서 데이터를 가져오고 파일에서 내보내는 기본 React 컴포넌트로 속성을 전달하는 데 사용됩니다.
+페이지의 초기 HTML은 서버에서 미리 렌더링된 후 브라우저에서 페이지를 `hydrating`하여 상호작용하도록 만듭니다.
 
 ```jsx filename="pages/dashboard.js"
-// `pages` directory
+// `pages` 디렉토리
 
 export async function getServerSideProps() {
   const res = await fetch(`https://...`)
@@ -545,14 +574,13 @@ export default function Dashboard({ projects }) {
 }
 ```
 
-In the `app` directory, we can colocate our data fetching inside our React components using [Server Components](/docs/getting-started/react-essentials#server-components). This allows us to send less JavaScript to the client, while maintaining the rendered HTML from the server.
-
-By setting the `cache` option to `no-store`, we can indicate that the fetched data should [never be cached](/docs/app/building-your-application/data-fetching/caching). This is similar to `getServerSideProps` in the `pages` directory.
+`app` 디렉토리에서 [서버 컴포넌트](/docs/getting-started/react-essentials#server-components)를 사용하여 React 컴포넌트 내에서 데이터 가져오기를 공동으로 수행할 수 있습니다. 이렇게 하면 서버에서 렌더링된 HTML을 유지하면서 클라이언트에 더 적은 자바스크립트를 보낼 수 있습니다.
+`cache` 옵션을 `no-store`로 설정하면 가져온 데이터를 [절대 캐싱하지 않아야 함](/docs/app/building-your-application/data-fetching/caching)해야 함을 나타낼 수 있습니다. 이는 `pages` 디렉토리에 있는 `getServerSideProps`와 유사합니다.
 
 ```tsx filename="app/dashboard/page.tsx" switcher
-// `app` directory
+// `app` 디렉토리
 
-// This function can be named anything
+// 이 함수는 아무 이름으로 지정할 수 있습니다.
 async function getProjects() {
   const res = await fetch(`https://...`, { cache: 'no-store' })
   const projects = await res.json()
@@ -574,9 +602,9 @@ export default async function Dashboard() {
 ```
 
 ```jsx filename="app/dashboard/page.js" switcher
-// `app` directory
+// `app` 디렉토리
 
-// This function can be named anything
+// 이 함수는 아무 이름으로 지정할 수 있습니다.
 async function getProjects() {
   const res = await fetch(`https://...`, { cache: 'no-store' })
   const projects = await res.json()
@@ -597,14 +625,14 @@ export default async function Dashboard() {
 }
 ```
 
-#### Accessing Request Object
+#### 요청 객체 접근
 
-In the `pages` directory, you can retrieve request-based data based on the Node.js HTTP API.
+`pages` 디렉토리에서 Node.js HTTP API를 기반으로 요청 기반 데이터를 검색할 수 있습니다.
 
-For example, you can retrieve the `req` object from `getServerSideProps` and use it to retrieve the request's cookies and headers.
+예를 들어 `getServerSideProps`에서 `req` 객체를 검색하고 이 객체를 사용하여 요청의 쿠키 및 헤더를 검색할 수 있습니다.
 
 ```jsx filename="pages/index.js"
-// `pages` directory
+// `pages` 디렉토리
 
 export async function getServerSideProps({ req, query }) {
   const authHeader = req.getHeaders()['authorization'];
@@ -618,13 +646,13 @@ export default function Page(props) {
 }
 ```
 
-The `app` directory exposes new read-only functions to retrieve request data:
+`app` 디렉토리는 요청 데이터를 검색하기 위한 새로운 읽기 전용 함수를 제공합니다.
 
-- [`headers()`](/docs/app/api-reference/functions/headers): Based on the Web Headers API, and can be used inside [Server Components](/docs/getting-started/react-essentials) to retrieve request headers.
-- [`cookies()`](/docs/app/api-reference/functions/cookies): Based on the Web Cookies API, and can be used inside [Server Components](/docs/getting-started/react-essentials) to retrieve cookies.
+- [`headers()`](/docs/app/api-reference/functions/headers): 웹 헤더 API에 기반하며, [서버 컴포넌트](/docs/getting-started/react-essentials) 내에서 요청 헤더를 검색하는 데 사용할 수 있습니다.
+- [`cookies()`](/docs/app/api-reference/functions/cookies): Web Cookies API에 기반하며, [서버 컴포넌트](/docs/getting-started/react-essentials) 내에서 쿠키를 검색하는 데 사용할 수 있습니다.
 
 ```tsx filename="app/page.tsx" switcher
-// `app` directory
+// `app` 디렉토리
 import { cookies, headers } from 'next/headers'
 
 async function getData() {
@@ -634,8 +662,8 @@ async function getData() {
 }
 
 export default async function Page() {
-  // You can use `cookies()` or `headers()` inside Server Components
-  // directly or in your data fetching function
+  // 서버 컴포넌트 내 직접 또는 data fetching
+  // 기능에서 `cookies()` 또는 `header()`를 사용할 수 있습니다.
   const theme = cookies().get('theme')
   const data = await getData()
   return '...'
@@ -643,7 +671,7 @@ export default async function Page() {
 ```
 
 ```jsx filename="app/page.js" switcher
-// `app` directory
+// `app` 디렉토리
 import { cookies, headers } from 'next/headers'
 
 async function getData() {
@@ -653,20 +681,20 @@ async function getData() {
 }
 
 export default async function Page() {
-  // You can use `cookies()` or `headers()` inside Server Components
-  // directly or in your data fetching function
+  // 서버 컴포넌트 내 직접 또는 data fetching
+  // 기능에서 `cookies()` 또는 `header()`를 사용할 수 있습니다.
   const theme = cookies().get('theme')
   const data = await getData()
   return '...'
 }
 ```
 
-#### Static Site Generation (`getStaticProps`)
+#### 정적 사이트 생성 (`getStaticProps`)
 
-In the `pages` directory, the `getStaticProps` function is used to pre-render a page at build time. This function can be used to fetch data from an external API or directly from a database, and pass this data down to the entire page as it's being generated during the build.
+`pages` 디렉토리에서 `getStaticProps` 함수는 빌드 시 페이지를 미리 렌더링하는 데 사용됩니다. 이 기능은 외부 API 또는 데이터베이스에서 직접 데이터를 가져와 빌드 중에 생성되는 전체 페이지로 데이터를 전달하는 데 사용할 수 있습니다.
 
 ```jsx filename="pages/index.js"
-// `pages` directory
+// `pages` 디렉토리
 
 export async function getStaticProps() {
   const res = await fetch(`https://...`)
@@ -680,12 +708,12 @@ export default function Index({ projects }) {
 }
 ```
 
-In the `app` directory, data fetching with [`fetch()`](/docs/app/api-reference/functions/fetch) will default to `cache: 'force-cache'`, which will cache the request data until manually invalidated. This is similar to `getStaticProps` in the `pages` directory.
+`app` 디렉토리에서 [`fetch()`](/docs/app/api-reference/functions/fetch)로 데이터를 가져오는 경우 수동으로 무효화될 때까지 요청 데이터를 캐시하는 `cache: 'force-cache'`로 기본 설정됩니다. 이는 `pages` 디렉토리에 있는 `getStaticProps`와 유사합니다.
 
 ```jsx filename="app/page.js"
-// `app` directory
+// `app` 디렉토리
 
-// This function can be named anything
+// 이 함수는 아무 이름으로 지정할 수 있습니다.
 async function getProjects() {
   const res = await fetch(`https://...`)
   const projects = await res.json()
@@ -700,12 +728,12 @@ export default async function Index() {
 }
 ```
 
-#### Dynamic paths (`getStaticPaths`)
+#### 동적 경로 (`getStaticPaths`)
 
-In the `pages` directory, the `getStaticPaths` function is used to define the dynamic paths that should be pre-rendered at build time.
+`pages` 디렉토리에서 `getStaticPaths` 함수는 빌드 시 미리 렌더링해야 하는 동적 경로를 정의하는 데 사용됩니다.
 
 ```jsx filename="pages/posts/[id].js"
-// `pages` directory
+// `pages` 디렉토리
 import PostLayout from '@/components/post-layout'
 
 export async function getStaticPaths() {
@@ -726,12 +754,12 @@ export default function Post({ post }) {
 }
 ```
 
-In the `app` directory, `getStaticPaths` is replaced with [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params).
+`app` 디렉토리에서 `getStaticPaths`는 [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params)로 대체됩니다.
 
-[`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params) behaves similarly to `getStaticPaths`, but has a simplified API for returning route parameters and can be used inside [layouts](/docs/app/building-your-application/routing/pages-and-layouts). The return shape of `generateStaticParams` is an array of segments instead of an array of nested `param` objects or a string of resolved paths.
+[`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params)는 `getStaticPaths`와 유사하게 동작하지만 경로 매개 변수를 반환하기 위한 단순화된 API를 가지고 있으며 [레이아웃](/docs/app/building-your-application/routing/pages-and-layouts) 내부에서 사용할 수 있습니다. `generateStaticParams`의 반환 형태는 중첩된 `param` 객체의 배열이나 확인된 경로의 문자열 대신 세그먼트의 배열입니다.
 
 ```jsx filename="app/posts/[id]/page.js"
-// `app` directory
+// `app` 디렉토리
 import PostLayout from '@/components/post-layout'
 
 export async function generateStaticParams() {
@@ -752,16 +780,16 @@ export default async function Post({ params }) {
 }
 ```
 
-Using the name `generateStaticParams` is more appropriate than `getStaticPaths` for the new model in the `app` directory. The `get` prefix is replaced with a more descriptive `generate`, which sits better alone now that `getStaticProps` and `getServerSideProps` are no longer necessary. The `Paths` suffix is replaced by `Params`, which is more appropriate for nested routing with multiple dynamic segments.
+`app` 디렉토리의 새 모델에는 `getStaticPaths`보다 `generateStaticParams`라는 이름을 사용하는 것이 더 적절합니다. `get` 접두사는 `getStaticProps` 및 `getServerSideProps`가 더 이상 필요하지 않으므로 보다 합리적인 `generate`로 대체됩니다. `Paths` 접미사가 `Params`로 대체되어 동적 세그먼트가 여러 개 있는 중첩 라우팅에 적합합니다.
 
 ---
 
-#### Replacing `fallback`
+#### `폴백` 대체
 
-In the `pages` directory, the `fallback` property returned from `getStaticPaths` is used to define the behavior of a page that isn't pre-rendered at build time. This property can be set to `true` to show a fallback page while the page is being generated, `false` to show a 404 page, or `blocking` to generate the page at request time.
+`pages` 디렉토리에서 `getStaticPaths`에서 반환된 `fallback` 속성은 빌드 시 미리 렌더링되지 않은 페이지의 동작을 정의하는 데 사용됩니다. 이 속성은 페이지가 생성되는 동안 폴백 페이지를 표시하려면 `true`로 설정하고, 404 페이지를 표시하려면 `false`로 설정하고, 요청 시 페이지를 생성하려면 `blocking`으로 설정할 수 있습니다.
 
 ```jsx filename="pages/posts/[id].js"
-// `pages` directory
+// `pages` 디렉토리
 
 export async function getStaticPaths() {
   return {
@@ -779,15 +807,15 @@ export default function Post({ post }) {
 }
 ```
 
-In the `app` directory the [`config.dynamicParams` property](/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams) controls how params outside of [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params) are handled:
+`app` 디렉토리에서 [`config.dynamicParams` 속성](/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams)은 [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params) 외부의 매개 변수가 처리되는 방식을 제어합니다.
 
-- **`true`**: (default) Dynamic segments not included in `generateStaticParams` are generated on demand.
-- **`false`**: Dynamic segments not included in `generateStaticParams` will return a 404.
+- **`true`**: (기본값) `generateStaticParams`에 포함되지 않은 동적 세그먼트는 요청 시 생성됩니다.
+- **`false`**: `generate StaticParams`에 포함되지 않은 동적 세그먼트는 404를 반환합니다.
 
-This replaces the `fallback: true | false | 'blocking'` option of `getStaticPaths` in the `pages` directory. The `fallback: 'blocking'` option is not included in `dynamicParams` because the difference between `'blocking'` and `true` is negligible with streaming.
+이는 `pages` 디렉토리에 있는 `getStaticPaths`의 `fallback: true | false | blocking` 옵션을 대체합니다. `fallback: blocking` 옵션은 `dynamicParams`에 포함되지 않습니다. `blocking`과 `true`의 차이는 스트리밍에서 무시할 수 있기 때문입니다.
 
 ```jsx filename="app/posts/[id]/page.js"
-// `app` directory
+// `app` 디렉토리
 
 export const dynamicParams = true;
 
@@ -806,14 +834,15 @@ export default async function Post({ params }) {
 }
 ```
 
-With [`dynamicParams`](/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams) set to `true` (the default), when a route segment is requested that hasn't been generated, it will be server-rendered and cached as [static data](/docs/app/building-your-application/data-fetching#static-and-dynamic-data-fetching) on success.
+[`dynamicParams`](/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams)를 `true`(기본값)로 설정하면 생성되지 않은 경로 세그먼트가 요청되면 서버에서 렌더링되고 [정적 데이터](/docs/app/building-your-application/data-fetching#static-and-dynamic-data-fetching)로 캐시됩니다.
 
-#### Incremental Static Regeneration (`getStaticProps` with `revalidate`)
+#### 증분 정적 재생성(`getStaticProps` 와 `revalidate`)
 
-In the `pages` directory, the `getStaticProps` function allows you to add a `revalidate` field to automatically regenerate a page after a certain amount of time. This is called [Incremental Static Regeneration (ISR)](/docs/app/building-your-application/data-fetching/fetching#static-data-fetching) and helps you update static content without redeploying.
+`pages` 디렉토리
+에서 `getStaticProp` 기능을 사용하면 일정 시간이 지나면 페이지를 자동으로 재생성하는 `revalidate` 필드를 추가할 수 있습니다. 이를 [증분 정적 재생성(ISR)](/docs/app/building-your-application/data-fetching/fetching#static-data-fetching)이라고 하며, 재배포하지 않고 정적 컨텐츠를 업데이트할 수 있습니다.
 
 ```jsx filename="pages/index.js"
-// `pages` directory
+// `pages` 디렉토리
 
 export async function getStaticProps() {
   const res = await fetch(`https://.../posts`)
@@ -834,10 +863,10 @@ export default function Index({ posts }) {
 }
 ```
 
-In the `app` directory, data fetching with [`fetch()`](/docs/app/api-reference/functions/fetch) can use `revalidate`, which will cache the request for the specified amount of seconds.
+`app` 디렉토리에서 [`fetch()`](/docs/app/api-reference/functions/fetch)를 사용하여 데이터를 가져오는 `revalidate`를 사용하면 지정된 시간(초) 동안 요청을 캐시할 수 있습니다.
 
 ```jsx filename="app/page.js"
-// `app` directory
+// `app` 디렉토리
 
 async function getPosts() {
   const res = await fetch(`https://.../posts`, { next: { revalidate: 60 } })
@@ -853,11 +882,11 @@ export default async function PostList() {
 }
 ```
 
-#### API Routes
+#### API 경로
 
-API Routes continue to work in the `pages/api` directory without any changes. However, they have been replaced by [Route Handlers](/docs/app/building-your-application/routing/router-handlers) in the `app` directory.
+API 경로는 변경 없이 `pages/api` 디렉토리에서 계속 작동합니다. 그러나 `app` 디렉토리에서 [라우트 핸들러](/docs/app/building-your-application/routing/router-handlers)로 대체되었습니다.
 
-Route Handlers allow you to create custom request handlers for a given route using the Web [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) and [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) APIs.
+경로 핸들러를 사용하면 웹 [요청](https://developer.mozilla.org/en-US/docs/Web/API/Request) 및 [응답](https://developer.mozilla.org/en-US/docs/Web/API/Response) API를 사용하여 지정된 경로에 대한 사용자 지정 요청 핸들러를 만들 수 있습니다.
 
 ```ts filename="app/api/route.ts" switcher
 export async function GET(request: Request) {}
@@ -867,34 +896,35 @@ export async function GET(request: Request) {}
 export async function GET(request) {}
 ```
 
-> **Good to know**: If you previously used API routes to call an external API from the client, you can now use [Server Components](/docs/getting-started/react-essentials#server-components) instead to securely fetch data. Learn more about [data fetching](/docs/app/building-your-application/data-fetching/fetching).
+> **참고**: 이전에 API 경로를 사용하여 클라이언트에서 외부 API를 호출했다면 이제 [서버 컴포넌트](/docs/getting-started/react-essentials#server-components)를 사용하여 데이터를 안전하게 가져올 수 있습니다. [data fetching](/docs/app/building-your-application/data-fetching/fetching)에 대해 자세히 알아보십시오.
 
-### Step 7: Styling
+### 7단계: 스타일링
 
-In the `pages` directory, global stylesheets are restricted to only `pages/_app.js`. With the `app` directory, this restriction has been lifted. Global styles can be added to any layout, page, or component.
+`pages` 디렉토리에서 글로벌 스타일시트는 `pages/_app.js`로만 제한됩니다. `app` 디렉토리를 통해 이 제한이 해제되었습니다. 전역 스타일을 모든 레이아웃, 페이지 또는 컴포넌트에 추가할 수 있습니다.
 
-- [CSS Modules](/docs/app/building-your-application/styling/css-modules)
+- [CSS 모듈](/docs/app/building-your-application/styling/css-modules)
 - [Tailwind CSS](/docs/app/building-your-application/styling/tailwind-css)
 - [Global Styles](/docs/app/building-your-application/styling/css-modules#global-styles)
 - [CSS-in-JS](/docs/app/building-your-application/styling/css-in-js)
-- [External Stylesheets](/docs/app/building-your-application/styling/css-modules#external-stylesheets)
+- [외부 스타일시트](/docs/app/building-your-application/styling/css-modules#external-stylesheets)
 - [Sass](/docs/app/building-your-application/styling/sass)
 
 #### Tailwind CSS
 
-If you're using Tailwind CSS, you'll need to add the `app` directory to your `tailwind.config.js` file:
+Tailwind CSS를 사용하는 경우 `app` 디렉토리
+를 `tailwind.config.js` 파일에 추가해야 합니다.
 
 ```js filename="tailwind.config.js"
 module.exports = {
   content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}', // <-- Add this line
+    './app/**/*.{js,ts,jsx,tsx,mdx}', // <-- 이 줄을 추가하세요.
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
 }
 ```
 
-You'll also need to import your global styles in your `app/layout.js` file:
+- 또한 `app/layout.js` 파일에서 글로벌 스타일을 가져와야 합니다.
 
 ```jsx filename="app/layout.js"
 import '../styles/globals.css'
@@ -908,8 +938,8 @@ export default function RootLayout({ children }) {
 }
 ```
 
-Learn more about [styling with Tailwind CSS](/docs/app/building-your-application/styling/tailwind-css)
+[Tailwind CSS를 사용한 스타일링](/docs/app/building-your-application/styling/tailwind-css)에 대해 자세히 알아보기
 
-## Codemods
+## 코드모드
 
-Next.js provides Codemod transformations to help upgrade your codebase when a feature is deprecated. See [Codemods](/docs/app/building-your-application/upgrading/codemods) for more information.
+Next.js는 기능이 더 이상 사용되지 않을 때 코드베이스를 업그레이드하는 데 도움이 되는 Codemods 변환을 제공합니다. 자세한 내용은 [Codemods](/docs/app/building-your-application/upgrading/codemods)를 참조하십시오.
