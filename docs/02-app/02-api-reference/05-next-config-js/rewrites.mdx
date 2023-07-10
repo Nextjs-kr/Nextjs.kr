@@ -77,8 +77,8 @@ Next.js에서 경로가 확인되는 순서:
 2. [redirects](/docs/pages/api-reference/next-config-js/redirects) 가 확인 및 적용됩니다
 3. `beforeFiles` 의 rewrites가 가 확인 및 적용됩니다
 4. static files from the [public directory](/docs/pages/building-your-application/optimizing/static-assets) 의 정적인 파일들, `_next/static` 파일들, 그리고 동적이지 않은 페이지들이 확인되고 제공됩니다
-5. `afterFiles` rewrites가 확인되고 적용됩니다. 만약 이들 rewrites 중 하나가 매치되면 우리는 동적인 경로들/정적인 파일들을 각각 매치 후 확인합니다
-6. `fallback` rewrites 가 확인 및 적용됩니다. 이들은 404 페이지가 렌더링 되기 전 그리고 동적인 경로들과 모든 정적인 assets들이 확인된 후 적용됩니다 만약 당신이 `getStaticPaths` 에서 [fallback: true/'blocking'](/docs/pages/api-reference/functions/get-static-paths#fallback-true) 를 사용한다면, 당신의 `next.config.js` 에 정의된 fallback `rewrites` 는 동작하지 _않습니다_.
+5. `afterFiles` rewrites가 확인되고 적용됩니다. 만약 이들 rewrites 중 하나가 매치되면 각 매칭 후 동적인 경로들/정적인 파일들을 확인합니다
+6. `fallback` rewrites 가 확인 및 적용됩니다. 이들은 동적인 경로들과 모든 정적인 assets들이 확인된 후, 그리고 404 페이지가 렌더링 되기 전에 적용됩니다 만약 당신이 `getStaticPaths` 에서 [fallback: true/'blocking'](/docs/pages/api-reference/functions/get-static-paths#fallback-true) 를 사용한다면, 당신의 `next.config.js` 에 정의된 fallback `rewrites` 는 동작하지 _않습니다_.
 
 ## Rewrite 파라미터들
 
