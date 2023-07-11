@@ -252,19 +252,19 @@ export default function Page() {
 
 #### 페이지
 
-[페이지](/docs/app/api-reference/file-conventions/page)(서버 컴포넌트)에서 searchParams에 접근하려면 [`searchParams`](/docs/app/api-reference/file-conventions/page#searchparams-optional) 프로퍼티를 사용합니다.
+[페이지](/docs/app/api-reference/file-conventions/page)(서버 컴포넌트)에서 searchParams에 접근하려면 [`searchParams`](/docs/app/api-reference/file-conventions/page#searchparams-optional) prop을 사용합니다.
 
 #### 레이아웃
 
-페이지와 달리 [레이아웃](/docs/app/api-reference/file-conventions/layout)(서버 컴포넌트)은 searchParams 프로퍼티를 **받지 않습니다.** 이는 탐색 중에 공유 레이아웃이 [탐색 중에는 다시 렌더링 되지 않아](/docs/app/building-your-application/routing#partial-rendering) `searchParams`이 오래될 수 있기 때문입니다. [자세한 설명](/docs/app/api-reference/file-conventions/layout#layouts-do-not-receive-searchparams)을 확인하세요.
+페이지와 달리 [레이아웃](/docs/app/api-reference/file-conventions/layout)(서버 컴포넌트)은 searchParams prop을 **받지 않습니다.** 이는 탐색 중에 공유 레이아웃이 [탐색 중에는 다시 렌더링 되지 않아](/docs/app/building-your-application/routing#partial-rendering) `searchParams`이 오래될 수 있기 때문입니다. [자세한 설명](/docs/app/api-reference/file-conventions/layout#layouts-do-not-receive-searchparams)을 확인하세요.
 
-대신 클라이언트 컴포넌트에서 페이지 [`searchParams`](/docs/app/api-reference/file-conventions/page) 프로퍼티 또는 [`useSearchParams`](/docs/app/api-reference/functions/use-params) hook을 사용하면 클라이언트에서 최신 `searchParams`를 사용하여 다시 렌더링 됩니다.
+대신 클라이언트 컴포넌트에서 페이지 [`searchParams`](/docs/app/api-reference/file-conventions/page) prop 또는 [`useSearchParams`](/docs/app/api-reference/functions/use-params) hook을 사용하면 클라이언트에서 최신 `searchParams`를 사용하여 다시 렌더링 됩니다.
 
 ## 예시
 
 ### `searchParams` 업데이트
 
-[`useRouter`](/docs/app/api-reference/functions/use-router) 또는 [`Link`](/docs/app/api-reference/components/link)를 사용하여 새 `searchParams`를 설정할 수 있습니다. 탐색이 수행된 후 현재 `page.js`는 업데이트된 [`searchParams` 프로퍼티](/docs/app/api-reference/file-conventions/page#searchparams-optional)를 받게 됩니다.
+[`useRouter`](/docs/app/api-reference/functions/use-router) 또는 [`Link`](/docs/app/api-reference/components/link)를 사용하여 새 `searchParams`를 설정할 수 있습니다. 탐색이 수행된 후 현재 `page.js`는 업데이트된 [`searchParams` prop](/docs/app/api-reference/file-conventions/page#searchparams-optional)를 받게 됩니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher
 export default function ExampleClientComponent() {
