@@ -60,19 +60,19 @@ const searchParams = useSearchParams()
   | `/dashboard?b=3`     | `null`                                                                                                                          |
   | `/dashboard?a=1&a=2` | `'1'` - 모든 값을 얻으려면 [`getAll()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/getAll) 을 사용하세요. |
 
-- [`URLSearchParams.has()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/has): 주어진 매개변수가 존재하는지 여부를 나타내는 부울 값을 반환합니다. 예를 들면
+- [`URLSearchParams.has()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/has): 주어진 매개변수가 존재하는지 여부를 나타내는 boolean 값을 반환합니다. 예를 들면
 
   | URL              | `searchParams.has("a")` |
   | ---------------- | ----------------------- |
   | `/dashboard?a=1` | `true`                  |
   | `/dashboard?b=3` | `false`                 |
 
-- [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)의 다른 **읽기 전용** 메서드에 대해 자세히 알아보기 , [`getAll()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/getAll), [`keys()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/keys), [`values()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/values), [`entries()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/entries), [`forEach()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/forEach), [`toString()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/toString).
+- [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)의 다른 **읽기 전용** 메서드에 대해 자세히 알아보기, [`getAll()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/getAll), [`keys()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/keys), [`values()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/values), [`entries()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/entries), [`forEach()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/forEach), [`toString()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/toString).
 
 > **참고**:
 >
-> - `useSearchParams`는 [클라이언트 컴포넌트](/docs/getting-started/react-essentials) hook이며 [부분 렌더링](/docs/app/building-your-application/routing#partial-rendering) 중 오래된 값을 방지하기 위해 [서버 컴포넌트](/docs/getting-started/react-essentials)에서는 **지원되지 않습니다**.
-> - 애플리케이션에 `/pages` 디렉터리가 포함된 경우, `useSearchParams`는 `ReadonlyURLSearchParams | null`을 반환합니다. null 값은 마이그레이션 중 호환성을 위한 것으로, `getServerSideProps`를 사용하지 않는 페이지의 사전 렌더링 중에는 searchParams를 알 수 없기 때문입니다.
+> - `useSearchParams`는 [클라이언트 컴포넌트](/docs/getting-started/react-essentials) hook으로 [부분 렌더링](/docs/app/building-your-application/routing#partial-rendering) 중 오래된 값을 방지하기 위해 [서버 컴포넌트](/docs/getting-started/react-essentials)에서는 **지원하지 않습니다**.
+> - 애플리케이션에 `/pages` 디렉토리가 포함된 경우, `useSearchParams`는 `ReadonlyURLSearchParams | null`을 반환합니다. `null` 값은 마이그레이션 중 호환성을 위한 것으로, `getServerSideProps`를 사용하지 않는 페이지의 사전 렌더링 중에는 검색 매개변수를 알 수 없기 때문입니다.
 
 ## 동작
 
@@ -80,7 +80,7 @@ const searchParams = useSearchParams()
 
 경로가 [정적으로 렌더링](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#static-rendering-default)되는 경우, useSearchParams()를 호출하면 가장 가까운 [Suspense 경계](/docs/app/building-your-application/routing/loading-ui-and-streaming#example)까지의 트리가 클라이언트 측에서 렌더링 됩니다.
 
-이렇게 하면 페이지의 일부가 정적으로 렌더링 되는 반면, `searchParams`를 사용하는 동적인 부분은 클라이언트 측에서 렌더링 됩니다.
+이렇게 하면 `searchParams`를 사용하는 동적인 부분이 클라이언트 측에서 렌더링 되는 동안 페이지의 일부가 정적으로 렌더링 됩니다.
 
 `useSearchParams`를 사용하는 컴포넌트를 `Suspense` 경계로 감싸서 클라이언트 측에서 렌더링되는 경로의 일부를 줄일 수 있습니다. 예를 들어
 
@@ -94,7 +94,7 @@ export default function SearchBar() {
 
   const search = searchParams.get('search')
 
-  // 정적 렌더링을 사용할 때는 서버에 기록되지 않습니다.
+  // 정적 렌더링을 사용할 때는 서버에 기록하지 않습니다.
   console.log(search)
 
   return <>Search: {search}</>
@@ -111,7 +111,7 @@ export default function SearchBar() {
 
   const search = searchParams.get('search')
 
-  // 정적 렌더링을 사용할 때는 서버에 기록되지 않습니다.
+  // 정적 렌더링을 사용할 때는 서버에 기록하지 않습니다.
   console.log(search)
 
   return <>Search: {search}</>
@@ -125,7 +125,7 @@ import SearchBar from './search-bar'
 // 서스펜스 경계에 폴백으로 전달된 이 컴포넌트는
 // 초기 HTML의 검색창 대신 렌더링됩니다.
 // 리액트 하이드레이션 중에 값을 사용할 수 있는 경우, 폴백은
-// `<SearchBar>` 컴포넌트로 대체됩니다.
+// `<SearchBar>` 컴포넌트로 대체합니다.
 function SearchBarFallback() {
   return <>placeholder</>
 }
@@ -148,10 +148,10 @@ export default function Page() {
 import { Suspense } from 'react'
 import SearchBar from './search-bar'
 
-// 서스펜스 바운더리에 대한 폴백으로 전달된 이 컴포넌트는
+// 서스펜스 경계에 대한 폴백으로 전달된 이 컴포넌트는
 // 초기 HTML에서 검색창 대신 렌더링 됩니다.
 // 리액트 하이드레이션 중에 값을 사용할 수 있는 경우, 폴백은
-// `<SearchBar>` 컴포넌트로 대체됩니다.
+// `<SearchBar>` 컴포넌트로 대체합니다.
 function SearchBarFallback() {
   return <>placeholder</>
 }
@@ -189,7 +189,7 @@ export default function SearchBar() {
   const search = searchParams.get('search')
 
   // 초기 렌더링 중에는 서버에,
-  // 이후 탐색 시에는 클라이언트에 기록됩니다.
+  // 이후 탐색 시에는 클라이언트에 기록합니다.
   console.log(search)
 
   return <>Search: {search}</>
@@ -207,7 +207,7 @@ export default function SearchBar() {
   const search = searchParams.get('search')
 
   // 초기 렌더링 중에는 서버에,
-  // 이후 탐색 시에는 클라이언트에 기록됩니다.
+  // 이후 탐색 시에는 클라이언트에 기록합니다.
   console.log(search)
 
   return <>Search: {search}</>
@@ -252,11 +252,11 @@ export default function Page() {
 
 #### 페이지
 
-[페이지](/docs/app/api-reference/file-conventions/page)(서버 컴포넌트)에서 searchParams에 접근하려면 [`searchParams`](/docs/app/api-reference/file-conventions/page#searchparams-optional) prop을 사용합니다.
+[페이지](/docs/app/api-reference/file-conventions/page)(서버 컴포넌트)에서 검색 매개변수에 접근하려면 [`searchParams`](/docs/app/api-reference/file-conventions/page#searchparams-optional) prop을 사용합니다.
 
 #### 레이아웃
 
-페이지와 달리 [레이아웃](/docs/app/api-reference/file-conventions/layout)(서버 컴포넌트)은 searchParams prop을 **받지 않습니다.** 이는 탐색 중에 공유 레이아웃이 [탐색 중에는 다시 렌더링 되지 않아](/docs/app/building-your-application/routing#partial-rendering) `searchParams`이 오래될 수 있기 때문입니다. [자세한 설명](/docs/app/api-reference/file-conventions/layout#layouts-do-not-receive-searchparams)을 확인하세요.
+페이지와 달리 [레이아웃](/docs/app/api-reference/file-conventions/layout)(서버 컴포넌트)은 `searchParams` prop을 **받지 않습니다.** 이는 공유된 레이아웃이 [탐색 중에는 다시 렌더링 되지 않아](/docs/app/building-your-application/routing#partial-rendering) `searchParams`이 오래될 수 있기 때문입니다. [자세한 설명](/docs/app/api-reference/file-conventions/layout#layouts-do-not-receive-searchparams)을 확인하세요.
 
 대신 클라이언트 컴포넌트에서 페이지 [`searchParams`](/docs/app/api-reference/file-conventions/page) prop 또는 [`useSearchParams`](/docs/app/api-reference/functions/use-params) hook을 사용하면 클라이언트에서 최신 `searchParams`를 사용하여 다시 렌더링 됩니다.
 
@@ -264,7 +264,7 @@ export default function Page() {
 
 ### `searchParams` 업데이트
 
-[`useRouter`](/docs/app/api-reference/functions/use-router) 또는 [`Link`](/docs/app/api-reference/components/link)를 사용하여 새 `searchParams`를 설정할 수 있습니다. 탐색이 수행된 후 현재 `page.js`는 업데이트된 [`searchParams` prop](/docs/app/api-reference/file-conventions/page#searchparams-optional)를 받게 됩니다.
+[`useRouter`](/docs/app/api-reference/functions/use-router) 또는 [`Link`](/docs/app/api-reference/components/link)를 사용하여 새 `searchParams`를 설정할 수 있습니다. 탐색 후 현재 `page.js`는 업데이트된 [`searchParams` prop](/docs/app/api-reference/file-conventions/page#searchparams-optional)를 받게 됩니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher
 export default function ExampleClientComponent() {
@@ -272,8 +272,7 @@ export default function ExampleClientComponent() {
   const pathname = usePathname()
   const searchParams = useSearchParams()!
 
-  // 현재 searchParams 문자열을 병합하여 새로운 searchParams 문자열을 가져옵니다.
-  // searchParams에 제공된 키/값 쌍을 사용합니다.
+  // 현재 searchParams를 키/값 쌍과 병합하여 새 searchParams 문자열을 가져옵니다.
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams)
@@ -318,8 +317,7 @@ export default function ExampleClientComponent() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  // 현재 searchParams 문자열을 병합하여 새로운 searchParams 문자열을 가져옵니다.
-  // searchParams에 제공된 키/값 쌍을 사용합니다.
+  // 현재 searchParams를 키/값 쌍과 병합하여 새 searchParams 문자열을 가져옵니다.
   const createQueryString = useCallback(
     (name, value) => {
       const params = new URLSearchParams(searchParams)
