@@ -1,11 +1,11 @@
 ---
 title: useRouter
-description: API reference for the useRouter hook.
+description: useRouter 훅에 대한 API 레퍼런스입니다.
 ---
 
-The `useRouter` hook allows you to programmatically change routes inside [Client Components](/docs/getting-started/react-essentials).
+`useRouter` 훅은 [클라이언트 컴포넌트](/docs/getting-started/react-essentials) 내부에서 프로그램에 따라 경로 변경을 허용합니다.
 
-> **Recommendation:** Use the [`<Link>` component](/docs/app/building-your-application/routing/linking-and-navigating#link-component) for navigation unless you have a specific requirement for using `useRouter`.
+> **권장사항:** `useRouter`를 사용하는 것에 특별한 요구사항이 존재하지 않다면 [`<Link>` 컴포넌트](/docs/app/building-your-application/routing/linking-and-navigating#link-component)를 네비게이션으로 사용하세요.
 
 ```tsx filename="app/example-client-component.tsx" switcher
 'use client'
@@ -41,33 +41,33 @@ export default function Page() {
 
 ## `useRouter()`
 
-- `router.push(href: string)`: Perform a client-side navigation to the provided route. Adds a new entry into the [browser’s history](https://developer.mozilla.org/en-US/docs/Web/API/History_API) stack.
-- `router.replace(href: string)`: Perform a client-side navigation to the provided route without adding a new entry into the [browser’s history stack](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
-- `router.refresh()`: Refresh the current route. Making a new request to the server, re-fetching data requests, and re-rendering Server Components. The client will merge the updated React Server Component payload without losing unaffected client-side React (e.g. `useState`) or browser state (e.g. scroll position).
-- `router.prefetch(href: string)`: [Prefetch](/docs/app/building-your-application/routing/linking-and-navigating#prefetching) the provided route for faster client-side transitions.
-- `router.back()`: Navigate back to the previous route in the browser’s history stack using [soft navigation](/docs/app/building-your-application/routing/linking-and-navigating#soft-navigation).
-- `router.forward()`: Navigate forwards to the next page in the browser’s history stack using [soft navigation](/docs/app/building-your-application/routing/linking-and-navigating#soft-navigation).
+- `router.push(href: string)`: 제공 받은 경로로 클라이언트 사이드 이동을 수행합니다. 새로운 항목을 [브라우저 방문 기록](https://developer.mozilla.org/en-US/docs/Web/API/History_API)에 추가합니다.
+- `router.replace(href: string)`: [브라우저 방문 기록 스택](https://developer.mozilla.org/en-US/docs/Web/API/History_API)에 새로운 항목을 추가하지 않고 제공받은 경로로 클라이언트 사이드 이동을 수행합니다.
+- `router.refresh()`: 현재 경로를 새로고침합니다. 서버로 새로운 요청을 만들면서, 데이터 요청들을 re-fetch하고 서버 컴포넌트를 리렌더링합니다. 클라이언트는 변경되지 않은 클라이언트 사이드 리액트(예: `useState`)나 브라우저 상태(예: 스크롤 위치)를 잃지 않고 업데이트된 리액트 서버 컴포넌트 페이로드를 병합합니다.
+- `router.prefetch(href: string)`: 더 빠른 클라이언트 사이드 전환을 위해 제공받은 경로를 [prefetch](/docs/app/building-your-application/routing/linking-and-navigating#prefetching)합니다.
+- `router.back()`: [soft navigation](/docs/app/building-your-application/routing/linking-and-navigating#soft-navigation)을 사용하여 브라우저 방문 기록 스택에서 이전 경로로 이동합니다.
+- `router.forward()`: [soft navigation](/docs/app/building-your-application/routing/linking-and-navigating#soft-navigation)을 사용하여 브라우저 방문 기록 스택에서 다음 페이지로 이동합니다.
 
-> **Good to know**:
+> **참고**:
 >
-> - The `push()` and `replace()` methods will perform a [soft navigation](/docs/app/building-your-application/routing/linking-and-navigating#soft-navigation) if the new route has been prefetched, and either, doesn't include [dynamic segments](/docs/app/building-your-application/routing/dynamic-routes) or has the same dynamic parameters as the current route.
-> - `next/link` automatically prefetch routes as they become visible in the viewport.
-> - `refresh()` could re-produce the same result if fetch requests are cached. Other dynamic functions like `cookies` and `headers` could also change the response.
-
-> **Migrating from the `pages` directory:**
+> - `push()`와 `replace()` 메소드는 새로운 경로가 prefetch되었으며 [동적 segments](/docs/app/building-your-application/routing/dynamic-routes)를 포함하지 않거나 현재 경로와 동일한 동적 매개변수를 가진 경우 [soft navigation](/docs/app/building-your-application/routing/linking-and-navigating#soft-navigation)을 수행합니다.
+> - `next/link`는 경로가 viewport에 표시될 때 자동으로 경로를 prefetch합니다.
+> - fetch 요청이 캐시되면 `refresh()`는 동일한 결과를 다시 생성할 수 있습니다.`cookies`와 `headers` 같은 다른 동적 함수들도 response를 변경할 수 있습니다.
 >
-> - The new `useRouter` hook should be imported from `next/navigation` and not `next/router`
-> - The `pathname` string has been removed and is replaced by [`usePathname()`](/docs/app/api-reference/functions/use-pathname)
-> - The `query` object has been removed and is replaced by [`useSearchParams()`](/docs/app/api-reference/functions/use-search-params)
-> - `router.events` is not currently supported. [See below.](#router-events)
+> **`pages` 디렉토리에서 이전하기:**
 >
-> [View the full migration guide](/docs/pages/building-your-application/upgrading/app-router-migration).
+> - 새로운 `useRouter` 훅은 `next/router`가 아니라 `next/navigation`에서 import되어야 합니다.
+> - `pathname` 문자열은 삭제되었으며 [`usePathname()`](/docs/app/api-reference/functions/use-pathname)로 대체되었습니다.
+> - `query` 객체는 삭제되었으며 [`useSearchParams()`](/docs/app/api-reference/functions/use-search-params)로 대체되었습니다.
+> - `router.events`는 현재 지원하지 않습니다. [참조하기](#router-이벤트)
+>
+> [완벽 이전 가이드 보기](/docs/pages/building-your-application/upgrading/app-router-migration).
 
-## Examples
+## 예시
 
-### Router Events
+### Router 이벤트
 
-You can listen for page changes by composing other Client Component hooks like `usePathname` and `useSearchParams`.
+`usePathname`과 `useSearchParams` 같이 다른 클라이언트 컴포넌트 훅을 구성하여 페이지 변경 사항을 감지할 수 있습니다.
 
 ```jsx filename="app/components/navigation-events.js"
 'use client'
@@ -82,7 +82,7 @@ export function NavigationEvents() {
   useEffect(() => {
     const url = `${pathname}?${searchParams}`
     console.log(url)
-    // You can now use the current URL
+    // 이제 현재 URL을 사용할 수 있습니다.
     // ...
   }, [pathname, searchParams])
 
@@ -90,7 +90,7 @@ export function NavigationEvents() {
 }
 ```
 
-Which can be imported into a layout.
+레이아웃으로 import할 수 있습니다.
 
 ```jsx filename="app/layout.js" highlight={2,10-12}
 import { Suspense } from 'react'
@@ -111,8 +111,8 @@ export default function Layout({ children }) {
 }
 ```
 
-> **Good to know**: `<NavigationEvents>` is wrapped in a [`Suspense` boundary](/docs/app/building-your-application/routing/loading-ui-and-streaming#example) because[`useSearchParams()`](/docs/app/api-reference/functions/use-search-params) causes client-side rendering up to the closest `Suspense` boundary during [static rendering](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#static-rendering-default). [Learn more](/docs/app/api-reference/functions/use-search-params#behavior).
+> **참고**: [`useSearchParams()`](/docs/app/api-reference/functions/use-search-params)는 [정적 렌더링](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#static-rendering-default)을 하는 중에 가장 가까운 [`Suspense` 바운더리](/docs/app/building-your-application/routing/loading-ui-and-streaming#example)까지 클라이언트 사이드 렌더링을 발생시키기 때문에 `<NavigationEvents>`는 `Suspense` 바운더리로 감쌉니다. [더 알아보기](/docs/app/api-reference/functions/use-search-params#behavior)
 
-| Version   | Changes                                        |
-| --------- | ---------------------------------------------- |
-| `v13.0.0` | `useRouter` from `next/navigation` introduced. |
+| Version   | Changes                                   |
+| --------- | ----------------------------------------- |
+| `v13.0.0` | `next/navigation`의 `useRouter`가 추가됨. |
