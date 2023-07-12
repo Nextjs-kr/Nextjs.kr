@@ -111,7 +111,7 @@ export default function Layout({ children }) {
 }
 ```
 
-> **참고**: [`useSearchParams()`](/docs/app/api-reference/functions/use-search-params)는 가장 가까운 [`Suspense` 바운더리](/docs/app/building-your-application/routing/loading-ui-and-streaming#example)까지 [정적 렌더링](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#static-rendering-default)을 하는 중에 클라이언트 사이드 렌더링을 발생시키기 때문에 `<NavigationEvents>`는 `Suspense` 바운더리로 감쌉니다. [더 배우기](/docs/app/api-reference/functions/use-search-params#behavior)
+> **참고**: [`useSearchParams()`](/docs/app/api-reference/functions/use-search-params)는 [정적 렌더링](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#static-rendering-default)을 하는 중에 가장 가까운 [`Suspense` 바운더리](/docs/app/building-your-application/routing/loading-ui-and-streaming#example)까지 클라이언트 사이드 렌더링을 발생시키기 때문에 `<NavigationEvents>`는 `Suspense` 바운더리로 감쌉니다. [더 알아보기](/docs/app/api-reference/functions/use-search-params#behavior)
 
 | Version   | Changes                                   |
 | --------- | ----------------------------------------- |
