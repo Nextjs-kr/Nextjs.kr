@@ -55,13 +55,13 @@ export default function Page() {
 > - 페이지에서 `.js`, `.jsx` 또는 `.tsx` 파일 확장자를 사용할 수 있습니다.
 > - 라우트 세그먼트에 공개적으로 접근하려면 `page.js` 파일이 필요합니다.
 > - 페이지는 기본적으로 [서버 컴포넌트](/docs/getting-started/react-essentials)이지만 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components)로 설정할 수 있습니다.
-> - 페이지는 데이터를 가져올 수 있습니다. 자세한 내용은 [데이터 가져오기](/docs/app/building-your-application/data-fetching) 섹션을 참조하세요.
+> - 페이지는 데이터를 가져올 수 있습니다. 자세한 내용은 [Data-Fetching](/docs/app/building-your-application/data-fetching) 섹션을 참조하세요.
 
 ## Layouts
 
 레이아웃은 여러 페이지 간에 **공유**되는 UI입니다. 탐색할 때 레이아웃은 state를 보존하고 상호작용하는 state를 유지하며 재 렌더링을 하지 않습니다. 레이아웃은 [중첩](#nesting-layouts)될 수도 있습니다.
 
-layout.js 파일의 React 컴포넌트를 내보내서 `기본`레이아웃을 정의할 수 있습니다. 컴포넌트는 렌더링 중에 자식 레이아웃(있는 경우) 또는 자식 페이지로 채워질 `children` prop을 받아들여야 합니다.
+`layout.js` 파일의 React 컴포넌트를 내보내서 `기본`레이아웃을 정의할 수 있습니다. 컴포넌트는 렌더링 중에 자식 레이아웃(있는 경우) 또는 자식 페이지로 채워질 `children` prop을 받아들여야 합니다.
 
 <Image
   alt="layout.js special file"
@@ -110,7 +110,7 @@ export default function DashboardLayout({
 > - 라우트의 레이아웃은 기본적으로 **중첩**됩니다. 각 부모 레이아웃은 React `children`프로퍼티를 사용해 하위의 자식 레이아웃을 감싸줍니다.
 > - [라우트 그룹](/docs/app/building-your-application/routing/route-groups)을 사용하여 공유 레이아웃 안팎에서 특정한 라우트 세그먼트를 선택할 수 있습니다.
 > - 레이아웃은 기본적으로 [서버 컴포넌트](/docs/getting-started/react-essentials)이지만 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components)로 설정할 수 있습니다.
-> - 레이아웃은 데이터를 가져올 수 있습니다. 자세한 내용은 [데이터 가져오기](/docs/app/building-your-application/data-fetching)섹션을 참조하세요.
+> - 레이아웃은 데이터를 가져올 수 있습니다. 자세한 내용은 [Data-Fetching](/docs/app/building-your-application/data-fetching)섹션을 참조하세요.
 > - 부모 레이아웃과 자식 레이아웃 간에 데이터를 전달할 수 없습니다. 하지만 라우트에서 동일한 데이터를 한 번 이상 가져올 수 있으며, React는 성능에 영향을 주지 않고 요청을 [자동으로 중복 제거](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping)합니다.
 > - 레이아웃은 현재 라우트의 세그먼트에 접근할 수 없습니다. 라우트 세그먼트에 접근하려면, 클라이언트 컴포넌트의 [`useSelectedLayoutSegment`](/docs/app/api-reference/functions/use-selected-layout-segment) 혹은 [`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments)을 사용할 수 있습니다.
 > - 레이아웃에서는 `.js`, `.jsx`, 혹은 `.tsx` 파일 확장자를 사용할 수 있습니다.
@@ -152,11 +152,11 @@ export default function RootLayout({ children }) {
 > - [라우트 그룹](/docs/app/building-your-application/routing/route-groups) 여러 루트 레이아웃을 만들 수 있습니다. [예제](/docs/app/building-your-application/routing/route-groups#creating-multiple-root-layouts)를 참조하세요.
 > - 루트 레이아웃은 기본적으로 [서버 컴포넌트](/docs/getting-started/react-essentials)이며 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components)로 설정할 수 **없습니다.**
 
-> **`페이지` 디렉토리에서 마이그레이션:** 루트 레이아웃은 [`_app.js`](/docs/pages/building-your-application/routing/custom-app) and [`_document.js`](/docs/pages/building-your-application/routing/custom-document)파일을 대체합니다. [마이그레이션 가이드를 확인 하세요.](/docs/app/building-your-application/upgrading/app-router-migration#migrating-_documentjs-and-_appjs)
+> **`페이지` 디렉토리에서 마이그레이션:** 루트 레이아웃은 [`_app.js`](/docs/pages/building-your-application/routing/custom-app) 과 [`_document.js`](/docs/pages/building-your-application/routing/custom-document)파일을 대체합니다. [마이그레이션 가이드를 확인 하세요.](/docs/app/building-your-application/upgrading/app-router-migration#migrating-_documentjs-and-_appjs)
 
 ### Nesting Layouts
 
-폴더(e.g. `app/dashboard/layout.js`)내에 정의된 레이아웃은 특정 라우트 세그먼트(e.g. `acme.com/dashboard`)에 적용되며 해당 세그먼트가 활성화될 때 렌더링합니다. 기본적으로, 파일 계층 구조의 레이아웃은 **중첩**되어 있으므로 하위 레이아웃이 `children`prop을 통해 하위 레이아웃을 감싸게 됩니다.
+폴더(예시- `app/dashboard/layout.js`)내에 정의된 레이아웃은 특정 라우트 세그먼트(e.g. `acme.com/dashboard`)에 적용되며 해당 세그먼트가 활성화될 때 렌더링합니다. 기본적으로, 파일 계층 구조의 레이아웃은 **중첩**되어 있으므로 하위 레이아웃이 `children`prop을 통해 하위 레이아웃을 감싸게 됩니다.
 
 <Image
   alt="Nested Layout"
@@ -184,7 +184,7 @@ export default function DashboardLayout({ children }) {
 
 위의 두 레이아웃을 결합하면 루트 레이아웃(`app/layout.js`)이 대시보드 레이아웃(`app/dashboard/layout.js`)을 감싸고, 대시보드 레이아웃은 `app/dashboard/*.`을 감싸게 됩니다.
 
-두 레이아웃은 이렇게 중첩됩니다:
+두 레이아웃은 이렇게 중첩됩니다.
 
 <Image
   alt="Nested Layouts"
@@ -200,10 +200,10 @@ export default function DashboardLayout({ children }) {
 
 템플릿은 각 하위 레이아웃 또는 페이지를 감싼다는 점에서 레이아웃과 유사합니다. 라우트 전체에서 지속되고 상태를 유지하는 레이아웃과 달리 템플릿은 탐색 시 각 하위 레이아웃에 대해 새 인스턴스를 생성합니다. 즉, 사용자가 템플릿을 공유하는 경로 사이를 탐색할 때 컴포넌트의 새 인스턴스가 마운트되고, DOM 요소가 다시 생성되며, state가 보존되지 **않고**, effect들이 다시 동기화됩니다.
 
-특정 동작이 필요한 경우 레이아웃보다 템플릿이 더 적합한 옵션이 될 수 있습니다. 예를 들면:
+특정 동작이 필요한 경우 레이아웃보다 템플릿이 더 적합한 옵션이 될 수 있습니다. 예를 들면,
 
 - CSS 또는 애니메이션 라이브러리를 사용하여 애니메이션을 입력/종료시.
-- `useEffect`(예: 페이지 조회 수 로깅) 및 `useState`(예: 페이지별 피드백 form)에 의존하는 기능들.
+- `useEffect`(예: 페이지 조회 수 로깅) 및 `useState`(예: 페이지별 피드백 폼)에 의존하는 기능들.
 - 프레임워크의 기본적인 동작을 변경할 때. 예를 들어 레이아웃 내부의 서스펜스 라우트는 레이아웃을 처음 로드할 때만 fallback을 표시하고 페이지를 전환할 때는 표시하지 않습니다. 템플릿의 경우 각 탐색에 fallback이 표시됩니다.
 
 > **권장사항:** 템플릿을 사용해야 할 특별한 이유가 없는 한 레이아웃을 사용하는 것이 좋습니다.
@@ -230,7 +230,7 @@ export default function Template({ children }) {
 }
 ```
 
-레이아웃과 템플릿이 있는 경로 세그먼트의 렌더링된 출력은 이와 같습니다:
+레이아웃과 템플릿이 있는 경로 세그먼트의 렌더링된 출력은 이와 같습니다.
 
 ```jsx filename="Output"
 <Layout>
