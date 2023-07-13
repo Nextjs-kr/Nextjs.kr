@@ -4,7 +4,7 @@ nav_title: Font
 description: 내장 next/font 로더를 사용하여 웹 폰트 로딩 최적화하기
 ---
 
-이 API 참조는 [`next/font/google`](/docs/app/building-your-application/optimizing/fonts#google-fonts) 과 [`next/font/local`](/docs/app/building-your-application/optimizing/fonts#local-fonts)의 사용하는 방법을 이해하는 데 도움이 됩니다. 기능 및 사용법은 [폰트 최적화](/docs/app/building-your-application/optimizing/fonts) 페이지를 참조하세요.
+이 API 참조는 [`next/font/google`](/docs/app/building-your-application/optimizing/fonts#google-fonts)과 [`next/font/local`](/docs/app/building-your-application/optimizing/fonts#local-fonts)의 사용하는 방법을 이해하는 데 도움이 됩니다. 기능 및 사용법은 [폰트 최적화](/docs/app/building-your-application/optimizing/fonts) 페이지를 참조하세요.
 
 ### Font Function Arguments
 
@@ -45,12 +45,12 @@ description: 내장 next/font 로더를 사용하여 웹 폰트 로딩 최적화
 // todo
 The font [`weight`](https://fonts.google.com/knowledge/glossary/weight) with the following possibilities:
 
-- 특정 폰트에 대해 사용 가능한 굵기 값 또는 [가변 폰트](https://fonts.google.com/variablefonts)인 경우 값의 범위 문자열입니다.
-- [가변 폰트](https://fonts.google.com/variablefonts)가 아닌 경우 폰트에 대한 굵기 값의 배열입니다. `next/font/google`에만 해당됩니다.
+- 특정 폰트에 대해 사용할 수 있는 굵기 값 또는 [가변 폰트](https://fonts.google.com/variablefonts)인 경우 값의 범위 문자열입니다.
+- [가변 폰트](https://fonts.google.com/variablefonts)가 아닌 경우 폰트에 대한 굵기 값의 배열입니다. `next/font/google`에만 해당합니다.
 
 `next/font/google` 및 `next/font/local`에서 사용됩니다.
 
-- 만약 사용중인 폰트가 [가변 폰트](https://fonts.google.com/variablefonts)가 **아닌** 경우 필수입니다.
+- 만약 사용 중인 폰트가 [가변 폰트](https://fonts.google.com/variablefonts)가 **아닌** 경우 필수입니다.
 
 예시:
 
@@ -78,8 +78,8 @@ The font [`style`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style) 
 
 ### `subsets`
 
-[`사전로드`](/docs/app/building-your-application/optimizing/fonts#specifying-a-subset)할 각 하위 집합의 이름을 가진 문자열 값 배열로 정의된 글꼴 [`하위 집합`](https://fonts.google.com/knowledge/glossary/subsetting)입니다.
-`하위 집합`을 통해 지정된 글꼴은 [`사전로드`](#preload) 옵션이 참이면 링크 사전로드 태그가 헤드에 주입됩니다.
+[`사전 로드`](/docs/app/building-your-application/optimizing/fonts#specifying-a-subset)할 각 하위 집합의 이름을 가진 문자열 값 배열로 정의된 글꼴 [`하위 집합`](https://fonts.google.com/knowledge/glossary/subsetting)입니다.
+`하위 집합`을 통해 지정된 글꼴은 [`사전 로드`](#preload) 옵션이 참이면 링크 사전 로드 태그가 헤드에 주입됩니다.
 
 `next/font/google` 에서 사용됩니다.
 
@@ -117,7 +117,7 @@ The font [`style`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style) 
 
 ### `preload`
 
-글꼴을 [사전로드](/docs/app/building your-application/optimizing/fonts#preloading)할지 여부를 지정하는 부울 값입니다. 기본값은 `true` 입니다.
+글꼴을 [사전 로드](/docs/app/building your-application/optimizing/fonts#preloading)할지 여부를 지정하는 부울 값입니다. 기본값은 `true` 입니다.
 
 `next/font/google` 및 `next/font/local` 에서 사용됩니다.
 
@@ -258,7 +258,7 @@ const inter = Inter({
 
 예를 들어 앱 디렉토리의 루트에 있는 `styles` 폴더에 `fonts.ts` 파일을 만듭니다.
 
-그런 다음 다음과 같이 글꼴 정의를 지정합니다.
+그런 뒤에 다음과 같이 글꼴 정의를 지정합니다.
 
 ```ts filename="styles/fonts.ts" switcher
 import { Inter, Lora, Source_Sans_Pro } from 'next/font/google'
