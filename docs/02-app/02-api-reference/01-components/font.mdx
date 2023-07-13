@@ -7,30 +7,28 @@ description: 내장 next/font 로더를 사용하여 웹 폰트 로딩 최적화
 이 API 참조는 [`next/font/google`](/docs/app/building-your-application/optimizing/fonts#google-fonts) 과 [`next/font/local`](/docs/app/building-your-application/optimizing/fonts#local-fonts)의 사용하는 방법을 이해하는 데 도움이 됩니다. 기능 및 사용법은 [폰트 최적화](/docs/app/building-your-application/optimizing/fonts) 페이지를 참조하세요.
 
 ### Font Function Arguments
-### 폰트 함수 인자
 
+### 폰트 함수 인자
 
 사용법은 [구글 폰트](/docs/app/building-your-application/optimizing/fonts#google-fonts) 와 [로컬 폰트](/docs/app/building-your-application/optimizing/fonts#local-fonts)를 참조하세요.
 
-| Key                                         | `font/google`       | `font/local`        | 타입                       | 필수          |
-| ------------------------------------------- | ------------------- | ------------------- | -------------------------- | ----------------- |
-| [`src`](#src)                               | <Cross size={18} /> | <Check size={18} /> | String 또는 Array of Objects | 필수               |
+| Key                                         | `font/google`       | `font/local`        | 타입                         | 필수          |
+| ------------------------------------------- | ------------------- | ------------------- | ---------------------------- | ------------- |
+| [`src`](#src)                               | <Cross size={18} /> | <Check size={18} /> | String 또는 Array of Objects | 필수          |
 | [`weight`](#weight)                         | <Check size={18} /> | <Check size={18} /> | String 또는 Array            | 필수/선택사항 |
-| [`style`](#style)                           | <Check size={18} /> | <Check size={18} /> | String 또는 Array            | -                 |
-| [`subsets`](#subsets)                       | <Check size={18} /> | <Cross size={18} /> | Array 또는 Strings           | -                 |
-| [`axes`](#axes)                             | <Check size={18} /> | <Cross size={18} /> | Array 또는 Strings           | -                 |
-| [`display`](#display)                       | <Check size={18} /> | <Check size={18} /> | String                     | -                 |
-| [`preload`](#preload)                       | <Check size={18} /> | <Check size={18} /> | Boolean                    | -                 |
-| [`fallback`](#fallback)                     | <Check size={18} /> | <Check size={18} /> | Array 또는 Strings           | -                 |
-| [`adjustFontFallback`](#adjustfontfallback) | <Check size={18} /> | <Check size={18} /> | Boolean 또는 String          | -                 |
-| [`variable`](#variable)                     | <Check size={18} /> | <Check size={18} /> | String                     | -                 |
-| [`declarations`](#declarations)             | <Cross size={18} /> | <Check size={18} /> | Array of Objects           | -                 |
+| [`style`](#style)                           | <Check size={18} /> | <Check size={18} /> | String 또는 Array            | -             |
+| [`subsets`](#subsets)                       | <Check size={18} /> | <Cross size={18} /> | Array 또는 Strings           | -             |
+| [`axes`](#axes)                             | <Check size={18} /> | <Cross size={18} /> | Array 또는 Strings           | -             |
+| [`display`](#display)                       | <Check size={18} /> | <Check size={18} /> | String                       | -             |
+| [`preload`](#preload)                       | <Check size={18} /> | <Check size={18} /> | Boolean                      | -             |
+| [`fallback`](#fallback)                     | <Check size={18} /> | <Check size={18} /> | Array 또는 Strings           | -             |
+| [`adjustFontFallback`](#adjustfontfallback) | <Check size={18} /> | <Check size={18} /> | Boolean 또는 String          | -             |
+| [`variable`](#variable)                     | <Check size={18} /> | <Check size={18} /> | String                       | -             |
+| [`declarations`](#declarations)             | <Cross size={18} /> | <Check size={18} /> | Array of Objects             | -             |
 
 ### `src`
 
-
 글꼴 파일 경로를 문자열 또는 배열의 객체 (유형이 `Array <{path: string, weight?: string, style?: string}>` 인)로 지정합니다. 글꼴 로더 함수가 호출되는 디렉토리를 기준으로 상대 경로로 지정합니다.
-
 
 `next/font/local`에서 사용
 
@@ -43,6 +41,7 @@ description: 내장 next/font 로더를 사용하여 웹 폰트 로딩 최적화
 - 글꼴 로더 함수가 `app/page.tsx`에서 `src: '../styles/fonts/my-font.ttf'`를 사용하여 호출되면, `my-font.ttf`는 프로젝트의 루트에 있는 `styles/fonts에` 위치합니다.
 
 ### `weight`
+
 // todo
 The font [`weight`](https://fonts.google.com/knowledge/glossary/weight) with the following possibilities:
 
@@ -60,6 +59,7 @@ The font [`weight`](https://fonts.google.com/knowledge/glossary/weight) with the
 - `weight: ['100','400','900']`: 비가변 글꼴에 가능한 3개의 값 배열
 
 ### `style`
+
 // todo
 The font [`style`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style) with the following possibilities:
 
@@ -352,7 +352,7 @@ import { greatVibes, sourceCodePro400 } from '@/fonts'
 
 ## 버전 변경 사항
 
-| 버전   | 변경 사항                                                               |
+| 버전      | 변경 사항                                                             |
 | --------- | --------------------------------------------------------------------- |
 | `v13.2.0` | `@next/font` renamed to `next/font`. Installation no longer required. |
 | `v13.0.0` | `@next/font` was added.                                               |
