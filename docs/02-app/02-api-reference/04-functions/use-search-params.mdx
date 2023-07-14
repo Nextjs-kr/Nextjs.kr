@@ -148,8 +148,8 @@ export default function Page() {
 import { Suspense } from 'react'
 import SearchBar from './search-bar'
 
-// 서스펜스 경계에 대한 폴백으로 전달된 이 컴포넌트는
-// 초기 HTML에서 검색창 대신 렌더링 됩니다.
+// 서스펜스 경계에 폴백으로 전달된 이 컴포넌트는
+// 초기 HTML의 검색창 대신 렌더링됩니다.
 // 리액트 하이드레이션 중에 값을 사용할 수 있는 경우, 폴백은
 // `<SearchBar>` 컴포넌트로 대체합니다.
 function SearchBarFallback() {
@@ -174,7 +174,7 @@ export default function Page() {
 
 경로가 [동적으로 렌더링](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-rendering) 되는 경우, 클라이언트 컴포넌트의 초기 서버 렌더링 중에 서버에서 `useSearchParams`를 사용할 수 있습니다.
 
-> **알아두면 좋은 점**: [`동적` 경로 세그먼트 구성 옵션](/docs/app/api-reference/file-conventions/route-segment-config#dynamic)을 `force-dynamic`으로 설정하면 동적 렌더링을 강제할 수 있습니다.
+> **참조**: [`동적` 경로 세그먼트 구성 옵션](/docs/app/api-reference/file-conventions/route-segment-config#dynamic)을 `force-dynamic`으로 설정하면 동적 렌더링을 강제할 수 있습니다.
 
 예를 들어
 
