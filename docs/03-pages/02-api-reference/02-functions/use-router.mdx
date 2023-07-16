@@ -1,9 +1,11 @@
 ---
 title: useRouter
-description: Learn more about the API of the Next.js Router, and access the router instance in your page with the useRouter hook.
+description: `Router`에 대한 API 레퍼런스. useRouter hook을 사용하여 page에서 router의 인스턴스에 접근하는 방법을 알아봅니다.
 ---
 
-If you want to access the [`router` object](#router-object) inside any function component in your app, you can use the `useRouter` hook, take a look at the following example:
+App에서 함수형 컴포넌트 안에 있는 [`router` 객체](#router-object)에 접근하려면, `useRouter` hook을 사용해야 합니다.
+
+예시
 
 ```jsx
 import { useRouter } from 'next/router'
@@ -30,53 +32,56 @@ function ActiveLink({ children, href }) {
 export default ActiveLink
 ```
 
-> `useRouter` is a [React Hook](https://react.dev/learn#using-hooks), meaning it cannot be used with classes. You can either use [withRouter](#withrouter) or wrap your class in a function component.
+> `useRouter`는 [React Hook](https://react.dev/learn#using-hooks) 입니다. 즉, 클래스형과 함께 사용할 수 없다는 의미입니다.<br/> [withRouter](#withrouter)를 사용하거나, 클래스를 함수형 컴포넌트로 래핑해야 사용할 수 있습니다.
 
-## `router` object
+## `router` 객체
 
-The following is the definition of the `router` object returned by both [`useRouter`](#top) and [`withRouter`](#withrouter):
+ 다음은 [`useRouter`](#top)와 [`withRouter`](#withrouter)에 의해 반환되는 `router` 객체의 정의입니다.
 
-- `pathname`: `String` - The path for current route file that comes after `/pages`. Therefore, `basePath`, `locale` and trailing slash (`trailingSlash: true`) are not included.
-- `query`: `Object` - The query string parsed to an object, including [dynamic route](/docs/pages/building-your-application/routing/dynamic-routes) parameters. It will be an empty object during prerendering if the page doesn't use [Server-side Rendering](/docs/pages/building-your-application/data-fetching/get-server-side-props). Defaults to `{}`
-- `asPath`: `String` - The path as shown in the browser including the search params and respecting the `trailingSlash` configuration. `basePath` and `locale` are not included.
-- `isFallback`: `boolean` - Whether the current page is in [fallback mode](/docs/pages/api-reference/functions/get-static-paths#fallback-true).
-- `basePath`: `String` - The active [basePath](/docs/app/api-reference/next-config-js/basePath) (if enabled).
-- `locale`: `String` - The active locale (if enabled).
-- `locales`: `String[]` - All supported locales (if enabled).
-- `defaultLocale`: `String` - The current default locale (if enabled).
-- `domainLocales`: `Array<{domain, defaultLocale, locales}>` - Any configured domain locales.
-- `isReady`: `boolean` - Whether the router fields are updated client-side and ready for use. Should only be used inside of `useEffect` methods and not for conditionally rendering on the server. See related docs for use case with [automatically statically optimized pages](/docs/pages/building-your-application/rendering/automatic-static-optimization)
-- `isPreview`: `boolean` - Whether the application is currently in [preview mode](/docs/pages/building-your-application/configuring/preview-mode).
+- `pathname`: `String` - `/pages` 하위에 존재하는 현재 파일의 경로를 나타냅니다. 그러므로 기본 경로(`basePath`), 로케일(`locale`) 그리고 후행 슬래시 (`trailingSlash: true`)는 포함되지 않습니다.
+- `query`: `Object` - 쿼리 스트링은 [동적 라우트](/docs/pages/building-your-application/routing/dynamic-routes) 파라미터를 포함한 객체로 파싱됩니다. 페이지에서 [서버 사이드 렌더링](/docs/pages/building-your-application/data-fetching/get-server-side-props)을 사용하지 않을 경우, 프리렌더링 중 기본값은 `{}`, 빈 객체 입니다.
+- `asPath`: `String` - 브라우저에서 검색 파라미터를 포함한 경로를 나타내며, 후행 슬래시(`trailingSlash`)의 구성을 준수합니다. 기본 경로(`basePath`)나 로케일(`locale`)은 포함되지 않습니다.
+- `isFallback`: `boolean` - 현재 페이지가 [폴백 모드](/docs/pages/api-reference/functions/get-static-paths#fallback-true)인지 여부를 확인합니다.
+- `basePath`: `String` - 활성화된 [기본 경로](/docs/app/api-reference/next-config-js/basePath) (가능할 경우).
+- `locale`: `String` - 활성화된 로케일 (가능할 경우).
+- `defaultLocale`: `String` - 현개 기본 로케일 (가능할 경우).
+- `locales`: `String[]` - 지원되는 모든 로케일 (가능할 경우).
+- `domainLocales`: `Array<{domain, defaultLocale, locales}>` - 구성된 모든 도메인 로케일.
+- `isReady`: `boolean` - router 필드가 클라이언트 사이드에서 업데이트되고, 사용할 준비가 되었는지 여부를 확인합니다, `useEffect` 메서드 안에서만 사용될 수 있으며 서버에서 조건부 렌더링을 할 수 없습니다. [자동 정적 최적화](/docs/pages/building-your-application/rendering/automatic-static-optimization) 사용 사례로 관련된 문서를 참조하세요.
+- `isPreview`: `boolean` - 어플리케이션이 현재 [미리보기 모드](/docs/pages/building-your-application/configuring/preview-mode)인지 여부를 확인합니다.
 
-> Using the `asPath` field may lead to a mismatch between client and server if the page is rendered using server-side rendering or [automatic static optimization](/docs/pages/building-your-application/rendering/automatic-static-optimization). Avoid using `asPath` until the `isReady` field is `true`.
+> 만약 페이지가 서버 사이드 렌더링 또는 [자동 정적 최적화](/docs/pages/building-your-application/rendering/automatic-static-optimization)를 통해 렌더링 되었다면, `asPath` 필드를 사용하는 것은 클라이언트와 서버 간에 불일치가 발생할 수 있습니다. `isReady` 필드가 `참`이 되기 전까지는 `asPath`사용을 지양해야 합니다.
 
-The following methods are included inside `router`:
+
+`router`에 포함된 메서드
 
 ### router.push
 
 <details>
-  <summary>Examples</summary>
+  <summary>예시</summary>
 
-- [Using Router](https://github.com/vercel/next.js/tree/canary/examples/using-router)
+- [Router 사용하기](https://github.com/vercel/next.js/tree/canary/examples/using-router)
 
 </details>
 
-Handles client-side transitions, this method is useful for cases where [`next/link`](/docs/pages/api-reference/components/link) is not enough.
+클라이언트 사이드의 전환을 처리합니다. 이 방법은 [`next/link`](/docs/pages/api-reference/components/link)가 충분하지 않은 경웨 유용합니다.
 
 ```js
 router.push(url, as, options)
 ```
 
-- `url`: `UrlObject | String` - The URL to navigate to (see [Node.JS URL module documentation](https://nodejs.org/api/url.html#legacy-urlobject) for `UrlObject` properties).
-- `as`: `UrlObject | String` - Optional decorator for the path that will be shown in the browser URL bar. Before Next.js 9.5.3 this was used for dynamic routes.
-- `options` - Optional object with the following configuration options:
-  - `scroll` - Optional boolean, controls scrolling to the top of the page after navigation. Defaults to `true`
-  - [`shallow`](/docs/pages/building-your-application/routing/linking-and-navigating#shallow-routing): Update the path of the current page without rerunning [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props), [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props) or [`getInitialProps`](/docs/pages/api-reference/functions/get-initial-props). Defaults to `false`
-  - `locale` - Optional string, indicates locale of the new page
+- `url`: `UrlObject | String` - 탐색할 URL 속성([Node.JS URL 모듈 문서](https://nodejs.org/api/url.html#legacy-urlobject) 참조) `UrlObject`.
+- `as`: `UrlObject | String` -브라우저 URL 표시줄에 표시될 경로에 대한 선택적 데코레이터입니다. Next.js 9.5.3 이전에는 동적 경로에 사용되었습니다.
+- `options` - 구성 옵션이 있는 선택적 객체 조합
+  - `scroll` - 선택적 불리언, 탐색 후 페이지의 상단으로 스크롤을 제어합니다. 기본값은 `true` 입니다.
+  - [`shallow`](/docs/pages/building-your-application/routing/linking-and-navigating#shallow-routing): 재실행 없이 현재 페이지의 경로를 업데이트합니다. [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props), [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props) 또는 [`getInitialProps`](/docs/pages/api-reference/functions/get-initial-props)에서 기본값은 `false` 입니다.
+  - `locale` - 선택적 문자열, 새로운 페이지의 로케일을 가리킵니다.
 
-> You don't need to use `router.push` for external URLs. [window.location](https://developer.mozilla.org/en-US/docs/Web/API/Window/location) is better suited for those cases.
+> 외부 URL에서는 `router.push` 사용할 필요가 없습니다. 이러한 경우, [window.location](https://developer.mozilla.org/en-US/docs/Web/API/Window/location)이 더 적합합니다.
 
-Navigating to `pages/about.js`, which is a predefined route:
+예시
+
+`pages/about.js`에서 미리 정의된 경로로 이동하기
 
 ```jsx
 import { useRouter } from 'next/router'
@@ -92,7 +97,7 @@ export default function Page() {
 }
 ```
 
-Navigating `pages/post/[pid].js`, which is a dynamic route:
+`pages/post/[pid].js` 동적 경로 탐색
 
 ```jsx
 import { useRouter } from 'next/router'
@@ -108,7 +113,7 @@ export default function Page() {
 }
 ```
 
-Redirecting the user to `pages/login.js`, useful for pages behind [authentication](/docs/pages/building-your-application/routing/authenticating):
+[인증](/docs/pages/building-your-application/routing/authenticating)을 거친 후, 사용자를 `/page/login.js` 페이지로 리다이렉트 시키는 경우
 
 ```jsx
 import { useEffect } from 'react'
@@ -131,9 +136,9 @@ export default function Page() {
 }
 ```
 
-#### Resetting state after navigation
+#### 네비게이션 후 상태를 재설정
 
-When navigating to the same page in Next.js, the page's state **will not** be reset by default as React does not unmount unless the parent component has changed.
+Next.js에서 동일 페이지를 이동할 때, 페이지의 상태는 부모 컴포넌트가 변경되지 않는 한 React가 마운트를 해제하지 않기 때문에, 기본적으로 페이지 상태가 재설정**되지 않습니다.**
 
 ```jsx filename="pages/[slug].js"
 import Link from 'next/link'
@@ -154,11 +159,11 @@ export default function Page(props) {
 }
 ```
 
-In the above example, navigating between `/one` and `/two` **will not** reset the count . The `useState` is maintained between renders because the top-level React component, `Page`, is the same.
+위의 예시에서, `/one` 과 `/two` 의 페이지 이동은 count를 재설정 **되지 않습니다.** `useState`는 최상위 레벨의 React 컴포넌트인 `Page`가 동일하기 때문에 렌더링 간의 상태를 유지합니다.
 
-If you do not want this behavior, you have a couple of options:
+이 동작을 원하지 않는 겨우, 다음과 같이 몇 가지 옵션을 수행할 수 있습니다.
 
-- Manually ensure each state is updated using `useEffect`. In the above example, that could look like:
+- 각각의 상태들의 업데이트 여부를 `useEffect`를 사용하여 수동으로 확인합니다. 위의 예시는 다음과 같이 표시될 수 있습니다.
 
   ```jsx
   useEffect(() => {
@@ -166,7 +171,7 @@ If you do not want this behavior, you have a couple of options:
   }, [router.query.slug])
   ```
 
-- Use a React `key` to [tell React to remount the component](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key). To do this for all pages, you can use a custom app:
+- [컴포넌트를 다시 마운트하도록 React에게 지시하기](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key)에서 React `key`를 사용할 수 있습니다. 모든 페이지 이 행위를 하기 위해서는, app을 커스터마이징 해야 합니다.
 
   ```jsx filename="pages/_app.js"
   import { useRouter } from 'next/router'
@@ -177,9 +182,9 @@ If you do not want this behavior, you have a couple of options:
   }
   ```
 
-#### With URL object
+#### URL 객체 사용
 
-You can use a URL object in the same way you can use it for [`next/link`](/docs/pages/api-reference/components/link#with-url-object). Works for both the `url` and `as` parameters:
+[`next/link`](/docs/pages/api-reference/components/link#with-url-object)에서 사용할 수 있는 것과 동일한 방식으로 URL 객체를 사용할 수 있습니다. `url` 과 `as` 파라미터에서 모두 작동하는 것을 확인할 수 있습니다.
 
 ```jsx
 import { useRouter } from 'next/router'
@@ -205,15 +210,15 @@ export default function ReadMore({ post }) {
 
 ### router.replace
 
-Similar to the `replace` prop in [`next/link`](/docs/pages/api-reference/components/link), `router.replace` will prevent adding a new URL entry into the `history` stack.
+[`next/link`](/docs/pages/api-reference/components/link)의 `replace` 속성과 유사합니다. `router.replace` 는 `histroy` 스택에  새로운 URL을 추가하지 못하게 합니다.
 
 ```js
 router.replace(url, as, options)
 ```
 
-- The API for `router.replace` is exactly the same as the API for [`router.push`](#routerpush).
+- `router.replace`에 대한 API는 [`router.push`](#routerpush) API와 동일합니다.
 
-Take a look at the following example:
+예시
 
 ```jsx
 import { useRouter } from 'next/router'
