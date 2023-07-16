@@ -10,24 +10,24 @@ description: 멀티 존을 사용하여 여러 개의 Next.js 앱을 하나의 �
 
 </details>
 
-영역은 하나의 Next.js 어플리케이션의 배포입니다. 멀티 존(다중 영역)을 사용할 수 있으며 어플리케이션들을 하나의 앱으로 병합할 수 있습니다.
+영역은 하나의 Next.js 애플리케이션의 배포입니다. 멀티 존(다중 영역)을 사용할 수 있으며 애플리케이션들을 하나의 앱으로 병합할 수 있습니다.
 
-예를 들어 다음의 어플리케이션을 작업하고 있다고 가정해 봅시다.
+예를 들어 다음의 애플리케이션을 작업하고 있다고 가정해 봅시다.
 
-- 서빙을 위한 하나의 어플리케이션 `/blog/**`
-- 이외의 모든 페이지를 전송하기 위한 모든 어플리케이션
+- 서빙을 위한 하나의 애플리케이션 `/blog/**`
+- 이외의 모든 페이지를 전송하기 위한 모든 애플리케이션
 
-멀티 존(다중 영역)이 적용된다면, 각각의 어플리케이션들을 독립적으로 개발 및 배포할 수 있으며, 고객들이 하나의 주소로 접근할 수 있는, 하나의 어플리케이션으로 어플리케이션들을 병합할 수 있습니다.
+멀티 존(다중 영역)이 적용된다면, 각각의 애플리케이션들을 독립적으로 개발 및 배포할 수 있으며, 고객들이 하나의 주소로 접근할 수 있는, 하나의 애플리케이션으로 애플리케이션들을 병합할 수 있습니다.
 
 ## 영역을 정의하는 방법
 
 영역에 종속된 API는 없습니다. 다음을 확인하세요.
 
-- 어플리케이션에 필요한 페이지들을 명확히 합니다. 해당 페이지는 다른 어플리케이션에서 다뤄질 수 없습니다. `A`라는 어플리케이션이 `/blog`라는 페이지를 다루고 있다면 `B`라는 어플리케이션은 이 페이지를 다룰 수 없습니다.
+- 애플리케이션에 필요한 페이지들을 명확히 합니다. 해당 페이지는 다른 애플리케이션에서 다뤄질 수 없습니다. `A`라는 애플리케이션이 `/blog`라는 페이지를 다루고 있다면 `B`라는 애플리케이션은 이 페이지를 다룰 수 없습니다.
 - 페이지들과 고정 파일들의 충돌을 예방하기 위해 [basePath](/docs/app/api-reference/next-config-js/basePath)를 설정하세요.
 
 ## 영역들을 병합하는 방법
 
-[`rewrites`](/docs/pages/api-reference/next-config-js/rewrites)를 사용하여 어플리케이션 또는 HTTP proxy 영역들을 병합할 수 있습니다.
+[`rewrites`](/docs/pages/api-reference/next-config-js/rewrites)를 사용하여 애플리케이션 또는 HTTP proxy 영역들을 병합할 수 있습니다.
 
-[모노레포](https://vercel.com/blog/monorepos-are-changing-how-teams-build-software?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)를 이용하면 단 한 번의 `git push`를 통해 [Vercel로 배포된 Next.js](https://vercel.com?utm_source=next-site&utm_medium=docs&utm_campaign=next-website) 어플리케이션들을 모두 배포할 수 있습니다.
+[모노레포](https://vercel.com/blog/monorepos-are-changing-how-teams-build-software?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)를 이용하면 단 한 번의 `git push`를 통해 [Vercel로 배포된 Next.js](https://vercel.com?utm_source=next-site&utm_medium=docs&utm_campaign=next-website) 애플리케이션들을 모두 배포할 수 있습니다.
