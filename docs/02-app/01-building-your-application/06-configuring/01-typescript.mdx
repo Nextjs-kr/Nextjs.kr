@@ -1,6 +1,6 @@
 ---
 title: TypeScript
-description: Next.js provides a TypeScript-first development experience for building your React application.
+description: Next.js는 React 애플리케이션을 구축하기 위한 TypeScript 우선 개발 환경을 제공합니다.
 ---
 
 Next.js는 React 애플리케이션을 구축하기 위한 TypeScript 우선 개발 환경을 제공합니다.
@@ -16,7 +16,7 @@ Next.js는 React 애플리케이션을 구축하기 위한 TypeScript 우선 개
 
 ## 새로운 프로젝트
 
-create-next-app은 이제 기본적으로 TypeScript이 함께 제공됩니다.
+`create-next-app`은 이제 기본적으로 TypeScript이 함께 제공됩니다.
 
 ```bash filename="Terminal"
 npx create-next-app@latest
@@ -42,7 +42,7 @@ TypeScript 파일이 열려 있는 상태에서 `next dev`를 처음 실행하�
   height="403"
 />
 
-프롬프트를 누락했다면 플러그인을 수동으로 활성화할 수 있습니다:
+프롬프트를 누락했다면 플러그인을 수동으로 활성화할 수 있습니다.
 
 1. Opening the command palette (`Ctrl/⌘` + `Shift` + `P`)
 2. Searching for "TypeScript: Select TypeScript Version"
@@ -60,7 +60,7 @@ TypeScript 파일이 열려 있는 상태에서 `next dev`를 처음 실행하�
 
 ### 플러그인 기능
 
-TypeScript 플러그인이 도움이 될 수 있습니다:
+TypeScript 플러그인이 도움이 될 수 있습니다.
 
 - [세그먼트 구성 옵션](/docs/app/api-reference/file-conventions/route-segment-config)에 대해 잘못된 값을 전달하면 경고가 표시됩니다.
 - 사용 가능한 옵션 및 상황에 맞는 문서 표시
@@ -97,7 +97,7 @@ module.exports = nextConfig
 
 Next.js는 애플리케이션의 모든 기존 경로에 대한 정보를 포함하는 링크 정의를 `.next/types`에 생성하며, 이 링크 정의는 TypeScript가 편집기에서 잘못된 링크에 대한 피드백을 제공하는 데 사용할 수 있습니다.
 
-현재 실험적으로 지원되는 것은 동적 세그먼트를 포함한 모든 문자열 리터럴입니다. 리터럴이 아닌 문자열의 경우, 현재 `href`를 `as Route`로 수동으로 캐스팅해야 합니다:
+현재 실험적으로 지원되는 것은 동적 세그먼트를 포함한 모든 문자열 리터럴입니다. 리터럴이 아닌 문자열의 경우, 현재 `href`를 `as Route`로 수동으로 캐스팅해야 합니다.
 
 ```tsx
 import type { Route } from 'next';
@@ -113,7 +113,7 @@ import Link from 'next/link'
 <Link href="/aboot" />
 ```
 
-`next/link`를 감싸는 사용자 정의 컴포넌트에서 `href`를 사용하려면 제네릭을 사용합니다:
+`next/link`를 감싸는 사용자 정의 컴포넌트에서 `href`를 사용하려면 제네릭을 사용합니다.
 
 ```tsx
 import type { Route } from 'next';
@@ -134,7 +134,7 @@ function Card<T extends string>({ href }: { href: Route<T> | URL })
 
 ## 엔드투엔드 type 안전성
 
-Next.js 13에는 **향상된 type 안전성**이 있습니다. 여기에는 하단 내용이 포함됩니다:
+Next.js 13에는 **향상된 type 안전성**이 있습니다. 여기에는 하단 내용이 포함됩니다.
 
 1. **불러오기 함수와 페이지 간 데이터 직렬화 없음**: 서버의 컴포넌트, 레이아웃, 페이지에서 직접 'fetch'할 수 있습니다. 이 데이터는 React에서 사용하기 위해 클라이언트 측에 전달하기 위해 직렬화(문자열로 변환)할 필요가 없습니다. 대신 `app`은 기본적으로 서버 컴포넌트를 사용하기 때문에 추가 단계 없이 `Date`, `Map`, `Set` 등과 같은 값을 사용할 수 있습니다. 이전에는 서버와 클라이언트 사이의 경계를 Next.js 전용 type으로 수동으로 입력해야 했습니다.
 2. **컴포넌트 간 데이터 흐름 간소화**: 루트 레이아웃을 위해 `_app`을 제거하여 컴포넌트와 페이지 간의 데이터 흐름을 시각화하기 쉬워졌습니다. 기존에는 개별 `pages`와 `_app` 사이의 데이터 흐름이 입력하기 어렵고 혼란스러운 버그를 유발할 수 있었습니다. Next.js 13의 [colocated data fetching](/docs/app/building-your-application/data-fetching/fetching)를 사용하면 더 이상 이런 문제가 발생하지 않습니다.
