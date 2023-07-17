@@ -74,12 +74,12 @@ export async function getStaticProps(context) {
 
 ### `revalidate`
 
-The `revalidate` property is the amount in seconds after which a page re-generation can occur (defaults to `false` or no revalidation).
+`revalidate` 속성은 페이지를 다시 생성할 수 있는 시간(초)입니다. (기본값은 `false`이고 revalidation을 하지 않음)
 
 ```js
-// This function gets called at build time on server-side.
-// It may be called again, on a serverless function, if
-// revalidation is enabled and a new request comes in
+// 이 함수는 서버 측에서 빌드 시 호출됩니다.
+// revalidation이 활성화되고 새 요청이 들어오면
+// 서버리스 함수에서 다시 호출될 수 있습니다.
 export async function getStaticProps() {
   const res = await fetch('https://.../posts')
   const posts = await res.json()
@@ -88,21 +88,21 @@ export async function getStaticProps() {
     props: {
       posts,
     },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every 10 seconds
-    revalidate: 10, // In seconds
+    // 다음과 같은 경우, Next.js는 페이지를 다시 생성하려고 시도합니다.
+    // - 요청이 들어올 때
+    // - 최대 10초에 한 번
+    revalidate: 10, // 초 단위
   }
 }
 ```
 
-Learn more about [Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration).
+[Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)에 대해 자세히 알아보십시오.
 
-The cache status of a page leveraging ISR can be determined by reading the value of the `x-nextjs-cache` response header. The possible values are the following:
+ISR을 활용하는 페이지의 캐시 상태는 응답 헤더의 `x-nextjs-cache` 응답 헤더 값을 읽어 확인할 수 있습니다. 가능한 값은 다음과 같습니다.
 
-- `MISS` - the path is not in the cache (occurs at most once, on the first visit)
-- `STALE` - the path is in the cache but exceeded the revalidate time so it will be updated in the background
-- `HIT` - the path is in the cache and has not exceeded the revalidate time
+- `MISS` - 경로가 캐시에 없음 (첫 번째 방문 시 최대 한 번 발생)
+- `STALE` - 경로가 캐시에 있지만 revalidation 시간을 초과하여 백그라운드에서 업데이트됨
+- `HIT` - 경로가 캐시에 있으며 revalidation 시간을 초과하지 않음
 
 ### `notFound`
 
