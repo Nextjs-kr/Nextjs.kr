@@ -65,7 +65,7 @@ TypeScript 플러그인이 도움이 될 수 있습니다.
 - [세그먼트 구성 옵션](/docs/app/api-reference/file-conventions/route-segment-config)에 대해 잘못된 값을 전달하면 경고가 표시됩니다.
 - 사용 가능한 옵션 및 상황에 맞는 문서 표시
 - `use client` 지시어가 올바르게 사용되었는지 확인합니다.
-- 클라이언트 훅(예: `useState`)이 클라이언트 컴포넌트에서만 사용되도록 합니다. 
+- 클라이언트 훅(예: `useState`)이 클라이언트 컴포넌트에서만 사용되도록 합니다.
 
 > **알아두면 유용한 정보**: 앞으로 더 많은 기능이 추가될 예정입니다.
 
@@ -74,7 +74,6 @@ TypeScript 플러그인이 도움이 될 수 있습니다.
 ## 최소 TypeScript 버전
 
 [import names 의 type 수정자](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#type-on-import-names) 및 [성능 개선](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#real-path-sync-native)과 같은 syntax기능을 사용하려면 TypeScript v4.5.2 이상을 사용할 것을 적극 권장합니다.
-
 
 <AppOnly>
 
@@ -227,7 +226,7 @@ export default function handler(
 
 ## 사용자 지정 `App`
 
-[`사용자 지정 App`](/docs/pages/building-your-application/routing/custom-app)이 있는 경우, 기본 제공 유형인 `AppProps`를 사용하고 파일 이름을 './pages/_app.tsx'로 변경하면 됩니다:
+[`사용자 지정 App`](/docs/pages/building-your-application/routing/custom-app)이 있는 경우, 기본 제공 유형인 `AppProps`를 사용하고 파일 이름을 './pages/\_app.tsx'로 변경하면 됩니다:
 
 ```ts
 import type { AppProps } from 'next/app'
@@ -290,8 +289,8 @@ module.exports = {
 
 ## Version Changes
 
-| Version   | Changes                                                                                                                              |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `v13.2.0` | 정적으로 입력된 링크는 베타 버전에서 사용할 수 있습니다.                                                                                        |
-| `v12.0.0` | 이제 더 빠른 빌드를 위해 타입스크립트 및 TSX 컴파일에 [SWC](/docs/architecture/nextjs-compiler)가 기본으로 사용됩니다.                  |
+| Version   | Changes                                                                                                                 |
+| --------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `v13.2.0` | 정적으로 입력된 링크는 베타 버전에서 사용할 수 있습니다.                                                                |
+| `v12.0.0` | 이제 더 빠른 빌드를 위해 타입스크립트 및 TSX 컴파일에 [SWC](/docs/architecture/nextjs-compiler)가 기본으로 사용됩니다.  |
 | `v10.2.1` | [증분 유형 검사](https://www.typescriptlang.org/tsconfig#incremental) 지원은 `tsconfig.json`에서 활성화하면 추가됩니다. |
