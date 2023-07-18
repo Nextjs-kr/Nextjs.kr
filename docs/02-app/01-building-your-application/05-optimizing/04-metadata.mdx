@@ -103,7 +103,7 @@ export default function Page({ params, searchParams }) {}
 
 사용할 수 있는 모든 옵션은 [API 레퍼런스](/docs/app/api-reference/functions/generate-metadata)에서 확인하세요.
 
-> **알아두면 좋은 것**:
+> **참고**:
 >
 > - 정적 메타데이터 및 `generateMetadata`를 통한 동적 메타데이터 모두 **서버 컴포넌트에서만 지원됩니다.**
 > - 라우트를 렌더링할 때 Next.js는 `generateMetadata`, `generateStaticParams`, 레이아웃, 페이지 및 서버 컴포넌트에서 같은 데이터를 가져오는 중복된 요청을 자동으로 제거합니다. `fetch`를 사용할 수 없는 경우 React [`캐시`](/docs/app/building-your-application/data-fetching/caching#react-cache)를 사용합니다.
@@ -120,7 +120,7 @@ metadata로 사용할 수 있는 특수 파일은 아래와 같습니다.
 
 정적 메타데이터에 위 파일들을 사용하거나 코드를 사용하여 프로그래밍적으로 이러한 파일을 생성할 수 있습니다.
 
-구현 및 예제는 [메타데이터 파일](/docs/app/api-reference/functions/generate-metadata) API 레퍼런스 및 [동적 이미지 생성](#dynamic-image-generation)에서 확인할 수 있습니다.
+구현 및 예시는 [메타데이터 파일](/docs/app/api-reference/functions/generate-metadata) API 레퍼런스 및 [동적 이미지 생성](#dynamic-image-generation)에서 확인할 수 있습니다.
 
 ## 동작
 
@@ -138,7 +138,7 @@ metadata로 사용할 수 있는 특수 파일은 아래와 같습니다.
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 ```
 
-> **알아두면 좋은 것**: 기본 [`뷰포트`](/docs/app/api-reference/functions/generate-metadata#viewport) 메타 태그는 덮어쓸 수 있습니다.
+> **참고**: 기본 [`뷰포트`](/docs/app/api-reference/functions/generate-metadata#viewport) 메타 태그는 덮어쓸 수 있습니다.
 
 ### 평가 순서
 
@@ -179,7 +179,7 @@ export const metadata = {
 // <meta property="og:title" content="Blog" />
 ```
 
-위의 예제에서는
+위의 예시에서는
 
 - `title` from `app/layout.js`의 `title`은 `app/blog/page.js`의 `title`로 **대체 되었습니다.**
 - `app/blog/page.js`에서 `openGraph` 메타데이터를 설정하므로, `app/layout.js`의 모든 `openGraph` 필드는 `app/blog/page.js`의 `openGraph` 필드로 대체됩니다. 최종 출력에 `openGraph.description`이 없다는 점에 유의하세요.
@@ -285,9 +285,9 @@ export async function GET() {
 
 `ImageResponse`는 플렉스박스 및 절대 위치 지정, 사용자 정의 글꼴, 텍스트 줄 바꿈, 가운데 정렬, 중첩된 이미지 등 일반적인 CSS 속성을 지원합니다. [지원되는 CSS 속성 전체 목록을 살펴보세요](/docs/app/api-reference/functions/image-response).
 
-> **알아두면 좋은 것**:
+> **참고**:
 >
-> - 예제는 [Vercel OG 플레이그라운드](https://og-playground.vercel.app/)에서 확인할 수 있습니다.
+> - 예시는 [Vercel OG 플레이그라운드](https://og-playground.vercel.app/)에서 확인할 수 있습니다.
 > - `ImageResponse`는 [@vercel/og](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation), [Satori](https://github.com/vercel/satori), Resvg를 사용하여 HTML과 CSS를 PNG로 변환합니다.
 > - 엣지 런타임만 지원됩니다. 기본 Node.js 런타임은 작동하지 않습니다.
 > - 플렉스박스와 CSS 속성 하위 집합만 지원됩니다. 고급 레이아웃(예: `display: grid`)은 작동하지 않습니다.
