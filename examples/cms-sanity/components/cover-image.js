@@ -11,7 +11,7 @@ export default function CoverImage({ title, slug, image: source, priority }) {
       })}
     >
       <Image
-        className="w-full h-auto"
+        className="h-auto w-full"
         width={2000}
         height={1000}
         alt={`Cover Image for ${title}`}

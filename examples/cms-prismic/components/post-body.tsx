@@ -9,7 +9,7 @@ type PostBodyProps = {
 
 export default function PostBody({ slices }: PostBodyProps) {
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="mx-auto max-w-2xl">
       <SliceZone slices={slices} components={components} />
     </div>
   )

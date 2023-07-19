@@ -95,10 +95,10 @@ const EntryForm = ({ onSubmit: onSubmitProp }) => {
 
   return (
     <>
-      <form className="flex relative my-4" onSubmit={onSubmit}>
+      <form className="relative my-4 flex" onSubmit={onSubmit}>
         <input
           required
-          className={cn(inputClasses, 'w-1/3 mr-2 px-4')}
+          className={cn(inputClasses, 'mr-2 w-1/3 px-4')}
           aria-label="Your name"
           placeholder="Your name..."
           value={values.name}
@@ -106,7 +106,7 @@ const EntryForm = ({ onSubmit: onSubmitProp }) => {
         />
         <input
           required
-          className={cn(inputClasses, 'pl-4 pr-32 flex-grow')}
+          className={cn(inputClasses, 'flex-grow pl-4 pr-32')}
           aria-label="Your message"
           placeholder="Your message..."
           value={values.message}
@@ -115,9 +115,9 @@ const EntryForm = ({ onSubmit: onSubmitProp }) => {
         <button
           className={cn(
             'flex items-center justify-center',
-            'absolute right-1 top-1 px-4 font-bold h-8',
-            'bg-gray-100 dark:bg-gray-700 text-gray-900',
-            'dark:text-gray-100 rounded w-28'
+            'absolute right-1 top-1 h-8 px-4 font-bold',
+            'bg-gray-100 text-gray-900 dark:bg-gray-700',
+            'w-28 rounded dark:text-gray-100'
           )}
           type="submit"
           disabled={isSubmitting}
@@ -140,16 +140,16 @@ const Guestbook = ({ fallback }) => {
   const { entries, onSubmit } = useEntriesFlow({ fallback })
   return (
     <SWRConfig value={{ fallback }}>
-      <main className="max-w-4xl mx-auto p-4">
+      <main className="mx-auto max-w-4xl p-4">
         <AppHead />
         <div
           className={cn(
-            'border border-blue-200 rounded p-6',
-            'my-4 w-full dark:border-gray-800 bg-blue-50',
+            'rounded border border-blue-200 p-6',
+            'my-4 w-full bg-blue-50 dark:border-gray-800',
             'dark:bg-blue-opaque'
           )}
         >
-          <h5 className={cn('text-lg md:text-xl font-bold', 'text-gray-900')}>
+          <h5 className={cn('text-lg font-bold md:text-xl', 'text-gray-900')}>
             Sign the Guestbook
           </h5>
           <p className="my-1 text-gray-800">

@@ -72,7 +72,7 @@ export default function ManiMenu({ mainMenuLinks }) {
       </button>
 
       <div
-        className="collapse navbar-collapse sub-menu-bar"
+        className="navbar-collapse sub-menu-bar collapse"
         ref={menuLinksEl}
         id="navbarSupportedContent"
       >

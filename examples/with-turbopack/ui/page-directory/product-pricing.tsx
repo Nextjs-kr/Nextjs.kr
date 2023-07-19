@@ -23,7 +23,7 @@ export function ProductPricing({ product }: { product: IProduct }) {
 
       <button
         onClick={() => console.log(`${product.name} added to cart!`)}
-        className="relative w-full items-center space-x-2 rounded-lg bg-vercel-blue px-3 py-1  text-sm font-medium text-white hover:bg-vercel-blue/90 disabled:text-white/70"
+        className="bg-vercel-blue hover:bg-vercel-blue/90 relative w-full items-center space-x-2 rounded-lg px-3  py-1 text-sm font-medium text-white disabled:text-white/70"
       >
         Add to Cart
       </button>

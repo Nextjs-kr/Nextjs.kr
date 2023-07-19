@@ -15,7 +15,7 @@ export default function NotePage({
             <Link
               as={`/posts/${post.slug}`}
               href="/posts/[slug]"
-              className="text-lg leading-6 font-bold"
+              className="text-lg font-bold leading-6"
             >
               {post.title}
             </Link>

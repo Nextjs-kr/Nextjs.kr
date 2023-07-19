@@ -6,7 +6,7 @@ export default function PostHeader({ title, coverImage, author }) {
   return (
     <>
       <PostTitle>{title}</PostTitle>
-      <div className="hidden md:block md:mb-12">
+      <div className="hidden md:mb-12 md:block">
         {author.length ? (
           <Avatar
             name={`${author[0].firstName} ${author[0].lastName}`}
@@ -14,7 +14,7 @@ export default function PostHeader({ title, coverImage, author }) {
           />
         ) : null}
       </div>
-      <div className="mb-8 md:mb-16 sm:mx-0">
+      <div className="mb-8 sm:mx-0 md:mb-16">
         <CoverImage
           title={title}
           width={2000}

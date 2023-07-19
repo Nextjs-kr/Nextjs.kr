@@ -30,7 +30,7 @@ export async function Image({ src, alt = null, width = null, height = null }) {
       )}
 
       {alt && (
-        <span className="block font-mono text-xs mt-5 text-center">{alt}</span>
+        <span className="mt-5 block text-center font-mono text-xs">{alt}</span>
       )}
     </span>
   )

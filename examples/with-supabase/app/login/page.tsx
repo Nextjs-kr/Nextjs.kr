@@ -34,7 +34,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex-1 flex flex-col w-full max-w-sm justify-center gap-2">
+    <div className="flex w-full max-w-sm flex-1 flex-col justify-center gap-2">
       {view === 'check-email' ? (
         <p className="text-center text-gray-400">
           Check <span className="font-bold text-white">{email}</span> to
@@ -42,14 +42,14 @@ export default function Login() {
         </p>
       ) : (
         <form
-          className="flex-1 flex flex-col w-full max-w-sm justify-center gap-2"
+          className="flex w-full max-w-sm flex-1 flex-col justify-center gap-2"
           onSubmit={view === 'sign-in' ? handleSignIn : handleSignUp}
         >
           <label className="text-md text-gray-400" htmlFor="email">
             Email
           </label>
           <input
-            className="rounded-md px-4 py-2 bg-inherit border mb-6"
+            className="mb-6 rounded-md border bg-inherit px-4 py-2"
             name="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
@@ -59,7 +59,7 @@ export default function Login() {
             Password
           </label>
           <input
-            className="rounded-md px-4 py-2 bg-inherit border mb-6"
+            className="mb-6 rounded-md border bg-inherit px-4 py-2"
             type="password"
             name="password"
             onChange={(e) => setPassword(e.target.value)}
@@ -68,10 +68,10 @@ export default function Login() {
           />
           {view === 'sign-in' ? (
             <>
-              <button className="bg-green-700 rounded px-4 py-2 text-gray-200 mb-6">
+              <button className="mb-6 rounded bg-green-700 px-4 py-2 text-gray-200">
                 Sign In
               </button>
-              <p className="text-sm text-gray-500 text-center">
+              <p className="text-center text-sm text-gray-500">
                 Don't have an account?
                 <button
                   className="ml-1 text-white underline"
@@ -84,10 +84,10 @@ export default function Login() {
           ) : null}
           {view === 'sign-up' ? (
             <>
-              <button className="bg-green-700 rounded px-4 py-2 text-gray-200 mb-6">
+              <button className="mb-6 rounded bg-green-700 px-4 py-2 text-gray-200">
                 Sign Up
               </button>
-              <p className="text-sm text-gray-500 text-center">
+              <p className="text-center text-sm text-gray-500">
                 Already have an account?
                 <button
                   className="ml-1 text-white underline"

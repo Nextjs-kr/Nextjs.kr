@@ -31,7 +31,7 @@
 }
 
 .alignfull {
-  @apply w-screen relative;
+  @apply relative w-screen;
 
   left: 50%;
   margin-left: -50vw;
@@ -41,7 +41,7 @@
 }
 
 .wp-block-image img {
-  @apply max-w-full mt-2;
+  @apply mt-2 max-w-full;
 }
 .wp-block-image.aligncenter {
   @apply text-center;
@@ -54,7 +54,7 @@
 .wp-block-image .alignright,
 .wp-block-image .aligncenter,
 .wp-block-image.is-resized {
-  @apply table ml-0 mr-0;
+  @apply ml-0 mr-0 table;
 }
 .wp-block-image .alignleft > figcaption,
 .wp-block-image .alignright > figcaption,
@@ -77,12 +77,12 @@
 
 .wp-block-button a,
 .wp-block-file a.wp-block-file__button {
-  @apply bg-blue-500 text-white no-underline py-2 px-4;
+  @apply bg-blue-500 py-2 px-4 text-white no-underline;
 }
 
 .wp-block-button a:hover,
 .wp-block-file a.wp-block-file__button:hover {
-  @apply bg-blue-400 cursor-pointer;
+  @apply cursor-pointer bg-blue-400;
 }
 
 .wp-block-file a:first-of-type {
@@ -90,7 +90,7 @@
 }
 
 .wp-block-cover {
-  @apply flex flex-wrap justify-center items-center bg-cover bg-center overflow-hidden;
+  @apply flex flex-wrap items-center justify-center overflow-hidden bg-cover bg-center;
 
   min-height: 430px;
 }

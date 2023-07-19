@@ -29,7 +29,7 @@ export default function MissingTokenSection() {
               src="https://cdn.buttercms.com/9bPtzdJ6QSWkySNjlmyR"
               alt=""
             />
-            <div className="hero-image text-center text-lg-end"></div>
+            <div className="hero-image text-lg-end text-center"></div>
           </div>
         </div>
       </div>

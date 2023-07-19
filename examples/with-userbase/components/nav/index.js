@@ -23,12 +23,12 @@ export default function Nav({ user, setUser }) {
 
   return (
     <nav className="container mx-auto">
-      <ul className="flex justify-end items-center p-8">
+      <ul className="flex items-center justify-end p-8">
         {!user ? (
           <>
             <li>
               <button
-                className="font-bold mx-2"
+                className="mx-2 font-bold"
                 onClick={() => openModal('logIn')}
               >
                 Log In
@@ -52,7 +52,7 @@ export default function Nav({ user, setUser }) {
         )}
       </ul>
       {open && (
-        <div className="w-4/5 md:w-1/2 mx-auto">
+        <div className="mx-auto w-4/5 md:w-1/2">
           <LoginModal
             toggle={setOpen}
             modalType={modalType}

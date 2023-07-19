@@ -8,13 +8,13 @@ const links = [
 function Nav() {
   return (
     <nav>
-      <ul className="flex justify-between items-center p-8">
+      <ul className="flex items-center justify-between p-8">
         <li>
           <Link href="/" className="text-blue-500 no-underline">
             Home
           </Link>
         </li>
-        <ul className="flex justify-between items-center">
+        <ul className="flex items-center justify-between">
           {links.map(({ href, label }) => (
             <li key={`${href}${label}`} className="ml-4">
               <a href={href} className="btn-blue no-underline">

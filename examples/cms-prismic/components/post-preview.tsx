@@ -32,15 +32,15 @@ export default function PostPreview({
       <div className="mb-5">
         <CoverImage title={asText(title)} href={href} image={coverImage} />
       </div>
-      <h3 className="text-3xl mb-3 leading-snug">
+      <h3 className="mb-3 text-3xl leading-snug">
         <Link href={href} className="hover:underline">
           <PrismicText field={title} />
         </Link>
       </h3>
-      <div className="text-lg mb-4">
+      <div className="mb-4 text-lg">
         <Date dateField={date} />
       </div>
-      <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
+      <p className="mb-4 text-lg leading-relaxed">{excerpt}</p>
       {isFilled.contentRelationship(author) && (
         <Avatar name={asText(author.data.name)} picture={author.data.picture} />
       )}

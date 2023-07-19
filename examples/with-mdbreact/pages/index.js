@@ -18,7 +18,7 @@ export default function Home() {
         <title>NextJS with Material Design Bootstrap for React</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MDBContainer className="text-center mt-5">
+      <MDBContainer className="mt-5 text-center">
         <h1 className="h1-responsive font-weight-bolder">
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
@@ -102,7 +102,7 @@ export default function Home() {
             </MDBCard>
           </MDBCol>
         </MDBRow>
-        <MDBFooter className="text-center mt-4" color="white">
+        <MDBFooter className="mt-4 text-center" color="white">
           <span className="black-text"> Powered by</span>
           <a
             href="https://vercel.com?filter=next.js&utm_source=github&utm_medium=example&utm_campaign=next-example"
