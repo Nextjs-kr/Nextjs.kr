@@ -264,9 +264,7 @@ export function middleware(request) {
 
 ## 고급 미들웨어 플래그
 
-skipTrailingSlashRedirect`를 사용하면 후행 슬래시를 추가하거나 제거하기 위한 Next.js 기본 리디렉션을 비활성화하여 미들웨어 내부에서 사용자 정의 처리를 통해 일부 경로에는 후행 슬래시를 유지하지만 다른 경로에는 유지하지 않을 수 있어 증분 마이그레이션이 더 쉬워질 수 있습니다.
-
-`skipTrailingSlashRedirect`는 Next.js의 기본 리다이렉션을 비활성화하여 미들웨어 내에서 사용자 정의 처리를 할 수 있게 해줍니다. 이를 통해 일부 경로에 대해 trailing slash를 유지하지만 다른 경로에서는 사용하지 않을 수 있어 점진적인 마이그레이션을 더 쉽게 수행할 수 있습니다.
+`skipTrailingSlashRedirect`는 Next.js의 기본 리디렉션을 비활성화하는 것을 허용합니다. 이는 뒤에 슬래시를 추가하거나 제거하는 작업에 대한 것으로, 미들웨어 내에서 커스텀 처리를 허용하여 일부 경로에 대해 뒤에 슬래시를 유지하고 다른 경로에는 뒤에 슬래시를 유지하지 않도록 할 수 있으며, 이를 통해 점진적인 마이그레이션을 더 쉽게 수행할 수 있게 합니다.
 
 ```js filename="next.config.js"
 module.exports = {
