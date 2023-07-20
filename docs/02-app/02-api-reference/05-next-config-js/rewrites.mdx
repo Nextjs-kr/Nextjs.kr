@@ -316,7 +316,7 @@ module.exports = {
 }
 ```
 
-만약 `trailingSlash: true` 를 사용하고 있다면 후행 슬래쉬를 `source` 매개변수에 삽입해야 합니다. 목적지 서버가 후행 슬래쉬를 필요로 한다면 이를 `destination` 매개변수에도 포함해야 합니다.
+만약 `trailingSlash: true` 를 사용하고 있다면 후행 슬래시를 `source` 매개변수에 삽입해야 합니다. 목적지 서버가 후행 슬래시를 필요로 한다면 이를 `destination` 매개변수에도 포함해야 합니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -370,7 +370,7 @@ module.exports = {
         destination: '/another', // 자동으로 /docs/another 가 됩니다
       },
       {
-        //  basePath: false가 설정되어 있으므로 /without-basePath 에 /docs 를 추가하지 않습니다 
+        // basePath: false가 설정되어 있으므로 /without-basePath 에 /docs 를 추가하지 않습니다 
         // 알아두기: 이는 내부 rewrites로 사용될 수 없습니다 e.g. `destination: '/another'`
         source: '/without-basePath',
         destination: 'https://example.com',
