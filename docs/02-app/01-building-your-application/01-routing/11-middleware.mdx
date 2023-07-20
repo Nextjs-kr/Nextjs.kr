@@ -56,7 +56,7 @@ export const config = {
 }
 ```
 
-배열 문법을 사용하여 단일 경로 또는 여러 경로를 일치시킬 수 있습니다:
+배열 문법을 사용하여 단일 경로 또는 여러 경로를 일치시킬 수 있습니다.
 
 ```js filename="middleware.js"
 export const config = {
@@ -64,13 +64,13 @@ export const config = {
 }
 ```
 
-`matcher` 구성은 부정적 전방탐색(negative lookahead) 또는 문자 일치(character matching)와 같은 완전한 정규식을 지원합니다. 특정 경로를 제외한 모든 경로와 일치하는 부정적 전방탐색의 예는 다음과 같습니다:
+`matcher` 구성은 부정적 전방탐색(negative lookahead) 또는 문자 일치(character matching)와 같은 완전한 정규식을 지원합니다. 특정 경로를 제외한 모든 경로와 일치하는 부정적 전방탐색의 예는 다음과 같습니다.
 
 ```js filename="middleware.js"
 export const config = {
   matcher: [
     /*
-     * 다음과 같이 시작하는 경로를 제외한 모든 요청 경로와 일치시킵니다:
+     * 다음과 같이 시작하는 경로를 제외한 모든 요청 경로와 일치시킵니다.
      * - api (API 경로)
      * - _next/static (정적 파일)
      * - _next/image (이미지 최적화 파일)
@@ -86,9 +86,9 @@ export const config = {
 matcher 구성:
 
 1. 반드시 `/`로 시작해야 합니다.
-2. 이름 있는 매개변수를 포함할 수 있습니다: `/about/:path`는 `/about/a`와 `/about/b`와 일치하지만 `/about/a/c`와는 일치하지 않습니다.
+2. 이름 있는 매개변수를 포함할 수 있습니다. `/about/:path`는 `/about/a`와 `/about/b`와 일치하지만 `/about/a/c`와는 일치하지 않습니다.
 3. 이름 있는 매개변수에는 수정자(콜론으로 시작함)를 사용할 수 있습니다: `/about/:path*`는 `*`가 *0개 이상*을 의미하기 때문에 `/about/a/b/c`와 일치합니다. `?`는 _0개 또는 1개_, `+`는 *1개 이상*을 의미합니다.
-4. 괄호로 둘러싸인 정규식을 사용할 수 있습니다: `/about/(.*)`는 `/about/:path*`와 동일한 의미를 가집니다.
+4. 괄호로 둘러싸인 정규식을 사용할 수 있습니다. `/about/(.*)`는 `/about/:path*`와 동일한 의미를 가집니다.
 
 자세한 내용은 [path-to-regexp](https://github.com/pillarjs/path-to-regexp#path-to-regexp-1) 문서를 참조하세요.
 
@@ -113,7 +113,7 @@ export function middleware(request: NextRequest) {
 
 ## NextResponse
 
-`NextResponse` API를 사용하면 다음 작업을 수행할 수 있습니다:
+`NextResponse` API를 사용하면 다음 작업을 수행할 수 있습니다.
 
 - 들어오는 요청을 다른 URL로 `리다이렉트`
 - 주어진 URL을 표시하여 응답 `재작성`
@@ -121,7 +121,7 @@ export function middleware(request: NextRequest) {
 - 응답 쿠키 설정
 - 응답 헤더 설정
 
-미들웨어에서 응답을 생성하려면 다음 중 하나를 수행할 수 있습니다:
+미들웨어에서 응답을 생성하려면 다음 중 하나를 수행할 수 있습니다.
 
 1. 응답을 생성하는 경로([Page](/docs/pages/building-your-application/routing/pages-and-layouts) 또는 [Edge API Route](/docs/pages/building-your-application/routing/api-routes))로 `재작성`합니다.
 2. 직접 `NextResponse`를 반환합니다. [응답 생성하기](#producing-a-response)를 참조하세요.
