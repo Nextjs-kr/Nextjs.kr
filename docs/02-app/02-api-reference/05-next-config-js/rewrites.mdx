@@ -30,18 +30,19 @@ Rewrites는 클라이언트 측 라우팅에 적용되며, 위의 예제에서 `
 - `destination`: `String` 라우팅하기를 원하는 경로입니다.
 - `basePath`: `false` or `undefined` - false인 경우 매칭 시 basePath가 포함되지 않으며 외부 rewrites에만 사용할 수 있습니다.
 - `locale`: `false` or `undefined` - 매칭 시 로케일이 포함되지 말아야 하는지 아닌지를 나타냅니다.
-- `has` 는 [has objects](#header-cookie-and-query-matching)로 구성된 배열입니다. 이는 `type`, `key` 그리고 `value` 속성을 포함합니다.
+- `has` 는 [has objects](#header-cookie-and-query-matching)로 구성된 배열입니다. 이는 `type`, `key`, `value` 속성을 포함합니다.
 - `missing` 은 [missing objects](#header-cookie-and-query-matching)로 구성된 배열입니다. 이는 `type`, `key`, `value` 속성을 포함합니다.
 
-`rewrites` 함수가 배열을 반환할 때, rewrites는 filesystem(pages and `/public` 파일들)을 확인한 뒤 동적 라우트 전에 적용됩니다. `rewrites` 함수가 배열로 구성된 객체를 특정한 형태로 반환할 때, 이러한 동작은 바뀔 수 있으며 Next.js의 `v10.1` 부터 더 세밀하게 제어됩니다:
+`rewrites` 함수가 배열을 반환할 때, rewrites는 파일시스템(pages 와 `/public` 파일들)을 확인하고 동적 라우트 전에 적용됩니다. `rewrites` 함수가 배열로 구성된 객체를 특정한 형태로 반환할 때, 이러한 동작은 바뀔 수 있으며 Next.js의 `v10.1` 부터 더 세밀하게 제어됩니다:
 
 ```js filename="next.config.js"
 module.exports = {
   async rewrites() {
     return {
       beforeFiles: [
-        // 이들 rewrites는 headers/redirects 이후에 
-        // 그리고 페이지 파일들을 오버라이딩할 수 있는 _next/public을 포함한 모든 파일 전에 확인됩니다.
+        // rewrites는 headers/redirects 후에 확인되고 
+        // 페이지 파일들을 오버라이딩하는 _next/public의 파일을 포함한 
+        // 모든 파일 전에 확인됩니다.
         {
           source: '/some-page',
           destination: '/somewhere-else',
@@ -199,9 +200,9 @@ module.exports = {
 }
 ```
 
-## 헤더, 쿠키, 그리고 쿼리 매칭
+## 헤더, 쿠키, 쿼리 매칭
 
-오직 헤더, 쿠키, 쿼리 값들이 `has` 필드와 매치되거나, `missing` 필드와 매치되지 않을 때만 rewrites를 사용할 수 있습니다. rewrite가 적용되기 위해 `source` 와 모든 `has` 아이템들은 모두 매치되어야 하며 모든  `missing` 아이템들은 매치되지 않아야 합니다. 
+헤더, 쿠키, 쿼리 값들이 `has` 필드와 매치되거나, `missing` 필드와 매치되지 않을 때만 rewrites를 사용할 수 있습니다. rewrite가 적용되기 위해 `source` 와 모든 `has` 아이템들은 모두 매치되어야 하며 모든  `missing` 아이템들은 매치되지 않아야 합니다. 
 
 `has` 와 `missing` 항목들은 다음의 필드를 가질 수 있습니다:
 
@@ -213,7 +214,7 @@ module.exports = {
 module.exports = {
   async rewrites() {
     return [
-      // 만약 헤더인 `x-rewrite-me` 가 있다면,
+      // `x-rewrite-me` 헤더가 있다면,
       // 이 rewrite는 적용됩니다
       {
         source: '/:path*',
@@ -225,7 +226,7 @@ module.exports = {
         ],
         destination: '/another-page',
       },
-      // 만약 헤더인 `x-rewrite-me` 가 없다면
+      // `x-rewrite-me` 헤더가 없다면
       // 이 rewrite는 적용됩니다
       {
         source: '/:path*',
@@ -237,7 +238,7 @@ module.exports = {
         ],
         destination: '/another-page',
       },
-      // 만약 source, query, 그리고 cookie가 매치되면, 
+      // source, query, cookie가 매치되면, 
       // 이 rewrite는 적용됩니다
       {
         source: '/specific/:path*',
@@ -245,8 +246,9 @@ module.exports = {
           {
             type: 'query',
             key: 'page',
-            // 이 페이지는 destination에 사용할 수 없습니다 
-            // 왜냐하면 value가 제공되지만 지정된 캡처 그룹 (?<page>home) 을 사용하지 않기 떄문입니다. 
+            // 이 페이지는 destination에 사용할 수 없습니다.
+            // value가 제공되지만 지정된 캡처 그룹을 사용하지 않기 떄문입니다. 
+            // 예. (?<page>home)
             value: 'home',
           },
           {
@@ -257,7 +259,7 @@ module.exports = {
         ],
         destination: '/:path*/home',
       },
-      // 만약 헤더인 `x-authorized` 가 존재하고
+      // x-authorized` 헤더가 존재하고
       // 매치되는 값을 가지고 있다면 이 rewrite는 적용됩니다
       {
         source: '/:path*',
@@ -270,7 +272,7 @@ module.exports = {
         ],
         destination: '/home?authorized=:authorized',
       },
-      // 만약 호스트가 `example.com`이면,
+      // 호스트가 `example.com`이면,
       // 이 rewrite는 적용됩니다 
       {
         source: '/:path*',
@@ -429,8 +431,8 @@ module.exports = {
 
 ## 버전 변화 과정
 
-| 버전       | 변화              |
+| Version   | Changes          |
 | --------- | ---------------- |
-| `v13.3.0` | `missing` 추가    |
-| `v10.2.0` | `has` 추가        |
-| `v9.5.0`  | Headers 추가      |
+| `v13.3.0` | `missing` added. |
+| `v10.2.0` | `has` added.     |
+| `v9.5.0`  | Headers added.   |
