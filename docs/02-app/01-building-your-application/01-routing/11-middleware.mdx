@@ -214,8 +214,6 @@ export function middleware(request) {
 }
 ```
 
-> **Good to know**: Avoid setting large headers as it might cause [431 Request Header Fields Too Large](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/431) error depending on your backend web server configuration.
-
 > **참고**: 백엔드 웹 서버 구성에 따라 [431 Request Header Fields Too Large](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/431) 오류가 발생할 수 있으므로 큰 헤더를 설정하는 것을 피하십시오.
 
 ## 응답 생성하기
@@ -263,12 +261,6 @@ export function middleware(request) {
   }
 }
 ```
-
-## Advanced Middleware Flags
-
-In `v13.1` of Next.js two additional flags were introduced for middleware, `skipMiddlewareUrlNormalize` and `skipTrailingSlashRedirect` to handle advanced use cases.
-
-`skipTrailingSlashRedirect` allows disabling Next.js default redirects for adding or removing trailing slashes allowing custom handling inside middleware which can allow maintaining the trailing slash for some paths but not others allowing easier incremental migrations.
 
 ## 고급 미들웨어 플래그
 
