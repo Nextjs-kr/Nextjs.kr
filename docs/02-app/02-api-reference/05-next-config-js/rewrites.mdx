@@ -371,7 +371,7 @@ module.exports = {
       },
       {
         //  basePath: false가 설정되어 있으므로 /without-basePath 에 /docs 를 추가하지 않습니다 
-        // 알아두기: 이는 내부 rewrites로 사용될 수 없습니다 e.g. `destination: '/another'`
+        // 주의: 이는 내부 rewrites로 사용될 수 없습니다. 예. `destination: '/another'`
         source: '/without-basePath',
         destination: 'https://example.com',
         basePath: false,
