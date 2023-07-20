@@ -130,7 +130,7 @@ export function middleware(request: NextRequest) {
 
 쿠키는 일반적인 헤더입니다. `Request`에서는 `Cookie` 헤더에 저장되고, `Response`에서는 `Set-Cookie` 헤더에 저장됩니다. Next.js는 `NextRequest`와 `NextResponse`의 `cookies` 확장자를 통해 이러한 쿠키에 쉽게 접근하고 조작할 수 있는 편리한 방법을 제공합니다.
 
-1. 들어오는 요청의 경우 `cookies`에는 `get`, `getAll`, `set`, `delete` 쿠키 메서드가 제공됩니다. has`로 쿠키의 존재 여부를 확인하거나 `clear`로 모든 쿠키를 제거할 수 있습니다.
+1. 들어오는 요청의 경우 `cookies`에는 `get`, `getAll`, `set`, `delete` 쿠키 메서드가 제공됩니다. `has`로 쿠키의 존재 여부를 확인하거나 `clear`로 모든 쿠키를 제거할 수 있습니다.
 2. 나가는 응답의 경우 `cookies`에는 `get`, `getAll`, `set`, `delete` 메서드가 있습니다.
 
 ```ts filename="middleware.ts"
