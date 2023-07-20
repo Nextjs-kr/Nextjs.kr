@@ -1,9 +1,9 @@
 ---
 title: useParams
-description: API Reference for the useParams hook.
+description: useParams 훅에 대한 API 레퍼런스입니다.
 ---
 
-`useParams` is a **Client Component** hook that lets you read a route's [dynamic params](/docs/app/building-your-application/routing/dynamic-routes) filled in by the current URL.
+`useParams`는 경로의 [동적 매개변수](/docs/app/building-your-application/routing/dynamic-routes)를 읽을 수 있게 해주는 **클라이언트 컴포넌트** 훅입니다. 어떤 경로의 동적 매개변수는 현재 URL 값으로 채워집니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher
 'use client'
@@ -39,25 +39,25 @@ export default function ExampleClientComponent() {
 }
 ```
 
-## Parameters
+## 매개변수
 
 ```tsx
 const params = useParams()
 ```
 
-`useParams` does not take any parameters.
+`useParams`는 어떤 매개변수도 받지 않습니다.
 
-## Returns
+## 반환값
 
-`useParams` returns an object containing the current route's filled in [dynamic parameters](/docs/app/building-your-application/routing/dynamic-routes).
+`useParams`는 현재 라우트의 [동적 매개변수](/docs/app/building-your-application/routing/dynamic-routes)를 포함하는 객체를 반환합니다.
 
-- Each property in the object is an active dynamic segment.
-- The properties name is the segment's name, and the properties value is what the segment is filled in with.
-- The properties value will either be a `string` or array of `string`'s depending on the [type of dynamic segment](/docs/app/building-your-application/routing/dynamic-routes).
-- If the route contains no dynamic parameters, `useParams` returns an empty object.
-- If used in `pages`, `useParams` will return `null`.
+- 객체의 각 프로퍼티는 활성화된 동적 세그먼트입니다. (동적 세그먼트에 맞추어 각각의 프로퍼티가 자동으로 생성됨)
+- 프로퍼티의 이름은 세그먼트의 이름이고, 프로퍼티의 값은 세그먼트에 채워진 값입니다.
+- 프로퍼티의 값은 [동적 세그먼트의 타입](/docs/app/building-your-application/routing/dynamic-routes)에 따라 문자열 또는 문자열 배열이 될 수 있습니다.
+- 라우트가 동적 매개변수를 포함하고 있지 않다면, `useParams` 는 빈 객체를 반환합니다.
+- `pages`에서 사용하는 경우, `useParams`는 `null`을 반환합니다.
 
-For example:
+예시
 
 | Route                           | URL         | `useParams()`             |
 | ------------------------------- | ----------- | ------------------------- |
@@ -66,8 +66,8 @@ For example:
 | `app/shop/[tag]/[item]/page.js` | `/shop/1/2` | `{ tag: '1', item: '2' }` |
 | `app/shop/[...slug]/page.js`    | `/shop/1/2` | `{ slug: ['1', '2'] }`    |
 
-## Version History
+## 버전 히스토리
 
-| Version   | Changes                 |
-| --------- | ----------------------- |
-| `v13.3.0` | `useParams` introduced. |
+| 버전   | 변경사항           |
+| --------- | ----------------- |
+| `v13.3.0` | `useParams` 도입. |

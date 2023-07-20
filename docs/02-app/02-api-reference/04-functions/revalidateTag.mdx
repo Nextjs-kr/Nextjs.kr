@@ -1,9 +1,9 @@
 ---
 title: revalidateTag
-description: API Reference for the revalidateTag function.
+description: revalidateTag 함수에 대한 API 레퍼런스입니다.
 ---
 
-`revalidateTag` allows you to revalidate data associated with a specific cache tag. This is useful for scenarios where you want to update your cached data without waiting for a revalidation period to expire.
+`revalidateTag`는 특정 캐시 태그와 연관된 데이터를 재검증할 수 있습니다. 이 기능은 재검증 기간이 만료될 때까지 기다리지 않고 캐시 데이터를 업데이트하려는 상황에 유용합니다.
 
 ```ts filename="app/api/revalidate/route.ts" switcher
 import { NextRequest, NextResponse } from 'next/server'
@@ -27,9 +27,9 @@ export async function GET(request) {
 }
 ```
 
-> **Good to know**:
+> **참고 사항**:
 >
-> - `revalidateTag` is available in both [Node.js and Edge runtimes](/docs/pages/building-your-application/rendering/edge-and-nodejs-runtimes).
+> - `revalidateTag`는 [Node.js와 Edge 런타임](/docs/pages/building-your-application/rendering/edge-and-nodejs-runtimes)에서 모두 사용할 수 있습니다.
 
 ## Parameters
 
@@ -37,9 +37,9 @@ export async function GET(request) {
 revalidateTag(tag: string): void;
 ```
 
-- `tag`: A string representing the cache tag associated with the data you want to revalidate.
+- `tag`: 재검증하려는 데이터와 연관된 캐시 태그를 나타내는 문자열입니다.
 
-You can add tags to `fetch` as follows:
+다음과 같이 `fetch`에 tags를 추가할 수 있습니다.
 
 ```tsx
 fetch(url, { next: { tags: [...] } });
@@ -47,7 +47,7 @@ fetch(url, { next: { tags: [...] } });
 
 ## Returns
 
-`revalidateTag` does not return any value.
+`revalidateTag`는 어떠한 값도 반환하지 않습니다.
 
 ## Examples
 
