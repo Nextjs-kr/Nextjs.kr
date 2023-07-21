@@ -197,7 +197,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 ## API 경로
 
-다음은 API 경로에 기본 제공 유형을 사용하는 방법의 예입니다:
+다음은 API 경로에 기본 제공 유형을 사용하는 방법의 예입니다.
 
 ```ts
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -226,7 +226,7 @@ export default function handler(
 
 ## 사용자 지정 `App`
 
-[`사용자 지정 App`](/docs/pages/building-your-application/routing/custom-app)이 있는 경우, 기본 제공 유형인 `AppProps`를 사용하고 파일 이름을 './pages/\_app.tsx'로 변경하면 됩니다:
+[`사용자 지정 App`](/docs/pages/building-your-application/routing/custom-app)이 있는 경우, 기본 제공 유형인 `AppProps`를 사용하고 파일 이름을 `./pages/\_app.tsx`로 변경하면 됩니다.
 
 ```ts
 import type { AppProps } from 'next/app'
@@ -273,7 +273,7 @@ module.exports = nextConfig
 
 비활성화할 경우 빌드 또는 배포 프로세스의 일부로 유형 검사를 실행하고 있는지 확인해야 하며, 그렇지 않으면 매우 위험할 수 있습니다.
 
-`next.config.js`를 열고 `typescript` 구성에서 `ignoreBuildErrors` 옵션을 활성화합니다:
+`next.config.js`를 열고 `typescript` 구성에서 `ignoreBuildErrors` 옵션을 활성화합니다.
 
 ```js filename="next.config.js"
 module.exports = {
