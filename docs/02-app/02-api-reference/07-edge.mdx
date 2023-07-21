@@ -3,7 +3,7 @@ title: Edge Runtime
 description: Edge Runtime에 대한 API 레퍼런스입니다.
 ---
 
-Next.js Edge Runtime은 표준 웹 API를 기반으로 하며, 다음 API를 지원합니다:
+Next.js Edge Runtime은 표준 웹 API를 기반으로 하며, 다음 API를 지원합니다.
 
 ## 네트워크 API
 
@@ -128,7 +128,7 @@ Next.js Edge Runtime은 표준 웹 API를 기반으로 하며, 다음 API를 지
 
 ## 미지원 API
 
-Edge 런타임에는 다음과 같은 몇 가지 제한 사항이 있습니다:
+Edge 런타임에는 다음과 같은 몇 가지 제한 사항이 있습니다.
 
 - 네이티브 Node.js API는 **지원되지 않습니다**. 예를 들어 파일 시스템을 읽거나 쓸 수 없습니다.
 - ES 모듈을 구현하고 네이티브 Node.js API를 사용하지 않는 한 `node_modules`를 사용할 수 있습니다.
@@ -144,7 +144,7 @@ Edge 런타임에는 다음과 같은 몇 가지 제한 사항이 있습니다:
 | [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate) | 버퍼 소스에서 WebAssembly 모듈을 컴파일하고 인스턴스화 합니다.|
 
 드물지만 코드의 런타임에 도달할 수 없고 트리셰이킹으로 제거할 수 없는 일부 동적 코드 평가문이 포함(또는 가져오기)되어 있을 수 있습니다.
-미들웨어 또는 Edge API Route 내보내기 설정으로 특정 파일을 허용하도록 검사를 완화할 수 있습니다:
+미들웨어 또는 Edge API Route 내보내기 설정으로 특정 파일을 허용하도록 검사를 완화할 수 있습니다.
 
 ```javascript
 export const config = {
