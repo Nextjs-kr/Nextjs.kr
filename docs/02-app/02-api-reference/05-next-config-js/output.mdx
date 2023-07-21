@@ -90,7 +90,7 @@ module.exports = {
 module.exports = {
   experimental: {
     turbotrace: {
-      // turbotrace의 로그 레벨을 설정합니다. 기본값은 `error`
+      // turbotrace의 로그 레벨을 설정합니다. 기본값은 `error` 입니다
       logLevel?:
       | 'bug'
       | 'fatal'
@@ -100,7 +100,7 @@ module.exports = {
       | 'note'
       | 'suggestions'
       | 'info',
-      // turbotrace의 로그가 분석 세부 정보를 포함해야 하는지를 설정합니다. 기본값은 `false`
+      // turbotrace의 로그가 분석 세부 정보를 포함해야 하는지를 설정합니다. 기본값은 `false` 입니다
       logDetail?: boolean
       // 모든 로그 메세지를 제한 없이 보여줍니다
       // turbotrace는 기본적으로 각 카테고리당 로그 메세지를 1개만 보여줍니다
@@ -113,7 +113,7 @@ module.exports = {
       // 코드 내에 `process.cwd()` 표현식이 있으면 이 옵션을 설정하여 추적 중에 `turbotrace`에게 `process.cwd()`값을 전달할 수 있습니다
       // 예를 들어 require(process.cwd() + '/package.json')는 require('/path/to/cwd/package.json')로 추적됩니다
       processCwd?: string
-      // `turbotrace`의 최대 메모리 사용량을 `MB` 단위로 설정합니다. 기본값은 `6000`
+      // `turbotrace`의 최대 메모리 사용량을 `MB` 단위로 설정합니다. 기본값은 `6000` 입니다
       memoryLimit?: number
     },
   },
