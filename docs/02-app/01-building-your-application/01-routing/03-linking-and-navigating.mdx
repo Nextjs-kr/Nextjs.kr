@@ -171,7 +171,7 @@ export default function Page() {
 
 Prefetching은 라우트를 방문하기 전에 백그라운드에서 라우트를 미리 로드하는 방법입니다. prefetch된 라우트의 렌더링 결과는 라우터의 클라이언트 측 캐시에 추가됩니다. 이렇게 하면 prefetch된 라우트로 이동하는 것이 거의 즉시 가능합니다.
 
-기본적으로 `<Link>` 컴포넌트를 사용할 때 라우트가 뷰포트에 표시되면 prefetch됩니다. 이는 페이지가 처음 로드되거나 스크롤을 통해 발생할 수 있습니다. 라우트는 [`useRouter()` Hook](/docs/app/api-reference/functions/use-router#userouter)의 `prefetch` 메서드를 사용하여 프로그래밍 방식으로 prefetch될 수도 있습니다.
+기본적으로 `<Link>` 컴포넌트를 사용할 때 라우트는 뷰포트에 표시되자마자 미리 가져옵니다. 이는 페이지가 처음 로드되거나 스크롤을 통해 발생할 수 있습니다. 라우트는 [`useRouter()` hook](/docs/app/api-reference/functions/use-router#userouter)의 `prefetch` 메서드를 사용하여 프로그래밍 방식으로 미리 가져올 수 있습니다.
 
 **정적 및 동적 라우트**:
 
