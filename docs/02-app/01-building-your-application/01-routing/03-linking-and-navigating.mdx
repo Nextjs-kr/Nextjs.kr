@@ -149,7 +149,6 @@ export default function Page() {
 - 라우터는 브라우저의 주소 표시줄에 URL을 업데이트합니다.
 - 라우터는 [클라이언트 측 캐시](#client-side-caching-of-rendered-server-components)에서 변경되지 않은 세그먼트(예: 공유된 레이아웃)를 재사용하여 불필요한 작업을 피합니다. 이것은 [부분 렌더링](/docs/app/building-your-application/routing#partial-rendering)이라고도 합니다.
 - [소프트 내비게이션의 조건](#conditions-for-soft-navigation)이 충족되면, 라우터는 서버가 아닌 캐시에서 새로운 세그먼트를 가져옵니다. 그렇지 않으면 라우터는 [하드 내비게이션](#hard-navigation)을 수행하고 서버로부터 서버 컴포넌트 페이로드를 가져옵니다.
-- If created, [loading UI](/docs/app/building-your-application/routing/loading-ui-and-streaming) is shown from the server while the payload is being fetched.
 - 생성된 경우, [로딩 UI](/docs/app/building-your-application/routing/loading-ui-and-streaming)는 페이로드가 fetched되는 동안 서버로부터 표시됩니다.
 - 라우터는 캐시되거나 신선한 페이로드를 사용하여 클라이언트에서 새로운 세그먼트를 렌더링 합니다.
 
