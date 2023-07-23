@@ -3,7 +3,7 @@ title: Linking과 Navigating
 description: Next.js에서 내비게이션이 작동하는 방식과 Link Component와 `useRouter` hook을 사용하는 방법을 배워보세요.
 ---
 
-Next.js 라우터는 [클라이언트 사이드 내비게이션](#how-navigation-works)을 사용하는 [서버 중심 라우팅](/docs/app/building-your-application/routing#server-centric-routing-with-client-side-navigation)을 사용합니다. 이는 내비게이션이 클라이언트 사이드 상태를 유지하고 값비싼 재렌더링을 피하며, 중단할 수 있으며, 경쟁 상태를 발생시키지 않는다는 것을 의미합니다.
+Next.js 라우터는 [서버 중심 라우팅](/docs/app/building-your-application/routing#server-centric-routing-with-client-side-navigation)과 [클라이언트 사이드 내비게이션](#how-navigation-works)을 사용합니다. 이는 [즉각적인 로딩 상태](/docs/app/building-your-application/routing/loading-ui-and-streaming)와 [동시 렌더링](https://react.dev/reference/react/startTransition)을 지원합니다. 즉, 내비게이션은 클라이언트 측 상태를 유지하고 비용이 많이 드는 리렌더링을 피하고 중단 가능하며 경쟁 상태를 일으키지 않습니다.
 
 라우트 사이를 이동하는 방법에는 두 가지가 있습니다.
 
