@@ -9,7 +9,7 @@ description: Next.js 앱에서 서버가 시작될 때 코드를 실행하기 �
 >
 > - 이 기능은 현재 **실험적인** 단계입니다. 사용하려면 `next.config.js` 에서 `experimental.instrumentationHook = true;` 로 설정해서 명시적으로 허용해야 합니다.
 > - `instrumentation` 파일은 `app` 이나 `pages` 디렉토리 하위가 아닌 프로젝트 루트에 있어야 합니다. `src` 디렉토리를 사용한다면 이 파일을 `pages`와 `app`과 나란히 있는 `src` 하위에 위치시키세요.
-> - 접미사를 추가하기 위해 [`pagesExtension` 설정 옵션](/docs/pages/api-reference/next-config-js/pageExtensions)을 사용한다면 `instrumentation` 파일이름 또한 일치시키기 위해 업데이트해야 합니다.
+> - 접미사를 추가하기 위해 [`pagesExtension` 설정](/docs/pages/api-reference/next-config-js/pageExtensions)을 사용한다면 `instrumentation` 파일의 확장자 또한 업데이트해야 합니다.
 > - 여러분이 사용할 수 있는 [with-opentelemetry](https://github.com/vercel/next.js/tree/canary/examples/with-opentelemetry) 예제를 제공하고 있습니다.
 
 `register` 함수가 배포되면 각각의 콜드 부트마다 호출됩니다. (각 환경마다 정확히 한 번씩 호출됩니다)
