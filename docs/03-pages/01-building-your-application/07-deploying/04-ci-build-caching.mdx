@@ -5,9 +5,9 @@ description: Next.js 빌드를 캐싱하도록 CI를 구성하는 방법입니�
 
 `.next/cache`빌드 성능을 향상시키기 위해 Next.js는 빌드 간에 공유되는 캐시를 저장합니다.
 
-CI (지속적 통합) 환경에서 캐시를 활용하려면, CI 워크플로우를 올바르게 구성하여 빌드 사이에 캐시를 올바르게 유지하도록 설정해야 합니다.
+CI (지속적 통합) 환경에서 캐시를 활용하려면 CI 워크플로우를 올바르게 구성하여 빌드 사이에 캐시를 올바르게 유지하도록 설정해야 합니다.
 
-> CI가 `.next/cache`를 빌드 사이에서 유지하지 않도록 설정되어 있다면, [No Cache Detected](/docs/messages/no-cache) 오류가 발생할 수 있습니다.
+> CI가 `.next/cache`를 빌드 사이에서 유지하지 않도록 설정되어 있다면 [No Cache Detected](/docs/messages/no-cache) 오류가 발생할 수 있습니다.
 
 다음은 일반적인 CI providers에 대한 캐시 구성 예시입니다.
 
@@ -60,7 +60,7 @@ cache:
 
 ## AWS CodeBuild
 
-`buildspec.yml`파일에 다음 내용을 추가하거나 병합합니다.:
+`buildspec.yml`파일에 다음 내용을 추가하거나 병합합니다.
 
 ```yaml
 cache:
