@@ -14,7 +14,7 @@ module.exports = {
 }
 ```
 
-loaderFile은 Next.js 애플리케이션의 root를 기준으로 한 상대 경로를 지정해야 합니다. 해당 파일은 문자열을 반환하는 함수를 대표로 내보내야 합니다.
+`loaderFile`은 Next.js 애플리케이션의 root를 기준으로 한 상대 경로를 지정해야 합니다. 해당 파일은 문자열을 반환하는 함수를 대표로 내보내야 합니다.
 
 ```js
 export default function myImageLoader({ src, width, quality }) {
