@@ -3,7 +3,7 @@ title: Instrumentation
 description: Next.js 앱에서 서버가 시작될 때 코드를 실행하기 위해 instrumentation을 사용하는 방법 알아보기
 ---
 
-프로젝트의 **루트 디렉토리**(혹은 src 디렉토리를 사용시 src 내부) 에 있는 `instrumentation.ts` (혹은 `.js`) 에서 `register` 로 명명된 함수를 내보낸다면 새로운 Next.js 서버 인스턴스가 시작될 때마다 그 함수를 호출할 것입니다.
+프로젝트의 **루트 디렉토리**(혹은 src 디렉토리를 사용시 src 내부) 에 있는 `instrumentation.ts` (혹은 `.js`) 에서 `register` 로 명명된 함수를 내보낸다면 새로운 Next.js 서버 인스턴스가 시작될 때마다 `register` 함수를 호출할 것입니다.
 
 > **참고**
 >
