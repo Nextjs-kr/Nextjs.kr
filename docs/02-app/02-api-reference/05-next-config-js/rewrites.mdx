@@ -5,7 +5,7 @@ description: Next.js 애플리케이션에 rewrites를 사용하세요.
 
 Rewrites는 들어오는 요청 경로를 다른 목적지 경로로 연결합니다.
 
-Rewrites는 URL 프록시처럼 기능하며 목적 경로를 가려주어 사용자가 사이트의 주소를 바꾸지 않은 것처럼 보이게 합니다. 반면, [redirects](/docs/pages/api-reference/next-config-js/redirects) 새로운 페이지로 다시 라우팅해 주며 URL 변화를 보여줍니다.
+Rewrites는 URL 프록시처럼 경로를 가려주어 사용자가 사이트에서 위치를 바꾸지 않은 것처럼 보이게 합니다. 반면 [redirects](/docs/pages/api-reference/next-config-js/redirects) 새로운 페이지로 경로를 재설정하고 URL 변경을 표시합니다.
 
 rewrite를 사용하기 위해 `next.config.js`에 `rewrites` 키를 사용할 수 있습니다:
 
@@ -22,9 +22,9 @@ module.exports = {
 }
 ```
 
-Rewrites는 클라이언트 측 라우팅에 적용되며, 위의 예제에서 `<Link href="/about">` 는 rewrites가 적용될 것입니다.
+Rewrites는 클라이언트 측 라우팅에 적용되며 위의 예제에서 `<Link href="/about">` 는 rewrites가 적용될 것입니다.
 
-`rewrites`는 비동기 함수로, `source`와 `destination` 속성을 갖는 객체를 포함하는 배열 또는 배열로 구성된 객체를 반환합니다.
+`rewrites`는 비동기 함수로 `source`와 `destination` 속성을 갖는 객체를 포함하는 배열 또는 배열로 구성된 객체를 반환합니다.
 
 - `source`: `String` - 들어오는 요청 경로 패턴입니다.
 - `destination`: `String` 라우팅하기를 원하는 경로입니다.
@@ -33,7 +33,7 @@ Rewrites는 클라이언트 측 라우팅에 적용되며, 위의 예제에서 `
 - `has` 는 [has objects](#header-cookie-and-query-matching)로 구성된 배열입니다. 이는 `type`, `key`, `value` 속성을 포함합니다.
 - `missing` 은 [missing objects](#header-cookie-and-query-matching)로 구성된 배열입니다. 이는 `type`, `key`, `value` 속성을 포함합니다.
 
-`rewrites` 함수가 배열을 반환할 때, rewrites는 파일시스템(pages 와 `/public` 파일들)을 확인하고 동적 라우트 전에 적용됩니다. `rewrites` 함수가 배열로 구성된 객체를 특정한 형태로 반환할 때, 이러한 동작은 바뀔 수 있으며 Next.js의 `v10.1` 부터 더 세밀하게 제어됩니다:
+`rewrites` 함수가 배열을 반환할 때 rewrites는 파일시스템(pages 와 `/public` 파일들)을 확인하고 동적 라우트 전에 적용됩니다. `rewrites` 함수가 배열로 구성된 객체를 특정한 형태로 반환할 때, 이러한 동작은 바뀔 수 있으며 Next.js의 `v10.1` 부터 더 세밀하게 제어됩니다:
 
 ```js filename="next.config.js"
 module.exports = {
@@ -83,7 +83,7 @@ Next.js에서 라우트가 확인되는 순서:
 
 ## Rewrite 매개변수들
 
-rewirte에서 매개변수를 사용할 때, 그 중 어느 것도 `destinaion`에 사용되지 않으면 그 매개변수들은 쿼리에 기본값으로 전달됩니다. 
+rewirte에서 매개변수를 사용할 때 그 중 어느 것도 `destinaion`에 사용되지 않으면, 그 매개변수들은 쿼리에 기본값으로 전달됩니다. 
 
 ```js filename="next.config.js"
 module.exports = {
@@ -152,7 +152,7 @@ module.exports = {
 
 ### 와일드카드 경로 매칭
 
-와일드카드 경로를 매칭하기 위해, 매개변수 뒤에 `*` 을 사용할 수 있습니다. 예를 들어 `/blog/:slug*` 는 `/blog/a/b/c/d/hello-world`에 매칭됩니다:
+와일드카드 경로를 매칭하기 위해 매개변수 뒤에 `*` 을 사용할 수 있습니다. 예를 들어 `/blog/:slug*` 는 `/blog/a/b/c/d/hello-world`에 매칭됩니다:
 
 ```js filename="next.config.js"
 module.exports = {
