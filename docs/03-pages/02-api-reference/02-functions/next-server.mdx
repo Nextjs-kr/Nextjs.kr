@@ -7,13 +7,13 @@ description: 미들웨어와 엣지 API Routes에서 사용하는 server-only �
 
 ## NextRequest
 
-`NextRequest` 객체는 네이티브 [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) 인터페이스의 확장 버전이며, 다음과 같은 메소드와 프로퍼티가 추가되었습니다.
+`NextRequest` 객체는 네이티브 [`Request`](https://developer.mozilla.org/ko/docs/Web/API/Request) 인터페이스의 확장 버전이며, 다음과 같은 메소드와 프로퍼티가 추가되었습니다.
 
 - `cookies` - 쿠키와 함께 `Request`에 포함되어있는 [RequestCookies](https://edge-runtime.vercel.app/packages/cookies#for-request) 인스턴스입니다. 요청의 `Cookie` 헤더를 읽거나 수정합니다. [미들웨어에서 쿠키 사용하기](/docs/app/building-your-application/routing/middleware#using-cookies)를 참고하세요.
 
   - `get` - 쿠키의 `name`을 입력 받은 후 `name`과 `value`로 이루어진 객체를 반환하는 메소드입니다. 입력 받은 `name`을 갖는 쿠키가 없을 경우 `undefined`를 반환합니다. 다수의 쿠키가 검색된 경우 제일 처음에 검색된 쿠키를 반환합니다.
   - `getAll` - `get`과 유사하지만 `name`과 일치하는 모든 쿠키를 배열로 반환하는 메소드입니다. `name`이 지정되지 않을 경우 검색 가능한 모든 쿠키를 반환합니다.
-  - `set` - [W3C CookieStore API](https://wicg.github.io/cookie-store/#dictdef-cookielistitem) 사양에서 정의된 `CookieListItem` 프로퍼티로 이루어진 객체를 받는 메소드입니다.
+  - `set` - [W3C CookieStore API](https://wicg.github.io/cookie-store/#dictdef-cookielistitem) 명세에서 정의된 `CookieListItem` 프로퍼티로 이루어진 객체를 받는 메소드입니다.
   - `delete` - `name` 또는 다수의 이름으로 이루어진 배열을 입력받는 메소드입니다. 이름과 일치하는 쿠키를 삭제합니다. 성공적으로 삭제할 경우 `true`를 반환하며 삭제되지 않을 경우 `false`를 반환합니다.
   - `has` - 쿠키의 `name`을 입력 받고 일치하는 쿠키가 존재하는지 (`true`) 존재하지 않는지 (`false`) 여부를 `boolean`으로 반환합니다.
   - `clear` - 아무 인자를 받지 않으며 `Cookie` 헤더를 효율적으로 삭제하는 메소드입니다.
@@ -85,7 +85,7 @@ import type { NextFetchEvent } from 'next/server'
 - `cookies` - `Response`에 있는 쿠키를 포함하고 있는 [ResponseCookies](https://edge-runtime.vercel.app/packages/cookies#for-response) 인스턴스 입니다. 응답의 `Set-Cookie` 헤더를 읽거나 수정합니다. [미들웨어에서 쿠키 사용하기](/docs/app/building-your-application/routing/middleware#using-cookies) 문서를 참고하세요.
   - `get` - 쿠키의 `name`을 입력 받은 후 `name`과 `value`로 이루어진 객체를 반환하는 메소드입니다. 입력 받은 `name`을 갖는 쿠키가 없을 경우 `undefined`를 반환합니다. 다수의 쿠키가 검색된 경우 제일 처음에 검색된 쿠키를 반환합니다.
   - `getAll` - `get`과 유사하지만 `name`과 일치하는 모든 쿠키를 배열로 반환하는 메소드입니다. `name`이 지정되지 않을 경우 검색 가능한 모든 쿠키를 반환합니다.
-  - `set` - [W3C CookieStore API](https://wicg.github.io/cookie-store/#dictdef-cookielistitem) 사양에서 정의된 `CookieListItem` 프로퍼티로 이루어진 객체를 받는 메소드입니다.
+  - `set` - [W3C CookieStore API](https://wicg.github.io/cookie-store/#dictdef-cookielistitem) 명세에서 정의된 `CookieListItem` 프로퍼티로 이루어진 객체를 받는 메소드입니다.
   - `delete` - `name` 또는 다수의 이름으로 이루어진 배열을 입력받는 메소드입니다. 이름과 일치하는 쿠키를 삭제합니다. 성공적으로 삭제할 경우 `true`를 반환하며 삭제되지 않을 경우 `false`를 반환합니다.
 
 ### 정적 메소드
