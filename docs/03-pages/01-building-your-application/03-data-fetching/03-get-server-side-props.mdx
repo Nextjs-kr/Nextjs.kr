@@ -61,7 +61,7 @@ export default function Page({ repo }) {
 
 ## getServerSideProps를 사용해야 하는 경우
 
-요청 시 데이터를 가져오는 페이지 렌더링을 할 때 `getServerSideProps`를 사용해야 합니다. 이는 데이터 특성 또는 요청의 속성 (`authorization` 헤더 혹은 지리적 위치(geo location))이 이유가 될 수 있습니다. `getServerSideProps`를 사용하는 페이지는 요청시 서버 측에서 렌더링되며 [캐시-제어 헤더가 구성되어 있을 경우](/docs/pages/building-your-application/deploying/production-checklist#caching)에만 캐시됩니다.
+요청 시 데이터를 가져오는 페이지 렌더링을 할 때 `getServerSideProps`를 사용해야 합니다. 이는 데이터 특성 또는 요청의 속성 (`authorization` 헤더 혹은 지리적 위치)이 이유가 될 수 있습니다. `getServerSideProps`를 사용하는 페이지는 요청시 서버 측에서 렌더링되며 [캐시-제어 헤더가 구성되어 있을 경우](/docs/pages/building-your-application/deploying/production-checklist#caching)에만 캐시됩니다.
 
 요청 중에 데이터 렌더링할 필요가 없는 경우, [클라이언트 측](#fetching-data-on-the-client-side)에서 데이터를 가져오거나 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props)를 고려해야합니다.
 
@@ -73,7 +73,7 @@ export default function Page({ repo }) {
 
 ### getServerSideProps를 Edge API 라우트와 함께 사용하는 경우
 
-`getServerSideProps`는 [Serverless 및 Edge Runtimes](/docs/pages/building-your-application/rendering/edge-and-nodejs-runtimes)과 함께 사용할 수 있으며 양쪽에서 모두 props를 설정할 수 있습니다. 하지만, 현재 Edge 런타임에서는 응답 객체에 접근할 수 없습니다. 즉, - 예를 들어 - `getServerSideProps`에서 쿠키를 추가할 수 없습니다. 응답 객체에 접근하려면, 기본적으로 사용되는 **Node.js 런타임을 계속 사용해야 합니다.**
+`getServerSideProps`는 [Serverless 및 Edge Runtimes](/docs/pages/building-your-application/rendering/edge-and-nodejs-runtimes)과 함께 사용할 수 있으며 양쪽에서 모두 props를 설정할 수 있습니다. 하지만, 현재 'Edge 런타임'에서는 응답 객체에 접근할 수 없습니다. 즉 - 예를 들어 - `getServerSideProps`에서 쿠키를 추가할 수 없습니다. 응답 객체에 접근하려면, 기본적으로 사용되는 **Node.js 런타임을 계속 사용해야 합니다.**
 
 `config`를 수정하여 각 페이지마다 명시적으로 런타임을 설정할 수 있습니다. 예시 코드:
 
@@ -105,11 +105,11 @@ function Page({ data }) {
 
 // 이 함수는 매 요청마다 호출됩니다
 export async function getServerSideProps() {
-  // 외부 API에서 데이터 가져오기
+  // 외부 API에서 데이터 가져옵니다.
   const res = await fetch(`https://.../data`)
   const data = await res.json()
 
-  // props를 통해 데이터를 페이지로 전달
+  // props를 통해 데이터를 페이지로 전달합니다.
   return { props: { data } }
 }
 
@@ -121,10 +121,10 @@ export default Page
 `getServerSideProps`안에서 캐시 헤더(`Cache-Control`)를 사용하여 동적 응답을 캐시할 수 있습니다. 예를 들면, [`stale-while-revalidate`](https://web.dev/stale-while-revalidate/)를 사용할 수 있습니다.
 
 ```jsx
-// 이 값은 10초 동안 새로운 값(fresh)으로 간주됩니다. (s-maxage=10)
+// 이 값은 10초 동안 새로운 값으로 간주됩니다. (s-maxage=10)
 // 다음 10초 내에 동일한 요청이 반복되면, 이전의
 // 캐시된 값은 여전히 새로운 값으로 간주됩니다. 동일한 요청이 59초 이내에 반복된다면,
-// 캐시된 값은 오래되었지만(stale) 렌더링은 여전히 유지되고 있을 것입니다.(stale-while-revalidate=59).
+// 캐시된 값은 오래되었지만 렌더링은 여전히 유지되고 있을 것입니다.(stale-while-revalidate=59).
 //
 // 백그라운드에서, 캐시를 새로운 값으로 채우기 위해 재검증(revalidation) 요청이 수행됩니다.
 // 페이지를 새로고침하면, 새로운 값이 표시됩니다.
