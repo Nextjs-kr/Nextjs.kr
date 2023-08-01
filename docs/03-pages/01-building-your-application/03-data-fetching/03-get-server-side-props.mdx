@@ -44,7 +44,7 @@ export default function Page({ repo }) {
 
 ## getServerSideProps가 실행되는 시점
 
-`getServerSideProps`은 오직 서버-사이드에서만 실행되고 브라우저에서 절대 실행되지 않습니다. 만약 페이지 내에서 `getServerSideProps`를 사용할 경우:
+`getServerSideProps`은 오직 서버-사이드에서만 실행되고 브라우저에서 절대 실행되지 않습니다. 만약 페이지 내에서 `getServerSideProps`를 사용할 경우.
 
 - 페이지를 직접 요청하면 `getServerSideProps`는 요청 시점에 실행되고, 해당 페이지는 반환된 props와 함께 사전 렌더링 됩니다.
 - [`next/link`](/docs/pages/api-reference/components/link) 혹은 [`next/router`](/docs/pages/api-reference/functions/use-router)를 사용해서 클라이언트 측 페이지 전환을 통해 페이지를 요청하면, Next.js는 `getServerSideProps`를 실행하는 API요청을 서버로 보냅니다.
@@ -75,7 +75,7 @@ export default function Page({ repo }) {
 
 `getServerSideProps`는 [Serverless 및 Edge Runtimes](/docs/pages/building-your-application/rendering/edge-and-nodejs-runtimes)과 함께 사용할 수 있으며 양쪽에서 모두 props를 설정할 수 있습니다. 하지만, 현재 'Edge 런타임'에서는 응답 객체에 접근할 수 없습니다. 즉 - 예를 들어 - `getServerSideProps`에서 쿠키를 추가할 수 없습니다. 응답 객체에 접근하려면, 기본적으로 사용되는 **Node.js 런타임을 계속 사용해야 합니다.**
 
-`config`를 수정하여 각 페이지마다 명시적으로 런타임을 설정할 수 있습니다. 예시 코드:
+`config`를 수정하여 각 페이지마다 명시적으로 런타임을 설정할 수 있습니다. 아래는 예시 코드입니다.
 
 ```jsx filename="pages/index.js"
 export const config = {
