@@ -3,7 +3,7 @@ title: getServerSideProps
 description: `getServerSideProps`를 사용하여 각 요청에 대한 데이터를 가져옵니다.
 ---
 
-페이지 내에서 `getServerSideProps`(서버-사이드 렌더링) 함수를 내보내면, Next.js는 `getServerSideProps` 의 반환 데이터를 사용하여 매 요청마다 해당 페이지를 사전 렌더링(pre-render) 합니다.
+페이지 내에서 `getServerSideProps`(서버-사이드 렌더링) 함수를 내보내면, Next.js는 `getServerSideProps` 의 반환 데이터를 사용하여 매 요청마다 해당 페이지를 사전 렌더링 합니다.
 
 ```tsx filename="pages/index.tsx" switcher
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
@@ -46,7 +46,7 @@ export default function Page({ repo }) {
 
 `getServerSideProps`은 오직 서버-사이드에서만 실행되고 브라우저에서 절대 실행되지 않습니다. 만약 페이지 내에서 `getServerSideProps`를 사용할 경우:
 
-- 페이지를 직접 요청하면 `getServerSideProps`는 요청 시점에 실행되고, 해당 페이지는 반환된 props와 함께 사전 렌더링(pre-render) 됩니다.
+- 페이지를 직접 요청하면 `getServerSideProps`는 요청 시점에 실행되고, 해당 페이지는 반환된 props와 함께 사전 렌더링 됩니다.
 - [`next/link`](/docs/pages/api-reference/components/link) 혹은 [`next/router`](/docs/pages/api-reference/functions/use-router)를 사용해서 클라이언트 측 페이지 전환을 통해 페이지를 요청하면, Next.js는 `getServerSideProps`를 실행하는 API요청을 서버로 보냅니다.
 
 `getServerSideProps`는 페이지를 렌더링하는데 필요한 JSON을 반환합니다. 이 모든 작업은 Next.js에 의해 자동으로 처리됩니다. 따라서 `getServerSideProps`가 정의되어 있다면 추가적인 작업을 수행할 필요가 없습니다.
@@ -87,16 +87,16 @@ export const getServerSideProps = async () => {}
 
 ## 클라이언트 측에서 데이터 가져오기
 
-만약 페이지에 자주 업데이트되는 데이터가 포함되어 있고 데이터를 사전 렌더링(pre-render) 할 필요가 없다면, 헤당 데이터를 [클라이언트 측](/docs/pages/building-your-application/data-fetching/client-side)에서 가져올 수 있습니다. 아래는 사용자 별 데이터 예시입니다.
+만약 페이지에 자주 업데이트되는 데이터가 포함되어 있고 데이터를 사전 렌더링 할 필요가 없다면, 헤당 데이터를 [클라이언트 측](/docs/pages/building-your-application/data-fetching/client-side)에서 가져올 수 있습니다. 아래는 사용자 별 데이터 예시입니다.
 
-- 먼저, 데이터가 없는 상태에서 즉시 페이지를 표시합니다. 페이지의 일부는 정적 생성(Static Generation)을 사용하여 사전 렌더링(pre-render)할 수 있습니다. 누락된 데이터는 로딩 상태로 표시할 수 있습니다.
+- 먼저, 데이터가 없는 상태에서 즉시 페이지를 표시합니다. 페이지의 일부는 정적 생성(Static Generation)을 사용하여 사전 렌더링 할 수 있습니다. 누락된 데이터는 로딩 상태로 표시할 수 있습니다.
 - 그 후에, 클라이언트 측에서 데이터를 가져와 준비가 되면 해당 데이터를 표시합니다.
 
-이 접근 방식은 사용자 대시보드 페이지와 같은 경우에 잘 적용해 볼 수 있습니다. 대시보드는 비공개이고 사용자 별 페이지이므로 SEO가 관련이 없고 해당 페이지는 사전 렌더링(pre-render)할 필요가 없습니다. 데이터가 자주 없데이트 되기 때문에, 요청 시간에 데이터를 가져와야 합니다.
+이 접근 방식은 사용자 대시보드 페이지와 같은 경우에 잘 적용해 볼 수 있습니다. 대시보드는 비공개이고 사용자 별 페이지이므로 SEO가 관련이 없고 해당 페이지는 사전 렌더링 할 필요가 없습니다. 데이터가 자주 없데이트 되기 때문에, 요청 시간에 데이터를 가져와야 합니다.
 
 ## getServerSideProps를 사용하여 요청 시 데이터 가져오기
 
-다음 예시는 요청 시 데이터를 가져오고 결과를 사전 렌더링(pre-render)하는 방법을 보여 줍니다.
+다음 예시는 요청 시 데이터를 가져오고 결과를 사전 렌더링하는 방법을 보여 줍니다.
 
 ```jsx
 function Page({ data }) {
