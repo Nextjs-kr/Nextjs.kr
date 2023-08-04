@@ -1,25 +1,25 @@
 ---
-title: Metadata
-description: Use the Metadata API to define metadata in any layout or page.
+title: 메타데이터
+description: 메타데이터 API를 사용하여 레이아웃이나 페이지에서 메타데이터를 정의하세요.
 related:
-  description: View all the Metadata API options.
+  description: 모든 메타데이터 API의 옵션을 살펴보세요.
   links:
     - app/api-reference/functions/generate-metadata
     - app/api-reference/file-conventions/metadata
 ---
 
-Next.js has a Metadata API that can be used to define your application metadata (e.g. `meta` and `link` tags inside your HTML `head` element) for improved SEO and web shareability.
+Next.js에는 SEO 및 웹 공유성을 향상하기 위한 애플리케이션의 메타데이터(예: HTML `head` 요소 내부의 `meta` 및 `link` 태그)를 정의하는 데 사용할 수 있는 메타데이터 API가 있습니다.
 
-There are two ways you can add metadata to your application:
+애플리케이션에 메타데이터를 추가하는 방법에는 두 가지가 있습니다.
 
-- **Config-based Metadata**: Export a [static `metadata` object](/docs/app/api-reference/functions/generate-metadata#metadata-object) or a dynamic [`generateMetadata` function](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function) in a `layout.js` or `page.js` file.
-- **File-based Metadata**: Add static or dynamically generated special files to route segments.
+- **구성 기반 메타데이터**: [정적 `메타데이터` 객체](/docs/app/api-reference/functions/generate-metadata#metadata-object)를 내보내거나, `layout.js` 또는 `page.js` 파일에서 동적 [함수 `generateMetadata`](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function)를 내보내세요.
+- **파일 기반 Metadata**: 정적 또는 동적으로 만들어진 특수 파일을 라우트 세그먼트에 추가하세요.
 
-With both these options, Next.js will automatically generate the relevant `<head>` elements for your pages. You can also create dynamic OG images using the [`ImageResponse`](/docs/app/api-reference/functions/image-response) constructor.
+위 두 가지 옵션 모두의 경우에, Next.js는 페이지에 적합한 `<head>` 엘리먼트를 자동으로 생성합니다. 또한 [`ImageResponse`](/docs/app/api-reference/functions/image-response) 생성자를 사용하여 동적 OG 이미지를 생성할 수 있습니다.
 
-## Static Metadata
+## 정적 메타데이터
 
-To define static metadata, export a [`Metadata` object](/docs/app/api-reference/functions/generate-metadata#metadata-object) from a `layout.js` or static `page.js` file.
+[`메타데이터` 객체](/docs/app/api-reference/functions/generate-metadata#metadata-object)를 `layout.js` 또는 정적 `page.js` 파일에서 내보내 정적 메타데이터를 정의하세요.
 
 ```tsx filename="layout.tsx / page.tsx" switcher
 import { Metadata } from 'next'
@@ -41,11 +41,11 @@ export const metadata = {
 export default function Page() {}
 ```
 
-For all the available options, see the [API Reference](/docs/app/api-reference/functions/generate-metadata).
+사용할 수 있는 모든 옵션은 [API 레퍼런스](/docs/app/api-reference/functions/generate-metadata)에서 확인하세요.
 
-## Dynamic Metadata
+## 동적 메타데이터
 
-You can use `generateMetadata` function to `fetch` metadata that requires dynamic values.
+`generateMetadata` 함수를 사용해서 동적 값이 필요한 메타데이터를 `가져올` 수 있습니다.
 
 ```tsx filename="app/products/[id]/page.tsx" switcher
 import { Metadata, ResolvingMetadata } from 'next'
@@ -101,60 +101,60 @@ export async function generateMetadata({ params, searchParams }, parent) {
 export default function Page({ params, searchParams }) {}
 ```
 
-For all the available params, see the [API Reference](/docs/app/api-reference/functions/generate-metadata).
+사용할 수 있는 모든 옵션은 [API 레퍼런스](/docs/app/api-reference/functions/generate-metadata)에서 확인하세요.
 
-> **Good to know**:
+> **참고**:
 >
-> - Both static and dynamic metadata through `generateMetadata` are **only supported in Server Components**.
-> - When rendering a route, Next.js will [automatically deduplicate `fetch` requests](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping) for the same data across `generateMetadata`, `generateStaticParams`, Layouts, Pages, and Server Components. React [`cache` can be used](/docs/app/building-your-application/data-fetching/caching#react-cache) if `fetch` is unavailable.
-> - Next.js will wait for data fetching inside `generateMetadata` to complete before streaming UI to the client. This guarantees the first part of a [streamed response](/docs/app/building-your-application/routing/loading-ui-and-streaming) includes `<head>` tags.
+> - 정적 메타데이터 및 `generateMetadata`를 통한 동적 메타데이터 모두 **서버 컴포넌트에서만 지원됩니다.**
+> - 라우트를 렌더링할 때 Next.js는 `generateMetadata`, `generateStaticParams`, 레이아웃, 페이지 및 서버 컴포넌트에서 같은 데이터를 가져오는 중복된 요청을 자동으로 제거합니다. `fetch`를 사용할 수 없는 경우 React [`캐시`](/docs/app/building-your-application/data-fetching/caching#react-cache)를 사용합니다.
+> - Next.js는 클라이언트에 UI를 스트리밍하기 전에 `generateMetadata` 내부의 데이터 불러오기가 완료될 때까지 기다립니다. 이 작업은 [스트리밍된 응답](/docs/app/building-your-application/routing/loading-ui-and-streaming)의 첫 부분에 `<head>` 태그가 포함될 수 있도록 보장합니다.
 
-## File-based metadata
+## 파일 기반 메타데이터
 
-These special files are available for metadata:
+metadata로 사용할 수 있는 특수 파일은 아래와 같습니다.
 
 - [favicon.ico, apple-icon.jpg, and icon.jpg](/docs/app/api-reference/file-conventions/metadata/app-icons)
 - [opengraph-image.jpg and twitter-image.jpg](/docs/app/api-reference/file-conventions/metadata/opengraph-image)
 - [robots.txt](/docs/app/api-reference/file-conventions/metadata/robots)
 - [sitemap.xml](/docs/app/api-reference/file-conventions/metadata/sitemap)
 
-You can use these for static metadata, or you can programatically generate these files with code.
+정적 메타데이터에 위 파일들을 사용하거나 코드를 사용하여 프로그래밍적으로 이러한 파일을 생성할 수 있습니다.
 
-For implementation and examples, see the [Metadata Files](/docs/app/api-reference/functions/generate-metadata) API Reference and [Dynamic Image Generation](#dynamic-image-generation).
+구현 및 예시는 [메타데이터 파일](/docs/app/api-reference/functions/generate-metadata) API 레퍼런스 및 [동적 이미지 생성](#dynamic-image-generation)에서 확인할 수 있습니다.
 
-## Behavior
+## 동작
 
-File-based metadata has the higher priority and will override any config-based metadata.
+파일 기반 메타데이터는 더 높은 우선순위를 가지며 모든 설정 기반 메타데이터를 덮어씁니다.
 
-### Default Fields
+### 기본 필드
 
-There are two default `meta` tags that are always added even if a route doesn't define metadata:
+라우트가 메타데이터를 정의하지 않더라도 항상 추가되는 두 가지 기본 `meta` 태그가 있습니다.
 
-- The [meta charset tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#attr-charset) sets the character encoding for the website.
-- The [meta viewport tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag) sets the viewport width and scale for the website to adjust for different devices.
+- [문자 집합 메타 태그](https://developer.mozilla.org/ko/docs/Web/HTML/Element/meta#attr-charset)는 웹 사이트의 문자 인코딩을 설정합니다.
+- [뷰포트 메타 태그](https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag)는 웹사이트의 뷰포트 너비와 배율을 설정하여 다양한 장치에 맞게 조정합니다.
 
 ```html
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 ```
 
-> **Good to know**: You can overwrite the default [`viewport`](/docs/app/api-reference/functions/generate-metadata#viewport) meta tag.
+> **참고**: 기본 [`뷰포트`](/docs/app/api-reference/functions/generate-metadata#viewport) 메타 태그는 덮어쓸 수 있습니다.
 
-### Ordering
+### 평가 순서
 
-Metadata is evaluated in order, starting from the root segment down to the segment closest to the final `page.js` segment. For example:
+메타데이터는 다음과 같이 루트 세그먼트부터 시작하여 최종 `page.js` 세그먼트에 가장 가까운 세그먼트까지 순서대로 평가됩니다.
 
-1. `app/layout.tsx` (Root Layout)
-2. `app/blog/layout.tsx` (Nested Blog Layout)
-3. `app/blog/[slug]/page.tsx` (Blog Page)
+1. `app/layout.tsx` (루트 레이아웃)
+2. `app/blog/layout.tsx` (중첩된 블로그 레이아웃)
+3. `app/blog/[slug]/page.tsx` (블로그 페이지)
 
-### Merging
+### 병합
 
-Following the [evaluation order](#ordering), Metadata objects exported from multiple segments in the same route are **shallowly** merged together to form the final metadata output of a route. Duplicate keys are **replaced** based on their ordering.
+[평가 순서](#ordering)에 따라 동일한 라우트 상의 여러 세그먼트에서 내보낸 메타데이터 개체를 **얕게** 병합하여 라우트의 최종 메타데이터 출력을 구성합니다. 중복된 키는 순서에 따라 **교체**됩니다.
 
-This means metadata with nested fields such as [`openGraph`](/docs/app/api-reference/functions/generate-metadata#opengraph) and [`robots`](/docs/app/api-reference/functions/generate-metadata#robots) that are defined in an earlier segment are **overwritten** by the last segment to define them.
+즉, 이전 세그먼트에서 정의된 [`openGraph`](/docs/app/api-reference/functions/generate-metadata#opengraph) 및 [`robots`](/docs/app/api-reference/functions/generate-metadata#robots)과 같이 중첩된 필드가 있는 메타데이터는 마지막 세그먼트에서 덮어씌워집니다.
 
-#### Overwriting fields
+#### 필드 덮어쓰기
 
 ```jsx filename="app/layout.js"
 export const metadata = {
@@ -179,12 +179,12 @@ export const metadata = {
 // <meta property="og:title" content="Blog" />
 ```
 
-In the example above:
+위의 예시에서는
 
-- `title` from `app/layout.js` is **replaced** by `title` in `app/blog/page.js`.
-- All `openGraph` fields from `app/layout.js` are **replaced** in `app/blog/page.js` because `app/blog/page.js` sets `openGraph` metadata. Note the absence of `openGraph.description`.
+- `title` from `app/layout.js`의 `title`은 `app/blog/page.js`의 `title`로 **대체 되었습니다.**
+- `app/blog/page.js`에서 `openGraph` 메타데이터를 설정하므로, `app/layout.js`의 모든 `openGraph` 필드는 `app/blog/page.js`의 `openGraph` 필드로 대체됩니다. 최종 출력에 `openGraph.description`이 없다는 점에 유의하세요.
 
-If you'd like to share some nested fields between segments while overwriting others, you can pull them out into a separate variable:
+세그먼트 간에 중첩된 일부 필드를 공유하면서 다른 필드를 덮어쓰려는 경우 해당 필드를 별도의 변수로 가져올 수 있습니다.
 
 ```jsx filename="app/shared-metadata.js"
 export const openGraphImage = { images: ['http://...'] }
@@ -212,9 +212,9 @@ export const metadata = {
 }
 ```
 
-In the example above, the OG image is shared between `app/layout.js` and `app/about/page.js` while the titles are different.
+위의 예시에서는 `app/layout.js`와 `app/about/page.js`의 타이틀은 다르지만, OG 이미지는 공유되어 있습니다.
 
-#### Inheriting fields
+#### 필드 상속하기
 
 ```jsx filename="app/layout.js"
 export const metadata = {
@@ -237,18 +237,18 @@ export const metadata = {
 // <meta property="og:description" content="Acme is a..." />
 ```
 
-**Notes**
+**참고 사항**
 
-- `title` from `app/layout.js` is **replaced** by `title` in `app/about/page.js`.
-- All `openGraph` fields from `app/layout.js` are **inherited** in `app/about/page.js` because `app/about/page.js` doesn't set `openGraph` metadata.
+- `app/layout.js`의 `title`은 `app/about/page.js`에서 `title`로 **대체**되었습니다.
+- `app/out/page.js`에서 `openGraph` 메타데이터를 설정하지 않았기 때문에 `app/layout.js`의 모든 `openGraph` 필드는 `app/out/page.js`에서 **상속**됩니다.
 
-## Dynamic Image Generation
+## 동적 이미지 생성
 
-The `ImageResponse` constructor allows you to generate dynamic images using JSX and CSS. This is useful for creating social media images such as Open Graph images, Twitter cards, and more.
+`ImageResponse` 생성자를 사용하면 JSX 및 CSS를 사용하여 오픈 그래프 이미지, 트위터 카드 등과 같은 소셜 미디어 이미지를 만드는 데 유용한 동적 이미지를 생성할 수 있습니다.
 
-`ImageResponse` uses the [Edge Runtime](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes#edge-runtime), and Next.js automatically adds the correct headers to cached images at the edge, helping improve performance and reducing recomputation.
+`ImageResponse`는 [엣지 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes#edge-runtime)을 사용하며, Next.js는 엣지에서 캐시 된 이미지에 올바른 헤더를 자동으로 추가하여 성능을 개선하고 재계산을 줄입니다.
 
-To use it, you can import `ImageResponse` from `next/server`:
+동적 이미지를 생성하려면 `next/server`에서 `ImageResponse`를 불러오세요.
 
 ```jsx filename="app/about/route.js"
 import { ImageResponse } from 'next/server'
@@ -281,24 +281,24 @@ export async function GET() {
 }
 ```
 
-`ImageResponse` integrates well with other Next.js APIs, including [Route Handlers](/docs/app/building-your-application/routing/router-handlers) and file-based Metadata. For example, you can use `ImageResponse` in a `opengraph-image.tsx` file to generate Open Graph images at build time or dynamically at request time.
+`ImageResponse`는 [라우트 핸들러](/docs/app/building-your-application/routing/router-handlers)와 파일 기반 메타데이터를 포함한 다른 Next.js API와 잘 통합됩니다. 예를 들어 `opengraph-image.tsx` 파일에서 `ImageResponse`를 사용하여 오픈 그래프 이미지를 빌드 시점에 생성하거나 요청 시점에 동적으로 생성할 수 있습니다.
 
-`ImageResponse` supports common CSS properties including flexbox and absolute positioning, custom fonts, text wrapping, centering, and nested images. [See the full list of supported CSS properties](/docs/app/api-reference/functions/image-response).
+`ImageResponse`는 플렉스박스 및 절대 위치 지정, 사용자 정의 글꼴, 텍스트 줄 바꿈, 가운데 정렬, 중첩된 이미지 등 일반적인 CSS 속성을 지원합니다. [지원되는 CSS 속성 전체 목록을 살펴보세요](/docs/app/api-reference/functions/image-response).
 
-> **Good to know**:
+> **참고**:
 >
-> - Examples are available in the [Vercel OG Playground](https://og-playground.vercel.app/).
-> - `ImageResponse` uses [@vercel/og](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation), [Satori](https://github.com/vercel/satori), and Resvg to convert HTML and CSS into PNG.
-> - Only the Edge Runtime is supported. The default Node.js runtime will not work.
-> - Only flexbox and a subset of CSS properties are supported. Advanced layouts (e.g. `display: grid`) will not work.
-> - Maximum bundle size of `500KB`. The bundle size includes your JSX, CSS, fonts, images, and any other assets. If you exceed the limit, consider reducing the size of any assets or fetching at runtime.
-> - Only `ttf`, `otf`, and `woff` font formats are supported. To maximize the font parsing speed, `ttf` or `otf` are preferred over `woff`.
+> - 예시는 [Vercel OG 플레이그라운드](https://og-playground.vercel.app/)에서 확인할 수 있습니다.
+> - `ImageResponse`는 [@vercel/og](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation), [Satori](https://github.com/vercel/satori), Resvg를 사용하여 HTML과 CSS를 PNG로 변환합니다.
+> - 엣지 런타임만 지원됩니다. 기본 Node.js 런타임은 작동하지 않습니다.
+> - 플렉스박스와 CSS 속성 하위 집합만 지원됩니다. 고급 레이아웃(예: `display: grid`)은 작동하지 않습니다.
+> - 최대 번들 크기는 `500KB`입니다. 번들 크기에는 JSX, CSS, 글꼴, 이미지 및 기타 에셋이 포함됩니다. 최대 번들 크기를 초과하는 경우 에셋의 크기를 줄이거나 런타임에 가져오는 것을 고려하세요.
+> - `ttf`, `otf`, `woff` 글꼴 형식만 지원됩니다. 글꼴의 구문분석 속도를 최대화하려면 `woff`보다 `ttf` 또는 `otf`를 사용하는 것이 좋습니다.
 
 ## JSON-LD
 
-[JSON-LD](https://json-ld.org/) is a format for structured data that can be used by search engines to understand your content. For example, you can use it to describe a person, an event, an organization, a movie, a book, a recipe, and many other types of entities.
+[JSON-LD](https://json-ld.org/)는 검색 엔진이 콘텐츠를 이해하는 데 사용할 수 있는 구조화된 데이터 형식입니다. 예를 들어 사람, 이벤트, 조직, 영화, 책, 레시피 및 기타 여러 유형의 엔티티를 설명하는 데 사용할 수 있습니다.
 
-Our current recommendation for JSON-LD is to render structured data as a `<script>` tag in your `layout.js` or `page.js` components. For example:
+현재 JSON-LD에 대한 권장 사항은 구조화된 데이터를 다음과 같이 `layout.js` 또는 `page.js` 컴포넌트에서 `<script>` 태그로 렌더링하는 것입니다.
 
 ```tsx filename="app/products/[id]/page.tsx" switcher
 export default async function Page({ params }) {
@@ -350,9 +350,9 @@ export default async function Page({ params }) {
 }
 ```
 
-You can validate and test your structured data with the [Rich Results Test](https://search.google.com/test/rich-results) for Google or the generic [Schema Markup Validator](https://validator.schema.org/).
+Google용 [리치 결과 테스트](https://search.google.com/test/rich-results) 또는 일반 [스키마 마크업 유효성 검사기](https://validator.schema.org/)를 사용하여 구조화된 데이터의 유효성을 검사하고 테스트할 수 있습니다.
 
-You can type your JSON-LD with TypeScript using community packages like [`schema-dts`](https://www.npmjs.com/package/schema-dts):
+[schema-dts](https://www.npmjs.com/package/schema-dts)와 같은 커뮤니티 패키지를 사용하여 다음과 같이 TypeScript로 JSON-LD를 입력할 수 있습니다.
 
 ```tsx
 import { Product, WithContext } from 'schema-dts'

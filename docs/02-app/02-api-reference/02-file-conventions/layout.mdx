@@ -3,7 +3,7 @@ title: layout.js
 description: API reference for the layout.js file.
 ---
 
-A **layout** is UI that is shared between routes.
+**layout**은 route 사이 공유하는 UI를 만드는 데 쓰입니다.
 
 ```tsx filename="app/dashboard/layout.tsx" switcher
 export default function DashboardLayout({
@@ -21,7 +21,7 @@ export default function DashboardLayout({ children }) {
 }
 ```
 
-A **root layout** is the top-most layout in the root `app` directory. It is used to define the `<html>` and `<body>` tags and other globally shared UI.
+**root layout** 은 `app` 디렉토리 최상단의 layout을 의미합니다. `<html>`과 `<body>` 태그를 포함한 프로젝트 전역에서 공유하는 UI를 정의하는 데 쓰입니다.
 
 ```tsx filename="app/layout.tsx" switcher
 export default function RootLayout({
@@ -49,21 +49,21 @@ export default function RootLayout({ children }) {
 
 ## Props
 
-### `children` (required)
+### `children` (필수)
 
-Layout components should accept and use a `children` prop. During rendering, `children` will be populated with the route segments the layout is wrapping. These will primarily be the component of a child [Layout](/docs/app/building-your-application/routing/pages-and-layouts#pages) (if it exists) or [Page](/docs/app/building-your-application/routing/pages-and-layouts#pages), but could also be other special files like [Loading](/docs/app/building-your-application/routing/loading-ui-and-streaming) or [Error](/docs/app/building-your-application/routing/error-handling) when applicable.
+레이아웃 컴포넌트는 `children` prop 을 받아와서 사용해야 합니다. 렌더링을 진행하는 동안, `children`은 해당 레이아웃이 감싸고 있는 `route` 조각을 가져와 채우게 됩니다. 주로 자식 [Layout](/docs/app/building-your-application/routing/pages-and-layouts#pages) (존재한다면) 이나 [Page](/docs/app/building-your-application/routing/pages-and-layouts#pages)를 가져오지만, [Loading](/docs/app/building-your-application/routing/loading-ui-and-streaming) 이나 [Error](/docs/app/building-your-application/routing/error-handling) 등의 별도의 파일을 가져올 수 있을 경우에는 해당 파일을 사용합니다.
 
-### `params` (optional)
+### `params` (선택)
 
-The [dynamic route parameters](/docs/app/building-your-application/routing/dynamic-routes) object from the root segment down to that layout.
+루트 세그먼트부터 해당 레이아웃까지의 [dynamic route parameters](/docs/app/building-your-application/routing/dynamic-routes) 객체를 가져옵니다.
 
-| Example                           | URL            | `params`                  |
+| 예시                              | URL            | `params`                  |
 | --------------------------------- | -------------- | ------------------------- |
 | `app/dashboard/[team]/layout.js`  | `/dashboard/1` | `{ team: '1' }`           |
 | `app/shop/[tag]/[item]/layout.js` | `/shop/1/2`    | `{ tag: '1', item: '2' }` |
 | `app/blog/[...slug]/layout.js`    | `/blog/1/2`    | `{ slug: ['1', '2'] }`    |
 
-For example:
+예제:
 
 ```tsx filename="app/shop/[tag]/[item]/layout.tsx" switcher
 export default function ShopLayout({
@@ -90,15 +90,15 @@ export default function ShopLayout({ children, params }) {
 }
 ```
 
-## Good to know
+## 참고사항
 
-### Layout's do not receive `searchParams`
+### 레이아웃은 `searchParams`를 받아 오지 않습니다.
 
-Unlike [Pages](/docs/app/api-reference/file-conventions/page), Layout components **do not** receive the `searchParams` prop. This is because a shared layout is [not re-rendered during navigation](/docs/app/building-your-application/routing#partial-rendering) which could lead to stale `searchParams` between navigations.
+[Pages](/docs/app/api-reference/file-conventions/page)와 다르게, 레이아웃 컴포넌트는 `searchParams` prop 을 **받아 오지 않습니다**. 공유되는 레이아웃은 [페이지 이동 중 다시 렌더링 되지 않아](/docs/app/building-your-application/routing#partial-rendering) 이전 페이지의 `searchParams`를 가져오는 경우가 발생할 수 있기 때문입니다.
 
-When using client-side navigation, Next.js automatically only renders the part of the page below the common layout between two routes.
+클라이언트 측 이동을 사용하는 경우, 두 경로 사이 이동시 Next.js는 자동으로 공통 레이아웃 이하의 변화하는 부분만 렌더링 합니다.
 
-For example, in the following directory structure, `dashboard/layout.tsx` is the common layout for both `/dashboard/settings` and `/dashboard/analytics`:
+예를 들어 아래와 같은 디렉토리 구조에서, `dashboard/layout.tsx` 은 두 개의 경로 `/dashboard/settings` 와 `/dashboard/analytics` 의 공통 레이아웃으로 쓰이고 있습니다:
 
 ```txt highight={3} hideLineNumbers
 app
@@ -110,24 +110,24 @@ app
         └── page.js
 ```
 
-When navigating from `/dashboard/settings` to `/dashboard/analytics`, `page.tsx` in `/dashboard/analytics` will be rendered on the server because it is UI that changed, while `dashboard/layout.tsx` will **not** be re-rendered because it is a common UI between the two routes.
+이 때 `/dashboard/settings` 에서 `/dashboard/analytics`으로 이동하는 경우, `/dashboard/analytics` 안에 있는 `page.tsx`는 변화하는 UI 이기에 서버에서 렌더링 하는 반면, 두 경로간 공통 UI 인 `dashboard/layout.tsx` 는 다시 렌더링 되지 **않습니다.**
 
-This performance optimization allows navigation between pages that share a layout to be quicker as only the data fetching and rendering for the page has to run, instead of the entire route that could include shared layouts that fetch their own data.
+이러한 성능 최적화는 같은 레이아웃을 공유하는 두 페이지간의 이동을 더 빠르게 해줍니다. 공유하는 레이아웃의 데이터를 한 번 더 불러오는 대신, 변화하는 페이지의 데이터만 불러와서 렌더링하기 때문입니다.
 
-Because `dashboard/layout.tsx` doesn't re-render, the `searchParams` prop in the layout Server Component might become **stale** after navigation.
+`dashboard/layout.tsx` 는 다시 렌더링 되지 않기 때문에, 서버 컴포넌트인 layout 안에 있는 `searchParams` prop 은 페이지 이동 후에도 **이전 페이지에서의 값을 가지고 있을 수 있습니다**.
 
-- Instead, use the Page [`searchParams`](/docs/app/api-reference/file-conventions/page) prop or the [`useSearchParams`](/docs/app/api-reference/functions/use-params) hook in a Client Component, which is re-rendered on the client with the latest `searchParams`.
+- 대신, Page 의 [`searchParams`](/docs/app/api-reference/file-conventions/page) prop 이나 클라이언트 컴포넌트의 [`useSearchParams`](/docs/app/api-reference/functions/use-params) hook 을 사용하세요. 가장 최근의 `searchParams` 를 받아와 클라이언트에서 다시 렌더링됩니다.
 
-### Root Layouts
+### 루트 레이아웃
 
-- The `app` directory **must** include a root `app/layout.js`.
-- The root layout **must** define `<html>` and `<body>` tags.
-  - You should **not** manually add `<head>` tags such as `<title>` and `<meta>` to root layouts. Instead, you should use the [Metadata API](/docs/app/api-reference/functions/generate-metadata) which automatically handles advanced requirements such as streaming and de-duplicating `<head>` elements.
-- You can use [route groups](/docs/app/building-your-application/routing/route-groups) to create multiple root layouts.
-  - Navigating **across multiple root layouts** will cause a **full page load** (as opposed to a client-side navigation). For example, navigating from `/cart` that uses `app/(shop)/layout.js` to `/blog` that uses `app/(marketing)/layout.js` will cause a full page load. This **only** applies to multiple root layouts.
+- `app` 디렉토리는 **반드시** 루트 레이아웃인 `app/layout.js` 를 포함해야 합니다.
+- 루트 레이아웃은 **반드시** `<html>`과 `<body>` 태그를 정의해야 합니다.
+  - 루트 레이아웃에 `<title>` 이나 `<meta>`와 같은 `<head>` 태그를 임의로 추가하는 것을 권장하지 **않습니다**. 대신, `<head>` 요소에 대한 스트리밍이나 중복 제거와 같은 향상된 요구사항을 자동으로 처리하는 [Metadata API](/docs/app/api-reference/functions/generate-metadata) 를 사용하세요.
+- 다수의 루트 레이아웃을 만들기 위해선 [route groups](/docs/app/building-your-application/routing/route-groups) 를 사용할 수 있습니다.
+  - **서로 다른 루트 레이아웃 사이를** 이동하는 것은 페이지를 **완전히 새로고침하도록** 합니다. (클라이언트측 이동과는 반대로). 예를 들어, `app/(shop)/layout.js` 를 사용하는 `/cart` 에서 `app/(marketing)/layout.js` 를 사용하는 `/blog` 로 이동하는 것은 페이지를 완전히 새로고침 하도록 할 것입니다. **다수의 루트 레이아웃을 사용할 때에만** 이러한 현상이 발생합니다.
 
-## Version History
+## 버전 히스토리
 
-| Version   | Changes              |
-| --------- | -------------------- |
-| `v13.0.0` | `layout` introduced. |
+| 버전      | 변화               |
+| --------- | ------------------ |
+| `v13.0.0` | `layout`이 도입됨. |
