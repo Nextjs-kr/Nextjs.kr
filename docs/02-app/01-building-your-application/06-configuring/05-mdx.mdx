@@ -1,54 +1,52 @@
 ---
 title: MDX
-description: Learn how to configure MDX to write JSX in your markdown files.
+description: JSX를 마크다운 파일 내에 사용하기 위해 MDX를 설정하는 방법에 대해 배웁니다.
 ---
 
-[Markdown](https://daringfireball.net/projects/markdown/syntax) is a lightweight markup language used to format text. It allows you to write using plain text syntax and convert it to structurally valid HTML. It's commonly used for writing content on websites and blogs.
+[마크다운](https://daringfireball.net/projects/markdown/syntax)은 텍스트를 구성하는 데 사용되는 경량 마크업 언어입니다. 마크다운을 사용하면 일반적인 텍스트 문법을 사용하여 작성할 수 있고, 구조적으로 유효한 HTML로 바꿀 수 있습니다. 일반적으로 마크다운은 웹사이트나 블로그에 콘텐츠를 작성하기 위해 사용합니다.
 
-You write...
+아래와 같이 작성하면...
 
 ```md
 I **love** using [Next.js](https://nextjs.org/)
 ```
 
-Output:
+다음의 결과를 얻을 수 있습니다.
 
 ```html
 <p>I <strong>love</strong> using <a href="https://nextjs.org/">Next.js</a></p>
 ```
 
-[MDX](https://mdxjs.com/) is a superset of markdown that lets you write [JSX](https://react.dev/learn/writing-markup-with-jsx) directly in your markdown files. It is a powerful way to add dynamic interactivity and embed React components within your content.
+[MDX](https://mdxjs.com/)는 마크다운 파일에 바로 [JSX](https://react.dev/learn/writing-markup-with-jsx)를 작성할 수 있게 하는 마크다운의 상위 집합입니다. MDX는 역동적인 상호작용 능력을 추가하고 리액트 컴포넌트를 콘텐츠에 포함할 수 있는 강력한 방법입니다.
 
-Next.js can support both local MDX content inside your application, as well as remote MDX files fetched dynamically on the server. The Next.js plugin handles transforming Markdown and React components into HTML, including support for usage in Server Components (default in `app`).
+Next.js는 애플리케이션 내에 있는 로컬 MDX 콘텐츠와 서버에서 동적으로 가져온 원격 MDX를 모두 지원하고 있습니다. Next.js 플러그인은 `app` 디렉토리에선 기본값인 서버 컴포넌트에서의 사용 지원을 포함하여 마크다운과 리액트 컴포넌트를 HTML로 변환하는 작업을 처리합니다.
 
 ## `@next/mdx`
 
-The `@next/mdx` package is configured in the `next.config.js` file at your projects root. **It sources data from local files**, allowing you to create pages with a `.mdx` extension, directly in your `/pages` or `/app` directory.
+`@next/mdx` 패키지는 프로젝트의 최상단에 있는 `next.config.js` 파일에서 설정할 수 있습니다. **@next/mdx 패키지는 로컬 파일에서 데이터 소스를 생성하여** `/pages` 혹은 `/app` 디렉토리에서 바로 `.mdx` 확장자를 가진 페이지를 만들 수 있게 해줍니다.
 
-## Getting Started
+## 시작하기
 
 <AppOnly>
 
-Install the `@next/mdx` package:
+`@next/mdx` 패키지를 설치합니다.
 
 ```bash filename="Terminal"
 npm install @next/mdx @mdx-js/loader @mdx-js/react @types/mdx
 ```
 
-Create `mdx-components.tsx` in the root of your application (the parent folder of `app`):
+`mdx-components.tsx` 파일을 `app` 폴더의 상위 폴더인 애플리케이션 최상단에 생성합니다.
 
 ```tsx filename="mdx-components.tsx" switcher
 import type { MDXComponents } from 'mdx/types'
 
-// This file allows you to provide custom React components
-// to be used in MDX files. You can import and use any
-// React component you want, including components from
-// other libraries.
+// 이 파일은 커스텀 리액트 컴포넌트를 MDX 파일에 사용할 수 있도록 해줍니다.
+// 다른 라이브러리에 있는 컴포넌트를 포함하여 우리가 원하는 어떤 리액트 컴포넌트도 가져와 사용할 수 있습니다.
 
-// This file is required to use MDX in `app` directory.
+// 이 파일은 `app` 디렉토리에서 MDX를 사용하기 위해 필요합니다.
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
-    // Allows customizing built-in components, e.g. to add styling.
+    // 빌트인 컴포넌트를 수정할 수 있습니다. 예시) 스타일을 추가할 수 있습니다.
     // h1: ({ children }) => <h1 style={{ fontSize: "100px" }}>{children}</h1>,
     ...components,
   }
@@ -56,22 +54,20 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 ```
 
 ```js filename="mdx-components.js" switcher
-// This file allows you to provide custom React components
-// to be used in MDX files. You can import and use any
-// React component you want, including components from
-// other libraries.
+// 이 파일은 커스텀 리액트 컴포넌트들을 MDX 파일들에 사용할 수 있도록 해줍니다.
+// 다른 라이브러리들에 있는 컴포넌트들을 포함하여 우리가 원하는 어떤 리액트 컴포넌트도 가져와 사용할 수 있습니다.
 
-// This file is required to use MDX in `app` directory.
+// 이 파일은 `app` 디렉토리에서 MDX를 사용하기 위해 필요합니다.
 export function useMDXComponents(components) {
   return {
-    // Allows customizing built-in components, e.g. to add styling.
+    // 빌트인 컴포넌트들을 수정할 수 있습니다. 예시) 스타일을 추가할 수 있습니다.
     // h1: ({ children }) => <h1 style={{ fontSize: "100px" }}>{children}</h1>,
     ...components,
   }
 }
 ```
 
-Update `next.config.js` to use `mdxRs`:
+`mdxRs`를 사용하기 위해 `next.config.js`를 수정합니다.
 
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
@@ -85,7 +81,7 @@ const withMDX = require('@next/mdx')()
 module.exports = withMDX(nextConfig)
 ```
 
-Add a new file with MDX content to your `app` directory:
+`app` 디렉토리에 MDX 콘텐츠를 가지고 있는 새로운 파일을 추가합니다.
 
 ```md filename="app/hello.mdx"
 Hello, Next.js!
@@ -93,7 +89,7 @@ Hello, Next.js!
 You can import and use React components in MDX files.
 ```
 
-Import the MDX file inside a `page` to display the content:
+`page` 파일에 앞서 만든 콘텐츠를 보여주기 위해 MDX 파일을 가져옵니다.
 
 ```tsx filename="app/page.tsx" switcher
 import HelloWorld from './hello.mdx'
@@ -115,13 +111,13 @@ export default function Page() {
 
 <PagesOnly>
 
-Install the required packages:
+필요한 패키지들을 설치합니다.
 
 ```bash filename="Terminal"
   npm install @next/mdx @mdx-js/loader @mdx-js/react
 ```
 
-Require the package and configure to support top level `.mdx` pages. The following adds the `options` object key allowing you to pass in any plugins:
+패키지를 require를 통해 불러오고 최상단 `.mdx` 페이지를 지원하도록 수정합니다. 다음의 예제는 어떤 플러그인도 전달할 수 있는 `options` 객체 키를 추가합니다.
 
 ```js
 // next.config.js
@@ -129,29 +125,28 @@ Require the package and configure to support top level `.mdx` pages. The followi
 const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/,
   options: {
-    // If you use remark-gfm, you'll need to use next.config.mjs
-    // as the package is ESM only
+    // remark-gfm을 사용하고 있다면, 패키지가 ESM만 지원하기 때문에 next.config.mjs를 사용해야 합니다.
     // https://github.com/remarkjs/remark-gfm#install
     remarkPlugins: [],
     rehypePlugins: [],
-    // If you use `MDXProvider`, uncomment the following line.
+    // `MDXProvider`을 사용한다면, 다음줄의 주석을 해제하여 사용하세요.
     // providerImportSource: "@mdx-js/react",
   },
 })
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configure pageExtensions to include md and mdx
+  // md, mdx 확장자를 포함하도록 pageExtensions를 수정합니다.
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-  // Optionally, add any other Next.js config below
+  // 필요한 경우 아래에 다른 Next.js 설정을 추가합니다.
   reactStrictMode: true,
 }
 
-// Merge MDX config with Next.js config
+// MDX 설정과 Next.js 설정을 합칩니다.
 module.exports = withMDX(nextConfig)
 ```
 
-- Create a new MDX page within the `/pages` directory:
+- `/pages` 디렉토리 내에 새로운 MDX 페이지를 생성합니다.
 
 ```txt
   your-project
@@ -160,7 +155,7 @@ module.exports = withMDX(nextConfig)
   └── package.json
 ```
 
-You can now import a React component directly inside your MDX page:
+이제 MDX 페이지에 바로 리액트 컴포넌트를 가져올 수 있습니다.
 
 ```mdx
 import { MyComponent } from 'my-components'
@@ -180,13 +175,13 @@ Checkout my React component:
 
 </PagesOnly>
 
-## Remote MDX
+## 원격 MDX
 
-If your Markdown or MDX files do _not_ live inside your application, you can fetch them dynamically on the server. This is useful for fetching content from a CMS or other data source.
+마크다운 혹은 MDX 파일이 우리의 애플리케이션에 존재하지 _않는다면_, 동적으로 서버에서 가져와 사용할 수 있습니다. 이 방법은 CMS 혹은 다른 데이터 소스에서 콘텐츠를 가져오는 데 유용합니다.
 
-There are two popular community packages for fetching MDX content: [`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote#react-server-components-rsc--nextjs-app-directory-support) and [`contentlayer`](https://www.contentlayer.dev/). For example, the following example uses `next-mdx-remote`:
+MDX 콘텐츠를 가져오는 데 사용할 수 있는 2가지 유명한 커뮤니티 패키지가 있습니다. [`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote#react-server-components-rsc--nextjs-app-directory-support) 와 [`contentlayer`](https://www.contentlayer.dev/) 입니다. 예를 들어 다음 예제는 `next-mdx-remote`를 사용하고 있습니다.
 
-> **Good to know**: Please proceed with caution. MDX compiles to JavaScript and is executed on the server. You should only fetch MDX content from a trusted source, otherwise this can lead to remote code execution (RCE).
+> **참고**: 주의하여 진행하세요. MDX는 서버에서 JavaScript로 컴파일되고 실행됩니다. MDX 콘텐츠를 항상 믿을 수 있는 소스에서 가져오세요. 그렇지 않으면 원격 코드 실행(RCE)을 야기할 수 있습니다.
 
 ```tsx filename="app/page.tsx" switcher
 import { MDXRemote } from 'next-mdx-remote/rsc'
@@ -208,17 +203,17 @@ export default async function Home() {
 }
 ```
 
-## Layouts
+## 레이아웃
 
 <AppOnly>
 
-To share a layout around MDX content, you can use the [built-in layouts support](/docs/app/building-your-application/routing/pages-and-layouts#layouts) with the App Router.
+MDX 콘텐츠 사이에 레이아웃을 공유하기 위해선 App Router에서 [built-in layouts support](/docs/app/building-your-application/routing/pages-and-layouts#layouts)를 사용할 수 있습니다.
 
 </AppOnly>
 
 <PagesOnly>
 
-To add a layout to your MDX page, create a new component and import it into the MDX page. Then you can wrap the MDX page with your layout component:
+MDX 페이지에 레이아웃을 추가하기 위해선 새로운 컴포넌트를 생성하고 MDX 페이지에 가져와 사용하세요. 이후엔 MDX 페이지를 레이아웃 컴포넌트로 감싸서 사용할 수 있습니다.
 
 ```jsx filename="pages/index.js"
 import { MyLayoutComponent } from 'my-components';
@@ -235,11 +230,11 @@ export default Page({ children }) => (
 
 </PagesOnly>
 
-## Remark and Rehype Plugins
+## Remark 와 Rehype 플러그인
 
-You can optionally provide `remark` and `rehype` plugins to transform the MDX content. For example, you can use `remark-gfm` to support GitHub Flavored Markdown.
+필요에따라 `remark` 와 `rehype` 플러그인을 사용하여 MDX 콘텐츠를 변형시킬 수 있습니다. 예를 들어 `remark-gfm`를 사용하여 깃허브스러운 마크다운을 지원할 수 있습니다.
 
-Since the `remark` and `rehype` ecosystem is ESM only, you'll need to use `next.config.mjs` as the configuration file.
+`remark` 와 `rehype` 생태계는 ESM만 지원하기 때문에 `next.config.mjs`를 설정 파일로 사용해야 합니다.
 
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
@@ -253,7 +248,8 @@ const withMDX = require('@next/mdx')({
   options: {
     remarkPlugins: [],
     rehypePlugins: [],
-    // If you use `MDXProvider`, uncomment the following line.
+
+    // `MDXProvider`을 사용한다면, 다음줄의 주석을 해제하여 사용하세요.
     // providerImportSource: "@mdx-js/react",
   },
 })
@@ -262,9 +258,9 @@ module.exports = withMDX(nextConfig)
 
 ## Frontmatter
 
-Frontmatter is a YAML like key/value pairing that can be used to store data about a page. `@next/mdx` does **not** support frontmatter by default, though there are many solutions for adding frontmatter to your MDX content, such as [gray-matter](https://github.com/jonschlinkert/gray-matter).
+Frontmatter는 페이지에 대한 정보를 저장하기 위해 사용할 수 있는 YAML 같은 키/밸류 쌍입니다. [gray-matter](https://github.com/jonschlinkert/gray-matter) 같은 MDX 콘텐츠에 frontmatter를 추가 할 수 있는 수많은 해결책들이 존재하지만 `@next/mdx`는 기본적으로 frontmatter를 지원하지 **않습니다**.
 
-To access page metadata with `@next/mdx`, you can export a meta object from within the `.mdx` file:
+`@next/mdx`로 페이지 메타데이터에 접근하기 위해선 `.mdx` 파일내에서 meta 객체를 export 해야 합니다.
 
 ```mdx
 export const meta = {
@@ -274,9 +270,9 @@ export const meta = {
 # My MDX page
 ```
 
-## Custom Elements
+## 사용자 지정 엘리먼트
 
-One of the pleasant aspects of using markdown, is that it maps to native `HTML` elements, making writing fast, and intuitive:
+마크다운을 사용할 때의 즐거운 측면중 하나는 네이티브 `HTML` 엘리먼트에 대응되어 빠르고 직관적으로 작성 할 수 있다는 점입니다.
 
 ```md
 This is a list in markdown:
@@ -286,7 +282,7 @@ This is a list in markdown:
 - Three
 ```
 
-The above generates the following `HTML`:
+위의 예제는 다음의 `HTML`을 만듭니다.
 
 ```html
 <p>This is a list in markdown:</p>
@@ -298,9 +294,9 @@ The above generates the following `HTML`:
 </ul>
 ```
 
-When you want to style your own elements to give a custom feel to your website or application, you can pass in shortcodes. These are your own custom components that map to `HTML` elements. To do this you use the `MDXProvider` and pass a components object as a prop. Each object key in the components object maps to a `HTML` element name.
+웹사이트나 애플리케이션에 독자적인 느낌을 주기 위해 스타일을 지정한다면 shortcodes를 전달할 수 있습니다. 여기 `HTML` 엘리먼트로 대응되는 독자적인 컴포넌트가 있습니다. 독자적인 스타일을 주기 위해선 `MDXProvider`를 사용하고 컴포넌트 객체를 프로퍼티즈로 전달하세요. 해당 컴포넌트 객체에 있는 각각의 객체 키는 `HTML` 엘리먼트 이름으로 대응됩니다.
 
-To enable you need to specify `providerImportSource: "@mdx-js/react"` in `next.config.js`.
+이 기능을 사용하기 위해선 `next.config.js` 파일에 `providerImportSource: "@mdx-js/react"`를 명시해야 합니다.
 
 ```js filename="next.config.js"
 const withMDX = require('@next/mdx')({
@@ -311,7 +307,7 @@ const withMDX = require('@next/mdx')({
 })
 ```
 
-Then setup the provider in your page
+이후 페이지에 프로바이더를 설정합니다.
 
 ```jsx filename="pages/index.js"
 
@@ -341,13 +337,13 @@ export default function Post(props) {
 }
 ```
 
-If you use it across the site you may want to add the provider to `_app.js` so all MDX pages pick up the custom element config.
+사이트 전반적으로 사용한다면 프로바이더를 `_app.js`에 추가합니다. 이렇게 하면 모든 MDX 페이지들은 커스텀 엘리먼트 설정에 접근할 수 있습니다.
 
-## Deep Dive: How do you transform markdown into HTML?
+## 심층 분석: 어떻게 마크다운을 HTML로 변형시킬 수 있나요?
 
-React does not natively understand Markdown. The markdown plaintext needs to first be transformed into HTML. This can be accomplished with `remark` and `rehype`.
+리액트는 자체적으로 마크다운을 이해하지 못합니다. 일반적인 마크다운 텍스트는 먼저 HTML로 변형되어야 합니다. 이는 `remark` 와 `rehype`를 통해 이뤄낼 수 있습니다.
 
-`remark` is an ecosystem of tools around markdown. `rehype` is the same, but for HTML. For example, the following code snippet transforms markdown into HTML:
+`remark`는 마크다운 중심의 도구 생태계입니다. `rehype`도 동일하지만, HTML을 위한 생태계입니다. 예를 들어 다음의 코드 스니펫은 마크다운을 HTML로 변형시킵니다.
 
 ```js
 import { unified } from 'unified'
@@ -360,23 +356,23 @@ main()
 
 async function main() {
   const file = await unified()
-    .use(remarkParse) // Convert into markdown AST
-    .use(remarkRehype) // Transform to HTML AST
-    .use(rehypeSanitize) // Sanitize HTML input
-    .use(rehypeStringify) // Convert AST into serialized HTML
+    .use(remarkParse) // 마크다운 AST로 변환
+    .use(remarkRehype) // HTML AST로 변형
+    .use(rehypeSanitize) // 주어진 HTML sanitize
+    .use(rehypeStringify) // AST를 직렬화된 HTML로 변환
     .process('Hello, Next.js!')
 
   console.log(String(file)) // <p>>Hello, Next.js!</p>
 }
 ```
 
-The `remark` and `rehype` ecosystem contains plugins for [syntax highlighting](https://github.com/atomiks/rehype-pretty-code), [linking headings](https://github.com/rehypejs/rehype-autolink-headings), [generating a table of contents](https://github.com/remarkjs/remark-toc), and more.
+`remark` 와 `rehype` 생태계는 [문법 강조](https://github.com/atomiks/rehype-pretty-code), [헤딩태크 링크 연결](https://github.com/rehypejs/rehype-autolink-headings), [테이블 콘텐츠 생성](https://github.com/remarkjs/remark-toc) 과 같은 플러그인들을 포함하고 있습니다.
 
-When using `@next/mdx` as shown below, you **do not** need to use `remark` or `rehype` directly, as it is handled for you.
+이전에 봤던 `@next/mdx`를 사용하고 있다면 `@next/mdx`가 알아서 처리하기 때문에 `remark` 혹은 `rehype`를 직접적으로 사용할 필요가 **없습니다.**
 
-## Using the Rust-based MDX compiler (Experimental)
+## 러스트 기반 MDX 컴파일러 사용하기 (실험단계)
 
-Next.js supports a new MDX compiler written in Rust. This compiler is still experimental and is not recommended for production use. To use the new compiler, you need to configure `next.config.js` when you pass it to `withMDX`:
+Next.js는 러스트로 작성된 새로운 MDX 컴파일러를 지원하고 있습니다. 이 컴파일러는 아직 실험단계이고 프로덕션을 위해 사용하는 걸 추천하지 않습니다. 이 새로운 컴파일러를 사용하기 위해선 `withMDX`에 전달할 때 `next.config.js`를 다음과 같이 수정해야 합니다.
 
 ```js filename="next.config.js"
 module.exports = withMDX({
@@ -386,7 +382,7 @@ module.exports = withMDX({
 })
 ```
 
-## Helpful Links
+## 도움 되는 링크
 
 - [MDX](https://mdxjs.com)
 - [`@next/mdx`](https://www.npmjs.com/package/@next/mdx)

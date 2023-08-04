@@ -1,11 +1,11 @@
 ---
 title: useSelectedLayoutSegment
-description: API Reference for the useSelectedLayoutSegment hook.
+description: useSelectedLayoutSegment hook에 대한 API 참조입니다.
 ---
 
-`useSelectedLayoutSegment` is a **Client Component** hook that lets you read the active route segment **one level below** the Layout it is called from.
+`useSelectedLayoutSegment`는 **클라이언트 컴포넌트** hook으로 호출된 레이아웃보다 **한 단계 아래**에서 활성 경로 세그먼트를 읽을 수 있게 해줍니다.
 
-It is useful for navigation UI, such as tabs inside a parent layout that change style depending on the active child segment.
+활성 자식 세그먼트에 따라 스타일이 변경되는 상위 레이아웃 안에 있는 탭과 같은 내비게이션 UI에 유용합니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher
 'use client'
@@ -31,24 +31,25 @@ export default function ExampleClientComponent() {
 }
 ```
 
-> **Good to know**:
+> **참고**:
 >
-> - Since `useSelectedLayoutSegment` is a [Client Component](/docs/getting-started/react-essentials#client-components) hook, and Layouts are [Server Components](/docs/getting-started/react-essentials#server-components) by default, `useSelectedLayoutSegment` is usually called via a Client Component that is imported into a Layout.
-> - `useSelectedLayoutSegment` only returns the segment one level down. To return all active segments, see [`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments)
+> - `useSelectedLayoutSegment`는 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components) hook이고, 레이아웃은 기본적으로 [서버 컴포넌트](/docs/getting-started/react-essentials#server-components) 이기 때문에, 보통 레이아웃안에 가져와진 클라이언트 컴포넌트를 통해 `useSelectedLayoutSegment`가 호출됩니다.
 
-## Parameters
+> - `useSelectedLayoutSegment`는 오직 한 단계 아래 세그먼트만 반환합니다. 모든 활성 세그먼트를 반환하려면 [`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments)를 참조하세요.
+
+## 매개변수
 
 ```tsx
 const segment = useSelectedLayoutSegment()
 ```
 
-`useSelectedLayoutSegment` does not take any parameters.
+`useSelectedLayoutSegment`는 어떠한 매개변수도 받지 않습니다.
 
-## Returns
+## 반환값
 
-`useSelectedLayoutSegment` returns a string of the active segment or `null` if one doesn't exist.
+`useSelectedLayoutSegment`는 활성 세그먼트의 문자열을 반환하거나 세그먼트가 없는 경우 `null`을 반환합니다.
 
-For example, given the Layouts and URLs below, the returned segment would be:
+예를 들어 아래 레이아웃과 URL들이 주어지면 반환되는 세그먼트는 다음과 같습니다.
 
 | Layout                    | Visited URL                    | Returned Segment |
 | ------------------------- | ------------------------------ | ---------------- |
@@ -59,11 +60,12 @@ For example, given the Layouts and URLs below, the returned segment would be:
 | `app/dashboard/layout.js` | `/dashboard/analytics`         | `'analytics'`    |
 | `app/dashboard/layout.js` | `/dashboard/analytics/monthly` | `'analytics'`    |
 
-## Examples
+## 예제
 
-### Creating an active link component
+### 활성 링크 컴포넌트 만들기
 
-You can use `useSelectedLayoutSegment` to create an active link component that changes style depending on the active segment. For example, a featured posts list in the sidebar of a blog:
+`useSelectedLayoutSegment`를 사용하여 활성 세그먼트에 따라 스타일을 변경하는 활성 링크 컴포넌트를 만들 수 있습니다.
+예를 들어 블로그의 사이드바에 있는 추천 게시글 목록은 다음과 같습니다.
 
 ```tsx filename="app/blog/blog-nav-link.tsx" switcher
 'use client'
@@ -71,7 +73,7 @@ You can use `useSelectedLayoutSegment` to create an active link component that c
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
 
-// This *client* component will be imported into a blog layout
+// 이 *클라이언트* 컴포넌트를 블로그 레이아웃안으로 가져옵니다.
 export default function BlogNavLink({
   slug,
   children,
@@ -79,15 +81,14 @@ export default function BlogNavLink({
   slug: string
   children: React.ReactNode
 }) {
-  // Navigating to `/blog/hello-world` will return 'hello-world'
-  // for the selected layout segment
+  // `/blog/hello-world`로 이동하면 선택한 레이아웃 세그먼트에 대한 'hello-world'이 반환됩니다.
   const segment = useSelectedLayoutSegment()
   const isActive = slug === segment
 
   return (
     <Link
       href={`/blog/${slug}`}
-      // Change style depending on whether the link is active
+      // 링크 활성화 여부에 따라 스타일을 변경합니다.
       style={{ fontWeight: isActive ? 'bold' : 'normal' }}
     >
       {children}
@@ -102,17 +103,16 @@ export default function BlogNavLink({
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
 
-// This *client* component will be imported into a blog layout
+// 이 *클라이언트* 컴포넌트를 블로그 레이아웃안으로 가져옵니다.
 export default function BlogNavLink({ slug, children }) {
-  // Navigating to `/blog/hello-world` will return 'hello-world'
-  // for the selected layout segment
+  // `/blog/hello-world`로 이동하면 선택한 레이아웃 세그먼트에 대한 'hello-world'이 반환됩니다.
   const segment = useSelectedLayoutSegment()
   const isActive = slug === segment
 
   return (
     <Link
       href={`/blog/${slug}`}
-      // Change style depending on whether the link is active
+      // 링크 활성화 여부에 따라 스타일을 변경합니다.
       style={{ fontWeight: isActive ? 'bold' : 'normal' }}
     >
       {children}
@@ -122,7 +122,7 @@ export default function BlogNavLink({ slug, children }) {
 ```
 
 ```tsx filename="app/blog/layout.tsx" switcher
-// Import the Client Component into a parent Layout (Server Component)
+// 클라이언트 컴포넌트를 부모 레이아웃(서버 컴포넌트)로 가져옵니다.
 import { BlogNavLink } from './blog-nav-link'
 import getFeaturedPosts from './get-featured-posts'
 
@@ -146,7 +146,7 @@ export default async function Layout({
 ```
 
 ```jsx filename="app/blog/layout.js" switcher
-// Import the Client Component into a parent Layout (Server Component)
+// 클라이언트 컴포넌트를 부모 레이아웃(서버 컴포넌트)로 가져옵니다.
 import { BlogNavLink } from './blog-nav-link'
 import getFeaturedPosts from './get-featured-posts'
 
