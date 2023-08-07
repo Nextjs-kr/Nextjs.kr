@@ -71,7 +71,7 @@ export default function handler(req, res) {
 
 이 절차는 사용 중인 headless CMS가 **커스텀 미리보기 URL**의 설정을 지원한다고 가정합니다. 그렇지 않다면, 여전히 이 방법을 통해 미리 보기 URL을 보호할 수 있지만 수동으로 미리 보기 URL을 구성하고 접근해야 합니다.
 
-**먼저**, 당신이 선택한 토큰 생성기를 통해 **비밀 토큰 문자열**을 생성해야 합니다. 이 비밀은 Next.js 앱과 headless CMS만 알 것입니다. 이 비밀은 CMS에 대한 접근 권한이 없는 사람들이 미리보기 URL에 접근하는 것을 막아줍니다.
+**먼저**, 당신이 선택한 토큰 생성기를 통해 **비밀 토큰 문자열**을 생성해야 합니다. 이 비밀 키는 Next.js 앱과 headless CMS만 알 것입니다. 이 비밀은 CMS에 대한 접근 권한이 없는 사람들이 미리보기 URL에 접근하는 것을 막아줍니다.
 
 **다음으로**, headless CMS가 커스텀 미리보기 URL의 설정을 지원한다면, 미리보기 URL대로 다음을 명시해야 합니다. 이는 미리보기 API route가 `pages/api/preview.js`에 위치하고 있다는 것을 가정합니다.
 
@@ -95,42 +95,42 @@ headless CMS는 `<path`가 CMS의 데이터에 기반하여 동적으로 설정�
 
 ```js
 export default async (req, res) => {
-  // Check the secret and next parameters
-  // This secret should only be known to this API route and the CMS
+  // 비밀 키와 다음 매개변수를 확인
+  // 이 비밀 키는 이 API route와 CMS만 알고 있어야 함
   if (req.query.secret !== 'MY_SECRET_TOKEN' || !req.query.slug) {
     return res.status(401).json({ message: 'Invalid token' })
   }
 
-  // Fetch the headless CMS to check if the provided `slug` exists
-  // getPostBySlug would implement the required fetching logic to the headless CMS
+  // 제공된 `slug`가 존재하는지 확인하기 위해 headless CMS 가져오기
+  // getPostBySlug는 headless CMS로 데이터를 가져오는 데 필요한 로직을 구현하고 있을 겁니다.
   const post = await getPostBySlug(req.query.slug)
 
-  // If the slug doesn't exist prevent preview mode from being enabled
+  // 해당 slug가 존재하지 않는다면 미리보기 모드의 활성화를 방지
   if (!post) {
     return res.status(401).json({ message: 'Invalid slug' })
   }
 
-  // Enable Preview Mode by setting the cookies
+  // 쿠키를 설정하여 미리보기 모드를 활성화
   res.setPreviewData({})
 
-  // Redirect to the path from the fetched post
-  // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
+  // 가져온 포스트의 경로로 리다이렉트
+  // 오픈 리다이렉트 취약점으로 이어질 수 있기에 req.query.slug로 리다이렉트하지 않음
   res.redirect(post.slug)
 }
 ```
 
-If it succeeds, then the browser will be redirected to the path you want to preview with the preview mode cookies being set.
+성공한다면, 브라우저는 미리보기 모드 쿠키가 설정된 상태에서 미리보기 하기를 원하는 경로로 리다이렉트될 것입니다.
 
-## Step 2: Update `getStaticProps`
+## 스텝 2: `getStaticProps` 업데이트하기
 
-The next step is to update `getStaticProps` to support the preview mode.
+다음 단계는 미리보기 모드를 지원하기 위해 `getStaticProps`를 업데이트하는 것입니다.
 
-If you request a page which has `getStaticProps` with the preview mode cookies set (via `res.setPreviewData`), then `getStaticProps` will be called at **request time** (instead of at build time).
+미리보기 쿠키가 설정된 상태에서 `getStaticProps`를 가진 페이지를 요청한다면(`res.setPreviewData`를 통해), `getStaticProps`는 **요청 시간**에 호출됩니다(빌드 시간 대신).
 
-Furthermore, it will be called with a `context` object where:
+게다가, `context` 객체와 함께 호출됩니다. `context` 객체는 다음과 같은 특징을 갖습니다.
 
-- `context.preview` will be `true`.
-- `context.previewData` will be the same as the argument used for `setPreviewData`.
+- `context.preview`가 `true`일 것입니다.
+- `context.previewData`가 `setPreviewData`에 사용된 매개변수와 같을 것입니다.
 
 ```js
 export async function getStaticProps(context) {
