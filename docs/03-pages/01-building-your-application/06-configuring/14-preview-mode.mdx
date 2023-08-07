@@ -79,9 +79,9 @@ export default function handler(req, res) {
 https://<your-site>/api/preview?secret=<token>&slug=<path>
 ```
 
-- `<your-site>`는 배포 도메인이어야 합니다. should be your deployment domain.
-- `<token>`는 생성한 비밀 토큰으로 대체해야 합니다. should be replaced with the secret token you generated.
-- `<path>`는 미리보기하고 싶은  should be the path for the page that you want to preview. If you want to preview `/posts/foo`, then you should use `&slug=/posts/foo`.
+- `<your-site>`는 배포 도메인이어야 합니다.
+- `<token>`는 생성한 비밀 토큰으로 대체해야 합니다.
+- `<path>`는 미리보기하고 싶은 페이지에 대한 경로여야 합니다. 만약 `/posts/foo`를 미리보기 하고 싶다면, `&slug=/posts/foo`를 사용해야 합니다.
 
 headless CMS는 `<path`가 CMS의 데이터에 기반하여 동적으로 설정될 수 있도록 미리보기 URL에 변수를 포함하는 것을 허용할 수 있습니다. 이렇게 말이죠. `&slug=/posts/{entry.fields.slug}`
 
@@ -130,49 +130,48 @@ export default async (req, res) => {
 게다가, `context` 객체와 함께 호출됩니다. `context` 객체는 다음과 같은 특징을 갖습니다.
 
 - `context.preview`가 `true`일 것입니다.
-- `context.previewData`가 `setPreviewData`에 사용된 매개변수와 같을 것입니다.
+- `context.previewData`가 `setPreviewData`에 사용되는 매개변수와 같을 것입니다.
 
 ```js
 export async function getStaticProps(context) {
-  // If you request this page with the preview mode cookies set:
+  // 미리보기 모드 쿠키가 설정된 상태에서 이 페이지를 요청하면:
   //
-  // - context.preview will be true
-  // - context.previewData will be the same as
-  //   the argument used for `setPreviewData`.
+  // - context.preview는 true가 됩니다.
+  // - context.previewData는 `setPreviewData`에 사용되는 매개변수와 같을 겁니다.
 }
 ```
 
-We used `res.setPreviewData({})` in the preview API route, so `context.previewData` will be `{}`. You can use this to pass session information from the preview API route to `getStaticProps` if necessary.
+우리는 미리보기 API route에서 `res.setPreviewData({})`를 사용했으므로, `context.previewData`는 `{}`가 될 겁니다. 필요하다면 이를 이용해서 미리보기 API route로부터 `getStaticProps`로 세션 정보를 넘길 수 있습니다.
 
-If you’re also using `getStaticPaths`, then `context.params` will also be available.
+`getStaticPaths` 또한 사용하고 있다면, `context.params` 또한 이용할 수 있습니다.
 
-### Fetch preview data
+### 미리보기 데이터 가져오기
 
-You can update `getStaticProps` to fetch different data based on `context.preview` and/or `context.previewData`.
+`context.preview` 또는 `context.previewData`에 기반하여 다른 데이터를 가져오기 위해 `getStaticProps`를 업데이트할 수 있습니다.
 
-For example, your headless CMS might have a different API endpoint for draft posts. If so, you can use `context.preview` to modify the API endpoint URL like below:
+예를 들어, headless CMS가 초안 포스트를 위해 다양한 API 엔드포인트를 가질 수 있습니다. 그렇다면, `context.preview`를 이용하여 API 엔드포인트 URL를 아래처럼 수정할 수 있습니다.
 
 ```js
 export async function getStaticProps(context) {
-  // If context.preview is true, append "/preview" to the API endpoint
-  // to request draft data instead of published data. This will vary
-  // based on which headless CMS you're using.
+  // context.preview가 true라면, 게시된 데이터 대신 초안 데이터를 요청하기 위해
+  // API 엔드포인트에 "/preview"를 붙임.
+  // 이는 사용 중인 headless CMS에 따라 달라질 수 있음
   const res = await fetch(`https://.../${context.preview ? 'preview' : ''}`)
   // ...
 }
 ```
 
-That’s it! If you access the preview API route (with `secret` and `slug`) from your headless CMS or manually, you should now be able to see the preview content. And if you update your draft without publishing, you should be able to preview the draft.
+이제 다 됐습니다! headless CMS로부터 혹은 수동으로 미리보기 API route에 접근하면(`secret`과 `slug`를 통해), 미리보기 내용을 볼 수 있을 겁니다. 그리고 초안을 게시 없이 업데이트 하면 초안을 미리보기 할 수 있을 겁니다.
 
-Set this as the preview URL on your headless CMS or access manually, and you should be able to see the preview.
+이것을 headless CMS에 미리보기 URL로 설정하거나 수동으로 접근하면, 미리보기를 볼 수 있을 겁니다.
 
 ```bash filename="Terminal"
 https://<your-site>/api/preview?secret=<token>&slug=<path>
 ```
 
-## More Details
+## 더 자세히
 
-> **Good to know**: during rendering `next/router` exposes an `isPreview` flag, see the [router object docs](/docs/pages/api-reference/functions/use-router#router-object) for more info.
+> **참고**: during rendering `next/router` exposes an `isPreview` flag, see the [router object docs](/docs/pages/api-reference/functions/use-router#router-object) for more info.
 
 ### Specify the Preview Mode duration
 
