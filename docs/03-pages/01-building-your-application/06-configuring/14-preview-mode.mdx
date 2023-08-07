@@ -1,45 +1,45 @@
 ---
-title: Preview Mode (Legacy)
-description: Next.js has the preview mode for statically generated pages. You can learn how it works here.
+title: 프리뷰 모드 (레거시)
+description: Next.js는 정적으로 생성된 페이지에 대한 프리뷰 모드를 갖고 있습니다. 이곳에서는 프리뷰 모드가 어떻게 작동하는지 배웁니다.
 ---
 
-> **Warning**: This feature is **legacy** and is superseded by [Draft Mode](/docs/pages/building-your-application/configuring/draft-mode).
+> **경고**: 이 기능은 **레거시**이며 [드래프트 모드](/docs/pages/building-your-application/configuring/draft-mode)로 대체됩니다.
 
 <details>
-  <summary>Examples</summary>
+  <summary>예제</summary>
 
-- [WordPress Example](https://github.com/vercel/next.js/tree/canary/examples/cms-wordpress) ([Demo](https://next-blog-wordpress.vercel.app))
-- [DatoCMS Example](https://github.com/vercel/next.js/tree/canary/examples/cms-datocms) ([Demo](https://next-blog-datocms.vercel.app/))
-- [TakeShape Example](https://github.com/vercel/next.js/tree/canary/examples/cms-takeshape) ([Demo](https://next-blog-takeshape.vercel.app/))
-- [Sanity Example](https://github.com/vercel/next.js/tree/canary/examples/cms-sanity) ([Demo](https://next-blog-sanity.vercel.app/))
-- [Prismic Example](https://github.com/vercel/next.js/tree/canary/examples/cms-prismic) ([Demo](https://next-blog-prismic.vercel.app/))
-- [Contentful Example](https://github.com/vercel/next.js/tree/canary/examples/cms-contentful) ([Demo](https://next-blog-contentful.vercel.app/))
-- [Strapi Example](https://github.com/vercel/next.js/tree/canary/examples/cms-strapi) ([Demo](https://next-blog-strapi.vercel.app/))
-- [Prepr Example](https://github.com/vercel/next.js/tree/canary/examples/cms-prepr) ([Demo](https://next-blog-prepr.vercel.app/))
-- [Agility CMS Example](https://github.com/vercel/next.js/tree/canary/examples/cms-agilitycms) ([Demo](https://next-blog-agilitycms.vercel.app/))
-- [Cosmic Example](https://github.com/vercel/next.js/tree/canary/examples/cms-cosmic) ([Demo](https://next-blog-cosmic.vercel.app/))
-- [ButterCMS Example](https://github.com/vercel/next.js/tree/canary/examples/cms-buttercms) ([Demo](https://next-blog-buttercms.vercel.app/))
-- [Storyblok Example](https://github.com/vercel/next.js/tree/canary/examples/cms-storyblok) ([Demo](https://next-blog-storyblok.vercel.app/))
-- [GraphCMS Example](https://github.com/vercel/next.js/tree/canary/examples/cms-graphcms) ([Demo](https://next-blog-graphcms.vercel.app/))
-- [Kontent Example](https://github.com/vercel/next.js/tree/canary/examples/cms-kontent-ai) ([Demo](https://next-blog-kontent.vercel.app//))
-- [Umbraco Heartcore Example](https://github.com/vercel/next.js/tree/canary/examples/cms-umbraco-heartcore) ([Demo](https://next-blog-umbraco-heartcore.vercel.app/))
-- [Plasmic Example](https://github.com/vercel/next.js/tree/canary/examples/cms-plasmic) ([Demo](https://nextjs-plasmic-example.vercel.app/))
-- [Enterspeed Example](https://github.com/vercel/next.js/tree/canary/examples/cms-enterspeed) ([Demo](https://next-blog-demo.enterspeed.com/))
-- [Makeswift Example](https://github.com/vercel/next.js/tree/canary/examples/cms-makeswift) ([Demo](https://nextjs-makeswift-example.vercel.app/))
+- [WordPress 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-wordpress) ([데모](https://next-blog-wordpress.vercel.app))
+- [DatoCMS 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-datocms) ([데모](https://next-blog-datocms.vercel.app/))
+- [TakeShape 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-takeshape) ([데모](https://next-blog-takeshape.vercel.app/))
+- [Sanity 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-sanity) ([데모](https://next-blog-sanity.vercel.app/))
+- [Prismic 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-prismic) ([데모](https://next-blog-prismic.vercel.app/))
+- [Contentful 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-contentful) ([데모](https://next-blog-contentful.vercel.app/))
+- [Strapi 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-strapi) ([데모](https://next-blog-strapi.vercel.app/))
+- [Prepr 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-prepr) ([데모](https://next-blog-prepr.vercel.app/))
+- [Agility CMS 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-agilitycms) ([데모](https://next-blog-agilitycms.vercel.app/))
+- [Cosmic 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-cosmic) ([데모](https://next-blog-cosmic.vercel.app/))
+- [ButterCMS 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-buttercms) ([데모](https://next-blog-buttercms.vercel.app/))
+- [Storyblok 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-storyblok) ([데모](https://next-blog-storyblok.vercel.app/))
+- [GraphCMS 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-graphcms) ([데모](https://next-blog-graphcms.vercel.app/))
+- [Kontent 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-kontent-ai) ([데모](https://next-blog-kontent.vercel.app//))
+- [Umbraco Heartcore 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-umbraco-heartcore) ([데모](https://next-blog-umbraco-heartcore.vercel.app/))
+- [Plasmic 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-plasmic) ([데모](https://nextjs-plasmic-example.vercel.app/))
+- [Enterspeed 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-enterspeed) ([데모](https://next-blog-demo.enterspeed.com/))
+- [Makeswift 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-makeswift) ([데모](https://nextjs-makeswift-example.vercel.app/))
 
 </details>
 
-In the [Pages documentation](/docs/pages/building-your-application/routing/pages-and-layouts) and the [Data Fetching documentation](/docs/pages/building-your-application/data-fetching), we talked about how to pre-render a page at build time (**Static Generation**) using `getStaticProps` and `getStaticPaths`.
+[Pages documentation](/docs/pages/building-your-application/routing/pages-and-layouts)과 [Data Fetching documentation](/docs/pages/building-your-application/data-fetching)에서, `getStaticProps`과 `getStaticPaths`를 사용하여 페이지를 빌드 타임에 미리 렌더링(**정적 생성**)하는 방법에 대해 다뤘습니다.
 
-Static Generation is useful when your pages fetch data from a headless CMS. However, it’s not ideal when you’re writing a draft on your headless CMS and want to **preview** the draft immediately on your page. You’d want Next.js to render these pages at **request time** instead of build time and fetch the draft content instead of the published content. You’d want Next.js to bypass Static Generation only for this specific case.
+정적 생성은 페지가 headless CMS로부터 데이터를 가져올 때 유용합니다. 그러나 만약 headless CMS에 대한 드래프트를 작성하고 있고 그것을 페이지에서 **프리뷰**하고 싶을 때 정적 생성은 이상적이지 않습니다. Next.js가 이러한 페이지를 빌드 시간 대신 **요청 시간**에 렌더링하고 게시된 내용 대신 초안 내용을 가져오기를 원할 겁니다. 그리고 Next.js가 이 특정한 경우에서만 정적 생성을 건너뛰기를 원할 것입니다.
 
-Next.js has a feature called **Preview Mode** which solves this problem. Here are instructions on how to use it.
+Next.js는 이러한 문제를 해결하기 위해 **프리뷰 모드**라는 기능을 갖고 있습니다. 이곳에서 그 기능의 사용 방법을 배웁니다.
 
-## Step 1: Create and access a preview API route
+## 스텝 1: 프리뷰 API route를 만들고 접근하기
 
-> Take a look at the [API Routes documentation](/docs/pages/building-your-application/routing/api-routes) first if you’re not familiar with Next.js API Routes.
+> Next.js API Routes가 친숙하지 않다면 [API Routes 문서](/docs/pages/building-your-application/routing/api-routes)를 먼저 살펴보세요.
 
-First, create a **preview API route**. It can have any name - e.g. `pages/api/preview.js` (or `.ts` if using TypeScript).
+먼저, **프리뷰 API route**를 만드세요. 이것은 이름을 가질 수 있습니다. - 예 : `pages/api/preview.js` (TypeScript를 사용하고 있다면 `.ts`).
 
 In this API route, you need to call `setPreviewData` on the response object. The argument for `setPreviewData` should be an object, and this can be used by `getStaticProps` (more on this later). For now, we’ll use `{}`.
 
