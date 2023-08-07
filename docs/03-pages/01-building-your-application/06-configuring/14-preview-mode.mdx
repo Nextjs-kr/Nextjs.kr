@@ -1,6 +1,6 @@
 ---
-title: 프리뷰 모드 (레거시)
-description: Next.js는 정적으로 생성된 페이지에 대한 프리뷰 모드를 갖고 있습니다. 이곳에서는 프리뷰 모드가 어떻게 작동하는지 배웁니다.
+title: 미리보기 모드 (레거시)
+description: Next.js는 정적으로 생성된 페이지에 대한 미리보기 모드를 갖고 있습니다. 이곳에서는 미리보기 모드가 어떻게 작동하는지 배웁니다.
 ---
 
 > **경고**: 이 기능은 **레거시**이며 [드래프트 모드](/docs/pages/building-your-application/configuring/draft-mode)로 대체됩니다.
@@ -31,17 +31,17 @@ description: Next.js는 정적으로 생성된 페이지에 대한 프리뷰 모
 
 [Pages documentation](/docs/pages/building-your-application/routing/pages-and-layouts)과 [Data Fetching documentation](/docs/pages/building-your-application/data-fetching)에서, `getStaticProps`과 `getStaticPaths`를 사용하여 페이지를 빌드 타임에 미리 렌더링(**정적 생성**)하는 방법에 대해 다뤘습니다.
 
-정적 생성은 페지가 headless CMS로부터 데이터를 가져올 때 유용합니다. 그러나 만약 headless CMS에 대한 드래프트를 작성하고 있고 그것을 페이지에서 **프리뷰**하고 싶을 때 정적 생성은 이상적이지 않습니다. Next.js가 이러한 페이지를 빌드 시간 대신 **요청 시간**에 렌더링하고 게시된 내용 대신 초안 내용을 가져오기를 원할 겁니다. 그리고 Next.js가 이 특정한 경우에서만 정적 생성을 건너뛰기를 원할 것입니다.
+정적 생성은 페지가 headless CMS로부터 데이터를 가져올 때 유용합니다. 그러나 만약 headless CMS에 대한 드래프트를 작성하고 있고 그것을 페이지에서 **미리보기**하고 싶을 때 정적 생성은 이상적이지 않습니다. Next.js가 이러한 페이지를 빌드 시간 대신 **요청 시간**에 렌더링하고 게시된 내용 대신 초안 내용을 가져오기를 원할 겁니다. 그리고 Next.js가 이 특정한 경우에서만 정적 생성을 건너뛰기를 원할 것입니다.
 
-Next.js는 이러한 문제를 해결하기 위해 **프리뷰 모드**라는 기능을 갖고 있습니다. 이곳에서 그 기능의 사용 방법을 배웁니다.
+Next.js는 이러한 문제를 해결하기 위해 **미리보기 모드**라는 기능을 갖고 있습니다. 이곳에서 이 기능의 사용 방법을 배웁니다.
 
-## 스텝 1: 프리뷰 API route를 만들고 접근하기
+## 스텝 1: 미리보기 API route를 생성하고 접근하기
 
 > Next.js API Routes가 친숙하지 않다면 [API Routes 문서](/docs/pages/building-your-application/routing/api-routes)를 먼저 살펴보세요.
 
-먼저, **프리뷰 API route**를 만드세요. 이것은 이름을 가질 수 있습니다. - 예 : `pages/api/preview.js` (TypeScript를 사용하고 있다면 `.ts`).
+먼저, **미리보기 API route**를 생성하세요. 이것은 이름을 가질 수 있습니다. - 예 : `pages/api/preview.js` (TypeScript를 사용하고 있다면 `.ts`).
 
-In this API route, you need to call `setPreviewData` on the response object. The argument for `setPreviewData` should be an object, and this can be used by `getStaticProps` (more on this later). For now, we’ll use `{}`.
+이 API route에서, 응답 객체에 대해 `setPreviewData`를 호출해야 합니다. `setPreviewData`의 매개변수는 객체여야만 하며, `getStaticProps`에 의해 사용될 수 있습니다(이에 대해 후술합니다). 이제부터 우리는 `{}`를 사용할 겁니다.
 
 ```js
 export default function handler(req, res) {
@@ -51,46 +51,47 @@ export default function handler(req, res) {
 }
 ```
 
-`res.setPreviewData` sets some **cookies** on the browser which turns on the preview mode. Any requests to Next.js containing these cookies will be considered as the **preview mode**, and the behavior for statically generated pages will change (more on this later).
+`res.setPreviewData`는 미리보기 모드를 켜는 몇몇 쿠키를 브라우저에 설정합니다. 이러한 쿠키를 포함하는 모든 Next.js로의 요청은 미리보기 모드로 간주됩니다. 정적으로 생성된 페이지에 대한 동작이 변화합니다(이에 대해 후술합니다).
 
-You can test this manually by creating an API route like below and accessing it from your browser manually:
+아래처럼 API route를 생성하고 브라우저에서 직접 접근하여 수동으로 테스트할 수 있습니다.
 
 ```js filename="pages/api/preview.js"
-// simple example for testing it manually from your browser.
+// 브라우저로 직접 테스트하기 위한 간단 예제
 export default function handler(req, res) {
   res.setPreviewData({})
   res.end('Preview mode enabled')
 }
 ```
 
-If you open your browser’s developer tools and visit `/api/preview`, you’ll notice that the `__prerender_bypass` and `__next_preview_data` cookies will be set on this request.
+브라우저의 개발자 도구를 열고 `/api/preview`에 가 보면, 이 요청에 대해 `__prerender_bypass`와 `__next_preview_data` 쿠키가 설정된 것을 알 수 있을 겁니다.
 
-### Securely accessing it from your Headless CMS
+### Headless CMS로부터 안전하게 접근하기
 
-In practice, you’d want to call this API route _securely_ from your headless CMS. The specific steps will vary depending on which headless CMS you’re using, but here are some common steps you could take.
+실전에서는 headless CMS로부터 _안전하게_ 이 API route를 호출하고 싶을 겁니다. 구체적인 절차는 사용하고 있는 CMS에 따라 다르겠지만, 일반적으로 수행할 수 있는 몇몇 절차가 있습니다.
 
-These steps assume that the headless CMS you’re using supports setting **custom preview URLs**. If it doesn’t, you can still use this method to secure your preview URLs, but you’ll need to construct and access the preview URL manually.
+이 절차는 사용 중인 headless CMS가 **커스텀 미리보기 URL**의 설정을 지원한다고 가정합니다. 그렇지 않다면, 여전히 이 방법을 통해 미리 보기 URL을 보호할 수 있지만 수동으로 미리 보기 URL을 구성하고 접근해야 합니다.
 
-**First**, you should create a **secret token string** using a token generator of your choice. This secret will only be known by your Next.js app and your headless CMS. This secret prevents people who don’t have access to your CMS from accessing preview URLs.
+**먼저**, 당신이 선택한 토큰 생성기를 통해 **비밀 토큰 문자열**을 생성해야 합니다. 이 비밀은 Next.js 앱과 headless CMS만 알 것입니다. 이 비밀은 CMS에 대한 접근 권한이 없는 사람들이 미리보기 URL에 접근하는 것을 막아줍니다.
 
-**Second**, if your headless CMS supports setting custom preview URLs, specify the following as the preview URL. This assumes that your preview API route is located at `pages/api/preview.js`.
+**다음으로**, headless CMS가 커스텀 미리보기 URL의 설정을 지원한다면, 미리보기 URL대로 다음을 명시해야 합니다. 이는 미리보기 API route가 `pages/api/preview.js`에 위치하고 있다는 것을 가정합니다.
 
 ```bash filename="Terminal"
 https://<your-site>/api/preview?secret=<token>&slug=<path>
 ```
 
-- `<your-site>` should be your deployment domain.
-- `<token>` should be replaced with the secret token you generated.
-- `<path>` should be the path for the page that you want to preview. If you want to preview `/posts/foo`, then you should use `&slug=/posts/foo`.
+- `<your-site>`는 배포 도메인이어야 합니다. should be your deployment domain.
+- `<token>`는 생성한 비밀 토큰으로 대체해야 합니다. should be replaced with the secret token you generated.
+- `<path>`는 미리보기하고 싶은  should be the path for the page that you want to preview. If you want to preview `/posts/foo`, then you should use `&slug=/posts/foo`.
 
-Your headless CMS might allow you to include a variable in the preview URL so that `<path>` can be set dynamically based on the CMS’s data like so: `&slug=/posts/{entry.fields.slug}`
+headless CMS는 `<path`가 CMS의 데이터에 기반하여 동적으로 설정될 수 있도록 미리보기 URL에 변수를 포함하는 것을 허용할 수 있습니다. 이렇게 말이죠. `&slug=/posts/{entry.fields.slug}`
 
+**마지막으로**, 미리보기 URL route에서 다음을 따르세요.
 **Finally**, in the preview API route:
 
-- Check that the secret matches and that the `slug` parameter exists (if not, the request should fail).
+- 비밀 키가 일치하며 `slug` 매개변수가 존재하는지 확인하세요(만약 아니라면, 요청은 실패해야 합니다).
 -
-- Call `res.setPreviewData`.
-- Then redirect the browser to the path specified by `slug`. (The following example uses a [307 redirect](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/307)).
+- `res.setPreviewData`를 호출하세요.
+- 그런 다음 브라우저를 `slug`에 의해 지정된 경로로 리다이렉트하세요. (다음 예시는 [307 redirect](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/307)를 사용합니다.)
 
 ```js
 export default async (req, res) => {
