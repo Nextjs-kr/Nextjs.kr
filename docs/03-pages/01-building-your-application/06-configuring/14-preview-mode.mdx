@@ -171,27 +171,27 @@ https://<your-site>/api/preview?secret=<token>&slug=<path>
 
 ## 더 자세히
 
-> **참고**: during rendering `next/router` exposes an `isPreview` flag, see the [router object docs](/docs/pages/api-reference/functions/use-router#router-object) for more info.
+> **참고**: 렌더링하는 동안 `next/router`는 `isPreview`를 노출합니다. 자세한 사항은 [router 객체 문서](/docs/pages/api-reference/functions/use-router#router-object)를 참고하세요.
 
-### Specify the Preview Mode duration
+### 미리보기 모드 지속 기간 지정하기
 
-`setPreviewData` takes an optional second parameter which should be an options object. It accepts the following keys:
+`setPreviewData`는 options 객체여야 하는 선택적인 두 번째 매개변수를 받습니다. 이는 다음의 키를 받습니다.
 
-- `maxAge`: Specifies the number (in seconds) for the preview session to last for.
-- `path`: Specifies the path the cookie should be applied under. Defaults to `/` enabling preview mode for all paths.
+- `maxAge`: 미리보기 세션이 지속되는 시간(초 단위)을 지정합니다.
+- `path` : 쿠키가 적용될 경로를 지정합니다. 기본값은 `/`으로 미리보기 모드를 모든 경로에 대해 활성화합니다.
 
 ```js
 setPreviewData(data, {
-  maxAge: 60 * 60, // The preview mode cookies expire in 1 hour
-  path: '/about', // The preview mode cookies apply to paths with /about
+  maxAge: 60 * 60, // 미리보기 모드 쿠키가 1시간 후에 만료됩니다.
+  path: '/about', // 미리보기 모드 쿠키가 /about 아래의 경로에 적용됩니다.
 })
 ```
 
-### Clear the Preview Mode cookies
+### 미리보기 모드 쿠키 지우기
 
-By default, no expiration date is set for Preview Mode cookies, so the preview session ends when the browser is closed.
+기본적으로 미리보기 모드 쿠키에 만료 시간이 지정되지 않아, 브라우저가 닫힐 때 미리보기 세션이 만료됩니다.
 
-To clear the Preview Mode cookies manually, create an API route that calls `clearPreviewData()`:
+미리보기 모드 쿠키를 직접 지우려면, `clearPreviewData()`를 호출하는 API route를 생성하세요:
 
 ```js filename="pages/api/clear-preview-mode-cookies.js"
 export default function handler(req, res) {
