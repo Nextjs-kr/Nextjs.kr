@@ -35,13 +35,13 @@ description: Next.js는 정적으로 생성된 페이지에 대한 미리보기 
 
 Next.js는 이러한 문제를 해결하기 위해 **미리보기 모드**라는 기능을 갖고 있습니다. 이곳에서 이 기능의 사용 방법을 배웁니다.
 
-## 스텝 1: 미리보기 API route를 생성하고 접근하기
+## 스텝 1: 미리보기 API 라우트를 생성하고 접근하기
 
-> Next.js API Routes가 친숙하지 않다면 [API Routes 문서](/docs/pages/building-your-application/routing/api-routes)를 먼저 살펴보세요.
+> Next.js API 라우트가 친숙하지 않다면 [API 라우트 문서](/docs/pages/building-your-application/routing/api-routes)를 먼저 살펴보세요.
 
-먼저, **미리보기 API route**를 생성하세요. 이것은 이름을 가질 수 있습니다. - 예 : `pages/api/preview.js` (TypeScript를 사용하고 있다면 `.ts`).
+먼저, **미리보기 API 라우트**를 생성하세요. 이것은 이름을 가질 수 있습니다. - 예 : `pages/api/preview.js` (TypeScript를 사용하고 있다면 `.ts`).
 
-이 API route에서, 응답 객체에 대해 `setPreviewData`를 호출해야 합니다. `setPreviewData`의 매개변수는 객체여야만 하며, `getStaticProps`에 의해 사용될 수 있습니다(이에 대해 후술합니다). 이제부터 우리는 `{}`를 사용할 겁니다.
+이 API 라우트에서, 응답 객체에 대해 `setPreviewData`를 호출해야 합니다. `setPreviewData`의 매개변수는 객체여야만 하며, `getStaticProps`에 의해 사용될 수 있습니다(이에 대해 후술합니다). 이제부터 우리는 `{}`를 사용할 겁니다.
 
 ```js
 export default function handler(req, res) {
@@ -53,7 +53,7 @@ export default function handler(req, res) {
 
 `res.setPreviewData`는 미리보기 모드를 켜는 몇몇 쿠키를 브라우저에 설정합니다. 이러한 쿠키를 포함하는 모든 Next.js로의 요청은 미리보기 모드로 간주됩니다. 정적으로 생성된 페이지에 대한 동작이 변화합니다(이에 대해 후술합니다).
 
-아래처럼 API route를 생성하고 브라우저에서 직접 접근하여 수동으로 테스트할 수 있습니다.
+아래처럼 API 라우트를 생성하고 브라우저에서 직접 접근하여 수동으로 테스트할 수 있습니다.
 
 ```js filename="pages/api/preview.js"
 // 브라우저로 직접 테스트하기 위한 간단 예제
@@ -67,13 +67,13 @@ export default function handler(req, res) {
 
 ### Headless CMS로부터 안전하게 접근하기
 
-실전에서는 headless CMS로부터 _안전하게_ 이 API route를 호출하고 싶을 겁니다. 구체적인 절차는 사용하고 있는 CMS에 따라 다르겠지만, 일반적으로 수행할 수 있는 몇몇 절차가 있습니다.
+실전에서는 headless CMS로부터 _안전하게_ 이 API 라우트를 호출하고 싶을 겁니다. 구체적인 절차는 사용하고 있는 CMS에 따라 다르겠지만, 일반적으로 수행할 수 있는 몇몇 절차가 있습니다.
 
 이 절차는 사용 중인 headless CMS가 **커스텀 미리보기 URL**의 설정을 지원한다고 가정합니다. 그렇지 않다면, 여전히 이 방법을 통해 미리 보기 URL을 보호할 수 있지만 수동으로 미리 보기 URL을 구성하고 접근해야 합니다.
 
 **먼저**, 당신이 선택한 토큰 생성기를 통해 **비밀 토큰 문자열**을 생성해야 합니다. 이 비밀 키는 Next.js 앱과 headless CMS만 알 것입니다. 이 비밀은 CMS에 대한 접근 권한이 없는 사람들이 미리보기 URL에 접근하는 것을 막아줍니다.
 
-**다음으로**, headless CMS가 커스텀 미리보기 URL의 설정을 지원한다면, 미리보기 URL대로 다음을 명시해야 합니다. 이는 미리보기 API route가 `pages/api/preview.js`에 위치하고 있다는 것을 가정합니다.
+**다음으로**, headless CMS가 커스텀 미리보기 URL의 설정을 지원한다면, 미리보기 URL대로 다음을 명시해야 합니다. 이는 미리보기 API 라우트가 `pages/api/preview.js`에 위치하고 있다는 것을 가정합니다.
 
 ```bash filename="Terminal"
 https://<your-site>/api/preview?secret=<token>&slug=<path>
@@ -85,8 +85,7 @@ https://<your-site>/api/preview?secret=<token>&slug=<path>
 
 headless CMS는 `<path`가 CMS의 데이터에 기반하여 동적으로 설정될 수 있도록 미리보기 URL에 변수를 포함하는 것을 허용할 수 있습니다. 이렇게 말이죠. `&slug=/posts/{entry.fields.slug}`
 
-**마지막으로**, 미리보기 URL route에서 다음을 따르세요.
-**Finally**, in the preview API route:
+**마지막으로**, 미리보기 API 라우트에서 다음을 따르세요.
 
 - 비밀 키가 일치하며 `slug` 매개변수가 존재하는지 확인하세요(만약 아니라면, 요청은 실패해야 합니다).
 -
@@ -96,7 +95,7 @@ headless CMS는 `<path`가 CMS의 데이터에 기반하여 동적으로 설정�
 ```js
 export default async (req, res) => {
   // 비밀 키와 다음 매개변수를 확인
-  // 이 비밀 키는 이 API route와 CMS만 알고 있어야 함
+  // 이 비밀 키는 이 API 라우트와 CMS만 알고 있어야 함
   if (req.query.secret !== 'MY_SECRET_TOKEN' || !req.query.slug) {
     return res.status(401).json({ message: 'Invalid token' })
   }
@@ -141,7 +140,7 @@ export async function getStaticProps(context) {
 }
 ```
 
-우리는 미리보기 API route에서 `res.setPreviewData({})`를 사용했으므로, `context.previewData`는 `{}`가 될 겁니다. 필요하다면 이를 이용해서 미리보기 API route로부터 `getStaticProps`로 세션 정보를 넘길 수 있습니다.
+우리는 미리보기 API 라우트에서 `res.setPreviewData({})`를 사용했으므로, `context.previewData`는 `{}`가 될 겁니다. 필요하다면 이를 이용해서 미리보기 API 라우트로부터 `getStaticProps`로 세션 정보를 넘길 수 있습니다.
 
 `getStaticPaths` 또한 사용하고 있다면, `context.params` 또한 이용할 수 있습니다.
 
@@ -161,7 +160,7 @@ export async function getStaticProps(context) {
 }
 ```
 
-이제 다 됐습니다! headless CMS로부터 혹은 수동으로 미리보기 API route에 접근하면(`secret`과 `slug`를 통해), 미리보기 내용을 볼 수 있을 겁니다. 그리고 초안을 게시 없이 업데이트 하면 초안을 미리보기 할 수 있을 겁니다.
+이제 다 됐습니다! headless CMS로부터 혹은 수동으로 미리보기 API 라우트에 접근하면(`secret`과 `slug`를 통해), 미리보기 내용을 볼 수 있을 겁니다. 그리고 초안을 게시 없이 업데이트 하면 초안을 미리보기 할 수 있을 겁니다.
 
 이것을 headless CMS에 미리보기 URL로 설정하거나 수동으로 접근하면, 미리보기를 볼 수 있을 겁니다.
 
@@ -191,7 +190,7 @@ setPreviewData(data, {
 
 기본적으로 미리보기 모드 쿠키에 만료 시간이 지정되지 않아, 브라우저가 닫힐 때 미리보기 세션이 만료됩니다.
 
-미리보기 모드 쿠키를 직접 지우려면, `clearPreviewData()`를 호출하는 API route를 생성하세요:
+미리보기 모드 쿠키를 직접 지우려면, `clearPreviewData()`를 호출하는 API 라우트를 생성하세요:
 
 ```js filename="pages/api/clear-preview-mode-cookies.js"
 export default function handler(req, res) {
@@ -199,9 +198,9 @@ export default function handler(req, res) {
 }
 ```
 
-Then, send a request to `/api/clear-preview-mode-cookies` to invoke the API Route. If calling this route using [`next/link`](/docs/pages/api-reference/components/link), you must pass `prefetch={false}` to prevent calling `clearPreviewData` during link prefetching.
+그 다음, API 라우트를 호출하기 위해 `/api/clear-preview-mode-cookies`로 요청을 보내세요. 이 라우트를 [`next/link`](/docs/pages/api-reference/components/link)를 사용해 호출한다면, 링크 프리페치 동안 `clearPreviewData`의 호출을 막기 위해 `prefetch={false}`를 넘겨주어야 합니다.
 
-If a path was specified in the `setPreviewData` call, you must pass the same path to `clearPreviewData`:
+경로가 `setPreviewData` 호출에 명시되어 있다면, `clearPreviewData`에 같은 경로를 넘겨주어야 합니다:
 
 ```js filename="pages/api/clear-preview-mode-cookies.js"
 export default function handler(req, res) {
@@ -211,17 +210,17 @@ export default function handler(req, res) {
 }
 ```
 
-### `previewData` size limits
+### `previewData` 크기 제한
 
-You can pass an object to `setPreviewData` and have it be available in `getStaticProps`. However, because the data will be stored in a cookie, there’s a size limitation. Currently, preview data is limited to 2KB.
+`setPreviewData`에 객체를 넘겨주어 `getStaticProps`에서 사용할 수 있습니다. 그러나, 데이터가 쿠키가 저장되기에 크기 제한이 있습니다. 현재 미리보기 데이터는 2KB로 제한됩니다.
 
-### Works with `getServerSideProps`
+### `getServerSideProps`와 함께 사용하기
 
-The preview mode works on `getServerSideProps` as well. It will also be available on the `context` object containing `preview` and `previewData`.
+미리보기 모드는 `getServerSideProps`에서도 작동합니다. 또한 `preview`와 `previewData`를 포함하는 `context` 객체에서도 사용 가능합니다.
 
-### Works with API Routes
+### API 라우트와 함께 사용하기
 
-API Routes will have access to `preview` and `previewData` under the request object. For example:
+API 라우트는 요청 객체의 `preview`와 `previewData`로의 접근 권한을 갖습니다. 예를 들어:
 
 ```js
 export default function myApiRoute(req, res) {
@@ -231,9 +230,9 @@ export default function myApiRoute(req, res) {
 }
 ```
 
-### Unique per `next build`
+### `next build`마다 유일함
 
-Both the bypass cookie value and the private key for encrypting the `previewData` change when `next build` is completed.
-This ensures that the bypass cookie can’t be guessed.
+`next build`가 완료될 때 바이패스 쿠키 값과 `previewData`를 암호화하는 데 사용되는 개인 키 모두 변경됩니다.
+이는 바이패스 쿠키를 추측할 수 없도록 보장합니다.
 
-> **Good to know**: To test Preview Mode locally over HTTP your browser will need to allow third-party cookies and local storage access.
+> **참고**: HTTP를 통해 로컬에서 미리보기 모드를 테스트하려면 서드파티 쿠키와 로컬 저장소 접근을 허용해야 합니다.
