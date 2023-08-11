@@ -31,7 +31,7 @@ description: Next.js는 정적으로 생성된 페이지에 대한 미리보기 
 
 [Pages documentation](/docs/pages/building-your-application/routing/pages-and-layouts)과 [Data Fetching documentation](/docs/pages/building-your-application/data-fetching)에서, `getStaticProps`과 `getStaticPaths`를 사용하여 페이지를 빌드 타임에 미리 렌더링(**정적 생성**)하는 방법에 대해 다뤘습니다.
 
-정적 생성은 페지가 headless CMS로부터 데이터를 가져올 때 유용합니다. 그러나 만약 headless CMS에 대한 드래프트를 작성하고 있고 그것을 페이지에서 **미리보기**하고 싶을 때 정적 생성은 이상적이지 않습니다. Next.js가 이러한 페이지를 빌드 시간 대신 **요청 시간**에 렌더링하고 게시된 내용 대신 초안 내용을 가져오기를 원할 겁니다. 그리고 Next.js가 이 특정한 경우에서만 정적 생성을 건너뛰기를 원할 것입니다.
+정적 생성은 페이지가 headless CMS로부터 데이터를 가져올 때 유용합니다. 그러나 만약 headless CMS에 대한 초안을 작성하고 있고 그것을 페이지에서 **미리보기**하고 싶을 때 정적 생성은 이상적이지 않습니다. Next.js가 이러한 페이지를 빌드 시간 대신 **요청 시간**에 렌더링하고 게시된 내용 대신 초안 내용을 가져오기를 원할 겁니다. 그리고 Next.js가 이 특정한 경우에서만 정적 생성을 건너뛰기를 원할 것입니다.
 
 Next.js는 이러한 문제를 해결하기 위해 **미리보기 모드**라는 기능을 갖고 있습니다. 이곳에서 이 기능의 사용 방법을 배웁니다.
 
@@ -51,7 +51,7 @@ export default function handler(req, res) {
 }
 ```
 
-`res.setPreviewData`는 미리보기 모드를 켜는 몇몇 쿠키를 브라우저에 설정합니다. 이러한 쿠키를 포함하는 모든 Next.js로의 요청은 미리보기 모드로 간주됩니다. 정적으로 생성된 페이지에 대한 동작이 변화합니다(이에 대해 후술합니다).
+`res.setPreviewData`는 미리보기 모드를 켜는 몇몇 쿠키를 브라우저에 설정합니다. 이러한 쿠키를 포함하는 모든 Next.js로의 요청은 미리보기 모드로 간주합니다. 정적으로 생성된 페이지에 대한 동작이 변화합니다(이에 대해 후술합니다).
 
 아래처럼 API 라우트를 생성하고 브라우저에서 직접 접근하여 수동으로 테스트할 수 있습니다.
 
@@ -81,7 +81,7 @@ https://<your-site>/api/preview?secret=<token>&slug=<path>
 
 - `<your-site>`는 배포 도메인이어야 합니다.
 - `<token>`는 생성한 비밀 토큰으로 대체해야 합니다.
-- `<path>`는 미리보기하고 싶은 페이지에 대한 경로여야 합니다. 만약 `/posts/foo`를 미리보기 하고 싶다면, `&slug=/posts/foo`를 사용해야 합니다.
+- `<path>`는 미리보기 하고 싶은 페이지에 대한 경로여야 합니다. 만약 `/posts/foo`를 미리보기 하고 싶다면, `&slug=/posts/foo`를 사용해야 합니다.
 
 headless CMS는 `<path`가 CMS의 데이터에 기반하여 동적으로 설정될 수 있도록 미리보기 URL에 변수를 포함하는 것을 허용할 수 있습니다. 이렇게 말이죠. `&slug=/posts/{entry.fields.slug}`
 
@@ -160,7 +160,7 @@ export async function getStaticProps(context) {
 }
 ```
 
-이제 다 됐습니다! headless CMS로부터 혹은 수동으로 미리보기 API 라우트에 접근하면(`secret`과 `slug`를 통해), 미리보기 내용을 볼 수 있을 겁니다. 그리고 초안을 게시 없이 업데이트 하면 초안을 미리보기 할 수 있을 겁니다.
+이제 다 됐습니다! headless CMS로부터 혹은 수동으로 미리보기 API 라우트에 접근하면(`secret`과 `slug`를 통해), 미리보기 내용을 볼 수 있을 겁니다. 그리고 초안을 게시 없이 업데이트하면 초안을 미리보기 할 수 있을 겁니다.
 
 이것을 headless CMS에 미리보기 URL로 설정하거나 수동으로 접근하면, 미리보기를 볼 수 있을 겁니다.
 
@@ -198,7 +198,7 @@ export default function handler(req, res) {
 }
 ```
 
-그 다음, API 라우트를 호출하기 위해 `/api/clear-preview-mode-cookies`로 요청을 보내세요. 이 라우트를 [`next/link`](/docs/pages/api-reference/components/link)를 사용해 호출한다면, 링크 프리페치 동안 `clearPreviewData`의 호출을 막기 위해 `prefetch={false}`를 넘겨주어야 합니다.
+그다음, API 라우트를 호출하기 위해 `/api/clear-preview-mode-cookies`로 요청을 보내세요. 이 라우트를 [`next/link`](/docs/pages/api-reference/components/link)를 사용해 호출한다면, 링크 프리페치 동안 `clearPreviewData`의 호출을 막기 위해 `prefetch={false}`를 넘겨주어야 합니다.
 
 경로가 `setPreviewData` 호출에 명시되어 있다면, `clearPreviewData`에 같은 경로를 넘겨주어야 합니다.
 
@@ -216,7 +216,7 @@ export default function handler(req, res) {
 
 ### `getServerSideProps`와 함께 사용하기
 
-미리보기 모드는 `getServerSideProps`에서도 작동합니다. 또한 `preview`와 `previewData`를 포함하는 `context` 객체에서도 사용 가능합니다.
+미리보기 모드는 `getServerSideProps`에서도 작동합니다. 또한 `preview`와 `previewData`를 포함하는 `context` 객체에서도 사용할 수 있습니다.
 
 ### API 라우트와 함께 사용하기
 
