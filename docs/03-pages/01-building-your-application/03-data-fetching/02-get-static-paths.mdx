@@ -1,11 +1,12 @@
 ---
 title: getStaticPaths
-description: Fetch data and generate static pages with `getStaticProps`. Learn more about this API for data fetching in Next.js.
+description: `getStaticProps`를 사용하여 데이터를 가져오고 정적 페이지를 생성합니다. Next.js에서 이 데이터 가져오기 API에 대해 자세히 알아보세요.
+
 ---
 
-If a page has [Dynamic Routes](/docs/pages/building-your-application/routing/dynamic-routes) and uses `getStaticProps`, it needs to define a list of paths to be statically generated.
+페이지에 [동적 라우트](/docs/pages/building-your-application/routing/dynamic-routes)가 있고 `getStaticProps`를 사용하는 경우, 정적으로 생성될 경로의 목록을 정의해야 합니다.
 
-When you export a function called `getStaticPaths` (Static Site Generation) from a page that uses dynamic routes, Next.js will statically pre-render all the paths specified by `getStaticPaths`.
+동적 라우트를 사용하는 페이지에서 `getStaticPaths` (정적 사이트 생성) 함수를 내보내면, Next.js는 `getStaticPaths`에서 지정한 모든 경로를 정적으로 사전 렌더링합니다.
 
 ```tsx filename="pages/repo/[name].tsx" switcher
 import type {
@@ -26,9 +27,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
         params: {
           name: 'next.js',
         },
-      }, // See the "paths" section below
+      }, // 아래 "paths" 섹션을 참조하세요.
     ],
-    fallback: true, // false or "blocking"
+    fallback: true, // false 또는 "blocking"
   }
 }
 
@@ -55,9 +56,9 @@ export const getStaticPaths = async () => {
         params: {
           name: 'next.js',
         },
-      }, // See the "paths" section below
+      }, // 아래 "paths" 섹션을 참조하세요.
     ],
-    fallback: true, // false or "blocking"
+    fallback: true, // false 또는 "blocking"
   }
 }
 
@@ -72,51 +73,51 @@ export default function Page({ repo }) {
 }
 ```
 
-The [`getStaticPaths` API reference](/docs/pages/api-reference/functions/get-static-paths) covers all parameters and props that can be used with `getStaticPaths`.
+[`getStaticPaths` API 레퍼런스](/docs/pages/api-reference/functions/get-static-paths)는 `getStaticPaths`와 함께 사용할 수 있는 모든 매개변수와 속성을 다룹니다.
 
-## When should I use getStaticPaths?
+## 언제 getStaticPaths를 사용해야 하나요?
 
-You should use `getStaticPaths` if you’re statically pre-rendering pages that use dynamic routes and:
+동적 라우트를 사용하여 페이지를 정적으로 사전 렌더링하는 경우 및 다음 조건에 해당하는 경우 `getStaticPaths`를 사용해야 합니다.
 
-- The data comes from a headless CMS
-- The data comes from a database
-- The data comes from the filesystem
-- The data can be publicly cached (not user-specific)
-- The page must be pre-rendered (for SEO) and be very fast — `getStaticProps` generates `HTML` and `JSON` files, both of which can be cached by a CDN for performance
+- 데이터가 무표시 CMS에서 오는 경우
+- 데이터가 데이터베이스에서 오는 경우
+- 데이터가 파일 시스템에서 오는 경우
+- 데이터를 공개적으로 캐시할 수 있는 경우(사용자 특정이 아님)
+- 페이지가 사전 렌더링되어야 하며 매우 빠르게 동작해야 하는 경우 — `getStaticProps`는 `HTML` 및 `JSON` 파일을 생성하며, 이 둘 다 CDN에서 성능을 위해 캐시될 수 있습니다.
 
-## When does getStaticPaths run
+## getStaticPaths는 언제 실행되나요?
 
-`getStaticPaths` will only run during build in production, it will not be called during runtime. You can validate code written inside `getStaticPaths` is removed from the client-side bundle [with this tool](https://next-code-elimination.vercel.app/).
+`getStaticPaths`는 프로덕션에서 빌드 중에만 실행되며, 런타임 중에는 호출되지 않습니다. [이 툴](https://next-code-elimination.vercel.app/)을 사용하여 `getStaticPaths` 내부에 작성된 코드가 클라이언트 측 번들에서 제거되었는지 확인할 수 있습니다.
 
-### How does getStaticProps run with regards to getStaticPaths
+### getStaticProps는 getStaticPaths와 어떻게 함께 실행되나요?
 
-- `getStaticProps` runs during `next build` for any `paths` returned during build
-- `getStaticProps` runs in the background when using `fallback: true`
-- `getStaticProps` is called before initial render when using `fallback: blocking`
+- `getStaticProps`는 빌드 중에 `getStaticPaths`에서 반환된 `paths`에 대해 `next build` 동안 실행됩니다.
+- `fallback: true`를 사용할 때 `getStaticProps`는 백그라운드에서 실행됩니다.
+- `fallback: blocking`을 사용할 때 `getStaticProps`는 초기 렌더링 전에 호출됩니다.
 
-## Where can I use getStaticPaths
+## 어디에서 getStaticPaths를 사용할 수 있나요?
 
-- `getStaticPaths` **must** be used with `getStaticProps`
-- You **cannot** use `getStaticPaths` with [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)
-- You can export `getStaticPaths` from a [Dynamic Route](/docs/pages/building-your-application/routing/dynamic-routes) that also uses `getStaticProps`
-- You **cannot** export `getStaticPaths` from non-page file (e.g. your `components` folder)
-- You must export `getStaticPaths` as a standalone function, and not a property of the page component
+- `getStaticPaths`는 `getStaticProps`와 함께 **반드시** 사용되어야 합니다.
+- `getStaticPaths`는 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)와 함께 **사용할 수 없습니다**.
+- `getStaticProps`도 사용하는 [동적 라우트](/docs/pages/building-your-application/routing/dynamic-routes)에서 `getStaticPaths`를 내보낼 수 있습니다.
+- 페이지가 아닌 파일(예: `components` 폴더)에서 `getStaticPaths`를 내보낼 수 **없습니다**.
+- 페이지 컴포넌트의 속성이 아닌 독립 함수로 `getStaticPaths`를 내보내야 합니다.
 
-## Runs on every request in development
+## 개발 중에 모든 요청에서 실행됩니다
 
-In development (`next dev`), `getStaticPaths` will be called on every request.
+개발(`next dev`) 중에는, `getStaticPaths`가 모든 요청에 대해 호출됩니다.
 
-## Generating paths on-demand
+## 요청 시 경로 생성
 
-`getStaticPaths` allows you to control which pages are generated during the build instead of on-demand with [`fallback`](/docs/pages/api-reference/functions/get-static-paths#fallback-blocking). Generating more pages during a build will cause slower builds.
+`getStaticPaths`를 사용하면 빌드 중에 페이지를 생성하는 대신 [`fallback`](/docs/pages/api-reference/functions/get-static-paths#fallback-blocking)과 함께 요청 시 생성할 수 있습니다. 빌드 중에 더 많은 페이지를 생성하면 빌드 속도가 느려집니다.
 
-You can defer generating all pages on-demand by returning an empty array for `paths`. This can be especially helpful when deploying your Next.js application to multiple environments. For example, you can have faster builds by generating all pages on-demand for previews (but not production builds). This is helpful for sites with hundreds/thousands of static pages.
+`paths`에 대한 빈 배열을 반환함으로써 모든 페이지를 요청 시 생성을 연기할 수 있습니다. 이는 Next.js 애플리케이션을 여러 환경에 배포할 때 특히 유용합니다. 예를 들어, 미리보기에는 모든 페이지를 요청 시 생성하여 빌드 속도를 높일 수 있지만(프로덕션 빌드는 제외) 수백/수천 개의 정적 페이지가 있는 사이트에 유용합니다.
+
 
 ```jsx filename="pages/posts/[id].js"
 export async function getStaticPaths() {
-  // When this is true (in preview environments) don't
-  // prerender any static pages
-  // (faster builds, but slower initial page load)
+  // 이 값이 참일 때(미리보기 환경에서) 정적 페이지를 사전 렌더링하지 마세요.
+  // (빌드 속도는 빠르지만, 초기 페이지 로드는 느림)
   if (process.env.SKIP_BUILD_STATIC_GENERATION) {
     return {
       paths: [],
@@ -124,18 +125,19 @@ export async function getStaticPaths() {
     }
   }
 
-  // Call an external API endpoint to get posts
+  // 외부 API 엔드포인트를 호출하여 게시물을 가져옵니다.
   const res = await fetch('https://.../posts')
   const posts = await res.json()
 
-  // Get the paths we want to prerender based on posts
-  // In production environments, prerender all pages
-  // (slower builds, but faster initial page load)
+  // 게시물을 기반으로 사전 렌더링하려는 경로를 가져옵니다.
+  // 프로덕션 환경에서는 모든 페이지를 사전 렌더링합니다.
+  // (빌드 속도는 느리지만, 초기 페이지 로드는 빠름)
   const paths = posts.map((post) => ({
     params: { id: post.id },
   }))
 
-  // { fallback: false } means other routes should 404
+  // { fallback: false }는 다른 라우트는 404를 반환해야 함을 의미합니다.
   return { paths, fallback: false }
 }
+
 ```
