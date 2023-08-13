@@ -1,9 +1,9 @@
 ---
 title: incrementalCacheHandlerPath
-설명: 데이터 저장 및 재검증에 사용되는 Next.js 캐시를 설정합니다.
+description: 데이터 저장 및 재검증에 사용되는 Next.js 캐시를 설정합니다.
 ---
 
-Next.js에서 [데이터 캐싱하기](/docs/app/building-your-application/data-fetching/caching)은 파일 시스템 캐시를 사용합니다. 이 경우 별도의 구성이 필요하지 않지만, `next.config.js`의 `incrementalCacheHandlerPath` 필드를 사용하여 `CacheHandler`를 사용자가 정의할 수 있습니다.
+Next.js에서 [기본 캐시 핸들러](/docs/app/building-your-application/data-fetching/caching)는 파일 시스템 캐시를 사용합니다. 이 경우 별도의 구성이 필요하지 않지만, `next.config.js`의 `incrementalCacheHandlerPath` 필드를 사용하여 `CacheHandler`를 사용자가 정의할 수 있습니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -49,10 +49,10 @@ module.exports = class CacheHandler {
 
 ### `set()`
 
-| 매개변수 | 타입           | 설명                             |
-| -------- | -------------- | -------------------------------- |
-| `key`    | `string`       | 아래의 데이터를 저장할 키입니다. |
-| `data`   | Data or `null` | 캐시할 데이터입니다.             |
+| 매개변수 | 타입             | 설명                             |
+| -------- | ---------------- | -------------------------------- |
+| `key`    | `string`         | 아래의 데이터를 저장할 키입니다. |
+| `data`   | Data 또는 `null` | 캐시할 데이터입니다.             |
 
 `Promise<void>`를 반환합니다.
 
