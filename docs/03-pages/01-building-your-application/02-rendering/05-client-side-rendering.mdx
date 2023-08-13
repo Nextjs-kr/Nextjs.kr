@@ -16,8 +16,8 @@ React를 사용한 클라이언트 사이드 렌더링(CSR)에서 브라우저�
 
 Next.js에서는 클라이언트 사이드 렌더링을 구현하는 두 가지 방법이 있습니다.
 
-1. 서버 사이드 렌더링 메서드([`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 및 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)) 대신 페이지 내부에서 React의 `useEffect()` hook을 사용합니다.
-2. 클라이언트에서 데이터를 가져오기 위해 [SWR](https://swr.vercel.app/) 또는 [TanStack Query](https://tanstack.com/query/v3/)와 같은 데이터 불러오기 라이브러리 사용(권장).
+1. 페이지 내부에서 React의 `useEffect()` hook을 서버 사이드 렌더링 메서드([`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 와 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)) 대신 사용합니다.
+2. 클라이언트에서 데이터를 가져오기 위해 [SWR](https://swr.vercel.app/) 또는 [TanStack Query](https://tanstack.com/query/v3/)와 같은 데이터 페치 라이브러리를 사용합니다.(권장)
 
 다음은 Next.js 페이지 내에서 `useEffect()`를 사용하는 예시입니다.
 
@@ -49,7 +49,7 @@ export function Page() {
 
 위의 예시에서 컴포넌트는 `Loading....` 렌더링으로 시작합니다. 그런 다음 데이터를 가져오면 데이터를 다시 렌더링하여 표시합니다.
 
-`useEffect()`에서 데이터를 불러오는 것은 이전 React 애플리케이션에서 볼 수 있는 패턴이지만, 더 나은 성능, 캐싱, 최적화 업데이트 등을 위해 데이터 페치 라이브러리를 사용하는 것을 권장합니다. 다음은 [SWR](https://swr.vercel.app/)을 사용해 클라이언트에서 데이터를 페치하는 최소한의 예시입니다.
+`useEffect()`에서 데이터를 불러오는 것은 이전 React 애플리케이션에서 볼 수 있는 패턴이지만 더 나은 성능, 캐싱, 최적화 업데이트 등을 위해 데이터 페치 라이브러리를 사용하는 것을 권장합니다. 다음은 [SWR](https://swr.vercel.app/)을 사용해 클라이언트에서 데이터를 페치하는 최소한의 예시입니다.
 
 ```jsx filename="pages/index.js"
 import useSWR from 'swr'
@@ -69,4 +69,4 @@ export function Page() {
 
 > **참고**:
 >
-> CSR은 SEO에 영향을 미칠 수 있습니다. 일부 검색 엔진 크롤러는 자바스크립트를 실행하지 않으므로 애플리케이션의 초기의 비어 있거나 로딩 중인 상태만 볼 수 있습니다. 또한 인터넷 연결 속도가 느린 사용자나 디바이스의 경우 전체 페이지를 보기 전에 모든 자바스크립트가 로드되고 실행될 때까지 기다려야 하므로 성능 문제가 발생할 수 있습니다. Next.js는 애플리케이션의 **각 페이지의 필요에 따라** [서버 사이드 렌더링](/docs/pages/building-your-application/rendering/server-side-rendering), 정적 사이트 생성(/docs/pages/building-your-application/rendering/static-site-generation), 클라이언트 사이드 렌더링을 조합하여 사용할 수 있는 하이브리드 접근 방식을 장려합니다. 앱 라우터에서는 페이지가 렌더링되는 동안 loading indicator를 표시하기 위해 [Suspense와 함께 로딩 UI](/docs/app/building-your-application/routing/loading-ui-and-streaming)를 사용할 수도 있습니다.
+> CSR은 SEO에 영향을 미칠 수 있습니다. 일부 검색 엔진 크롤러는 자바스크립트를 실행하지 않으므로 애플리케이션의 초기의 비어 있거나 로딩 중인 상태만 볼 수 있습니다. 또한 인터넷 연결 속도가 느린 사용자나 디바이스의 경우 전체 페이지를 보기 전에 모든 자바스크립트가 로드되고 실행될 때까지 기다려야 하므로 성능 문제가 발생할 수 있습니다. Next.js는 애플리케이션의 **각 페이지의 필요에 따라** [서버 사이드 렌더링](/docs/pages/building-your-application/rendering/server-side-rendering), 정적 사이트 생성(/docs/pages/building-your-application/rendering/static-site-generation), 클라이언트 사이드 렌더링을 조합하여 사용할 수 있는 하이브리드 접근 방식을 장려합니다. 앱 라우터에서는 페이지가 렌더링되는 동안 로딩 인디케이터를 표시하기 위해 [Suspense와 함께 로딩 UI](/docs/app/building-your-application/routing/loading-ui-and-streaming)를 사용할 수도 있습니다.

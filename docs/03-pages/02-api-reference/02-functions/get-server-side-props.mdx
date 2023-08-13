@@ -50,11 +50,11 @@ export default function Page({ repo }) {
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `params`        | 이 페이지가 [동적 라우트](/docs/pages/building-your-application/routing/dynamic-routes)를 사용하는 경우 `params`에는 라우트 매개변수가 포함됩니다. 페이지 이름이 `[id].js`인 경우 `params`는 `{ id: ... }`처럼 보일 것입니다.                     |
 | `req`           | 쿠키의 문자열 값에 매핑되는 문자열 키가 있는 객체인 추가 `cookies` prop이 있는 [`HTTP` IncomingMessage 객체](https://nodejs.org/api/http.html#http_class_http_incomingmessage)입니다.                                                   |
-| `res`           | [The `HTTP` 응답 객체](https://nodejs.org/api/http.html#http_class_http_serverresponse).                                                                                                                                |
+| `res`           | [`HTTP` 응답 객체](https://nodejs.org/api/http.html#http_class_http_serverresponse).                                                                                                                                |
 | `query`         | 적 라우트 매개변수를 포함한 쿼리 문자열을 나타내는 객체.                                                                                                                                                                           |
 | `preview`       | (`draftMode`에서는 더 이상 사용되지 않음) 페이지가 [미리 보기 모드](/docs/pages/building-your-application/configuring/preview-mode)에 있으면 미리 보기는 `참`이고 그렇지 않으면 `거짓`입니다.                                                  |
 | `previewData`   | (`draftMode`에서는 더 이상 사용되지 않음) `setPreviewData`에 의해 설정된 [미리 보기](/docs/pages/building-your-application/configuring/preview-mode) 데이터입니다.                                                                   |
-| `draftMode`     | 페이지가 [초안 모드](docs/pages/building-your-application/configuring/draft-mode)에 있으면 `draftMode`가 `참`이고 그렇지 않으면 `거짓`입니다.                                                                                        |
+| `draftMode`     | 페이지가 [드래프트 모드](docs/pages/building-your-application/configuring/draft-mode)(draftMode)에 있으면 `draftMode`가 `참`이고 그렇지 않으면 `거짓`입니다.                                                                                        |
 | `resolvedUrl`   | 클라이언트 전환을 위해 `_next/data` 접두사를 제거하고 원래 쿼리 값을 포함하는 요청 `URL`의 정규화된 버전입니다.                                                                                                                             |
 | `locale`        | locale 활성 locale을 포함합니다(활성화된 경우).                                                                                                                                                                              |
 | `locales`       | 지원되는 모든 locale을 포함합니다(활성화된 경우).                                                                                                                                                                              |
@@ -78,7 +78,7 @@ export async function getServerSideProps(context) {
 
 ### `notFound`
 
-`notFound` 부울을 사용하면 페이지에서 `404`상태와 [404 페이지](/docs/pages/building-your-application/routing/custom-error#404-page)를 반환할 수 있습니다. `notFound: true`를 사용하면 이전에 성공적으로 생성된 페이지가 있더라도 페이지가 `404`를 반환합니다. 이는 사용자가 생성한 콘텐츠가 작성자에 의해 삭제되는 등의 사례를 지원하기 위한 것입니다.
+`notFound` 불리언을 사용하면 페이지에서 `404`상태와 [404 페이지](/docs/pages/building-your-application/routing/custom-error#404-page)를 반환할 수 있습니다. `notFound: true`를 사용하면 이전에 성공적으로 생성된 페이지가 있더라도 페이지가 `404`를 반환합니다. 이는 사용자가 생성한 콘텐츠가 작성자에 의해 삭제되는 등의 사례를 지원하기 위한 것입니다.
 
 ```js
 export async function getServerSideProps(context) {
@@ -99,7 +99,7 @@ export async function getServerSideProps(context) {
 
 ### `redirect`
 
-`redirect` 객체는 내부 및 외부 리소스로 리디렉션할 수 있습니다. `{ destination: 문자열, permanent: 부울 }`의 형태와 일치해야 합니다. 드물지만 구형 `HTTP` 클라이언트가 제대로 리디렉션되도록 사용자 지정 상태 코드를 할당해야 하는 경우가 있습니다. 이러한 경우 `permanent` 속성 대신 `statusCode` 속성을 사용할 수 있지만 둘 다 사용할 수는 없습니다.
+`redirect` 객체는 내부 및 외부 리소스로 리다이렉트할 수 있습니다. `{ destination: 문자열, permanent: 불리언 }`의 형태와 일치해야 합니다. 드물지만 구형 `HTTP` 클라이언트가 제대로 리다이렉트하도록 사용자 지정 상태 코드를 할당해야 하는 경우가 있습니다. 이러한 경우 `permanent` 속성 대신 `statusCode` 속성을 사용할 수 있지만 둘 다 사용할 수는 없습니다.
 
 ```js
 export async function getServerSideProps(context) {
