@@ -94,7 +94,7 @@ const nextConfig = {
 module.exports = nextConfig
 ```
 
-Next.js는 애플리케이션의 모든 기존 경로에 대한 정보를 포함하는 링크의 정의를 `.next/types`에 생성합니다. 그런 다음 TypeScript는 이를 이용하여 잘못된 링크에 대한 피드백을 에디터에서 제공할 수 있습니다.
+Next.js는 애플리케이션의 모든 기존 라우트에 대한 정보를 포함하는 링크의 정의를 `.next/types`에 생성합니다. 그런 다음 TypeScript는 이를 이용하여 잘못된 링크에 대한 피드백을 에디터에서 제공할 수 있습니다.
 
 현재 실험적 기능에서는 동적 세그먼트를 포함한 모든 문자열 리터럴을 지원합니다. 리터럴이 아닌 문자열의 경우 현재 `as Route`를 사용하여 `href`를 수동으로 타입 캐스팅해야 합니다.
 
@@ -102,13 +102,13 @@ Next.js는 애플리케이션의 모든 기존 경로에 대한 정보를 포함
 import type { Route } from 'next';
 import Link from 'next/link'
 
-// href가 유효한 경로인 경우, TypeScript 오류 없음
+// href가 유효한 라우트인 경우, TypeScript 오류 없음
 <Link href="/about" />
 <Link href="/blog/nextjs" />
 <Link href={`/blog/${slug}`} />
 <Link href={('/blog' + slug) as Route} />
 
-// href가 유효한 경로가 아닌 경우, TypeScript 오류 발생
+// href가 유효한 라우트가 아닌 경우, TypeScript 오류 발생
 <Link href="/aboot" />
 ```
 
