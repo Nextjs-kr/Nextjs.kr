@@ -138,7 +138,7 @@ Next.js 13에는 **타입 안전성이 향상**되었으며 아래 내용이 포
 1. **패칭 함수와 페이지 간 데이터 직렬화 없음**: 서버의 컴포넌트, 레이아웃, 페이지에서 직접 `fetch`를 사용할 수 있습니다. 해당 데이터는 React에서 사용되어 클라이언트 측에 전달되기 위해 직렬화(문자열로 변환)할 필요가 _없습니다_. 대신 `app`은 기본적으로 서버 컴포넌트를 사용하므로, 추가 설정 없이 `Date`, `Map`, `Set` 등과 같은 값을 사용할 수 있습니다. 이전에는 Next.js 관련 타입을 사용하여 서버와 클라이언트 사이의 타입을 수동으로 작성했습니다.
 2. **컴포넌트 간 데이터 흐름 간소화**: `_app`을 제거하고 루트 레이아웃을 선호하도록 변경되어, 컴포넌트와 페이지 간의 데이터 흐름을 더 쉽게 볼 수 있습니다. 기존에는 개별 `page`와 `_app` 사이의 데이터 흐름을 이해하기 어렵고 버그가 발생하기도 했습니다. Next.js 13의 [동일 위치 데이터 패칭](/docs/app/building-your-application/data-fetching/fetching)를 사용하면 더 이상 이런 문제가 발생하지 않습니다.
 
-[Next.js의 Data Fetching](/docs/app/building-your-application/data-fetching/fetching)는 이제 데이터베이스 또는 콘텐츠 공급자 선택에 관해 규정하지 않고 가능한 한 end-to-end 타입 안전성을 제공합니다.
+[Next.js의 데이터 패칭](/docs/app/building-your-application/data-fetching/fetching)는 이제 데이터베이스 또는 콘텐츠 공급자 선택에 관해 규정하지 않고 가능한 한 end-to-end 타입 안전성을 제공합니다.
 
 일반적인 타입스크립트에서 예상할 수 있는 것처럼 응답 데이터를 타입화할 수 있습니다.
 ```tsx filename="app/page.tsx"
