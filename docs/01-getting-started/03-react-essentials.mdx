@@ -1,27 +1,27 @@
 ---
-title: React Essentials
-description: An overview of essential React features for building Next.js Applications, including Server Components.
+title: 리액트 필수 요소
+description: 서버 컴포넌트를 포함한 Next.js 애플리케이션을 구축하기 위한 필수 React 기능 개요
 ---
 
-To build applications with Next.js, it helps to be familiar with React's newer features such as Server Components. This page will go through the differences between Server and Client Components, when to use them, and recommended patterns.
+Next.js로 애플리케이션을 빌드하려면 서버 컴포넌트와 같은 React의 최신 기능에 익숙해지면 도움이 됩니다. 이 페이지에서는 서버 컴포넌트와 클라이언트 컴포넌트의 차이점, 사용 시기, 권장 패턴에 관해 설명합니다.
 
-If you're new to React, we also recommend referring to the [React Docs](https://react.dev/learn). Here are some great resources for learning:
+React를 처음 사용하는 경우, [React Docs](https://react.dev/learn)를 참고하시길 권장합니다. 다음은 학습에 도움이 되는 몇 가지 훌륭한 자원입니다.
 
 - [React Tutorial](https://react.dev/learn/tutorial-tic-tac-toe)
 - [Thinking in React](https://react.dev/learn/thinking-in-react)
 - [Learn React](https://react.dev/learn/describing-the-ui)
 
-## Server Components
+## 서버 컴포넌트
 
-Server and Client Components allow developers to build applications that span the server and client, combining the rich interactivity of client-side apps with the improved performance of traditional server rendering.
+서버 및 클라이언트 컴포넌트를 사용하면 개발자는 클라이언트 측 앱의 풍부한 상호 작용과 기존 서버 렌더링의 향상된 성능을 결합하여 서버와 클라이언트를 아우르는 애플리케이션을 구축할 수 있습니다.
 
-### Thinking in Server Components
+### 서버 컴포넌트에서 생각하기
 
-Similar to how React changed the way we think about building UIs, React Server Components introduce a new mental model for building hybrid applications that leverage the [server and the client](/docs/app/building-your-application/rendering#rendering-environments).
+React가 UI를 구축하는 방식을 바꾼 것과 유사하게, React 서버 컴포넌트는 [서버와 클라이언트](/docs/app/building-your-application/rendering#rendering-environments)를 활용하는 하이브리드 애플리케이션을 구축하기 위한 새로운 사고 모델을 도입했습니다.
 
-Instead of React rendering your whole application client-side (such as in the case of Single-Page Applications), React now gives you the flexibility to choose where to render your components based on their purpose.
+단일 페이지 애플리케이션의 경우처럼 전체 애플리케이션을 클라이언트 측에서 렌더링하는 대신, React는 이제 컴포넌트의 목적에 따라 렌더링할 위치를 선택할 수 있는 유연성을 제공합니다.
 
-For example, consider a [page](/docs/app/building-your-application/routing/pages-and-layouts#pages) in your application:
+예를 들어 애플리케이션의 [한 페이지](<(/docs/app/building-your-application/routing/pages-and-layouts#pages)>)를 생각해 보겠습니다:
 
 <Image
   alt="Thinking in Server Components"
@@ -31,27 +31,27 @@ For example, consider a [page](/docs/app/building-your-application/routing/pages
   height="652"
 />
 
-If we were to split the page into smaller components, you'll notice that the majority of components are non-interactive and can be rendered on the server as Server Components. For smaller pieces of interactive UI, we can _sprinkle in_ Client Components. This aligns with Next.js server-first approach.
+페이지를 더 작은 컴포넌트로 분할하면 대부분의 컴포넌트가 인터렉션이 없는 컴포넌트이며 서버에서 서버 컴포넌트로 렌더링할 수 있음을 알 수 있습니다. 더 작은 인터랙티브 UI의 경우 클라이언트 컴포넌트를 _뿌릴 수_ 있습니다. 이는 Next.js의 서버 우선 접근 방식과 일치합니다.
 
-### Why Server Components?
+### 왜 서버 컴포넌트인가?
 
-So, you may be thinking, why Server Components? What are the advantages of using them over Client Components?
+그렇다면 왜 서버 컴포넌트일까요? 클라이언트 컴포넌트보다 서버 컴포넌트를 사용하면 어떤 이점이 있을까요?
 
-Server Components allow developers to better leverage server infrastructure. For example, you can move data fetching to the server, closer to your database, and keep large dependencies that previously would impact the client JavaScript bundle size on the server, leading to improved performance. Server Components make writing a React application feel similar to PHP or Ruby on Rails, but with the power and flexibility of React and the components model for templating UI.
+서버 컴포넌트를 사용하면 개발자가 서버 인프라를 더 잘 활용할 수 있습니다. 예를 들어, 데이터 불러오기를 데이터베이스에 더 가까운 서버로 옮기고, 이전에는 클라이언트 자바스크립트 번들 크기에 영향을 미쳤던 대규모 종속성을 서버에 유지하여 성능을 개선할 수 있습니다. 서버 컴포넌트를 사용하면 React 애플리케이션을 작성하는 것이 PHP나 Ruby on Rails와 비슷하게 느껴지지만, React의 강력한 성능과 유연성, UI 템플릿을 위한 컴포넌트 모델을 사용할 수 있습니다.
 
-With Server Components, the initial page load is faster, and the client-side JavaScript bundle size is reduced. The base client-side runtime is **cacheable** and **predictable** in size, and does _not_ increase as your application grows. Additional JavaScript is _only added_ as client-side interactivity is used in your application through [Client Components](#client-components).
+서버 컴포넌트를 사용하면 초기 페이지 로딩이 빨라지고 클라이언트 측 자바스크립트의 번들 크기가 줄어듭니다. 기본 클라이언트 측 실행시간은 **캐시가 가능하고** 크기가 **예측할 수 있으며** 애플리케이션이 커져도 _증가하지 않습니다_. 추가적인 자바스크립트는 [클라이언트 컴포넌트](#client-components)를 통해 애플리케이션에서 클라이언트 측 상호 작용이 사용될 때만 추가됩니다.
 
-When a route is loaded with Next.js, the initial HTML is rendered on the server. This HTML is then **progressively enhanced** in the browser, allowing the client to take over the application and add interactivity, by asynchronously loading the Next.js and React client-side runtime.
+Next.js로 경로가 로드되면 초기 HTML이 서버에서 렌더링 됩니다. 그런 다음, 이 HTML은 브라우저에서 **점진적으로 향상**되어 클라이언트가 Next.js 및 React 클라이언트 측 실행시간을 비동기적으로 로드하여 애플리케이션을 넘겨받아 상호 작용을 추가할 수 있습니다.
 
-To make the transition to Server Components easier, all components inside the [App Router](/docs/app/building-your-application/routing#the-app-router) are Server Components by default, including [special files](/docs/app/building-your-application/routing#file-conventions) and [colocated components](/docs/app/building-your-application/routing#colocation). This allows you to automatically adopt them with no extra work, and achieve great performance out of the box. You can also optionally opt-in to Client Components using the ['use client' directive](#the-use-client-directive).
+서버 컴포넌트로 쉽게 전환할 수 있도록 [특수 파일](/docs/app/building-your-application/routing#file-conventions) 및 [코로케이션된 컴포넌트](/docs/app/building-your-application/routing#colocation)를 포함하여 [App Router](/docs/app/building-your-application/routing#the-app-router) 내의 모든 컴포넌트는 기본적으로 서버 컴포넌트로 전환됩니다. 따라서 추가 작업 없이 자동으로 적용하여 즉시 뛰어난 성능을 얻을 수 있습니다. ['use client' 지시문](#the-use-client-directive)을 사용하여 선택적으로 클라이언트 컴포넌트를 사용할 수도 있습니다.
 
-## Client Components
+## 클라이언트 컴포넌트
 
-Client Components enable you to add client-side interactivity to your application. In Next.js, they are [pre-rendered](/docs/app/building-your-application/rendering#component-level-client-and-server-rendering) on the server and [hydrated](/docs/app/building-your-application/rendering#component-level-client-and-server-rendering) on the client. You can think of Client Components as how components in the [Pages Router](/docs/pages) have always worked.
+클라이언트 컴포넌트를 사용하면 애플리케이션에 클라이언트 측 상호 작용을 추가할 수 있습니다. Next.js에서는 서버에서 [미리 렌더링](/docs/app/building-your-application/rendering#component-level-client-and-server-rendering)되고 클라이언트에서 [하이드레이션](/docs/app/building-your-application/rendering#component-level-client-and-server-rendering)됩니다. 클라이언트 컴포넌트는 [페이지 라우터](/docs/pages)의 컴포넌트가 항상 작동하는 방식이라고 생각하면 됩니다. 클라이언트 컴포넌트는 항상 [Pages Router](/docs/pages)에서 컴포넌트가 작동하는 방식과 동일합니다.
 
-### The "use client" directive
+### "use client" 지시어
 
-The [`"use client"` directive](https://github.com/reactjs/rfcs/pull/227) is a convention to declare a boundary between a Server and Client Component module graph.
+["use client" 지시문](https://github.com/reactjs/rfcs/pull/227)은 서버와 클라이언트 컴포넌트 모듈 그래프 사이의 경계를 선언하는 규칙입니다.
 
 ```tsx filename="app/counter.tsx" highlight={1} switcher
 'use client'
@@ -95,52 +95,52 @@ export default function Counter() {
   height="1320"
 />
 
-`"use client"` _sits_ between server-only and client code. It's placed at the top of a file, above imports, to define the _cut-off_ point where it crosses the boundary from the server-only to the client part. Once `"use client"` is defined in a file, all other modules imported into it, including child components, are considered part of the client bundle.
+`"use client"`은 서버 전용 코드와 클라이언트 코드 사이에 *위치*합니다. 파일 상단의 가져오기 위에 위치하여 서버 전용에서 클라이언트 부분으로 경계를 넘나드는 *중단점*을 정의합니다. 파일에 `"use client"`가 정의되면 하위 컴포넌트를 포함하여 파일로 가져온 다른 모든 모듈은 클라이언트 번들의 일부로 간주합니다.
 
-Since Server Components are the default, all components are part of the Server Component module graph unless defined or imported in a module that starts with the `"use client"` directive.
+서버 컴포넌트가 기본값이므로 `"use client"` 지시어로 시작하는 모듈에서 정의하거나 가져오지 않는 한 모든 컴포넌트는 서버 컴포넌트 모듈 그래프의 일부가 됩니다.
 
-> **Good to know**:
+> **알아두면 유용한 정보**
 >
-> - Components in the Server Component module graph are guaranteed to be only rendered on the server.
-> - Components in the Client Component module graph are primarily rendered on the client, but with Next.js, they can also be pre-rendered on the server and hydrated on the client.
-> - The `"use client"` directive must be defined at the **top of a file** before any imports.
-> - `"use client"` does **not** need to be defined in every file. The Client module boundary only needs to be defined once, at the "entry point", for all modules imported into it to be considered a Client Component.
+> - 서버 컴포넌트 모듈 그래프의 컴포넌트는 서버에서만 렌더링 되도록 보장됩니다.
+> - 클라이언트 컴포넌트 모듈 그래프의 컴포넌트는 주로 클라이언트에서 렌더링 되지만 Next.js를 사용하면 서버에서 미리 렌더링한 후 클라이언트에서 하이드레이션할 수도 있습니다.
+> - `"use client"` 지시문은 가져오기 전에 **파일 상단**에 정의해야 합니다.
+> - `"use client"`를 모든 파일에 정의할 필요는 **없습니다**. 클라이언트 모듈 경계는 "진입점"에서 한 번만 정의하면 되며, 이 경계로 가져온 모든 모듈은 클라이언트 컴포넌트로 간주합니다.
 
-## When to use Server and Client Components?
+## 서버 및 클라이언트 컴포넌트는 언제 사용하나요?
 
-To simplify the decision between Server and Client Components, we recommend using Server Components (default in the `app` directory) until you have a use case for a Client Component.
+서버 컴포넌트와 클라이언트 컴포넌트 간의 결정을 단순화하기 위해 클라이언트 컴포넌트에 대한 사용 사례를 확보할 때까지는 서버 컴포넌트(`app` 디렉터리의 기본값)를 사용하는 것이 좋습니다.
 
-This table summarizes the different use cases for Server and Client Components:
+이 표에는 서버 및 클라이언트 컴포넌트의 다양한 사용 사례가 요약되어 있습니다.
 
-| What do you need to do?                                                            | Server Component    | Client Component    |
+| 무엇을 해야 하나요?                                                                | 서버 컴포넌트       | 클라이언트 컴포넌트 |
 | ---------------------------------------------------------------------------------- | ------------------- | ------------------- |
-| Fetch data.                                                                        | <Check size={18} /> | <Cross size={18} /> |
-| Access backend resources (directly)                                                | <Check size={18} /> | <Cross size={18} /> |
-| Keep sensitive information on the server (access tokens, API keys, etc)            | <Check size={18} /> | <Cross size={18} /> |
-| Keep large dependencies on the server / Reduce client-side JavaScript              | <Check size={18} /> | <Cross size={18} /> |
-| Add interactivity and event listeners (`onClick()`, `onChange()`, etc)             | <Cross size={18} /> | <Check size={18} /> |
-| Use State and Lifecycle Effects (`useState()`, `useReducer()`, `useEffect()`, etc) | <Cross size={18} /> | <Check size={18} /> |
-| Use browser-only APIs                                                              | <Cross size={18} /> | <Check size={18} /> |
-| Use custom hooks that depend on state, effects, or browser-only APIs               | <Cross size={18} /> | <Check size={18} /> |
-| Use [React Class components](https://react.dev/reference/react/Component)          | <Cross size={18} /> | <Check size={18} /> |
+| 데이터 가져오기.                                                                   | <Check size={18} /> | <Cross size={18} /> |
+| 백엔드 리소스에 직접 액세스                                                        | <Check size={18} /> | <Cross size={18} /> |
+| 서버에 민감한 정보(액세스 토큰, API 키 등)를 보관                                  | <Check size={18} /> | <Cross size={18} /> |
+| 서버에 대한 대규모 종속성 유지 / 클라이언트 측 자바스크립트 감소                   | <Check size={18} /> | <Cross size={18} /> |
+| 인터랙티브 및 이벤트 리스너 추가(`onClick()`, `onChange()` 등)                     | <Cross size={18} /> | <Check size={18} /> |
+| State 및 Lifecycle Effects 사용 (`useState()`, `useReducer()`, `useEffect()`, etc) | <Cross size={18} /> | <Check size={18} /> |
+| 브라우저 전용 API 사용                                                             | <Cross size={18} /> | <Check size={18} /> |
+| state, 효과 또는 브라우저 전용 API에 의존하는 custom hooks 사용                    | <Cross size={18} /> | <Check size={18} /> |
+| [React Class components](https://react.dev/reference/react/Component) 사용         | <Cross size={18} /> | <Check size={18} /> |
 
-## Patterns
+## 패턴들
 
-### Moving Client Components to the Leaves
+### 클라이언트 컴포넌트를 컴포넌트 트리의 끝으로 이동하기
 
-To improve the performance of your application, we recommend moving Client Components to the leaves of your component tree where possible.
+애플리케이션의 성능을 개선하려면 가능한 경우 클라이언트 컴포넌트를 컴포넌트 트리의 왼쪽으로 이동하는 것이 좋습니다.
 
-For example, you may have a Layout that has static elements (e.g. logo, links, etc) and an interactive search bar that uses state.
+예를 들어 정적 요소(예: 로고, 링크 등)가 있는 레이아웃과 state를 사용하는 대화형 검색창이 있을 수 있습니다.
 
-Instead of making the whole layout a Client Component, move the interactive logic to a Client Component (e.g. `<SearchBar />`) and keep your layout as a Server Component. This means you don't have to send all the component Javascript of the layout to the client.
+전체 레이아웃을 클라이언트 컴포넌트로 만드는 대신 인터랙티브 로직을 클라이언트 컴포넌트(예: `<SearchBar />`)로 이동하고 레이아웃은 서버 컴포넌트로 유지합니다. 즉, 레이아웃의 모든 컴포넌트 자바스크립트를 클라이언트에 전송할 필요가 없습니다.
 
 ```tsx filename="app/layout.tsx" switcher
-// SearchBar is a Client Component
+// SearchBar는 클라이언트 컴포넌트입니다.
 import SearchBar from './searchbar'
-// Logo is a Server Component
+// 로고는 서버 컴포넌트입니다.
 import Logo from './logo'
 
-// Layout is a Server Component by default
+// 레이아웃은 기본적으로 서버 컴포넌트입니다.
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
@@ -155,12 +155,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 ```
 
 ```jsx filename="app/layout.js" switcher
-// SearchBar is a Client Component
+// SearchBar는 클라이언트 컴포넌트입니다.
 import SearchBar from './searchbar'
-// Logo is a Server Component
+// 로고는 서버 컴포넌트입니다.
 import Logo from './logo'
 
-// Layout is a Server Component by default
+// 레이아웃은 기본적으로 서버 컴포넌트입니다.
 export default function Layout({ children }) {
   return (
     <>
@@ -174,33 +174,33 @@ export default function Layout({ children }) {
 }
 ```
 
-### Composing Client and Server Components
+### 클라이언트 및 서버 컴포넌트 구성
 
-Server and Client Components can be combined in the same component tree.
+서버 컴포넌트와 클라이언트 컴포넌트는 동일한 컴포넌트 트리에서 결합할 수 있습니다.
 
-Behind the scenes, React handles rendering as follows:
+내부에서 React는 다음과 같이 렌더링을 처리합니다.
 
-- On the server, React renders **all** Server Components **before** sending the result to the client.
-  - This includes Server Components nested inside Client Components.
-  - Client Components encountered during this stage are skipped.
-- On the client, React renders Client Components and _slots in_ the rendered result of Server Components, merging the work done on the server and client.
-  - If any Server Components are nested inside a Client Component, their rendered content will be placed correctly within the Client Component.
+- 서버에서 React는 결과를 클라이언트로 **보내기 전에** **모든** 서버 컴포넌트를 렌더링합니다.
+  - 여기에는 클라이언트 컴포넌트 안에 중첩된 서버 컴포넌트가 포함됩니다.
+  - 이 단계에서 만나는 클라이언트 컴포넌트는 건너뜁니다.
+- 클라이언트에서 React는 클라이언트 컴포넌트를 렌더링하고 서버 컴포넌트의 렌더링 결과에 _슬롯을_ 생성하여 서버와 클라이언트에서 수행한 작업을 병합합니다.
+  - 서버 컴포넌트가 클라이언트 컴포넌트 안에 중첩된 경우 렌더링된 콘텐츠가 클라이언트 컴포넌트 내에 올바르게 배치됩니다.
 
-> **Good to know**: In Next.js, during the initial page load, both the rendered result of Server Components from the above step and Client Components are [pre-rendered on the server as HTML](/docs/app/building-your-application/rendering#static-and-dynamic-rendering-on-the-server) to produce a faster initial page load.
+> **알아두면 유용한 정보**: Next.js에서는 초기 페이지 로딩 시 위 단계의 서버 컴포넌트와 클라이언트 컴포넌트의 렌더링 결과가 모두 [서버에서 HTML로 미리 렌더링](/docs/app/building-your-application/rendering#static-and-dynamic-rendering-on-the-server)되어 초기 페이지 로딩 속도가 빨라집니다.
 
-### Nesting Server Components inside Client Components
+### 클라이언트 컴포넌트 안에 서버 컴포넌트 중첩
 
-Given the rendering flow outlined above, there is a restriction around importing a Server Component into a Client Component, as this approach would require an additional server round trip.
+위에서 설명한 렌더링 흐름을 고려할 때 서버 컴포넌트를 클라이언트 컴포넌트로 임포트하는 데는 제한이 있는데, 이 접근 방식은 추가 서버 왕복이 필요하기 때문입니다.
 
-#### Unsupported Pattern: Importing Server Components into Client Components
+#### 지원되지 않는 패턴입니다: 서버 컴포넌트를 클라이언트 컴포넌트로 가져오기
 
-The following pattern is not supported. You cannot import a Server Component into a Client Component:
+다음 패턴은 지원되지 않습니다. 서버 컴포넌트를 클라이언트 컴포넌트로 가져올 수 없습니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher highlight={5,18}
 'use client'
 
-// This pattern will **not** work!
-// You cannot import a Server Component into a Client Component.
+// 이 패턴은 **작동하지** 않습니다!
+// 서버 컴포넌트를 클라이언트 컴포넌트로 임포트할 수 없습니다.
 import ExampleServerComponent from './example-server-component'
 
 export default function ExampleClientComponent({
@@ -223,8 +223,8 @@ export default function ExampleClientComponent({
 ```jsx filename="app/example-client-component.js" switcher highlight={5,14}
 'use client'
 
-// This pattern will **not** work!
-// You cannot import a Server Component into a Client Component.
+// 이 패턴은 **작동하지** 않습니다!
+// 서버 컴포넌트를 클라이언트 컴포넌트로 임포트할 수 없습니다.
 import ExampleServerComponent from './example-server-component'
 
 export default function ExampleClientComponent({ children }) {
@@ -240,13 +240,13 @@ export default function ExampleClientComponent({ children }) {
 }
 ```
 
-#### Recommended Pattern: Passing Server Components to Client Components as Props
+#### 권장 패턴입니다: 서버 컴포넌트를 클라이언트 컴포넌트에 prop으로 전달하기
 
-Instead, when designing Client Components you can use React props to mark _"holes"_ for Server Components.
+대신 클라이언트 컴포넌트를 디자인할 때 React props를 사용하여 서버 컴포넌트에 *"구멍"*을 표시할 수 있습니다.
 
-The Server Component will be rendered on the server, and when the Client Component is rendered on the client, the _"hole"_ will be filled in with the rendered result of the Server Component.
+서버 컴포넌트는 서버에서 렌더링되고 클라이언트 컴포넌트가 클라이언트에서 렌더링될 때 *"구멍"*은 서버 컴포넌트의 렌더링된 결과로 채워집니다.
 
-A common pattern is to use the React `children` prop to create the _"hole"_. We can refactor `<ExampleClientComponent>` to accept a generic `children` prop and move the import and explicit nesting of `<ExampleClientComponent>` up to a parent component.
+일반적인 패턴은 React `children` prop을 사용하여 *"구멍"*을 만드는 것입니다. 일반 `children` prop을 허용하도록 `<ExampleClientComponent>`를 리팩터링하고 `<ExampleClientComponent>`의 임포트와 명시적 중첩을 부모 컴포넌트로 옮길 수 있습니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher highlight={6,16}
 'use client'
@@ -288,20 +288,20 @@ export default function ExampleClientComponent({ children }) {
 }
 ```
 
-Now, `<ExampleClientComponent>` has no knowledge of what `children` is. Infact, from its perspective it doesn't even know that `children` will eventually be filled in by the result of a Server Component.
+이제 `<ExampleClientComponent>`는 `children`이 무엇인지에 대한 지식이 없습니다. 사실, 이 컴포넌트의 관점에서는 `children`이 결국 서버 컴포넌트의 결과에 의해 채워질 것이라는 사실조차 알지 못합니다.
 
-The only responsibility `ExampleClientComponent` has is to decide where whatever `children` will eventually be should be placed.
+`ExampleClientComponent`의 유일한 책임은 `children`이 최종적으로 배치될 위치를 결정하는 것입니다.
 
-In a parent Server Component, you can import both the `<ExampleClientComponent>` and `<ExampleServerComponent>` and pass `<ExampleServerComponent>` as a child of `<ExampleClientComponent>`:
+부모 서버 컴포넌트에서 `<ExampleClientComponent>`와 `<ExampleServerComponent>`를 모두 임포트하고 `<ExampleServerComponent>`를 `<ExampleClientComponent>`의 자손으로 전달할 수 있습니다.
 
 ```tsx filename="app/page.tsx"  highlight={11} switcher
-// This pattern works:
-// You can pass a Server Component as a child or prop of a
-// Client Component.
+// 이 패턴은 효과가 있습니다.
+// 서버 컴포넌트를 자식이나 프로퍼티로 전달할 수 있습니다.
+// 클라이언트 컴포넌트로 전달할 수 있습니다.
 import ExampleClientComponent from './example-client-component'
 import ExampleServerComponent from './example-server-component'
 
-// Pages in Next.js are Server Components by default
+// Next.js의 페이지는 기본적으로 서버 컴포넌트입니다.
 export default function Page() {
   return (
     <ExampleClientComponent>
@@ -312,13 +312,13 @@ export default function Page() {
 ```
 
 ```jsx filename="app/page.js" highlight={11} switcher
-// This pattern works:
-// You can pass a Server Component as a child or prop of a
-// Client Component.
+// 이 패턴은 효과가 있습니다.
+// 서버 컴포넌트를 자식이나 프로퍼티로 전달할 수 있습니다.
+// 클라이언트 컴포넌트로 전달할 수 있습니다.
 import ExampleClientComponent from './example-client-component'
 import ExampleServerComponent from './example-server-component'
 
-// Pages in Next.js are Server Components by default
+// Next.js의 페이지는 기본적으로 서버 컴포넌트입니다.
 export default function Page() {
   return (
     <ExampleClientComponent>
@@ -328,30 +328,30 @@ export default function Page() {
 }
 ```
 
-With this approach, the rendering of `<ExampleClientComponent>` and `<ExampleServerComponent>` are decoupled and can be rendered independently - aligning with Server Components, which are rendered on the server before Client Components.
+이 접근 방식을 사용하면 `<ExampleClientComponent>`와 `<ExampleServerComponent>`의 렌더링이 분리되어 독립적으로 렌더링될 수 있으며, 클라이언트 컴포넌트보다 먼저 서버에서 렌더링되는 서버 컴포넌트에 맞춰 조정됩니다.
 
-> **Good to know**
+> **알아두면 유용한 정보**
 >
-> - This pattern is **already applied** in [layouts and pages](/docs/app/building-your-application/routing/pages-and-layouts) with the `children` prop so you don't have to create an additional wrapper component.
-> - Passing React components (JSX) to other components is not a new concept and has always been part of the React composition model.
-> - This composition strategy works across Server and Client Components because the component that receives the prop has no knowledge of **what** the prop is. It is only responsible for where the thing that it is passed should be placed.
->   - This allows the passed prop to be rendered independently, in this case, on the server, well before the Client Component is rendered on the client.
->   - The very same strategy of "lifting content up" has been used to avoid state changes in a parent component re-rendering an imported nested child component.
-> - You're not limited to the `children` prop. You can use any prop to pass JSX.
+> - 이 패턴은 ""이미"" [레이아웃 및 페이지](/docs/app/building-your-application/routing/pages-and-layouts)에 `children` prop를 사용하여 적용되어 있으므로 추가 래퍼 컴포넌트를 만들 필요가 없습니다.
+> - React 컴포넌트(JSX)를 다른 컴포넌트에 전달하는 것은 새로운 개념이 아니며 항상 React 컴포넌트 구성 모델의 일부로 사용되어 왔습니다.
+> - 이 컴포지션 전략은 prop을 받는 컴포넌트가 소품이 **무엇인지** 알지 못하기 때문에 서버와 클라이언트 컴포넌트에서 모두 작동합니다. 단지 전달받은 prop이 어디에 배치되어야 하는지에 대한 책임만 있을 뿐입니다.
+>   - 이렇게 하면 클라이언트 구성요소가 클라이언트에서 렌더링되기 훨씬 전에 전달된 prop을 서버에서 독립적으로 렌더링할 수 있습니다.
+>   - 가져온 중첩된 하위 컴포넌트를 다시 렌더링하는 부모 컴포넌트의 상태 변경을 피하기 위해 "lifting content up"이라는 동일한 전략이 사용되었습니다.
+> - `children` prop에만 국한되지 않습니다. 어떤 prop을 사용해서든 JSX를 전달할 수 있습니다.
 
-### Passing props from Server to Client Components (Serialization)
+### 서버에서 클라이언트 컴포넌트로 props 전달하기(직렬화)
 
-Props passed from the Server to Client Components need to be [serializable](https://developer.mozilla.org/en-US/docs/Glossary/Serialization). This means that values such as functions, Dates, etc, cannot be passed directly to Client Components.
+서버에서 클라이언트 컴포넌트로 전달되는 소품은 [직렬화 가능](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)이어야 합니다. 즉, 함수, 날짜 등과 같은 값은 클라이언트 컴포넌트에 직접 전달할 수 없습니다.
 
-> **Where is the Network Boundary?**
+> **네트워크 경계는 어디에 있나요??**
 >
-> In the App Router, the network boundary is between Server Components and Client Components. This is different from the Pages where the boundary is between `getStaticProps`/`getServerSideProps` and Page Components. Data fetched inside Server Components do not need to be serialized as it doesn't cross the network boundary unless it is passed to a Client Component. Learn more about [data fetching](/docs/app/building-your-application/data-fetching#fetching-data-on-the-server) with Server Components.
+> 앱 라우터에서 네트워크 경계는 서버 구성 요소와 클라이언트 구성 요소 사이입니다. 이것은 `getStaticProps`/`getServerSideProps`와 페이지 컴포넌트 사이에 경계가 있는 페이지와는 다릅니다. 서버 컴포넌트 내부에서 가져온 데이터는 클라이언트 컴포넌트로 전달되지 않는 한 네트워크 경계를 넘지 않으므로 직렬화할 필요가 없습니다. 서버 컴포넌트를 사용한 [데이터 불러오기(/docs/app/building-your-application/data-fetching#fetching-data-on-the-server)에 대해 자세히 알아보세요.
 
-### Keeping Server-Only Code out of Client Components (Poisoning)
+### 서버 전용 코드를 클라이언트 컴포넌트에서 제외(포이즈닝)
 
-Since JavaScript modules can be shared between both Server and Client Components, it's possible for code that was only ever intended to be run on the server to sneak its way into the client.
+자바스크립트 모듈은 서버와 클라이언트 컴포넌트 모두에서 공유할 수 있기 때문에 서버에서만 실행되어야 할 코드가 클라이언트에 스며들 수 있습니다.
 
-For example, take the following data-fetching function:
+예를 들어 다음 데이터 가져오기 함수를 살펴봅시다.
 
 ```ts filename="lib/data.ts" switcher
 export async function getData() {
@@ -377,23 +377,23 @@ export async function getData() {
 }
 ```
 
-At first glance, it appears that `getData` works on both the server and the client. But because the environment variable `API_KEY` is not prefixed with `NEXT_PUBLIC`, it's a private variable that can only be accessed on the server. Next.js replaces private environment variables with the empty string in client code to prevent leaking secure information.
+언뜻 보기에는 `getData`가 서버와 클라이언트 모두에서 작동하는 것처럼 보입니다. 하지만 환경 변수 `API_KEY` 앞에 `NEXT_PUBLIC`이 붙지 않기 때문에 서버에서만 액세스할 수 있는 비공개 변수입니다. Next.js는 클라이언트 코드에서 비공개 환경 변수를 빈 문자열로 대체하여 보안 정보 유출을 방지합니다.
 
-As a result, even though `getData()` can be imported and executed on the client, it won't work as expected. And while making the variable public would make the function work on the client, it would leak sensitive information.
+결과적으로 `getData()`를 가져와 클라이언트에서 실행할 수 있지만 예상대로 작동하지 않습니다. 변수를 공개하면 클라이언트에서 함수가 작동할 수 있지만 민감한 정보가 유출될 수 있습니다.
 
-So, this function was written with the intention that it would only ever be executed on the server.
+따라서 이 함수는 서버에서만 실행되도록 의도하여 작성되었습니다.
 
-### The "server only" package
+### "server only" 패키지
 
-To prevent this sort of unintended client usage of server code, we can use the `server-only` package to give other developers a build-time error if they ever accidentally import one of these modules into a Client Component.
+이러한 종류의 의도치 않은 클라이언트 서버 코드 사용을 방지하기 위해 `server-only` 패키지를 사용하면 다른 개발자가 실수로 이러한 모듈 중 하나를 클라이언트 컴포넌트로 임포트하는 경우 빌드 타임 오류를 발생시킬 수 있습니다.
 
-To use `server-only`, first install the package:
+`server-only`을 사용하려면 먼저 패키지를 설치합니다.
 
 ```bash filename="Terminal"
 npm install server-only
 ```
 
-Then import the package into any module that contains server-only code:
+그런 다음 패키지를 서버 전용 코드가 포함된 모듈로 가져옵니다.
 
 ```js filename="lib/data.js"
 import 'server-only'
@@ -409,25 +409,25 @@ export async function getData() {
 }
 ```
 
-Now, any Client Component that imports `getData()` will receive a build-time error explaining that this module can only be used on the server.
+이제 `getData()`를 임포트하는 모든 클라이언트 컴포넌트는 이 모듈을 서버에서만 사용할 수 있다는 빌드 타임 오류를 받게 됩니다.
 
-The corresponding package `client-only` can be used to mark modules that contain client-only code – for example, code that accesses the `window` object.
+해당 패키지 `client-only`은 클라이언트 전용 코드가 포함된 모듈(예: 'window' 객체에 액세스하는 코드)을 표시하는 데 사용할 수 있습니다.
 
-### Data Fetching
+### 데이터 가져오기
 
-Although it's possible to fetch data in Client Components, we recommend fetching data in Server Components unless you have a specific reason for fetching data on the client. Moving data fetching to the server leads to better performance and user experience.
+클라이언트 컴포넌트에서 데이터를 가져올 수 있지만 클라이언트에서 데이터를 가져와야 하는 특별한 이유가 없는 한 서버 컴포넌트에서 데이터를 가져오는 것을 권장합니다. 데이터 가져오기를 서버로 옮기면 성능과 사용자 환경이 개선됩니다.
 
-[Learn more about data fetching](/docs/app/building-your-application/data-fetching).
+[데이터 가져오기에 대해 자세히 알아보기](/docs/app/building-your-application/data-fetching).
 
-### Third-party packages
+### 서드파티 패키지
 
-Since Server Components are new, third-party packages in the ecosystem are just beginning to add the `"use client"` directive to components that use client-only features like `useState`, `useEffect`, and `createContext`.
+서버 컴포넌트는 새로운 것이기 때문에 에코시스템의 서드파티 패키지는 이제 막 `useState`, `useEffect`, `createContext`와 같은 클라이언트 전용 기능을 사용하는 컴포넌트에 `"use client"` 지시문을 추가하기 시작했습니다.
 
-Today, many components from `npm` packages that use client-only features do not yet have the directive. These third-party components will work as expected within your own [Client Components](#the-use-client-directive) since they have the `"use client"` directive, but they won't work within Server Components.
+오늘날 클라이언트 전용 기능을 사용하는 `npm` 패키지의 많은 컴포넌트에는 아직 지시어가 없습니다. 이러한 타사 컴포넌트는 `"use client"` 지시어가 있기 때문에 자체 [클라이언트 컴포넌트](#the-use-client-directive)에서는 예상대로 작동하지만 서버 컴포넌트 내에서는 작동하지 않습니다.
 
-For example, let's say you've installed the hypothetical `acme-carousel` package which has an `<Carousel />` component. This component uses `useState`, but it doesn't yet have the `"use client"` directive.
+예를 들어 `<Carousel />` 컴포넌트가 있는 가상의 `acme-carousel` 패키지를 설치했다고 가정해 보겠습니다. 이 컴포넌트는 `useState`를 사용하지만 아직 `"use client"` 지시어가 없습니다.
 
-If you use `<Carousel />` within a Client Component, it will work as expected:
+클라이언트 컴포넌트 내에서 `<Carousel />`을 사용하면 예상대로 작동합니다.
 
 ```tsx filename="app/gallery.tsx" switcher
 'use client'
@@ -442,7 +442,7 @@ export default function Gallery() {
     <div>
       <button onClick={() => setIsOpen(true)}>View pictures</button>
 
-      {/* Works, since Carousel is used within a Client Component */}
+      {/* Carousel은 클라이언트 컴포넌트 내에서 사용되므로 작동합니다. */}
       {isOpen && <Carousel />}
     </div>
   )
@@ -462,14 +462,14 @@ export default function Gallery() {
     <div>
       <button onClick={() => setIsOpen(true)}>View pictures</button>
 
-      {/*  Works, since Carousel is used within a Client Component */}
+      {/* Carousel은 클라이언트 컴포넌트 내에서 사용되므로 작동합니다. */}
       {isOpen && <Carousel />}
     </div>
   )
 }
 ```
 
-However, if you try to use it directly within a Server Component, you'll see an error:
+그러나 서버 컴포넌트 내에서 직접 사용하려고 하면 다음과 같은 오류가 표시됩니다.
 
 ```tsx filename="app/page.tsx" switcher
 import { Carousel } from 'acme-carousel'
@@ -479,7 +479,7 @@ export default function Page() {
     <div>
       <p>View pictures</p>
 
-      {/* Error: `useState` can not be used within Server Components */}
+      {/* 오류: `use State`는 서버 컴포넌트 내에서 사용할 수 없습니다. */}
       <Carousel />
     </div>
   )
@@ -494,16 +494,16 @@ export default function Page() {
     <div>
       <p>View pictures</p>
 
-      {/*  Error: `useState` can not be used within Server Components */}
+      {/*  오류: `use State`는 서버 컴포넌트 내에서 사용할 수 없습니다. */}
       <Carousel />
     </div>
   )
 }
 ```
 
-This is because Next.js doesn't know `<Carousel />` is using client-only features.
+이는 `<Carousel />`이 클라이언트 전용 기능을 사용하고 있다는 것을 Next.js가 인식하지 못하기 때문입니다.
 
-To fix this, you can wrap third-party components that rely on client-only features in your own Client Components:
+이 문제를 해결하려면 클라이언트 전용 기능에 의존하는 타사 컴포넌트를 자체 클라이언트 컴포넌트로 래핑할 수 있습니다.
 
 ```tsx filename="app/carousel.tsx" switcher
 'use client'
@@ -521,7 +521,7 @@ import { Carousel } from 'acme-carousel'
 export default Carousel
 ```
 
-Now, you can use `<Carousel />` directly within a Server Component:
+이제 서버 컴포넌트 내에서 바로 `<Carousel />`을 사용할 수 있습니다.
 
 ```tsx filename="app/page.tsx" switcher
 import Carousel from './carousel'
@@ -531,7 +531,7 @@ export default function Page() {
     <div>
       <p>View pictures</p>
 
-      {/*  Works, since Carousel is a Client Component */}
+      {/*  Carousel은 클라이언트 구성 요소이므로 작동합니다. */}
       <Carousel />
     </div>
   )
@@ -546,32 +546,32 @@ export default function Page() {
     <div>
       <p>View pictures</p>
 
-      {/*  Works, since Carousel is a Client Component */}
+      {/*  캐러셀은 클라이언트 구성 요소이므로 작동합니다. */}
       <Carousel />
     </div>
   )
 }
 ```
 
-We don't expect you to need to wrap most third-party components since it's likely you'll be using them within Client Components. However, one exception is provider components, since they rely on React state and context, and are typically needed at the root of an application. [Learn more about third-party context providers below](#rendering-third-party-context-providers-in-server-components).
+대부분의 서드파티 컴포넌트는 클라이언트 컴포넌트 내에서 사용할 가능성이 높기 때문에 래핑할 필요가 없을 것으로 예상합니다. 그러나 한 가지 예외는 공급자 컴포넌트인데, 이는 React state와 context에 의존하고 일반적으로 애플리케이션의 루트에 필요하기 때문입니다. [아래에서 서드파티 context 프로바이더에 대해 자세히 알아보세요.](#rendering-third-party-context-providers-in-server-components).
 
-#### Library Authors
+#### 라이브러리 작성자
 
-- In a similar fashion, library authors creating packages to be consumed by other developers can use the `"use client"` directive to mark client entry points of their package. This allows users of the package to import package components directly into their Server Components without having to create a wrapping boundary.
-- You can optimize your package by using ['use client' deeper in the tree](#moving-client-components-to-the-leaves), allowing the imported modules to be part of the Server Component module graph.
-- It's worth noting some bundlers might strip out `"use client"` directives. You can find an example of how to configure esbuild to include the `"use client"` directive in the [React Wrap Balancer](https://github.com/shuding/react-wrap-balancer/blob/main/tsup.config.ts#L10-L13) and [Vercel Analytics](https://github.com/vercel/analytics/blob/main/packages/web/tsup.config.js#L26-L30) repositories.
+- 비슷한 방식으로 다른 개발자가 사용할 패키지를 만드는 라이브러리 작성자는 `"use client"` 지시어를 사용하여 패키지의 클라이언트 진입점을 표시할 수 있습니다. 이를 통해 패키지 사용자는 래핑 경계를 만들지 않고도 패키지 컴포넌트를 서버 컴포넌트로 직접 가져올 수 있습니다.
+- 트리에서 ['use client'을 더 깊게](#moving-client-components-to-the-leaves)를 사용하여 가져온 모듈이 서버 컴포넌트 모듈 그래프의 일부가 될 수 있도록 하여 패키지를 최적화할 수 있습니다.
+- 일부 번들러는 `"use client"` 지시문을 제거할 수 있다는 점에 유의할 필요가 있습니다. [React Wrap Balancer](https://github.com/shuding/react-wrap-balancer/blob/main/tsup.config.ts#L10-L13) 및 [Vercel Analytics](https://github.com/vercel/analytics/blob/main/packages/web/tsup.config.js#L26-L30) 리포지토리에서 `"use client"` 지시문을 포함하도록 esbuild를 구성하는 방법에 대한 예제를 찾을 수 있습니다.
 
 ## Context
 
-Most React applications rely on [context](https://react.dev/reference/react/useContext) to share data between components, either directly via [`createContext`](https://react.dev/reference/react/useContext), or indirectly via provider components imported from third-party libraries.
+대부분의 React 애플리케이션은 컴포넌트 간에 데이터를 공유하기 위해 [context](https://react.dev/reference/react/useContext) 의존하는데, 이는 [`createContext`](https://react.dev/reference/react/useContext)를 통해 직접적으로 또는 타사 라이브러리에서 가져온 공급자 컴포넌트를 통해 간접적으로 이루어집니다.
 
-In Next.js 13, context is fully supported within Client Components, but it **cannot** be created or consumed directly within Server Components. This is because Server Components have no React state (since they're not interactive), and context is primarily used for rerendering interactive components deep in the tree after some React state has been updated.
+Next.js 13에서는 context가 클라이언트 컴포넌트 내에서 완벽하게 지원되지만 서버 컴포넌트 내에서 직접 생성하거나 사용할 수는 **없습니다**. 서버 컴포넌트에는 (인터랙티브하지 않기 때문에) React state가 없고, context는 주로 일부 React state가 업데이트된 후 트리 깊숙한 곳에 있는 인터랙티브 컴포넌트를 다시 렌더링하는 데 사용되기 때문입니다.
 
-We'll discuss alternatives for sharing data between Server Components, but first, let's take a look at how to use context within Client Components.
+서버 컴포넌트 간 데이터 공유에 대한 대안은 나중에 논의하겠지만, 먼저 클라이언트 컴포넌트 내에서 context를 사용하는 방법을 살펴봅시다.
 
-### Using context in Client Components
+### 클라이언트 컴포넌트에서 context 사용하기
 
-All of the context APIs are fully supported within Client Components:
+모든 context API는 클라이언트 컴포넌트 내에서 완벽하게 지원됩니다.
 
 ```tsx filename="app/sidebar.tsx" switcher
 'use client'
@@ -633,12 +633,12 @@ function SidebarNav() {
 }
 ```
 
-However, context providers are typically rendered near the root of an application to share global concerns, like the current theme. Because context is not supported in Server Components, trying to create a context at the root of your application will cause an error:
+그러나 context 공급자는 일반적으로 현재 테마와 같은 글로벌 관심사를 공유하기 위해 애플리케이션의 루트 근처에 렌더링됩니다. context는 서버 컴포넌트에서 지원되지 않으므로 애플리케이션의 루트에서 context를 만들려고 하면 오류가 발생합니다.
 
 ```tsx filename="app/layout.tsx" switcher
 import { createContext } from 'react'
 
-//  createContext is not supported in Server Components
+//  서버 컴포넌트에서는 createContext가 지원되지 않습니다.
 export const ThemeContext = createContext({})
 
 export default function RootLayout({ children }) {
@@ -655,7 +655,7 @@ export default function RootLayout({ children }) {
 ```jsx filename="app/layout.js" switcher
 import { createContext } from 'react'
 
-//  createContext is not supported in Server Components
+//  서버 컴포넌트에서는 createContext가 지원되지 않습니다.
 export const ThemeContext = createContext({})
 
 export default function RootLayout({ children }) {
@@ -669,7 +669,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-To fix this, create your context and render its provider inside of a Client Component:
+이 문제를 해결하려면 context를 생성하고 클라이언트 컴포넌트 내에서 해당 프로바이더를 렌더링하세요.
 
 ```tsx filename="app/theme-provider.tsx" switcher
 'use client'
@@ -695,7 +695,7 @@ export default function ThemeProvider({ children }) {
 }
 ```
 
-Your Server Component will now be able to directly render your provider since it's been marked as a Client Component:
+이제 서버 컴포넌트가 클라이언트 컴포넌트로 표시되었으므로 공급자를 직접 렌더링할 수 있습니다.
 
 ```tsx filename="app/layout.tsx" switcher
 import ThemeProvider from './theme-provider'
@@ -729,15 +729,15 @@ export default function RootLayout({ children }) {
 }
 ```
 
-With the provider rendered at the root, all other Client Components throughout your app will be able to consume this context.
+공급자가 루트에서 렌더링되면 앱의 다른 모든 클라이언트 컴포넌트가 이 context를 사용할 수 있습니다.
 
-> **Good to know**: You should render providers as deep as possible in the tree – notice how `ThemeProvider` only wraps `{children}` instead of the entire `<html>` document. This makes it easier for Next.js to optimize the static parts of your Server Components.
+> **알아두면 유용한 정보**: 제공자를 트리에서 가능한 한 깊숙이 렌더링해야 합니다. `ThemeProvider`가 전체 `<html>` 문서 대신 `{children}`만 래핑하는 방식을 주목하세요. 이렇게 하면 Next.js가 서버 컴포넌트의 정적 부분을 더 쉽게 최적화할 수 있습니다.
 
-### Rendering third-party context providers in Server Components
+### 서버 컴포넌트에서 서드파티 context 공급자 렌더링하기
 
-Third-party npm packages often include Providers that need to be rendered near the root of your application. If these providers include the `"use client"` directive, they can be rendered directly inside of your Server Components. However, since Server Components are so new, many third-party providers won't have added the directive yet.
+서드파티 npm 패키지에는 애플리케이션 루트 근처에서 렌더링해야 하는 프로바이더가 포함된 경우가 많습니다. 이러한 공급자가 `"use client"` 지시문을 포함하는 경우 서버 컴포넌트 내부에서 직접 렌더링할 수 있습니다. 그러나 서버 컴포넌트는 매우 새롭기 때문에 아직 많은 타사 제공업체가 이 지시문을 추가하지 않았을 것입니다.
 
-If you try to render a third-party provider that doesn't have `"use client"`, it will cause an error:
+`"use client"`이 없는 타사 공급자를 렌더링하려고 하면 오류가 발생합니다.
 
 ```tsx filename="app/layout.tsx" switcher
 import { ThemeProvider } from 'acme-theme'
@@ -746,7 +746,7 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        {/*  Error: `createContext` can't be used in Server Components */}
+        {/*  오류: 서버 컴포넌트에서 `createContext`를 사용할 수 없습니다. */}
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
@@ -761,7 +761,7 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        {/*  Error: `createContext` can't be used in Server Components */}
+        {/*  오류: 서버 컴포넌트에서 `createContext`를 사용할 수 없습니다. */}
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
@@ -769,7 +769,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-To fix this, wrap third-party providers in your own Client Component:
+이 문제를 해결하려면 타사 제공업체를 자체 클라이언트 컴포넌트로 래핑하세요.
 
 ```jsx filename="app/providers.js"
 'use client'
@@ -786,7 +786,7 @@ export function Providers({ children }) {
 }
 ```
 
-Now, you can import and render `<Providers />` directly within your root layout.
+이제 루트 레이아웃 내에서 바로 `<Providers />`를 가져와 렌더링할 수 있습니다.
 
 ```jsx filename="app/layout.js"
 import { Providers } from './providers'
@@ -802,13 +802,13 @@ export default function RootLayout({ children }) {
 }
 ```
 
-With the providers rendered at the root, all the components and hooks from these libraries will work as expected within your own Client Components.
+루트에서 렌더링된 프로바이더를 사용하면 이러한 라이브러리의 모든 컴포넌트와 hook가 자체 클라이언트 컴포넌트 내에서 예상대로 작동합니다.
 
-Once a third-party library has added `"use client"` to its client code, you'll be able to remove the wrapper Client Component.
+타사 라이브러리가 클라이언트 코드에 `"use client"`를 추가하면 래퍼 클라이언트 컴포넌트를 제거할 수 있습니다.
 
-### Sharing data between Server Components
+### 서버 컴포넌트 간 데이터 공유
 
-Since Server Components are not interactive and therefore do not read from React state, you don't need React context to share data. Instead, you can use native JavaScript patterns for common data that multiple Server Components need to access. For example, a module can be used to share a database connection across multiple components:
+서버 컴포넌트는 인터랙티브하지 않으므로 React state에서 읽지 않으므로 데이터를 공유하기 위해 React context가 필요하지 않습니다. 대신 여러 서버 컴포넌트가 액세스해야 하는 공통 데이터에 native JavaScript 패턴을 사용할 수 있습니다. 예를 들어 모듈을 사용하여 여러 컴포넌트에서 데이터베이스 연결을 공유할 수 있습니다.
 
 ```ts filename="utils/database.ts" switcher
 export const db = new DatabaseConnection()
@@ -854,10 +854,10 @@ export async function DashboardPage() {
 }
 ```
 
-In the above example, both the layout and page need to make database queries. Each of these components shares access to the database by importing the `@utils/database` module. This JavaScript pattern is called global singletons.
+위의 예시에서는 레이아웃과 페이지 모두 데이터베이스 쿼리를 수행해야 합니다. 이러한 각 컴포넌트는 `@utils/database` 모듈을 가져와서 데이터베이스에 대한 액세스를 공유합니다. 이 자바스크립트 패턴을 글로벌 싱글톤이라고 합니다.
 
-### Sharing fetch requests between Server Components
+### 서버 컴포넌트 간 가져오기 요청 공유
 
-When fetching data, you may want to share the result of a `fetch` between a `page` or `layout` and some of its children components. This is an unnecessary coupling between the components and can lead to passing `props` back and forth between components.
+데이터를 가져올 때 `page` 또는 `layout`과 일부 하위 컴포넌트 간에 `fetch` 결과를 공유하고 싶을 수 있습니다. 이는 컴포넌트 간에 불필요한 연결이 발생하여 컴포넌트 간에 `props`가 앞뒤로 전달될 수 있습니다.
 
-Instead, we recommend colocating data fetching alongside the component that consumes the data. [`fetch` requests are automatically deduped](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping) in Server Components, so each route segment can request exactly the data it needs without worrying about duplicate requests. Next.js will read the same value from the `fetch` cache.
+대신 데이터를 소비하는 컴포넌트와 함께 데이터 가져오기를 함께 배치하는 것이 좋습니다. 서버 컴포넌트에서 [`fetch` 요청이 자동으로 중복 제거](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping)되므로 각 경로 세그먼트는 중복 요청에 대한 걱정 없이 필요한 데이터만 정확하게 요청할 수 있습니다. Next.js는 `fetch` 캐시에서 동일한 값을 읽습니다.
