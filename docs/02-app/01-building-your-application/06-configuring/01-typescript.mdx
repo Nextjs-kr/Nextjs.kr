@@ -73,13 +73,13 @@ TypeScript 플러그인은 다음과 같은 기능을 지원합니다.
 
 ## 최소 TypeScript 버전
 
-[type modifiers on import names](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#type-on-import-names)와 같은 구문 기능을 사용하려면 TypeScript의 `v4.5.2` 이상을 사용하는 것이 좋습니다.
+[type modifiers on import names](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#type-on-import-names) 및 [성능 개선](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#real-path-sync-native)과 같은 구문 기능을 사용하려면 TypeScript의 `v4.5.2` 이상을 사용하는 것이 좋습니다.
 
 <AppOnly>
 
-## 정적으로 타입이 부여된 링크
+## 정적 타입 링크
 
-Next.js는 `next/link`를 사용할 때 오타 및 기타 오류를 방지하기 위해 링크의 정적 타입화를 지원하기 때문에 페이지 간 탐색 시 타입 안전성이 향상됩니다.
+Next.js는 `next/link`를 사용할 때 오타 및 다른 오류를 방지하고 페이지 간 탐색 시 타입 안전성을 향상시키기 위해 링크에 정적으로 타입을 지정할 수 있습니다.
 
 이 기능을 사용하려면 `experimental.typedRoutes`를 활성화하고 프로젝트에서 TypeScript를 사용해야 합니다.
 
@@ -166,7 +166,7 @@ _완전한_ end-to-end 타입 안전성을 위해 데이터베이스 또는 콘�
 
 ## 서버와 클라이언트 컴포넌트 간에 데이터 전달하기
 
-props를 통해 서버와 클라이언트 컴포넌트 간에 데이터를 전달할 때, 브라우저에서 사용할 수 있도록 데이터가 직렬화(문자열로 변환)됩니다. 하지만 특별한 타입이 필요하지 않습니다. 컴포넌트 간에 다른 props를 전달할 때와 동일하게 타입화됩니다.
+프로퍼티를 통해 서버와 클라이언트 컴포넌트 간에 데이터를 전달할 때에도 브라우저에서 사용할 수 있도록 데이터가 직렬화(문자열로 변환)됩니다. 이때 특별한 타입이 필요하지 않으며 컴포넌트 간에 다른 프로퍼티를 전달할 때와 동일하게 타입이 지정됩니다.
 
 렌더링 하지 않은 데이터는 서버와 클라이언트 간에 전달하지 않으므로(서버에 남아 있음) 직렬화할 코드가 더 적습니다. 이는 현재 서버 컴포넌트 지원을 통해서만 가능합니다.
 
@@ -196,7 +196,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 ## API 라우트
 
-다음은 API 라우트에 기본 제공 타입을 사용하는 방법의 예입니다.
+다음은 API 라우트에 내장된 타입을 사용하는 방법의 예입니다.
 
 ```ts
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -270,7 +270,7 @@ module.exports = nextConfig
 
 애플리케이션에 오류가 있더라도 Next.js가 위험하게 생산 코드를 생성하기를 원한다면 기본 제공 타입 검사 단계를 비활성화할 수 있습니다.
 
-비활성화하였으면 빌드 또는 배포 프로세스 중 별도의 타입 검사를 실행하고 있는지 확인하십시오. 그렇지 않으면 매우 위험할 수 있습니다.
+비활성화하였으면 빌드 또는 배포 프로세스 중 별도의 타입 검사를 실행하고 있는지 확인해야 하며 그렇지 않으면 매우 위험할 수 있습니다.
 
 `next.config.js`를 열고 `typescript` 구성에서 `ignoreBuildErrors` 옵션을 활성화합니다.
 
