@@ -111,7 +111,7 @@ export default function Page({ repo }) {
 
 `getStaticPaths`를 사용하면 빌드 중에 페이지를 생성하는 대신 [`fallback`](/docs/pages/api-reference/functions/get-static-paths#fallback-blocking)과 함께 요청 시 생성할 수 있습니다. 빌드 중에 더 많은 페이지를 생성하면 빌드 속도가 느려집니다.
 
-`paths`에 대한 빈 배열을 반환함으로써 모든 페이지를 요청 시 생성을 연기할 수 있습니다. 이는 Next.js 애플리케이션을 여러 환경에 배포할 때 특히 유용합니다. 예를 들어, 미리보기에는 모든 페이지를 요청 시 생성하여 빌드 속도를 높일 수 있지만(프로덕션 빌드는 제외) 수백/수천 개의 정적 페이지가 있는 사이트에 유용합니다.
+`paths`에 대한 빈 배열을 반환함으로써 모든 페이지를 즉시 생성하는 것을 연기할 수 있습니다. 이는 특히 여러 환경에 Next.js 애플리케이션을 배포할 때 유용합니다. 예를 들어, 미리보기를 위해 모든 페이지를 즉시 생성하여 빌드 속도를 높일 수 있지만(프로덕션 빌드는 제외) 이는 수백/수천 개의 정적 페이지가 있는 사이트에 유용합니다.
 
 ```jsx filename="pages/posts/[id].js"
 export async function getStaticPaths() {
