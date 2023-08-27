@@ -79,7 +79,7 @@ export default function Page({ repo }) {
 
 동적 라우트를 사용하여 페이지를 정적으로 사전 렌더링하는 경우 및 다음 조건에 해당하는 경우 `getStaticPaths`를 사용해야 합니다.
 
-- 데이터가 무표시 CMS에서 오는 경우
+- 데이터가 헤드리스 CMS에서 오는 경우
 - 데이터가 데이터베이스에서 오는 경우
 - 데이터가 파일 시스템에서 오는 경우
 - 데이터를 공개적으로 캐시할 수 있는 경우(사용자 특정이 아님)
@@ -113,7 +113,6 @@ export default function Page({ repo }) {
 
 `paths`에 대한 빈 배열을 반환함으로써 모든 페이지를 요청 시 생성을 연기할 수 있습니다. 이는 Next.js 애플리케이션을 여러 환경에 배포할 때 특히 유용합니다. 예를 들어, 미리보기에는 모든 페이지를 요청 시 생성하여 빌드 속도를 높일 수 있지만(프로덕션 빌드는 제외) 수백/수천 개의 정적 페이지가 있는 사이트에 유용합니다.
 
-
 ```jsx filename="pages/posts/[id].js"
 export async function getStaticPaths() {
   // 이 값이 참일 때(미리보기 환경에서) 정적 페이지를 사전 렌더링하지 마세요.
@@ -139,5 +138,4 @@ export async function getStaticPaths() {
   // { fallback: false }는 다른 라우트는 404를 반환해야 함을 의미합니다.
   return { paths, fallback: false }
 }
-
 ```
