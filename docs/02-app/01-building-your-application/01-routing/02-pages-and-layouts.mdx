@@ -1,17 +1,17 @@
 ---
-title: Pages and Layouts
-description: Create your first page and shared layout with the App Router.
+title: 페이지와 레이아웃
+description: 앱 라우터로 첫 페이지와 공유 레이아웃 만들기
 ---
 
-> We recommend reading the [Routing Fundamentals](/docs/app/building-your-application/routing) and [Defining Routes](/docs/app/building-your-application/routing/defining-routes) pages before continuing.
+> 계속하기 전에 [라우팅 기본 사항](/docs/app/building-your-application/routing) 및 [라우팅 정의 페이지](/docs/app/building-your-application/routing/defining-routes)를 읽어보는 것을 추천합니다.
 
-The App Router inside Next.js 13 introduced new file conventions to easily create [pages](#pages), [shared layouts](#layouts), and [templates](#templates). This page will guide you through how to use these special files in your Next.js application.
+Next.js 13의 앱 라우터에는 [페이지](#pages), [공유 레이아웃](#layouts) 및 [템플릿](#templates)을 쉽게 만들 수 있는 새로운 파일 컨벤션이 도입되었습니다. 이 페이지에서는 Next.js 애플리케이션에서 이러한 특별한 파일들을 사용하는 방법을 안내합니다.
 
 ## Pages
 
-A page is UI that is **unique** to a route. You can define pages by exporting a component from a `page.js` file. Use nested folders to [define a route](/docs/app/building-your-application/routing/defining-routes) and a `page.js` file to make the route publicly accessible.
+페이지는 라우트에 **고유한** UI입니다. `page.js` 파일에서 컴포넌트를 내보내 페이지를 정의할 수 있습니다. 중첩 폴더를 사용하여 [라우트를 정의](/docs/app/building-your-application/routing/defining-routes)하고 `page.js` 파일을 사용하여 라우트에 공개적으로 접근할 수 있도록 합니다.
 
-Create your first page by adding a `page.js` file inside the `app` directory:
+`app` 디렉토리에 `page.js` 파일을 추가하여 첫 페이지를 만듭니다.
 
 <Image
   alt="page.js special file"
@@ -22,46 +22,46 @@ Create your first page by adding a `page.js` file inside the `app` directory:
 />
 
 ```tsx filename="app/page.tsx" switcher
-// `app/page.tsx` is the UI for the `/` URL
+// `app/page.tsx`는 `/` URL의 UI입니다.
 export default function Page() {
   return <h1>Hello, Home page!</h1>
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-// `app/page.js` is the UI for the `/` URL
+// `app/page.js`는 `/` URL의 UI입니다.
 export default function Page() {
   return <h1>Hello, Home page!</h1>
 }
 ```
 
 ```tsx filename="app/dashboard/page.tsx" switcher
-// `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
+// `app/dashboard/page.tsx` 는`/dashboard` URL의 UI입니다.
 export default function Page() {
   return <h1>Hello, Dashboard Page!</h1>
 }
 ```
 
 ```jsx filename="app/dashboard/page.js" switcher
-// `app/dashboard/page.js` is the UI for the `/dashboard` URL
+// `app/dashboard/page.js` 는`/dashboard` URL의 UI입니다.
 export default function Page() {
   return <h1>Hello, Dashboard Page!</h1>
 }
 ```
 
-> **Good to know**:
+> **참고**:
 >
-> - A page is always the [leaf](/docs/app/building-your-application/routing#terminology) of the [route subtree](/docs/app/building-your-application/routing#terminology).
-> - `.js`, `.jsx`, or `.tsx` file extensions can be used for Pages.
-> - A `page.js` file is required to make a route segment publicly accessible.
-> - Pages are [Server Components](/docs/getting-started/react-essentials) by default but can be set to a [Client Component](/docs/getting-started/react-essentials#client-components).
-> - Pages can fetch data. View the [Data Fetching](/docs/app/building-your-application/data-fetching) section for more information.
+> - 페이지는 항상 [라우트 하위 트리](/docs/app/building-your-application/routing#terminology)의 [리프](/docs/app/building-your-application/routing#terminology)입니다.
+> - 페이지에서 `.js`, `.jsx` 또는 `.tsx` 파일 확장자를 사용할 수 있습니다.
+> - 라우트 세그먼트에 공개적으로 접근하려면 `page.js` 파일이 필요합니다.
+> - 페이지는 기본적으로 [서버 컴포넌트](/docs/getting-started/react-essentials)이지만 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components)로 설정할 수 있습니다.
+> - 페이지는 데이터를 가져올 수 있습니다. 자세한 내용은 [Data-Fetching](/docs/app/building-your-application/data-fetching) 섹션을 참조하세요.
 
 ## Layouts
 
-A layout is UI that is **shared** between multiple pages. On navigation, layouts preserve state, remain interactive, and do not re-render. Layouts can also be [nested](#nesting-layouts).
+레이아웃은 여러 페이지 간에 **공유**되는 UI입니다. 탐색할 때 레이아웃은 state를 보존하고 상호작용하는 state를 유지하며 재 렌더링을 하지 않습니다. 레이아웃은 [중첩](#nesting-layouts)될 수도 있습니다.
 
-You can define a layout by `default` exporting a React component from a `layout.js` file. The component should accept a `children` prop that will be populated with a child layout (if it exists) or a child page during rendering.
+`layout.js` 파일의 React 컴포넌트를 내보내서 `기본`레이아웃을 정의할 수 있습니다. 컴포넌트는 렌더링 중에 자식 레이아웃(있는 경우) 또는 자식 페이지로 채워질 `children` prop을 받아들여야 합니다.
 
 <Image
   alt="layout.js special file"
@@ -103,22 +103,22 @@ export default function DashboardLayout({
 }
 ```
 
-> **Good to know**:
+> **참고**:
 >
-> - The top-most layout is called the [Root Layout](#root-layout-required). This **required** layout is shared across all pages in an application. Root layouts must contain `html` and `body` tags.
-> - Any route segment can optionally define its own [Layout](#nesting-layouts). These layouts will be shared across all pages in that segment.
-> - Layouts in a route are **nested** by default. Each parent layout wraps child layouts below it using the React `children` prop.
-> - You can use [Route Groups](/docs/app/building-your-application/routing/route-groups) to opt specific route segments in and out of shared layouts.
-> - Layouts are [Server Components](/docs/getting-started/react-essentials) by default but can be set to a [Client Component](/docs/getting-started/react-essentials#client-components).
-> - Layouts can fetch data. View the [Data Fetching](/docs/app/building-your-application/data-fetching) section for more information.
-> - Passing data between a parent layout and its children is not possible. However, you can fetch the same data in a route more than once, and React will [automatically dedupe the requests](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping) without affecting performance.
-> - Layouts do not have access to the current route segment(s). To access route segments, you can use [`useSelectedLayoutSegment`](/docs/app/api-reference/functions/use-selected-layout-segment) or [`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments) in a Client Component.
-> - `.js`, `.jsx`, or `.tsx` file extensions can be used for Layouts.
-> - A `layout.js` and `page.js` file can be defined in the same folder. The layout will wrap the page.
+> - 가장 위에 있는 레이아웃을 [루트 레이아웃](#root-layout-required)이라고 합니다. 이 **필수** 레이아웃은 애플리케이션의 모든 페이지에서 공유됩니다. 루트 레이아웃에는 `html` 과 `body` 태그가 반드시 포함되어야 합니다.
+> - 모든 세그먼트 라우트는 선택적으로 자체 [레이아웃](#nesting-layouts)을 정의할 수 있습니다. 이러한 레이아웃은 해당 세그먼트 모든 페이지에서 공유됩니다.
+> - 라우트의 레이아웃은 기본적으로 **중첩**됩니다. 각 부모 레이아웃은 React `children`프로퍼티를 사용해 하위의 자식 레이아웃을 감싸줍니다.
+> - [라우트 그룹](/docs/app/building-your-application/routing/route-groups)을 사용하여 공유 레이아웃 안팎에서 특정한 라우트 세그먼트를 선택할 수 있습니다.
+> - 레이아웃은 기본적으로 [서버 컴포넌트](/docs/getting-started/react-essentials)이지만 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components)로 설정할 수 있습니다.
+> - 레이아웃은 데이터를 가져올 수 있습니다. 자세한 내용은 [Data-Fetching](/docs/app/building-your-application/data-fetching)섹션을 참조하세요.
+> - 부모 레이아웃과 자식 레이아웃 간에 데이터를 전달할 수 없습니다. 하지만 라우트에서 동일한 데이터를 한 번 이상 가져올 수 있으며, React는 성능에 영향을 주지 않고 요청을 [자동으로 중복 제거](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping)합니다.
+> - 레이아웃은 현재 라우트의 세그먼트에 접근할 수 없습니다. 라우트 세그먼트에 접근하려면, 클라이언트 컴포넌트의 [`useSelectedLayoutSegment`](/docs/app/api-reference/functions/use-selected-layout-segment) 혹은 [`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments)을 사용할 수 있습니다.
+> - 레이아웃에서는 `.js`, `.jsx`, 혹은 `.tsx` 파일 확장자를 사용할 수 있습니다.
+> - `layout.js` 와 `page.js` 파일은 같은 폴더에 정의할 수 있습니다. 레이아웃이 페이지를 감싸게 됩니다.
 
 ### Root Layout (Required)
 
-The root layout is defined at the top level of the `app` directory and applies to all routes. This layout enables you to modify the initial HTML returned from the server.
+루트 레이아웃은 `app`디렉토리의 최상위 레벨에 정의되며 모든 라우트에 적용됩니다. 이 레이아웃을 사용하면 서버에서 반환된 초기 HTML을 수정할 수 있습니다.
 
 ```tsx filename="app/layout.tsx" switcher
 export default function RootLayout({
@@ -144,19 +144,19 @@ export default function RootLayout({ children }) {
 }
 ```
 
-> **Good to know**:
+> **참고**:
 >
-> - The `app` directory **must** include a root layout.
-> - The root layout must define `<html>` and `<body>` tags since Next.js does not automatically create them.
-> - You can use the [built-in SEO support](/docs/app/building-your-application/optimizing/metadata) to manage `<head>` HTML elements, for example, the `<title>` element.
-> - You can use [route groups](/docs/app/building-your-application/routing/route-groups) to create multiple root layouts. See an [example here](/docs/app/building-your-application/routing/route-groups#creating-multiple-root-layouts).
-> - The root layout is a [Server Component](/docs/getting-started/react-essentials) by default and **can not** be set to a [Client Component](/docs/getting-started/react-essentials#client-components).
+> - 앱 디렉리에는 **반드시** 루트 레이아웃이 포함되어야 합니다.
+> - Next.js가 자동으로 생성하지 않으므로, 루트 레이아웃에는 `<html>`과`<body>`태그를 반드시 정의해야 합니다.
+> - [빌트인 SEO 지원 기능](/docs/app/building-your-application/optimizing/metadata)을 사용하여 `<head>` HTML 요소(예: `<title>` 요소)를 관리할 수 있습니다.
+> - [라우트 그룹](/docs/app/building-your-application/routing/route-groups) 여러 루트 레이아웃을 만들 수 있습니다. [예제](/docs/app/building-your-application/routing/route-groups#creating-multiple-root-layouts)를 참조하세요.
+> - 루트 레이아웃은 기본적으로 [서버 컴포넌트](/docs/getting-started/react-essentials)이며 [클라이언트 컴포넌트](/docs/getting-started/react-essentials#client-components)로 설정할 수 **없습니다.**
 
-> **Migrating from the `pages` directory:** The root layout replaces the [`_app.js`](/docs/pages/building-your-application/routing/custom-app) and [`_document.js`](/docs/pages/building-your-application/routing/custom-document) files. [View the migration guide](/docs/app/building-your-application/upgrading/app-router-migration#migrating-_documentjs-and-_appjs).
+> **`페이지` 디렉토리에서 마이그레이션:** 루트 레이아웃은 [`_app.js`](/docs/pages/building-your-application/routing/custom-app) 과 [`_document.js`](/docs/pages/building-your-application/routing/custom-document)파일을 대체합니다. [마이그레이션 가이드를 확인 하세요.](/docs/app/building-your-application/upgrading/app-router-migration#migrating-_documentjs-and-_appjs)
 
 ### Nesting Layouts
 
-Layouts defined inside a folder (e.g. `app/dashboard/layout.js`) apply to specific route segments (e.g. `acme.com/dashboard`) and render when those segments are active. By default, layouts in the file hierarchy are **nested**, which means they wrap child layouts via their `children` prop.
+폴더(예시- `app/dashboard/layout.js`)내에 정의된 레이아웃은 특정 라우트 세그먼트(e.g. `acme.com/dashboard`)에 적용되며 해당 세그먼트가 활성화될 때 렌더링합니다. 기본적으로, 파일 계층 구조의 레이아웃은 **중첩**되어 있으므로 하위 레이아웃이 `children`prop을 통해 하위 레이아웃을 감싸게 됩니다.
 
 <Image
   alt="Nested Layout"
@@ -182,9 +182,9 @@ export default function DashboardLayout({ children }) {
 }
 ```
 
-If you were to combine the two layouts above, the root layout (`app/layout.js`) would wrap the dashboard layout (`app/dashboard/layout.js`), which would wrap route segments inside `app/dashboard/*`.
+위의 두 레이아웃을 결합하면 루트 레이아웃(`app/layout.js`)이 대시보드 레이아웃(`app/dashboard/layout.js`)을 감싸고, 대시보드 레이아웃은 `app/dashboard/*.`을 감싸게 됩니다.
 
-The two layouts would be nested as such:
+두 레이아웃은 이렇게 중첩됩니다.
 
 <Image
   alt="Nested Layouts"
@@ -194,21 +194,21 @@ The two layouts would be nested as such:
   height="1026"
 />
 
-You can use [Route Groups](/docs/app/building-your-application/routing/route-groups) to opt specific route segments in and out of shared layouts.
+[라우트 그룹](/docs/app/building-your-application/routing/route-groups)을 사용하여 공유 레이아웃 안팎에서 특정 라우트 세그먼트를 선택할 수 있습니다.
 
 ## Templates
 
-Templates are similar to layouts in that they wrap each child layout or page. Unlike layouts that persist across routes and maintain state, templates create a new instance for each of their children on navigation. This means that when a user navigates between routes that share a template, a new instance of the component is mounted, DOM elements are recreated, state is **not** preserved, and effects are re-synchronized.
+템플릿은 각 하위 레이아웃 또는 페이지를 감싼다는 점에서 레이아웃과 유사합니다. 라우트 전체에서 지속되고 상태를 유지하는 레이아웃과 달리 템플릿은 탐색 시 각 하위 레이아웃에 대해 새 인스턴스를 생성합니다. 즉, 사용자가 템플릿을 공유하는 경로 사이를 탐색할 때 컴포넌트의 새 인스턴스가 마운트되고, DOM 요소가 다시 생성되며, state가 보존되지 **않고**, effect들이 다시 동기화됩니다.
 
-There may be cases where you need those specific behaviors, and templates would be a more suitable option than layouts. For example:
+특정 동작이 필요한 경우 레이아웃보다 템플릿이 더 적합한 옵션이 될 수 있습니다. 예를 들면,
 
-- Enter/exit animations using CSS or animation libraries.
-- Features that rely on `useEffect` (e.g logging page views) and `useState` (e.g a per-page feedback form).
-- To change the default framework behavior. For example, Suspense Boundaries inside layouts only show the fallback the first time the Layout is loaded and not when switching pages. For templates, the fallback is shown on each navigation.
+- CSS 또는 애니메이션 라이브러리를 사용하여 애니메이션을 입력/종료시.
+- `useEffect`(예: 페이지 조회 수 로깅) 및 `useState`(예: 페이지별 피드백 폼)에 의존하는 기능들.
+- 프레임워크의 기본적인 동작을 변경할 때. 예를 들어 레이아웃 내부의 서스펜스 라우트는 레이아웃을 처음 로드할 때만 fallback을 표시하고 페이지를 전환할 때는 표시하지 않습니다. 템플릿의 경우 각 탐색에 fallback이 표시됩니다.
 
-> **Recommendation:** We recommend using Layouts unless you have a specific reason to use Template.
+> **권장사항:** 템플릿을 사용해야 할 특별한 이유가 없는 한 레이아웃을 사용하는 것이 좋습니다.
 
-A template can be defined by exporting a default React component from a `template.js` file. The component should accept a `children` prop which will be nested segments.
+템플릿은 `template.js` 파일에서 기본 React 컴포넌트를 내보내서 정의할 수 있습니다. 해당 컴포넌트는 중첩된 세그먼트가 될 `children` prop을 받아들여야 합니다.
 
 <Image
   alt="template.js special file"
@@ -230,20 +230,20 @@ export default function Template({ children }) {
 }
 ```
 
-The rendered output of a route segment with a layout and a template will be as such:
+레이아웃과 템플릿이 있는 경로 세그먼트의 렌더링된 출력은 이와 같습니다.
 
 ```jsx filename="Output"
 <Layout>
-  {/* Note that the template is given a unique key. */}
+  {/* 템플릿에는 고유 키가 부여됩니다. */}
   <Template key={routeParam}>{children}</Template>
 </Layout>
 ```
 
 ## Modifying `<head>`
 
-In the `app` directory, you can modify the `<head>` HTML elements such as `title` and `meta` using the [built-in SEO support](/docs/app/building-your-application/optimizing/metadata).
+`앱` 디렉토리에서 [빌트인 SEO 지원](/docs/app/building-your-application/optimizing/metadata)을 사용하여 `title` 및 `meta` 등의 `<head>` HTML 요소를 수정할 수 있습니다.
 
-Metadata can be defined by exporting a [`metadata` object](/docs/app/api-reference/functions/generate-metadata#the-metadata-object) or [`generateMetadata` function](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function) in a [`layout.js`](/docs/app/api-reference/file-conventions/layout) or [`page.js`](/docs/app/api-reference/file-conventions/page) file.
+메타데이터는 [`layout.js`](/docs/app/api-reference/file-conventions/layout) 혹은 [`page.js`](/docs/app/api-reference/file-conventions/page) 파일에서 [`metadata` 객체](/docs/app/api-reference/functions/generate-metadata#the-metadata-object)를 내보내거나 [`generateMetadata` 함수](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function)를 사용하여 정의할 수 있습니다.
 
 ```tsx filename="app/page.tsx" switcher
 import { Metadata } from 'next'
@@ -267,6 +267,6 @@ export default function Page() {
 }
 ```
 
-> **Good to know**: You should **not** manually add `<head>` tags such as `<title>` and `<meta>` to root layouts. Instead, you should use the [Metadata API](/docs/app/api-reference/functions/generate-metadata) which automatically handles advanced requirements such as streaming and de-duplicating `<head>` elements.
+> **참고**: 루트 레이아웃에 `<title>` 및 `<meta>`와 같은 `<head>` 태그를 수동으로 추가해서는 **안 됩니다.** 대신 `<head>` 요소의 스트리밍 및 중복 제거와 같은 고급 요구 사항을 자동으로 처리하는 [메타데이터 API](/docs/app/api-reference/functions/generate-metadata)를 사용해야 합니다.
 
-[Learn more about available metadata options in the API reference.](/docs/app/api-reference/functions/generate-metadata)
+[API 레퍼런스에서 사용 가능한 메타데이터 옵션들에 대해 자세히 알아보세요.](/docs/app/api-reference/functions/generate-metadata)
