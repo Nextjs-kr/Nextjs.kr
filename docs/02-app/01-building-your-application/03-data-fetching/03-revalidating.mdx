@@ -1,12 +1,12 @@
 ---
-title: Revalidating Data
-nav_title: Revalidating
+title: 데이터 재검증하기
+nav_title: 재검증
 description: Incremental Static Regeneration을 사용하여 Next.js에서 데이터를 재검증하는 방법에 대해 알아보세요.
 ---
 
 Next.js를 사용하면 **전체 사이트를 다시 빌드할 필요 없이** 특정 정적 라우트를 업데이트할 수 있습니다. 재검증([Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)이라고도 함)을 사용하면 정적의 이점을 유지하면서 수백만 페이지로 확장할 수 있습니다.
 
-Next.js에는 두 가지 유형의 재검증이 있습니다:
+Next.js에는 두 가지 유형의 재검증이 있습니다.
 
 - **Background**: 특정 시간 간격으로 데이터를 재검증합니다.
 - **On-demand**: 업데이트와 같은 이벤트를 기반으로 데이터를 재검증합니다.
@@ -37,7 +37,7 @@ export const revalidate = 60 // 60초마다 페이지 재검증
 2. 최초 요청 이후 60초 이전의 라우트에 대한 모든 요청도 캐시 되어 즉시 표시됩니다.
 3. 60초가 지난 후에도 다음 요청에는 캐시 된(오래된) 데이터가 계속 표시됩니다.
 4. Next.js는 백그라운드에서 데이터 재생성을 트리거합니다.
-5. 라우트가 성공적으로 생성되면 Next.js는 캐시를 무효화하고 업데이트된 라우트를 표시합니다. Background 재생성이 실패하면 이전 데이터는 여전히 변경되지 않습니다.
+5. 라우트가 성공적으로 생성되면 Next.js는 캐시를 무효화하고 업데이트된 라우트를 표시합니다. 백그라운드 재생성이 실패하면 이전 데이터는 여전히 변경되지 않습니다.
 
 생성되지 않은 라우트 세그먼트에 대한 요청이 이루어지면 Next.js는 첫 번째 요청에서 라우트를 동적으로 렌더링합니다. 이후 요청은 캐시에서 정적 라우트 세그먼트를 제공합니다.
 
