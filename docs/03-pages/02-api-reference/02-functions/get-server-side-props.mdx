@@ -1,9 +1,9 @@
 ---
 title: getServerSideProps
-description: API reference for `getServerSideProps`. Learn how to fetch data on each request with Next.js.
+description: `getServerSideProps`에 대한 API 참조입니다. Next.js를 사용하여 각 요청에서 데이터를 페치하는 방법을 알아보세요.
 ---
 
-When exporting a function called `getServerSideProps` (Server-Side Rendering) from a page, Next.js will pre-render this page on each request using the data returned by `getServerSideProps`. This is useful if you want to fetch data that changes often, and have the page update to show the most current data.
+페이지에서 `getServerSideProps`(서버 사이드 렌더링)라는 함수를 내보낼 때 Next.js는 `getServerSideProps`가 반환한 데이터를 사용하여 각 요청에 대해 이 페이지를 미리 렌더링합니다. 이 기능은 자주 변경되는 데이터를 가져와서 최신 데이터를 표시하도록 페이지를 업데이트하려는 경우에 유용합니다.
 
 ```tsx filename="pages/index.tsx" switcher
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
@@ -40,45 +40,45 @@ export default function Page({ repo }) {
 }
 ```
 
-You can import modules in top-level scope for use in `getServerSideProps`. Imports used will **not be bundled for the client-side**. This means you can write **server-side code directly in `getServerSideProps`**, including fetching data from your database.
+최상위 범위에서 모듈을 가져와 `getServerSideProps`에서 사용할 수 있습니다. 사용한 임포트는 **클라이언트 사이드에 번들로 제공되지 않습니다**. 즉, 데이터베이스에서 데이터를 가져오는 등의 **서버 사이드 코드를 `getServerSideProps`에서 직접 작성할 수 있습니다.**
 
-## Context parameter
+## Context 매개변수
 
-The `context` parameter is an object containing the following keys:
+`context` 매개변수는 다음 key를 포함하는 객체입니다.
 
-| Name            | Description                                                                                                                                                                                                           |
+| 이름             | 설명                                                                                                                                                                                                                   |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `params`        | If this page uses a [dynamic route](/docs/pages/building-your-application/routing/dynamic-routes), `params` contains the route parameters. If the page name is `[id].js`, then `params` will look like `{ id: ... }`. |
-| `req`           | [The `HTTP` IncomingMessage object](https://nodejs.org/api/http.html#http_class_http_incomingmessage), with an additional `cookies` prop, which is an object with string keys mapping to string values of cookies.    |
-| `res`           | [The `HTTP` response object](https://nodejs.org/api/http.html#http_class_http_serverresponse).                                                                                                                        |
-| `query`         | An object representing the query string, including dynamic route parameters.                                                                                                                                          |
-| `preview`       | (Deprecated for `draftMode`) `preview` is `true` if the page is in the [Preview Mode](/docs/pages/building-your-application/configuring/preview-mode) and `false` otherwise.                                          |
-| `previewData`   | (Deprecated for `draftMode`) The [preview](/docs/pages/building-your-application/configuring/preview-mode) data set by `setPreviewData`.                                                                              |
-| `draftMode`     | `draftMode` is `true` if the page is in the [Draft Mode](docs/pages/building-your-application/configuring/draft-mode) and `false` otherwise.                                                                          |
-| `resolvedUrl`   | A normalized version of the request `URL` that strips the `_next/data` prefix for client transitions and includes original query values.                                                                              |
-| `locale`        | Contains the active locale (if enabled).                                                                                                                                                                              |
-| `locales`       | Contains all supported locales (if enabled).                                                                                                                                                                          |
-| `defaultLocale` | Contains the configured default locale (if enabled).                                                                                                                                                                  |
+| `params`        | 이 페이지가 [동적 라우트](/docs/pages/building-your-application/routing/dynamic-routes)를 사용하는 경우 `params`에는 라우트 매개변수가 포함되어 있습니다. 페이지 이름이 `[id].js`인 경우 `params`는 `{ id: ... }`처럼 보일 것입니다.                |
+| `req`           | 쿠키의 문자열 값에 문자열 키가 매핑된 객체로, `cookies` prop이 있는 [`HTTP` IncomingMessage 객체](https://nodejs.org/api/http.html#http_class_http_incomingmessage)입니다.                                                           |
+| `res`           | [`HTTP` 응답 객체](https://nodejs.org/api/http.html#http_class_http_serverresponse)입니다.                                                                                                                                |
+| `query`         | 동적 라우트 매개변수를 포함한 쿼리 문자열을 나타내는 객체입니다.                                                                                                                                                                      |
+| `preview`       | (`draftMode`에서는 더 이상 사용되지 않음) 페이지가 [미리 보기 모드](/docs/pages/building-your-application/configuring/preview-mode)에 있으면 미리 보기는 `참`이고 그렇지 않으면 `거짓`입니다.                                                  |
+| `previewData`   | (`draftMode`에서는 더 이상 사용되지 않음) `setPreviewData`에 의해 설정된 [미리 보기](/docs/pages/building-your-application/configuring/preview-mode) 데이터입니다.                                                                   |
+| `draftMode`     | 페이지가 [드래프트 모드](docs/pages/building-your-application/configuring/draft-mode)(draftMode)에 있으면 `draftMode`가 `참`이고 그렇지 않으면 `거짓`입니다.                                                                                        |
+| `resolvedUrl`   | 클라이언트 전환을 위해 `_next/data` 접두사를 제거하고 원래 쿼리 값을 포함하는 요청 `URL`의 정규화된 버전입니다.                                                                                                                             |
+| `locale`        | locale 활성 locale을 포함합니다(활성화된 경우).                                                                                                                                                                              |
+| `locales`       | 지원되는 모든 locale을 포함합니다(활성화된 경우).                                                                                                                                                                              |
+| `defaultLocale` | 구성된 기본 locale을 포함합니다(활성화된 경우).                                                                                                                                                                                |
 
-## getServerSideProps return values
+## getServerSideProps 반환 값
 
-The `getServerSideProps` function should return an object with **any one of the following** properties:
+`getServerSideProps` 함수는 **다음 속성들 중 하나를 가진** 객체를 반환해야 합니다.
 
 ### `props`
 
-The `props` object is a key-value pair, where each value is received by the page component. It should be a [serializable object](https://developer.mozilla.org/en-US/docs/Glossary/Serialization) so that any props passed, could be serialized with [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
+`props` 객체는 키-값 쌍으로, 각 값은 페이지 컴포넌트에서 수신됩니다. [직렬화 가능한 객체](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)여야 전달된 모든 프로퍼티를 [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)로 직렬화할 수 있습니다.
 
 ```jsx
 export async function getServerSideProps(context) {
   return {
-    props: { message: `Next.js is awesome` }, // will be passed to the page component as props
+    props: { message: `Next.js is awesome` }, // 페이지 컴포넌트에 프로퍼티로 전달됩니다.
   }
 }
 ```
 
 ### `notFound`
 
-The `notFound` boolean allows the page to return a `404` status and [404 Page](/docs/pages/building-your-application/routing/custom-error#404-page). With `notFound: true`, the page will return a `404` even if there was a successfully generated page before. This is meant to support use cases like user-generated content getting removed by its author.
+`notFound` 불리언을 사용하면 페이지에서 `404`상태와 [404 페이지](/docs/pages/building-your-application/routing/custom-error#404-page)를 반환할 수 있습니다. `notFound: true`를 사용하면 이전에 성공적으로 생성된 페이지가 있더라도 페이지가 `404`를 반환합니다. 이는 사용자가 생성한 콘텐츠가 작성자에 의해 삭제되는 등의 사례를 지원하기 위한 것입니다.
 
 ```js
 export async function getServerSideProps(context) {
@@ -92,14 +92,14 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { data }, // will be passed to the page component as props
+    props: { data }, // 페이지 컴포넌트에 프로퍼티로 전달됩니다.
   }
 }
 ```
 
 ### `redirect`
 
-The `redirect` object allows redirecting to internal and external resources. It should match the shape of `{ destination: string, permanent: boolean }`. In some rare cases, you might need to assign a custom status code for older `HTTP` clients to properly redirect. In these cases, you can use the `statusCode` property instead of the `permanent` property, but not both.
+`redirect` 객체는 내부 및 외부 리소스로 리다이렉트할 수 있습니다. `{ destination: 문자열, permanent: 불리언 }`의 형태와 일치해야 합니다. 드물지만 구형 `HTTP` 클라이언트가 제대로 리다이렉트하도록 사용자 지정 상태 코드를 할당해야 하는 경우가 있습니다. 이러한 경우 `permanent` 속성 대신 `statusCode` 속성을 사용할 수 있지만 둘 다 사용할 수는 없습니다.
 
 ```js
 export async function getServerSideProps(context) {
@@ -116,15 +116,15 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {}, // will be passed to the page component as props
+    props: {}, // 페이지 컴포넌트에 프로퍼티로 전달됩니다.
   }
 }
 ```
 
-## Version History
+## 버전 역사
 
-| Version   | Changes                                                                                                    |
+| 버전       | 변경 사항                                                                                                    |
 | --------- | ---------------------------------------------------------------------------------------------------------- |
-| `v13.4.0` | [App Router](/docs/app/building-your-application/data-fetching) is now stable with simplifed data fetching |
-| `v10.0.0` | `locale`, `locales`, `defaultLocale`, and `notFound` options added.                                        |
-| `v9.3.0`  | `getServerSideProps` introduced.                                                                           |
+| `v13.4.0` | [앱 라우터](/docs/app/building-your-application/data-fetching)가 간소화된 데이터 불러오기로 안정적으로 작동합니다.        |
+| `v10.0.0` | `locale`, `locales`, `defaultLocale`, `notFound` 옵션이 추가되었습니다.                                         |
+| `v9.3.0`  | `getServerSideProps` 를 도입했습니다.                                                                          |
