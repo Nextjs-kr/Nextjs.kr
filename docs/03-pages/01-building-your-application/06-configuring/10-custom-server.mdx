@@ -1,24 +1,24 @@
 ---
-title: Custom Server
-description: Start a Next.js app programmatically using a custom server.
+제목: 사용자 지정 서버
+description: 사용자 지정 서버를 사용하여 Next.js 앱을 프로그래밍 방식으로 실행합니다.
 ---
 
 <details>
-  <summary>Examples</summary>
+  <summary>예시</summary>
 
-- [Custom Server](https://github.com/vercel/next.js/tree/canary/examples/custom-server)
-- [SSR Caching](https://github.com/vercel/next.js/tree/canary/examples/ssr-caching)
+- [사용자 지정 서버](https://github.com/vercel/next.js/tree/canary/examples/custom-server)
+- [SSR 캐싱](https://github.com/vercel/next.js/tree/canary/examples/ssr-caching)
 
 </details>
 
-By default, Next.js includes its own server with `next start`. If you have an existing backend, you can still use it with Next.js (this is not a custom server). A custom Next.js server allows you to start a server 100% programmatically in order to use custom server patterns. Most of the time, you will not need this - but it's available for complete customization.
+기본적으로 Next.js에는 `next start`로 실행시킬 수 있는 서버를 포함하고 있습니다. 백엔드 서버가 있다면 Next.js와 함께 사용할 수 있습니다.(이것은 사용자 정의 서버가 아닙니다). Next.js 사용자 정의 서버는 사용자 정의 서버 패턴을 사용하기 위해 100% 프로그래밍 방식으로 서버를 실행할 수 있도록 해줍니다. 대부분의 경우 이 기능이 필요하지 않습니다. - 그러나 완전한 사용자 지정이 가능합니다.
 
-> **Good to know**:
+> **참고**:
 >
-> - Before deciding to use a custom server, please keep in mind that it should only be used when the integrated router of Next.js can't meet your app requirements. A custom server will remove important performance optimizations, like **serverless functions** and **[Automatic Static Optimization](/docs/pages/building-your-application/rendering/automatic-static-optimization).**
-> - A custom server **cannot** be deployed on [Vercel](https://vercel.com/solutions/nextjs).
+> - 사용자 지정 서버를 사용하기로 결정하기 전에, 통합 앱 라우터가 당신의 앱의 요구사항을 충족하지 못할 경우에만 사용해야 한다는 것을 명심하세요. 사용자 지정 서버는 **서버리스 기능** 과 **[자동 정적 최적화](/docs/pages/building-your-application/rendering/automatic-static-optimization)**처럼 중요한 성능 최적화를 제거합니다.
+> - 사용자 지정 서버는 [Vercel](https://vercel.com/solutions/nextjs)에 배포할 수 **없습니다**.
 
-Take a look at the following example of a custom server:
+사용자 지정 서버의 예시.
 
 ```js filename="server.js"
 const { createServer } = require('http')
@@ -28,15 +28,15 @@ const next = require('next')
 const dev = process.env.NODE_ENV !== 'production'
 const hostname = 'localhost'
 const port = 3000
-// when using middleware `hostname` and `port` must be provided below
+// 미들웨어를 사용할 때는 'hostname'과 'port'를 제공해야 합니다.
 const app = next({ dev, hostname, port })
 const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
   createServer(async (req, res) => {
     try {
-      // Be sure to pass `true` as the second argument to `url.parse`.
-      // This tells it to parse the query portion of the URL.
+      // parse함수의 두번째 인자로 true를 넘겨야 합니다.
+      // 이것은 URL의 쿼리 부분을 분석하도록 합니다.
       const parsedUrl = parse(req.url, true)
       const { pathname, query } = parsedUrl
 
@@ -63,9 +63,9 @@ app.prepare().then(() => {
 })
 ```
 
-> `server.js` doesn't go through babel or webpack. Make sure the syntax and sources this file requires are compatible with the current node version you are running.
+> `server.js`는 웹팩이나 바벨을 통과하지 않습니다. 실행 중인 노드의 버전과 파일에 있는 문법과 원본이 호환되는지 확인하세요.
 
-To run the custom server you'll need to update the `scripts` in `package.json` like so:
+사용자 지정 서버를 실행하려면 `package.json`에 있는 `scripts` 다음과 같이 수정해야 합니다.
 
 ```json filename="package.json"
 {
@@ -79,27 +79,27 @@ To run the custom server you'll need to update the `scripts` in `package.json` l
 
 ---
 
-The custom server uses the following import to connect the server with the Next.js application:
+사용자 정의 서버는 다음 import를 사용하여 Next.js 앱과 서버를 연결합니다.
 
 ```js
 const next = require('next')
 const app = next({})
 ```
 
-The above `next` import is a function that receives an object with the following options:
+위 `next` 가져오기는 아래 옵션의 객체를 받는 함수입니다.
 
-- `dev`: `Boolean` - Whether or not to launch Next.js in dev mode. Defaults to `false`
-- `dir`: `String` - Location of the Next.js project. Defaults to `'.'`
-- `quiet`: `Boolean` - Hide error messages containing server information. Defaults to `false`
-- `conf`: `object` - The same object you would use in [next.config.js](/docs/pages/api-reference/next-config-js). Defaults to `{}`
+- `dev`: `Boolean` - 개발 모드에서 Next.js를 실행할지에 대한 여부입니다. 기본값은 `false`입니다.
+- `dir`: `String` - Next.js 프로젝트의 경로입니다. 기본값은 `'.'`입니다.
+- `quiet`: `Boolean` - 서버 정보를 포함하는 에러의 메세지를 띄울지에 대한 여부입니다. 기본값은 `false`입니다.
+- `conf`: `object` - [next.config.js](/docs/pages/api-reference/next-config-js)에서 사용하는 것과 동일한 객체입니다. 기본값은 `{}`입니다.
 
-The returned `app` can then be used to let Next.js handle requests as required.
+반환된 `app`을 통해 Next.js가 필요에 따라 요청을 처리할 수 있습니다.
 
-## Disabling file-system routing
+## 파일 라우팅 사용 안함
 
-By default, `Next` will serve each file in the `pages` folder under a pathname matching the filename. If your project uses a custom server, this behavior may result in the same content being served from multiple paths, which can present problems with SEO and UX.
+기본적으로 `Next`는 `pages`폴더 아래에 있는 각각의 파일 이름과 같은 경로 이름으로 제공합니다. 만약 사용자 정의 서버를 사용한다면 여러 경로에서 동일한 콘텐츠가 제공될 수 있고 SEO 및 UX에 문제를 일으킬 수 있습니다.
 
-To disable this behavior and prevent routing based on files in `pages`, open `next.config.js` and disable the `useFileSystemPublicRoutes` config:
+위 동작을 비활성화 하고 `pages`의 파일 기반 라우팅을 막으려면 `next.config.js`을 열고 `useFileSystemPublicRoutes`설정을 비활성화 하세요.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -107,6 +107,6 @@ module.exports = {
 }
 ```
 
-> Note that `useFileSystemPublicRoutes` disables filename routes from SSR; client-side routing may still access those paths. When using this option, you should guard against navigation to routes you do not want programmatically.
+> `useFileSystemPublicRoutes`는 SSR에서 파일 이름 경로를 비활성화합니다. 클라이언트 측의 라우팅은 여전히 비활성화된 경로들에 접근할 수 있습니다. 이 옵션을 사용할 때는 원하지 않는 경로로 이동하지 않게 프로그래밍적으로 방지해야 합니다.
 
-> You may also wish to configure the client-side router to disallow client-side redirects to filename routes; for that refer to [`router.beforePopState`](/docs/pages/api-reference/functions/use-router#routerbeforepopstate).
+> 또한 파일 이름 경로에 대한 클라이언트 측의 리다이렉트를 허용하지 않도록 클라이언트 측 라우터를 구성할 수 있습니다. [`router.beforePopState`](/docs/pages/api-reference/functions/use-router#routerbeforepopstate)를 참조하세요.
