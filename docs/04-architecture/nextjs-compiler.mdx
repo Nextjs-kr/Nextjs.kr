@@ -1,32 +1,32 @@
 ---
 title: Next.js 컴파일러
-description: Next.js 어플리케이션을 변환하고 경량화하는 Rust로 작성된 Next.js 컴파일러
+description: Next.js 애플리케이션을 변환하고 경량화하는 Rust로 작성된 Next.js 컴파일러
 ---
 
-Next.js 컴파일러는 [SWC](http://swc.rs/)를 사용하여 Rust로 작성되어 있으며, 자바스크립트 코드를 변환하고 경령화 해줍니다. 이를 통해 개별 파일의 변환 작업과 번들의 최소화 작업에 사용되는 Babel과 Terser의 역할을 대체합니다.
+Next.js 컴파일러는 [SWC](http://swc.rs/)를 사용하여 Rust로 작성되어 있으며, 자바스크립트 코드를 변환하고 경량화 해줍니다. 이를 통해 개별 파일의 변환 작업과 번들의 최소화 작업에 사용되는 Babel과 Terser의 역할을 대체합니다.
 
-Next.js 컴파일러를 사용한 컴파일링 Babel보다 17배 빠르며, Next.js 12 버전부터 기본으로 활성화되었습니다. 기존의 Babel 구성이나 [지원되지 않는 기능](#unsupported-features)을 사용 중인 경우, Next.js는 자체 컴파일러를 비활성화하고 계속해서 Babel을 사용합니다.
+Next.js 컴파일러를 사용한 컴파일링은 Babel보다 17배 빠르며, Next.js 12 버전부터 기본으로 활성화되었습니다. 기존의 Babel 구성이나 [지원되지 않는 기능](#unsupported-features)을 사용 중인 경우, Next.js는 자체 컴파일러를 비활성화하고 계속해서 Babel을 사용합니다.
 
-## Why SWC
+## SWC를 사용한 이유
 
 [SWC](http://swc.rs/)는 확장 가능한 러스트 기반 플랫폼으로, 차세대 빠른 개발자 도구입니다.
 
 SWC는 컴파일링, 경량화, 번들링 등에 사용할 수 있으며 확장성을 갖추도록 설계되었습니다. 기본 제공이든 사용자 지정이든 코드 변환 작업을 위해 호출 될 수 있으며 Next.js와 같은 상위 수준의 도구를 통해 수행됩니다.
 
-SWC를 기반으로 개발하기로 한 이유는 아래와 같습니다:
+SWC를 기반으로 개발하기로 한 이유는 아래와 같습니다.
 
 - **확장성**: 라이브러리를 포크하거나 설계 제약 조건을 해결할 필요 없이 SWC는 Next.js 내부에서 Crate로 사용될 수 있습니다.
 - **성능**: SWC로 전환 후 Next.js에서 약 3배 빠른 새로고침 및 약 5배 빠른 빌드를 달성할 수 있었으며, 아직 최적화할 여지가 더 남아 있습니다.
 - **웹어셈블리:** WASM에 대한 Rust의 지원은 가능한 모든 플랫폼을 지원하고 Next.js 개발을 어디에서나 할 수 있도록 하는 데 필수적입니다.
 - **커뮤니티:** 러스트 커뮤니티와 생태계는 놀랍고 아직도 성장 중입니다.
 
-## Supproted Features
+## Supported Features
 
 ### Styled Components
 
 현재 `babel-plugin-styled-components`을 Next.js 컴파일러에 이식 중입니다.
 
-먼저, `npm install next@latest`을 하여 Next.js 최선버전으로 업데이트 합니다. 그리고 `next.config.js`을 다음과 같이 설정합니다:
+먼저, `npm install next@latest`을 하여 Next.js 최선버전으로 업데이트 합니다. 그리고 `next.config.js`을 다음과 같이 설정합니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -63,7 +63,7 @@ module.exports = {
 
 ### Jest
 
-Next.js 컴파일러는 아래 사항을 포함하여 테스트를 변환하고 Next.js와 함께 Jest를 구성하는 것을 간소화합니다:
+Next.js 컴파일러는 아래 사항을 포함하여 테스트를 변환하고 Next.js와 함께 Jest를 구성하는 것을 간소화합니다.
 
 - `.css`, `.module.css`, `.scss` 변형, image import의 자동 모킹(mocking)
 - SWC를 사용하여 `transform`을 자동으로 설정
@@ -72,7 +72,7 @@ Next.js 컴파일러는 아래 사항을 포함하여 테스트를 변환하고 
 - 테스트 해결에서 `.next`를 무시
 - 실험적인 SWC 변환을 가능하게 하는 플래그를 위해 `next.config.js`를 로드
 
-먼저, `npm install next@latest`을 하여 Next.js 최선버전으로 업데이트 합니다. 그런 다음 `jest.config.js` 파일을 업데이트합니다:
+먼저, `npm install next@latest`을 하여 Next.js 최선버전으로 업데이트 합니다. 그런 다음 `jest.config.js` 파일을 업데이트합니다.
 
 ```js filename="jest.config.js"
 const nextJest = require('next/jest')
@@ -91,13 +91,13 @@ module.exports = createJestConfig(customJestConfig)
 
 ### Relay
 
-[Relay](https://relay.dev/)를 활성화기 위해서 다음과 같이 설정합니다:
+[Relay](https://relay.dev/)를 활성화기 위해서 다음과 같이 설정합니다.
 
 ```js filename="next.config.js"
 module.exports = {
   compiler: {
     relay: {
-      // realy.config.js와 일치해야 합니다.
+      // relay.config.js와 일치해야 합니다.
       src: './',
       artifactDirectory: './__generated__',
       language: 'typescript',
@@ -111,9 +111,9 @@ module.exports = {
 
 ### Remove React Properties
 
-JSX 속성을 삭제할 수 있습니다. 테스트를 자주 사용되며 `babel-plugin-react-remove-properties`과 비슷합니다.
+JSX 속성을 삭제할 수 있습니다. 테스트를 위해 자주 사용되며 `babel-plugin-react-remove-properties`과 비슷합니다.
 
-기본 정규표현식 ^data-test'와 일치하는 속성을 제거하려면 아래와 같이 설정합니다:
+기본 정규표현식 `^data-test`와 일치하는 속성을 제거하려면 아래와 같이 설정합니다:
 
 ```js filename="next.config.js"
 module.exports = {
@@ -137,7 +137,7 @@ module.exports = {
 
 ### Remove Console
 
-`node_modules`이 아닌 어플리케이션에 있는 모든 `console.*` 호출을 지우며 `babel-plugin-transform-remove-console`과 비슷합니다.
+`node_modules`이 아닌 애플리케이션에 있는 모든 `console.*` 호출을 지우며 `babel-plugin-transform-remove-console`과 비슷합니다.
 
 `console.*`호출을 지우려면 다음과 같이 설정합니다:
 
@@ -231,7 +231,7 @@ module.exports = {
 
 ### Minification
 
-Next.js의 swc 컴파일러는 v13 이후 기본적으로 경령화에 사용되며 Terser보다 7배 더 빠릅니다.
+Next.js의 swc 컴파일러는 v13 이후 기본적으로 경량화에 사용되며 Terser보다 7배 더 빠릅니다.
 
 만약 Terser가 여전히 필요한 경우 다음과 같이 설정할 수 있습니다.
 
@@ -294,7 +294,7 @@ module.exports = {
 
 #### Handlebars variables and helper functions
 
-[handlebars](https://docs.rs/handlebars) 를 사용하여 'transform' 필드에서 대체 가져오기 경로를 템플릿으로 만듭니다. 다음 변수와 헬퍼 함수(helper functions)를 사용할 수 있습니다:
+[handlebars](https://docs.rs/handlebars) 를 사용하여 `transform` 필드에서 대체 가져오기 경로를 템플릿으로 만듭니다. 다음 변수와 헬퍼 함수(helper functions)를 사용할 수 있습니다:
 
 1. `member`: `string` 타입이며 import의 이름을 가리킵니다.
 2. `lowerCase`, `upperCase`, `camelCase`, `kebabCase`: 헬퍼 함수가 문자열을 lower, upper, camel, kebab case로 변환합니다.
@@ -448,9 +448,9 @@ module.exports = {
 
 `.babelrc` 파일이 있으면 Next.js는 개별 파일 변환을 위해 Babel을 자동으로 사용합니다. 따라서 사용자 지정 Babel 플러그인을 활용하는 기존 애플리케이션과의 하위 호환성을 보장합니다.
 
-커스텀 Babel 설정을 사용하는 경우, [설정을 공유 부탁드립니다](https://github.com/vercel/next.js/discussions/30174). 향후 지원할 플러그인뿐 아니라 일반적으로 많이 사용되는 Babel을 최대한 이식하기 위헤 노력 중입니다.
+커스텀 Babel 설정을 사용하는 경우, [설정을 공유 부탁드립니다](https://github.com/vercel/next.js/discussions/30174). 향후 지원할 플러그인뿐 아니라 일반적으로 많이 사용되는 Babel을 최대한 이식하기 위해 노력 중입니다.
 
-## Version History
+## 버전 이력
 
 | Version   | Changes                                                                                                                                                                                                  |
 | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
