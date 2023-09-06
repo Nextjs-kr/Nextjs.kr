@@ -8,7 +8,7 @@ Next.js에서 [지연 로딩](https://developer.mozilla.org/en-US/docs/Web/Perfo
 
 이를 통해 **클라이언트 컴포넌트들**과 불러와진 라이브러리들의 로딩을 연기할 수 있고, 오직 클라이언트 번들에서 그것들이 필요할 때만 포함하도록 할 수 있습니다. 예를 들어, 사용자가 클릭해서 열기 전까지는 모델의 로딩을 지연하고 싶다고 해봅시다.
 
-Next.js에서 지연 로딩을 구현하는 데는 두 가지 방법이 있습니다:
+Next.js에서 지연 로딩을 구현하는 데는 두 가지 방법이 있습니다.
 
 1. [동적 가져오기](#nextdynamic)와 함께 `next/dynamic`를 사용하기
 2. [`React.lazy()`](https://react.dev/reference/react/lazy)와 함께 [Suspense](https://react.dev/reference/react/Suspense)를 사용하기
@@ -58,7 +58,7 @@ export default function ClientComponentExample() {
 
 `React.lazy()`와 Suspense를 사용하면, 클라이언트 컴포넌트들은 기본적으로 사전 렌더링 (SSR) 될 것입니다.
 
-클라이언트 컴포넌트가 사전 렌더링 되지 않게 하기 위해서, `ssr` 옵션을 `false`로 설정할 수 있습니다:
+클라이언트 컴포넌트가 사전 렌더링 되지 않게 하기 위해서, `ssr` 옵션을 `false`로 설정할 수 있습니다.
 
 ```jsx
 const ComponentC = dynamic(() => import('../components/C'), { ssr: false })
@@ -141,7 +141,7 @@ export default function Page() {
 
 ### 명명된 내보내기 가져오기
 
-명명된 내보내기를 동적으로 가져오기위해, [`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) 함수를 통해 반환된 Promise로부터 반환할 수 있습니다:
+명명된 내보내기를 동적으로 가져오기위해, [`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) 함수를 통해 반환된 Promise로부터 반환할 수 있습니다.
 
 ```jsx filename="components/hello.js"
 'use client'
@@ -181,7 +181,7 @@ export default function Home() {
 
 ## 명명된 내보내기와 사용
 
-명명된 내보내기를 동적으로 가져오려면, [`import()`](https://github.com/tc39/proposal-dynamic-import#example)에 의해 반환된 [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)에서 반환해 가져올 수 있습니다:
+명명된 내보내기를 동적으로 가져오려면, [`import()`](https://github.com/tc39/proposal-dynamic-import#example)에 의해 반환된 [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)에서 반환해 가져올 수 있습니다.
 
 ```jsx filename="components/hello.js"
 export function Hello() {
