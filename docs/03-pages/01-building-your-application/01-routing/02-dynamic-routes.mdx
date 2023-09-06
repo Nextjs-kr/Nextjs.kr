@@ -9,13 +9,13 @@ related:
     - pages/api-reference/functions/use-router
 ---
 
-정확한 세그먼트 이름을 미리 알지 못하고 동적 데이터로 라우팅을 생성하는 경우, 요청 시 입력되거나 빌드 시 [미리 렌더링 되는](#generating-static-params) 되는 동적 세그먼트를 사용할 수 있습니다.
+정확한 세그먼트 이름을 미리 알지 못하고 동적 데이터로 라우팅을 생성하는 경우, 요청 시 입력되거나 빌드 시 [미리 렌더링 되는](/docs/03-pages/01-building-your-application/03-data-fetching/02-get-static-paths.mdx) 되는 동적 세그먼트를 사용할 수 있습니다.
 
 ## 컨벤션
 
-동적 세그먼트는 폴더 이름을 대괄호로 사용해 만들 수 있습니다: `[폴더 이름]`. 예: `[id]` 또는 `[slug]`.
+동적 세그먼트는 `[폴더 이름]`처럼 폴더 이름을 대괄호로 사용해 만들 수 있습니다. 예: `[id]` 또는 `[slug]`.
 
-동적 세그먼트는 [`useRouter`](/docs/pages/api-reference/functions/use-router)를 통해 사용할 수 있습니다.
+동적 세그먼트는 [`useRouter`](/docs/03-pages/02-api-reference/02-functions/use-router.mdx)를 통해서도 사용할 수 있습니다.
 
 ## 예시
 
@@ -47,9 +47,9 @@ export default function Page() {
 
 ## 포괄적 세그먼트
 
-동적 세그먼트는 괄호 안에 줄임표를 추가하여 `[...폴더이름]` 안에 모든 후속 세그먼트를 **포함하도록** 확장할 수 있습니다.
+동적 세그먼트는 `[...폴더이름]`처럼 괄호 안에 줄임표를 추가하여 안에 모든 후속 세그먼트를 **포함하도록** 확장할 수 있습니다.
 
-예를 들어 `pages/shop/[...slug].js`는 `/shop/clothes` 뿐만 아니라 `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts` 등으로 매치될 수 있습니다.
+예를 들어 `pages/shop/[...slug].js`는 `/shop/clothes` 뿐만 아니라 `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts` 등도 매치됩니다.
 
 | 경로                      | 예시 URL      | `params`                    |
 | ------------------------- | ------------- | --------------------------- |
@@ -57,13 +57,13 @@ export default function Page() {
 | `pages/shop/[...slug].js` | `/shop/a/b`   | `{ slug: ['a', 'b'] }`      |
 | `pages/shop/[...slug].js` | `/shop/a/b/c` | `{ slug: ['a', 'b', 'c'] }` |
 
-## 선택적으로 모든 세그먼트 캡처하기
+## 선택적 포괄 세그먼트
 
-모든 세그먼트를 캡처하는 것은 이중 대괄호에 매개 변수를 포함하여`([[...folderName]])` **선택적으로** 생성할 수 있습니다.
+포괄적 세그먼트를 `([[...folderName]])`처럼 이중 대괄호를 사용하여 만들면 **Optional**하게 만들 수 있습니다.
 
-예를 들어 `pages/shop/[[...slug]].js`는 `/shop/clothes`, `/shop/clothes/tops`, `/shop/clothes/tops/t-shop` 외에 `/shop` **또한** 매치될 수 있습니다.
+예를 들어 `pages/shop/[[...slug]].js`는 `/shop/clothes`, `/shop/clothes/tops`, `/shop/clothes/tops/t-shop` 뿐만 아니라 `/shop` **또한** 매치될 수 있습니다.
 
-**모든 세그먼트 캡처하기**와 **선택적으로 세그먼트 캡처하기**의 차이점은 선택적 세그먼트 캡처하기의 경우 매개 변수가 없는 경로에도 매치될 수 있다는 점입니다(위 예제의 `/shop`).
+**포괄적 세그먼트**와 **선택적 포괄 세그먼트**의 차이점은 선택적 포괄 세그먼트의 경우 매개 변수가 없는 경로에도 매치될 수 있다는 점입니다(위 예시의 `/shop`).
 
 | 경로                        | 예시 URL      | `params`                    |
 | --------------------------- | ------------- | --------------------------- |

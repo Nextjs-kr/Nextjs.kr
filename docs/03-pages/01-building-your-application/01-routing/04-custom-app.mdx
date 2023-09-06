@@ -6,9 +6,10 @@ description: Next.js의 기본 App 컴포넌트를 덮어 씀으로써 페이지
 Next.js는 `App` 컴포넌트를 사용하여 페이지를 초기화합니다. `App` 컴포넌트는 덮어 쓰기 하여 페이지 초기화를 제어할 수 있으며 그 외의 기능은 다음과 같습니다.
 
 - 페이지 변경 사이에 레이아웃 유지
-- 페이지 이동 시 state 유지
 - 추가 데이터를 페이지로 주입
-- [전역 CSS 추가](/docs/pages/building-your-application/styling)
+- [전역 CSS 추가](/docs/03-pages/01-building-your-application/04-styling)
+
+### 사용방법
 
 기본 `App`을 덮어 쓰려면 아래와 같이 `pages/_app.js` 파일을 생성하세요.
 
@@ -18,19 +19,17 @@ export default function MyApp({ Component, pageProps }) {
 }
 ```
 
-`Component` prop는 현재 `page`에 해당하므로 라우트를 이동할 때마다 새 `page`로 변경됩니다. 따라서 `Component`에 전달하는 prop는 모두 `page`가 받습니다.
+`Component` prop은 현재 `page`에 해당하므로 라우트를 이동할 때마다 `Component`는 새 `page`로 변경됩니다. 따라서 `Component`에 전달하는 prop은 모두 `page`가 받게 됩니다.
 
-`pageProps`는 Next.js의 [데이터 페칭 메서드](/docs/pages/building-your-application/data-fetching) 중 하나가 사전 로딩한 초기 prop가 담긴 객체이며 초기 prop가 없을 경우엔 빈 객체입니다.
+`pageProps`는 Next.js의 [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching) 중 하나가 사전 로딩한 초기 prop이 담긴 객체이며 초기 prop이 없을 경우엔 빈 객체입니다.
 
-`App.getInitialProps`는 `context.ctx`라는 단일 인자를 받습니다. `context.ctx`는 `getInitialProps`의 [`context` 객체](/docs/pages/api-reference/functions/get-initial-props#context-object)와 동일한 프로퍼티가 담긴 객체입니다.
+> **참고**
+>
+> - 앱이 실행 중인 상태에서 커스텀 `App`을 추가했다면 개발 서버를 재실행해야 합니다. 이는 `pages/_app.js`가 기존에 없었을 경우에만 해당합니다.
+> - `App`은 [`getStaticProps`](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx) 또는 [`getServerSideProps`](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx)와 같은 Next.js [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching)를 지원하지 않습니다.
 
-### 주의 사항
+## `App`에서 `getInitialProps` 사용하기
 
-- 앱이 실행 중인 상태에서 커스텀 `App`을 추가했다면 개발 서버를 재실행해야 합니다. 이는 `pages/_app.js`가 기존에 없었을 경우에만 해당합니다.
-- `App`에 커스텀 [`getInitialProps`](/docs/pages/api-reference/functions/get-initial-props)를 추가하면 [정적 생성](/docs/pages/building-your-application/data-fetching/get-static-props)이 없는 페이지의 [자동 정적 최적화](/docs/pages/building-your-application/rendering/automatic-static-optimization)가 비활성화됩니다.
-- 커스텀 앱에 `getInitialProps`를 추가할 땐 반드시 `"next/app"에서 App을 불러오기(import App from "next/app")` 하여 `getInitialProps` 내부에서 `App.getInitialProps(appContext)` 호출 후 반환된 객체를 반환 값에 병합하세요.
-- `App`은 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 또는 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)와 같은 Next.js [데이터 페칭 메서드](/docs/pages/building-your-application/data-fetching)를 지원하지 않습니다. 전역 데이터 페칭이 필요한 경우 [점진적 `app/` 디렉터리 적용](/docs/app/building-your-application/upgrading)을 고려하세요.
+`App`에서 [`getInitialProps`](/docs/03-pages/02-api-reference/02-functions/get-initial-props.mdx)를 사용하면 [정적 생성(getStaticProps)](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx)이 없는 페이지의 [자동 정적 최적화](/docs/03-pages/01-building-your-application/02-rendering/04-automatic-static-optimization.mdx)가 비활성화됩니다.
 
-### TypeScript
-
-TypeScript를 사용할 경우 [Next.js TypeScript 문서](/docs/pages/building-your-application/configuring/typescript#custom-app)를 참고하세요.
+**이 패턴을 사용하는 것을 권장하지 않습니다.** 대신 [페이지와 레이아웃](/docs/02-app/01-building-your-application/01-routing/02-pages-and-layouts.mdx)에서 훨씬 쉽게 데이터를 가져올 수 있는 [App 라우터의 점진적 적용](/docs/02-app/01-building-your-application/08-upgrading/02-app-router-migration.mdx)을 고려해보세요

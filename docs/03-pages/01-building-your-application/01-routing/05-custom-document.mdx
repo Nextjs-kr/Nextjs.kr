@@ -3,9 +3,9 @@ title: 커스텀 Document
 description: Next.js의 기본 문서 마크업을 확장합니다.
 ---
 
-커스텀 Document는 [페이지](/docs/pages/building-your-application/routing/pages-and-layouts)를 렌더링할 때 사용되는 `<html>` 및 `<body>`태그를 업데이트할 수 있습니다. 이 파일은 서버에서만 렌더링 되므로 `_document`에서는 onClick과 같은 이벤트 핸들러를 사용할 수 없습니다.
+커스텀 `Document`는 [페이지](/docs/03-pages/01-building-your-application/01-routing/01-pages-and-layouts.mdx)를 렌더링할 때 사용되는 `<html>` 및 `<body>`태그를 업데이트할 수 있습니다.
 
-기본 Document를 덮어쓰려면 아래와 같이 `pages/_document.js` 파일을 생성하십시오:
+기본 Document를 덮어쓰려면 아래와 같이 `pages/_document.js` 파일을 생성하세요:
 
 ```jsx
 import { Html, Head, Main, NextScript } from 'next/document'
@@ -23,36 +23,37 @@ export default function Document() {
 }
 ```
 
-위의 코드는 Next.js의 기본 Document입니다. 커스텀 속성은 props를 통해 전달할 수 있습니다. 예를 들어, `<html>` 태그에 `lang="en"`을 추가할 수 있습니다:
-
-```jsx
-<Html lang="en">
-```
-
-또는 `body` 태그에 `className`을 추가할 수 있습니다:
-
-```jsx
-<body className="bg-white">
-```
-
-`<Html>`, `<Head />`,` <Main />`, `<NextScript />`은 페이지가 올바르게 렌더링 되기 위해 필요합니다.
+> **알아두면 좋은 정보**
+>
+> - `_document`는 서버에서만 렌더링 되므로 onClick과 같은 이벤트 핸들러를 사용할 수 없습니다.
+> - 페이지가 올바르게 렌더링되기 위해서는 `<Html>`, `<Head />`,` <Main />`, `<NextScript />`가 필요합니다.
 
 ## 주의사항
 
-- `_document`에서 사용된 `<Head />` 컴포넌트는 [`next/head`](/docs/pages/api-reference/components/head)와 다릅니다. 여기에서 사용된 `<Head />` 컴포넌트는 모든 페이지에 공통인 `<head>` 코드로써만 사용되어야 합니다. 다른 경우에는 [`next/head`](/docs/pages/api-reference/components/head)를 페이지나 컴포넌트에서 사용하는 것이 좋습니다.
+- `_document`에서 사용되는 `<Head />` 컴포넌트는 [`next/head`](/docs/03-pages/02-api-reference/01-components/head.mdx)와 다릅니다. 여기에서 사용된 `<Head />` 컴포넌트는 모든 페이지에 공통인 `<head>` 코드로써만 사용되어야 합니다. 다른 경우에는 각 페이지나 컴포넌트에서 [`next/head`](/docs/pages/api-reference/components/head)를 사용하는 것이 좋습니다.
 - `<Main />` 바깥의 React 컴포넌트는 브라우저에서 초기화되지 않습니다. 여기에
   애플리케이션 로직이나 사용자 지정 CSS(예: `styled-jsx`)를 추가하지 마십시오.
-  모든 페이지에서 공유되는 컴포넌트(메뉴나 툴바와 같은)가 필요한 경우 [레이아웃](/docs/pages/building-your-application/routing/pages-and-layouts#layout-pattern)을
-  참조하십시오.
-- `Document`는 현재 Next.js의 [데이터 패칭 방법](/docs/pages/building-your-application/data-fetching)인 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 또는 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)을 지원하지 않습니다.
+  모든 페이지에서 공유되는 컴포넌트(메뉴나 툴바와 같은)가 필요한 경우 [레이아웃](/docs/03-pages/01-building-your-application/01-routing/01-pages-and-layouts.mdx)을
+  사용하세요.
+- `Document`는 현재 [`getStaticProps`](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx)나 [`getServerSideProps`](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx)와 같은 [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching)를 지원하지 않습니다.
+
+> ## Nano's Comment
+>
+> 현재 EXP `_document.jsx`에 GTM 초기화 스크립트가 있습니다. 이걸 `Layout`으로 옮겨야 할 듯 합니다.
 
 ## `renderPage` 커스터마이징
 
-> **참고**: 이는 CSS-in-JS와 같은 라이브러리가 서버 측 렌더링을 지원하기 위해 필요한 고급 기능으로, 내장된 `styled-jsx` 지원에는 필요하지 않습니다.
+> **참고**: 이는 CSS-in-JS와 같은 라이브러리(GDS?)가 서버 사이드 렌더링을 지원하기 위해 필요한 고급 기능으로, 내장된 `styled-jsx` 지원에는 필요하지 않습니다.
 
-[React 18](/docs/getting-started/react-essentials) 지원을 위해, 가능하다면 `getInitialProps`와 `renderPage`을 커스터마이징 하지 않는것을 추천합니다.
+**이 패턴을 사용하는 것을 권장하지 않습니다.** 대신 [페이지와 레이아웃](/docs/02-app/01-building-your-application/01-routing/02-pages-and-layouts.mdx)에서 훨씬 쉽게 데이터를 가져올 수 있는 [App 라우터의 점진적 적용](/docs/02-app/01-building-your-application/08-upgrading/02-app-router-migration.mdx)을 고려해보세요
 
-아래에 표시된 `ctx` 객체는 [`getInitialProps`](/docs/pages/api-reference/functions/get-initial-props#context-object)에서 받는 객체와 동일하며, `renderPage`가 추가된 것입니다.
+> ## Nano's Comment
+>
+> App 디렉토리에서는 `_document`의 기능이 `root layout`으로 대체되는데, 여기서는 데이터 페칭이 쉽게 가능하기 때문에 App 디렉토리로의 전환을 추천하는듯 합니다. `React18` 출시 이전 문서에서는
+>
+> `React18 지원 준비를 위해 renderPage 커스터마이징 사용을 권장하지 않습니다.`
+>
+> 라는 문구가 있었는데 출시 이후에 그냥 권장하지 않고 App 라우터로 바꿔라~ 라는 문구만 있는걸로 보아 사용해도 큰 문제는 없을듯 합니다.
 
 ```jsx
 import Document, { Html, Head, Main, NextScript } from 'next/document'
@@ -92,24 +93,7 @@ class MyDocument extends Document {
 export default MyDocument
 ```
 
-> **참고**: `_document`의 `getInitialProps`는 클라이언트 측 전환 중에 호출되지 않습니다.
-
-## TypeScript
-
-내장된 `DocumentContext` 타입을 사용해서 파일 이름을 `./pages/_document.tsx`로 변경할 수 있습니다. 아래의 예시를 참조하세요:
-
-```tsx
-import Document, { DocumentContext, DocumentInitialProps } from 'next/document'
-
-class MyDocument extends Document {
-  static async getInitialProps(
-    ctx: DocumentContext
-  ): Promise<DocumentInitialProps> {
-    const initialProps = await Document.getInitialProps(ctx)
-
-    return initialProps
-  }
-}
-
-export default MyDocument
-```
+> **참고**
+>
+> - `_document`의 `getInitialProps`는 클라이언트 측 전환 중에 호출되지 않습니다.
+> - `_document`의 `ctx` 객체는 [`getInitialProps`](/docs/03-pages/02-api-reference/02-functions/get-initial-props.mdx)에서 받는 `_ctx` 객체와 동일하며, `renderPage`가 추가된 것입니다.

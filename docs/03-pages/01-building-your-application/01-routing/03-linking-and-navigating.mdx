@@ -1,11 +1,11 @@
 ---
-title: Linking and Navigating
-description: Learn how navigation works in Next.js, and how to use the Link Component and `useRouter` hook.
+title: Linking과 Navigating
+description: Next.js에서 네비게이션이 어떻게 동작하는지, 그리고 Link 컴포넌트와 `useRouter` 훅을 어떻게 사용하는지 알아봅시다.
 ---
 
-The Next.js router allows you to do client-side route transitions between pages, similar to a single-page application.
+Next.js 라우터를 사용하면 페이지 간에 SPA와 유사한 클라이언트 사이드 라우팅을 할 수 있습니다.
 
-A React component called `Link` is provided to do this client-side route transition.
+클라이언트 사이드 라우팅을 위한 `Link` 컴포넌트가 제공됩니다.
 
 ```jsx
 import Link from 'next/link'
@@ -29,17 +29,17 @@ function Home() {
 export default Home
 ```
 
-The example above uses multiple links. Each one maps a path (`href`) to a known page:
+위의 예시에서는 여러 개의 링크를 사용합니다. 각 링크는 알고있는 페이지에 대한 경로(`href`)를 매핑합니다.
 
 - `/` → `pages/index.js`
 - `/about` → `pages/about.js`
 - `/blog/hello-world` → `pages/blog/[slug].js`
 
-Any `<Link />` in the viewport (initially or through scroll) will be prefetched by default (including the corresponding data) for pages using [Static Generation](/docs/pages/building-your-application/data-fetching/get-static-props). The corresponding data for [server-rendered](/docs/pages/building-your-application/data-fetching/get-server-side-props) routes is fetched _only when_ the `<Link />` is clicked.
+뷰포트에 있는 모든 `<Link />`는 기본적으로 [Static Generation](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx)을 사용하는 페이지를 미리 불러옵니다.(해당 데이터도 포함) [서버사이드 렌더링](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx) 라우트는 `<Link />`를 클릭한 경우에만 불러옵니다.
 
-## Linking to dynamic paths
+## 동적 경로에 연결하기
 
-You can also use interpolation to create the path, which comes in handy for [dynamic route segments](/docs/pages/building-your-application/routing/dynamic-routes). For example, to show a list of posts which have been passed to the component as a prop:
+인터폴레이션을 통해 경로를 생성할 수도 있는데, 이는 [동적 라우팅 세그먼트](/docs/03-pages/01-building-your-application/01-routing/02-dynamic-routes.mdx)에 유용합니다.
 
 ```jsx
 import Link from 'next/link'
@@ -61,9 +61,9 @@ function Posts({ posts }) {
 export default Posts
 ```
 
-> [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) is used in the example to keep the path utf-8 compatible.
+> 이 예시에서는 경로가 utf-8과 호환되도록 하기 위해 [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent)를 사용합니다.
 
-Alternatively, using a URL Object:
+대신, 다음과 같이 `href`에 URL 객체를 사용할 수도 있습니다.
 
 ```jsx
 import Link from 'next/link'
@@ -90,36 +90,34 @@ function Posts({ posts }) {
 export default Posts
 ```
 
-Now, instead of using interpolation to create the path, we use a URL object in `href` where:
+- `pathname`: `pages` 디렉토리에 잇는 페이지 경로명입니다. 이 경우는 `/blog/[slug]`입니다.
+- 'query': 동적 세그먼트를 포함하는 객체입니다. 이 경우는 `slug`입니다.
 
-- `pathname` is the name of the page in the `pages` directory. `/blog/[slug]` in this case.
-- `query` is an object with the dynamic segment. `slug` in this case.
-
-## Injecting the router
+## 라우터 주입하기
 
 <details>
-  <summary>Examples</summary>
+  <summary>예제</summary>
 
 - [Dynamic Routing](https://github.com/vercel/next.js/tree/canary/examples/dynamic-routing)
 
 </details>
 
-To access the [`router` object](/docs/pages/api-reference/functions/use-router#router-object) in a React component you can use [`useRouter`](/docs/pages/api-reference/functions/use-router) or [`withRouter`](/docs/pages/api-reference/functions/use-router#withrouter).
+리액트 컴포넌트에서 ['router' 객체](/docs/03-pages/02-api-reference/02-functions/use-router.mdx#router-object)에 접근하려면 [`useRouter`](/docs/03-pages/02-api-reference/02-functions/use-router.mdx) 또는 [`withRouter`](/docs/03-pages/02-api-reference/02-functions/use-router.mdx#withrouter)를 사용할 수 있습니다.
 
-In general we recommend using [`useRouter`](/docs/pages/api-reference/functions/use-router).
+일반적으로 [`useRouter`](/docs/03-pages/02-api-reference/02-functions/use-router.mdx)를 사용하는 것을 권장합니다.
 
-## Imperative Routing
+## 명령형(Imperative) 라우팅
 
 <details>
-  <summary>Examples</summary>
+  <summary>예제</summary>
 
 - [Using Router](https://github.com/vercel/next.js/tree/canary/examples/using-router)
 
 </details>
 
-[`next/link`](/docs/pages/api-reference/components/link) should be able to cover most of your routing needs, but you can also do client-side navigations without it, take a look at the [documentation for `next/router`](/docs/pages/api-reference/functions/use-router).
+[`next/link`](/docs/03-pages/02-api-reference/01-components/link.mdx)로 대부분의 라우팅 요구사항을 충족할 수 있지만, 이것 없이도 클라이언트 사이드 네비게이션이 가능합니다.
 
-The following example shows how to do basic page navigations with [`useRouter`](/docs/pages/api-reference/functions/use-router):
+다음 에시는 [`useRouter`](/docs/03-pages/02-api-reference/02-functions/use-router.mdx) 훅을 사용하여 페이지를 이동하는 기본적인 방법을 보여줍니다.
 
 ```jsx
 import { useRouter } from 'next/router'
@@ -135,64 +133,64 @@ export default function ReadMore() {
 }
 ```
 
-## Shallow Routing
+## 얕은 라우팅
 
 <details>
-  <summary>Examples</summary>
+  <summary>예제</summary>
 
 - [Shallow Routing](https://github.com/vercel/next.js/tree/canary/examples/with-shallow-routing)
 
 </details>
 
-Shallow routing allows you to change the URL without running data fetching methods again, that includes [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props), [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props), and [`getInitialProps`](/docs/pages/api-reference/functions/get-initial-props).
+얕은 라우팅을 통해 [`getServerSideProps`](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx), [`getStaticProps`](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx), [`getInitialProps`](/docs/03-pages/02-api-reference/data-fetching/getInitialProps.mdx)와 같은 데이터 페칭 메소드를 다시 실행하지 않고 URL을 변경할 수 있습니다.
 
-You'll receive the updated `pathname` and the `query` via the [`router` object](/docs/pages/api-reference/functions/use-router#router-object) (added by [`useRouter`](/docs/pages/api-reference/functions/use-router) or [`withRouter`](/docs/pages/api-reference/functions/use-router#withrouter)), without losing state.
+[`useRouter`](/docs/03-pages/02-api-reference/02-functions/use-router.mdx) 또는 [`withRouter`](/docs/03-pages/02-api-reference/02-functions/use-router.mdx#withRouter)를 통해 가져온 [`router` 객체](/docs/03-pages/02-api-reference/02-functions/use-router.mdx#router-object)로부터 다른 state의 손실 없이 업데이트된 `pathname`과 `query`를 받아올 수 있습니다.
 
-To enable shallow routing, set the `shallow` option to `true`. Consider the following example:
+얕은 라우팅을 사용하기 위해서는 `shallow` 옵션을 `true`로 설정해야 합니다. 다음 예시를 살펴봅시다.
 
 ```jsx
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-// Current URL is '/'
+// 현재 URL은 '/'
 function Page() {
   const router = useRouter()
 
   useEffect(() => {
-    // Always do navigations after the first render
+    // 첫번째 렌더 이후에 항상 네비게이션을 수행합니다.
     router.push('/?counter=10', undefined, { shallow: true })
   }, [])
 
   useEffect(() => {
-    // The counter changed!
+    // counter가 변경되었습니다!
   }, [router.query.counter])
 }
 
 export default Page
 ```
 
-The URL will get updated to `/?counter=10`. and the page won't get replaced, only the state of the route is changed.
+URL은 `/?counter=10`으로 업데이트되지만, 페이지는 교체되지 않습니다. 오직 라우터의 상태만 변경됩니다.
 
-You can also watch for URL changes via [`componentDidUpdate`](https://react.dev/reference/react/Component#componentdidupdate) as shown below:
+아래처럼 [`componentDidUpdate`](https://react.dev/reference/react/Component#componentdidupdate)를 사용하여 URL 변경을 확인할 수도 있습니다.
 
 ```jsx
 componentDidUpdate(prevProps) {
   const { pathname, query } = this.props.router
-  // verify props have changed to avoid an infinite loop
+  // 무한루프를 막기 위해 props가 변경되었는지 확인합니다.
   if (query.counter !== prevProps.router.query.counter) {
-    // fetch data based on the new query
+    // 새로운 query를 사용하여 데이터를 가져옵니다.
   }
 }
 ```
 
-### Caveats
+### 주의
 
-Shallow routing **only** works for URL changes in the current page. For example, let's assume we have another page called `pages/about.js`, and you run this:
+얕은 라우팅은 현재 페이지의 URL 변경에 대해서**만** 동작합니다. 예를 들어 `pages/about.js`라는 다른 페이지가 있다고 가정해봅시다. 그리고 다음과 같이 실행한다면:
 
 ```js
 router.push('/?counter=10', '/about?counter=10', { shallow: true })
 ```
 
-Since that's a new page, it'll unload the current page, load the new one and wait for data fetching even though we asked to do shallow routing.
+새로운 페이지로 라우팅했기 때문에 얕은 라우팅을 요청했음에도 불구하고 현재 페이지 대신 새로운 페이지를 로드하고 데이터를 새로 불러옵니다.
 
-When shallow routing is used with middleware it will not ensure the new page matches the current page like previously done without middleware. This is due to middleware being able to rewrite dynamically and can't be verified client-side without a data fetch which is skipped with shallow, so a shallow route change must always be treated as shallow.
+얕은 라우팅을 미들웨어와 함께 사용하면 새로운 페이지가 기존 페이지와 일치하는지 확인할 수 없습니다. 이는 미들웨어가 페이지를 동적으로 재작성할 수 있기 때문에 얕은 라우팅으로 건너뛴 데이터 페칭 없이는 이를 클라이언트 사이드에서 확인할 수 없기 때문입니다. 따라서 얕은 라우팅은 항상 얕은 라우팅으로만 처리되어야 합니다.
