@@ -7,7 +7,7 @@ Next.js는 `App` 컴포넌트를 사용하여 페이지를 초기화합니다. `
 
 - 페이지 변경 사이에 레이아웃 유지
 - 추가 데이터를 페이지로 주입
-- [전역 CSS 추가](/docs/03-pages/01-building-your-application/04-styling)
+- [전역 CSS 추가](/docs/03-pages/01-building-your-application/04-styling/index.mdx)
 
 ### 사용방법
 
@@ -21,12 +21,12 @@ export default function MyApp({ Component, pageProps }) {
 
 `Component` prop은 현재 `page`에 해당하므로 라우트를 이동할 때마다 `Component`는 새 `page`로 변경됩니다. 따라서 `Component`에 전달하는 prop은 모두 `page`가 받게 됩니다.
 
-`pageProps`는 Next.js의 [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching) 중 하나가 사전 로딩한 초기 prop이 담긴 객체이며 초기 prop이 없을 경우엔 빈 객체입니다.
+`pageProps`는 Next.js의 [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching/index.mdx) 중 하나가 사전 로딩한 초기 prop이 담긴 객체이며 초기 prop이 없을 경우엔 빈 객체입니다.
 
 > **참고**
 >
 > - 앱이 실행 중인 상태에서 커스텀 `App`을 추가했다면 개발 서버를 재실행해야 합니다. 이는 `pages/_app.js`가 기존에 없었을 경우에만 해당합니다.
-> - `App`은 [`getStaticProps`](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx) 또는 [`getServerSideProps`](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx)와 같은 Next.js [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching)를 지원하지 않습니다.
+> - `App`은 [`getStaticProps`](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx) 또는 [`getServerSideProps`](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx)와 같은 Next.js [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching/index.mdx)를 지원하지 않습니다.
 
 ## `App`에서 `getInitialProps` 사용하기
 

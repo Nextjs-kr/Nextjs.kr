@@ -30,12 +30,12 @@ export default function Document() {
 
 ## 주의사항
 
-- `_document`에서 사용되는 `<Head />` 컴포넌트는 [`next/head`](/docs/03-pages/02-api-reference/01-components/head.mdx)와 다릅니다. 여기에서 사용된 `<Head />` 컴포넌트는 모든 페이지에 공통인 `<head>` 코드로써만 사용되어야 합니다. 다른 경우에는 각 페이지나 컴포넌트에서 [`next/head`](/docs/pages/api-reference/components/head)를 사용하는 것이 좋습니다.
+- `_document`에서 사용되는 `<Head />` 컴포넌트는 [`next/head`](/docs/03-pages/02-api-reference/01-components/head.mdx)와 다릅니다. 여기에서 사용된 `<Head />` 컴포넌트는 모든 페이지에 공통인 `<head>` 코드로써만 사용되어야 합니다. 다른 경우에는 각 페이지나 컴포넌트에서 [`next/head`](/docs/03-pages/02-api-reference/01-components/head.mdx)를 사용하는 것이 좋습니다.
 - `<Main />` 바깥의 React 컴포넌트는 브라우저에서 초기화되지 않습니다. 여기에
   애플리케이션 로직이나 사용자 지정 CSS(예: `styled-jsx`)를 추가하지 마십시오.
   모든 페이지에서 공유되는 컴포넌트(메뉴나 툴바와 같은)가 필요한 경우 [레이아웃](/docs/03-pages/01-building-your-application/01-routing/01-pages-and-layouts.mdx)을
   사용하세요.
-- `Document`는 현재 [`getStaticProps`](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx)나 [`getServerSideProps`](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx)와 같은 [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching)를 지원하지 않습니다.
+- `Document`는 현재 [`getStaticProps`](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx)나 [`getServerSideProps`](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx)와 같은 [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching/index.mdx)를 지원하지 않습니다.
 
 > ## Nano's Comment
 >
