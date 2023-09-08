@@ -232,7 +232,6 @@ export default function myApiRoute(req, res) {
 
 ### `next build`마다 유일함
 
-`next build`가 완료될 때 바이패스 쿠키 값과 `previewData`를 암호화하는 데 사용되는 개인 키 모두 변경됩니다.
-이는 바이패스 쿠키를 추측할 수 없도록 보장합니다.
+`next build`가 완료되면 바이패스 쿠키 값과 `previewData`를 암호화하기 위한 개인 키가 변경됩니다. 이렇게 하면 바이패스 쿠키를 추측할 수 없도록 보장됩니다.
 
 > **참고**: HTTP를 통해 로컬에서 미리보기 모드를 테스트하려면 서드파티 쿠키와 로컬 저장소 접근을 허용해야 합니다.
