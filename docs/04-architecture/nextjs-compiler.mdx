@@ -20,7 +20,7 @@ SWC를 기반으로 개발하기로 한 이유는 아래와 같습니다.
 - **웹어셈블리:** WASM에 대한 Rust의 지원은 가능한 모든 플랫폼을 지원하고 Next.js 개발을 어디에서나 할 수 있도록 하는 데 필수적입니다.
 - **커뮤니티:** 러스트 커뮤니티와 생태계는 놀랍고 아직도 성장 중입니다.
 
-## Supported Features
+## 지원하는 기능
 
 ### Styled Components
 
@@ -109,7 +109,7 @@ module.exports = {
 
 > **참고**: Next.js에서 'pages' 디렉토리에 있는 모든 JavaScript 파일은 경로로 간주됩니다. 따라서 `relay-compiler`의 경우 'pages' 외부에 `artifactDirectory` 구성 설정을 지정해야 합니다. 그렇지 않으면 `relay-compiler`가 `__generated__` 디렉터리의 원본 파일 옆에 파일을 생성하고 이 파일은 경로로 간주되어 프로덕션 빌드가 중단됩니다.
 
-### Remove React Properties
+### React 속성 삭제
 
 JSX 속성을 삭제할 수 있습니다. 테스트를 위해 자주 사용되며 `babel-plugin-react-remove-properties`과 비슷합니다.
 
@@ -135,7 +135,7 @@ module.exports = {
 }
 ```
 
-### Remove Console
+### 콘솔 지우기
 
 `node_modules`이 아닌 애플리케이션에 있는 모든 `console.*` 호출을 지우며 `babel-plugin-transform-remove-console`과 비슷합니다.
 
@@ -161,7 +161,7 @@ module.exports = {
 }
 ```
 
-### Legacy Decorators
+### 레거시 데코레이터
 
 Next.js는 `jsconfig.json` 또는 `tsconfig.json`에서 `experimentalDecorators` 자동으로 감지합니다. Legacy decorators는 일반적으로 `mobx`와 같은 이전 버전의 라이브러리와 함께 사용됩니다.
 
@@ -229,7 +229,7 @@ module.exports = {
 }
 ```
 
-### Minification
+### 경량화
 
 Next.js의 swc 컴파일러는 v13 이후 기본적으로 경량화에 사용되며 Terser보다 7배 더 빠릅니다.
 
@@ -241,7 +241,7 @@ module.exports = {
 }
 ```
 
-### Module Transpilation
+### 모듈 트랜스파일링
 
 Next.js는 로컬 패키지(예: monorepos) 또는 외부 종속성(`node_modules`)에서 종속성을 자동으로 변환하고 번들링할 수 있습니다. 이 기능은 `next-transpile-modules` 패키지를 대체합니다.
 
@@ -251,7 +251,7 @@ module.exports = {
 }
 ```
 
-### Modularize Imports
+### 모듈화 가져오기
 
 <details open>
   <summary>Examples</summary>
@@ -292,9 +292,9 @@ module.exports = {
 }
 ```
 
-#### Handlebars variables and helper functions
+#### 핸들바 변수와 핼퍼 함수
 
-[handlebars](https://docs.rs/handlebars) 를 사용하여 `transform` 필드에서 대체 가져오기 경로를 템플릿으로 만듭니다. 다음 변수와 헬퍼 함수(helper functions)를 사용할 수 있습니다:
+[헨들바](https://docs.rs/handlebars) 를 사용하여 `transform` 필드에서 대체 가져오기 경로를 템플릿으로 만듭니다. 다음 변수와 헬퍼 함수(helper functions)를 사용할 수 있습니다:
 
 1. `member`: `string` 타입이며 import의 이름을 가리킵니다.
 2. `lowerCase`, `upperCase`, `camelCase`, `kebabCase`: 헬퍼 함수가 문자열을 lower, upper, camel, kebab case로 변환합니다.
@@ -349,7 +349,7 @@ import Header from 'my-library/components/app/header'
 import Footer from 'my-library/components/app/footer'
 ```
 
-#### Using named imports
+#### named import 사용하기
 
 기본적으로 `modularizeImports`는 각 모듈이 default exports를 사용한다고 가정합니다. 그러나 항상 그렇지 않을 수 있으며 named exports를 사용할 수도 있습니다.
 
@@ -385,7 +385,7 @@ import { MyModule } from 'my-library'
 import { MyModule } from 'my-library/MyModule'
 ```
 
-#### Preventing full import
+#### full import 방지하기
 
 `preventFullImport` 설정을 활성화하면 컴파일러는 "배럴 파일"("barrel file")을 기본 import문을 사용 시 에러를 반환합니다. 아래와 같이 설정이 되어있다면:
 
@@ -407,9 +407,9 @@ Named import를 쓰지 않고 `lodash` 라이브러리 전체를 import해온다
 import lodash from 'lodash'
 ```
 
-## Experimental Features
+## 실험적인 기능
 
-### SWC Trace profiling
+### SWC 트레이스 프로파일링
 
 SWC의 내부 변환 trace를 chromium의 [trace event format](https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview?mode=html#%21=)으로 생성할 수 있습니다.
 
@@ -423,7 +423,7 @@ module.exports = {
 
 활성화된 경우 swc는 `.next/` 디렉토리 아래에 `swc-trace-profile-${timestamp}.json`이라는 이름으로 trace을 생성합니다. 생성된 trace는 Chromium의 trace viewer(chrome://tracing/, https://ui.perfetto.dev/) 또는 호환되는 flamegraph viewer (https://www.speedscope.app/)에서 로드하여 시각화할 수 있습니다.
 
-### SWC Plugins (Experimental)
+### (실험적 기능) SWC 플러그인
 
 swc의 변환을 설정하여 wasm으로 작성된 SWC의 실험적인 플러그인 지원을 사용하여 변환 동작을 재정의할 수 있습니다.
 
@@ -444,7 +444,7 @@ module.exports = {
 
 `swcPlugins`는 플러그인을 설정하기 위해 튜플을 받습니다. 플러그인용 튜플에는 플러그인에 대한 경로와 플러그인 구성을 위한 객체가 포함됩니다. 플러그인 경로는 npm 모듈 패키지 이름이거나 `.wasm` 자체의 절대 경로일 수 있습니다.
 
-## Unsupported Features
+## 지원하지 않는 기능
 
 `.babelrc` 파일이 있으면 Next.js는 개별 파일 변환을 위해 Babel을 자동으로 사용합니다. 따라서 사용자 지정 Babel 플러그인을 활용하는 기존 애플리케이션과의 하위 호환성을 보장합니다.
 
@@ -452,7 +452,7 @@ module.exports = {
 
 ## 버전 이력
 
-| Version   | Changes                                                                                                                                                                                                  |
+| 버전      | 변경사항                                                                                                                                                                                                 |
 | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `v13.1.0` | [Module Transpilation](https://nextjs.org/blog/next-13-1#built-in-module-transpilation-stable) and [Modularize Imports](https://nextjs.org/blog/next-13-1#import-resolution-for-smaller-bundles) stable. |
 | `v13.0.0` | SWC Minifier enabled by default.                                                                                                                                                                         |
