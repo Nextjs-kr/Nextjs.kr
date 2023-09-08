@@ -29,7 +29,7 @@ description: Next.js는 정적으로 생성된 페이지에 대한 미리보기 
 
 </details>
 
-[Pages documentation](/docs/pages/building-your-application/routing/pages-and-layouts)과 [Data Fetching documentation](/docs/pages/building-your-application/data-fetching)에서, `getStaticProps`과 `getStaticPaths`를 사용하여 페이지를 빌드 타임에 미리 렌더링(**정적 생성**)하는 방법에 대해 다뤘습니다.
+[페이지 문서](/docs/pages/building-your-application/routing/pages-and-layouts)과 [데이터 가져오기](/docs/pages/building-your-application/data-fetching)에서, `getStaticProps`과 `getStaticPaths`를 사용하여 페이지를 빌드 타임에 미리 렌더링(**정적 생성**)하는 방법에 대해 다뤘습니다.
 
 정적 생성은 페이지가 headless CMS로부터 데이터를 가져올 때 유용합니다. 하지만 headless CMS에서 초안을 작성하고  해당 원고를 페이지에서 **미리보기**하려는 경우에는 이상적이지 않습니다.  Next.js가 이 페이지들을  빌드 타임 대신에 **요청 시간** 렌더링하고 게시된 내용이 아니라 초안을 가져오는 것이 좋습니다. 이러한 경우에만 Next.js가 정적 생성을 건너뛰기를 바랍니다.
 
@@ -41,7 +41,7 @@ Next.js는 이러한 문제를 해결하기 위해 **미리보기 모드**라는
 
 먼저, **미리보기 API 라우트**를 생성하세요. 이것은 이름을 가질 수 있습니다. - 예 : `pages/api/preview.js` (TypeScript를 사용하고 있다면 `.ts`).
 
-이 API 라우트에서, 응답 객체에 대해 `setPreviewData`를 호출해야 합니다. `setPreviewData`의 매개변수는 객체여야만 하며, `getStaticProps`에 의해 사용될 수 있습니다(이에 대해 후술합니다). 이제부터 우리는 `{}`를 사용할 겁니다.
+이 API 라우트에서, 응답 객체에 대해 `setPreviewData`를 호출해야 합니다. `setPreviewData`의 매개변수는 객체여야만 하며, `getStaticProps`에 의해 사용될 수 있습니다(이에 대한 자세한 내용은 나중에 설명하겠습니다). 이제부터 우리는 `{}`를 사용할 겁니다.
 
 ```js
 export default function handler(req, res) {
