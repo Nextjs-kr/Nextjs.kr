@@ -158,6 +158,7 @@ title: <Link>
 description: <Link> 컴포넌트에 대한 API 참조입니다.
 source: app/api-reference/components/link
 ---
+
 ```
 
 따라서 한 곳에서 콘텐츠를 편집하여 두 섹션에 모두 반영할 수 있습니다.
