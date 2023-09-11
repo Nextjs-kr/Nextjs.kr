@@ -1,16 +1,16 @@
 ---
-title: Intercepting Routes
-description: Use intercepting routes to load a new route within the current layout while masking the browser URL, useful for advanced routing patterns such as modals.
+title: 인터셉팅 라우트
+description: 인터셉팅 라우트를 사용해 현재 레이아웃 내에서 새 경로를 로드하는 동시에 브라우저 URL을 마스킹합니다. 인터셉팅 라우트는 모달과 같은 고급 라우팅 패턴에 유용합니다.
 related:
-  title: Next Steps
-  description: Learn how to use modals with Intercepted and Parallel Routes.
+  title: 다음 단계
+  description: 인터셉트와 병렬 라우트를 이용한 모달 사용 학습하기
   links:
     - app/building-your-application/routing/parallel-routes
 ---
 
-Intercepting routes allows you to load a route within the current layout while keeping the context for the current page. This routing paradigm can be useful when you want to "intercept" a certain route to show a different route.
+인터셉팅 라우트를 사용해서 현재 페이지의 환경을 유지한 상태에서 현재 레이아웃 안에 경로를 로드할 수 있습니다. 인터셉팅 라우트는 다른 경로를 보여주기 위해 특정한 경로를 "가로채고" 싶을 때 매우 유용한 개념입니다.
 
-For example, when clicking on a photo from within a feed, a modal overlaying the feed should show up with the photo. In this case, Next.js intercepts the `/feed` route and "masks" this URL to show `/photo/123` instead.
+예를 들어 피드 안에 있는 사진을 클릭할 때, 사진을 보여주기 위한 모달이 피드 위에 표시됩니다. 이 경우에 Next.js는 `/feed` 경로를 가로채고 URL이 `/photo/123`으로 보이도록 "마스킹"합니다.
 
 <Image
   alt="Intercepting routes soft navigation"
@@ -20,7 +20,7 @@ For example, when clicking on a photo from within a feed, a modal overlaying the
   height="617"
 />
 
-However, when navigating to the photo directly by for example when clicking a shareable URL or by refreshing the page, the entire photo page should render instead of the modal. No route interception should occur.
+하지만 공유 가능한 URL로 접근하거나 페이지를 새로고침 하면서 사진을 직접적으로 탐색하는 경우에 사진 페이지가 모달 대신 렌더링 되어야 하며 인터셉팅 라우트가 동작하면 안 됩니다.
 
 <Image
   alt="Intercepting routes hard navigation"
@@ -30,18 +30,18 @@ However, when navigating to the photo directly by for example when clicking a sh
   height="604"
 />
 
-## Convention
+## 규칙
 
-Intercepting routes can be defined with the `(..)` convention, which is similar to relative path convention `../` but for segments.
+인터셉팅 라우트는 상대 경로 규칙 `../`과 유사한 `(..)` 규칙으로 정의할 수 있습니다. `(..)` 규칙은 세그먼트를 기준으로 동작합니다.
 
-You can use:
+이렇게 사용할 수 있습니다.
 
-- `(.)` to match segments on the **same level**
-- `(..)` to match segments **one level above**
-- `(..)(..)` to match segments **two levels above**
-- `(...)` to match segments from the **root** `app` directory
+- `(.)` **동등한 레벨**의 세그먼트와 일치
+- `(..)` **한 단계 상위 레벨**의 세그먼트와 일치
+- `(..)(..)` **두 단계 상위 레벨**의 세그먼트와 일치
+- `(...)` **루트** `app` 디렉토리의 세그먼트와 일치
 
-For example, you can intercept the `photo` segment from within the `feed` segment by creating a `(..)photo` directory.
+예를 들어 `(..)photo` 디렉토리를 생성하여 `feed` 세그먼트 안에서 `photo` 세그먼트를 가로챌 수 있습니다
 
 <Image
   alt="Intercepting routes folder structure"
@@ -51,20 +51,20 @@ For example, you can intercept the `photo` segment from within the `feed` segmen
   height="604"
 />
 
-> Note that the `(..)` convention is based on _route segments_, not the file-system.
+> 중요합니다! <br> `(..)` 컨벤션은 file-system이 아닌 *route segments*를 기준으로 합니다.
 
-## Examples
+## 예시
 
-### Modals
+### 모달
 
-Intercepting Routes can be used together with [Parallel Routes](/docs/app/building-your-application/routing/parallel-routes) to create modals.
+모달을 생성하기 위해서 인터셉팅 라우트를 [병렬 라우트](/docs/app/building-your-application/routing/parallel-routes)와 같이 사용할 수 있습니다.
 
-Using this pattern to create modals overcomes some common challenges when working with modals, by allowing you to:
+이 패턴을 사용해서 모달을 생성하면 모달 작업 시 흔히 격는 여려움을 해결할 수 있으며 아래와 같은 동작이 가능합니다.
 
-- Make the modal content **shareable through a URL**
-- **Preserve context** when the page is refreshed, instead of closing the modal
-- **Close the modal on backwards navigation** rather than going to the previous route
-- **Reopen the modal on forwards navigation**
+- **URL을 통해서 공유 가능한** 모달 컨탠츠를 만들 수 있습니다.
+- 페이지가 새로고침 될 때 모달을 닫지 않고 **컨탠츠를 유지**할 수 있습니다.
+- **뒤로 가기** 상황에서 이전 페이지로 가지 않고 **모달을 닫을 수 있습니다.**
+- **앞으로 가기** 상황에서 **모달을 다시 열 수 있습니다.**
 
 <Image
   alt="Intercepting routes modal example"
@@ -74,8 +74,8 @@ Using this pattern to create modals overcomes some common challenges when workin
   height="976"
 />
 
-> In the above example, the path to the `photo` segment can use the `(..)` matcher since `@modal` is a _slot_ and not a _segment_. This means that the `photo` route is only one _segment_ level higher, despite being two _file-system_ levels higher.
+> 위의 예시에서 `@modal`은  _세그먼트_ 가 아닌 _슬롯_ 입니다. 따라서 `사진` 세그먼트에 대한 경로에서 `(..)` 일치자를 사용할 수 있습니다. _파일 시스템_ 레벨이 두 단계 더 높지만 `사진` 경로의 _세그먼트_ 레벨이 한 단계 더 높음을 의미합니다.
 
-Other examples could include opening a login modal in a top navbar while also having a dedicated `/login` page, or opening a shopping cart in a side modal.
+또 다른 예시로 전용 `/login` 페이지가 있는 상태에서 상단 네비게이션 바에서 로그인 모달을 열거나 사이드 모달에서 쇼핑 카트를 여는 경우가 있습니다.
 
-[View an example](https://github.com/vercel-labs/nextgram) of modals with Intercepted and Parallel Routes.
+인터셉트와 병렬 라우트를 활용한 모달의 [예시](https://github.com/vercel-labs/nextgram)
