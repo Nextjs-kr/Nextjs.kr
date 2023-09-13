@@ -1,24 +1,20 @@
 ---
-title: 초안 모드
-description: Next.js에는 정적 페이지와 동적 페이지 사이를 전환할 수 있는 초안 모드가 있습니다. 이 문서에서 App Router와 함께 작동하는 방법을 알아볼 수 있습니다.
+title: 드래프트 모드
+description: Next.js에는 정적 페이지와 동적 페이지를 전환할 수 있는 드래프트 모드가 있습니다. 이 문서에서 App Router 방식으로 작동하는 방법을 알아볼 수 있습니다.
 ---
 
-정적 렌더링은 페이지가 Headless CMS에서 데이터를 가져올 때 유용합니다.
-하지만 Headless CMS에서 초안을 작성하고 페이지에서 초안을 바로 확인하려는 경우에는 이런 방식이 적합하지 않습니다.
-이럴 때는 페이지를 빌드 시간이 아닌 **요청 시간**에 렌더링하고,
-게시된 콘텐츠 대신 초안 콘텐츠를 가져오는 것이 Next.js에게 필요한 기능일 것입니다.
-또한 이러한 특정 경우에만 Next.js가 [동적 렌더링](/docs/app/building-your-application/rendering/static-and-dynamic-rendering)으로 전환하기를 원할 것입니다.
+정적 렌더링은 페이지가 헤드리스 CMS에서 데이터를 가져올 때 유용합니다. 하지만 헤드리스 CMS에서 초안을 작성하고, 해당 내용을 페이지에서 바로 확인하려고 하는 경우에는 정적 렌더링 방식이 적합하지 않습니다. 이럴 때는 페이지를 빌드 시점이 아닌 **요청 시점**에 렌더링하고, 초안으로 작성된 페이지를 바로 가져오는 게 우리에게 필요한 방식일 것입니다. 그래서 이러한 특정 경우에만 Next.js가 [동적 렌더링](/docs/app/building-your-application/rendering/static-and-dynamic-rendering)으로 동작하면 좋겠다고 생각했습니다.
 
-Next.js에는 이 문제를 해결하는 **초안 모드(Draft Mode)**라는 기능이 있습니다. 이제부터 사용 방법에 대해 알려드리겠습니다.
+Next.js에는 이 문제를 해결하는 **드래프트 모드(Draft Mode)**라는 기능이 있습니다. 이제부터 사용 방법에 대해 알아보겠습니다.
 
 ## 1단계: 라우트 핸들러 생성 및 접근
 
-먼저, [라우트 핸들러(Route Handler)](/docs/app/building-your-application/routing/router-handlers)를 생성합니다. 이름은 상관없습니다(예: `app/api/draft/route.ts`).
+먼저, [라우트 핸들러(Route Handler)](/docs/app/building-your-application/routing/router-handlers)를 생성합니다. 어떠한 이름도 가능합니다(예: `app/api/draft/route.ts`).
 
 그런 다음 `next/headers`에서 `draftMode`를 가져와 `enable()` 메서드를 호출합니다.
 
 ```ts filename="app/api/draft/route.ts" switcher
-// 초안 모드를 활성화하는 라우트 핸들러
+// 드래프트 모드를 활성화하는 라우트 핸들러
 import { draftMode } from 'next/headers'
 
 export async function GET(request: Request) {
@@ -28,7 +24,7 @@ export async function GET(request: Request) {
 ```
 
 ```js filename="app/api/draft/route.js" switcher
-// 초안 모드를 활성화하는 라우트 핸들러
+// 드래프트 모드를 활성화하는 라우트 핸들러
 import { draftMode } from 'next/headers'
 
 export async function GET(request) {
@@ -37,33 +33,33 @@ export async function GET(request) {
 }
 ```
 
-이렇게 **쿠키**를 설정해 초안 모드를 활성화합니다. 이 쿠키가 포함된 이후의 요청은 **초안 모드**를 실행하여, 정적으로 생성된 페이지의 동작을 변경합니다(자세한 내용은 아래에서 설명합니다).
+위처럼 **쿠키**를 설정해 드래프트 모드를 활성화합니다. 이 쿠키가 포함된 이후의 요청에서는 **드래프트 모드**를 실행하여, 정적으로 생성된 페이지의 동작을 변경합니다(자세한 내용은 아래에서 설명합니다).
 
 `/api/draft` 주소로 접근한 뒤, 브라우저의 개발자 도구를 통해 수동으로 테스트할 수 있습니다. '\_\_prerender_bypass'라는 쿠키가 있는 `Set-Cookie` 응답 헤더를 확인하세요.
 
-### Headless CMS에서 안전하게 접근하기
+### 헤드리스 CMS에서 안전하게 접근하기
 
-실제 작업에서는 Headless CMS에서 이 라우트 핸들러를 _안전하게_ 호출하고 싶을 것입니다. 구체적인 절차는 사용 중인 Headless CMS에 따라 다르지만, 다음은 몇 가지 일반적인 방법입니다.
+실제 작업에서는 헤드리스 CMS에서 라우트 핸들러를 _안전하게_ 호출하고 싶을 것입니다. 구체적인 방법은 사용 중인 헤드리스 CMS에 따라 다르지만, 몇 가지 일반적인 방법을 소개해드리겠습니다.
 
-이 단계에서는 사용 중인 Headless CMS가 **커스텀 초안 URL** 설정을 지원한다고 가정합니다. 지원하지 않는 경우에도 이 방법을 사용하여 초안 URL을 보호할 수 있지만, 그럴 경우엔 직접 초안 URL을 생성해 접근해야 합니다.
+여기에서는 사용 중인 헤드리스 CMS가 **커스텀 초안 URL** 설정을 지원한다고 가정합니다. 지원하지 않는 경우에도 이 방법을 사용하여 초안 URL을 보호하려면 직접 초안 URL을 생성해야 합니다.
 
-**첫째** 원하는 토큰 생성기를 사용하여 **비밀 토큰 문자열**을 생성해야 합니다. 이 비밀 토큰은 Next.js 앱과 Headless CMS만 알 수 있습니다. 이 비밀 토큰은 CMS에 접근할 수 없는 사람이 초안 URL에 접근하는 것을 방지합니다.
+**첫째**, 토큰 생성기를 사용하여 **비밀 토큰**을 생성해야 합니다. 이 비밀 토큰은 Next.js 앱과 헤드리스 CMS만 알아야 하며, CMS에 접근할 수 없는 사람이 초안 URL에 접근하는 것을 방지합니다.
 
-**둘째** Headless CMS가 커스텀 초안 URL 설정을 지원하는 경우, 초안 URL을 다음과 같이 지정합니다. 여기서는 라우트 핸들러가 `app/api/draft/route.ts`에 있다고 가정합니다.
+**둘째**, 헤드리스 CMS가 커스텀 초안 URL 설정을 지원하는 경우, 초안 URL을 다음과 같이 지정합니다. 여기서는 라우트 핸들러가 `app/api/draft/route.ts`에 있다고 가정합니다.
 
 ```bash filename="Terminal"
 https://<your-site>/api/draft?secret=<token>&slug=<path>
 ```
 
 - `<your-site>`는 배포한 도메인이 되어야 합니다.
-- `<token>`은 생성해 둔 비밀 토큰으로 대체해야 합니다.
-- `<path>` 는 보려는 페이지의 경로여야 합니다. `posts/foo`를 보려면 `&slug=/posts/foo`를 사용해야 합니다.
+- `<token>`은 생성해 둔 비밀 토큰입니다.
+- `<path>` 는 보려는 페이지의 경로여야 합니다. 예를 들어 `/posts/foo`를 보려면 `&slug=/posts/foo`를 사용해야 합니다.
 
-Headless CMS를 사용하면 초안 URL에 변수를 포함해 `<path>`를 `&slug=/posts/{entry.fields.slug}`와 같이 CMS의 데이터에 따라 동적으로 설정할 수 있습니다:
+헤드리스 CMS를 사용하면 초안 URL에 변수를 포함해 `<path>`를 `&slug=/posts/{entry.fields.slug}`와 같이 CMS의 데이터에 따라 동적으로 설정할 수 있습니다.
 
-**마지막으로**, 라우트 핸들러에서:
+**마지막으로**, 라우트 핸들러에서
 
-- 비밀 토큰이 일치하는지, `slug` 매개변수가 존재하는지 확인합니다(그렇지 않으면 요청은 실패합니다).
+- 비밀 토큰이 일치하는지, `slug` 매개변수가 존재하는지 확인합니다(존재하지 않으면 요청은 실패합니다).
 - `draftMode.enable()`를 호출하여 쿠키를 설정합니다.
 - 그런 다음 브라우저를 `slug`에 지정된 경로로 리다이렉트합니다.
 
@@ -73,7 +69,7 @@ import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 export async function GET(request: Request) {
-  // 매개 변수로 들어온 쿼리 스트링을 파싱합니다
+  // 매개변수로 들어온 쿼리 스트링을 파싱합니다
   const { searchParams } = new URL(request.url)
   const secret = searchParams.get('secret')
   const slug = searchParams.get('slug')
@@ -84,20 +80,20 @@ export async function GET(request: Request) {
     return new Response('Invalid token', { status: 401 })
   }
 
-  // `slug` 경로가 존재하는지 확인하기 위해 Headless CMS의 데이터를 가져옵니다
-  // getPostBySlug는 Headless CMS에 필요한 데이터를 가져오는 로직을 구현합니다
+  // `slug` 경로가 존재하는지 확인하기 위해 헤드리스 CMS의 데이터를 가져옵니다
+  // getPostBySlug는 헤드리스 CMS에 필요한 데이터를 가져오는 로직을 구현합니다
   const post = await getPostBySlug(slug)
 
-  // slug 경로가 존재하지 않는다면 초안 모드를 활성화하지 않습니다
+  // slug 경로가 존재하지 않는다면 드래프트 모드를 활성화하지 않습니다
   if (!post) {
     return new Response('Invalid slug', { status: 401 })
   }
 
-  // 쿠키를 설정하여 초안 모드를 활성화합니다
+  // 쿠키를 설정하여 드래프트 모드를 활성화합니다
   draftMode().enable()
 
   // 가져온 게시물의 경로로 리다이렉트합니다
-  // 리다이렉트 도중 취약점이 노출될 수 있으므로 searchParams.slug로 리다이렉트하지 않습니다.
+  // 리다이렉트 도중 취약점이 노출될 수 있으므로 searchParams.slug 경로로 리다이렉트하지 않습니다.
   redirect(post.slug)
 }
 ```
@@ -108,7 +104,7 @@ import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 export async function GET(request) {
-  // 매개 변수로 들어온 쿼리 스트링을 파싱합니다
+  // 매개변수로 들어온 쿼리 스트링을 파싱합니다
   const { searchParams } = new URL(request.url)
   const secret = searchParams.get('secret')
   const slug = searchParams.get('slug')
@@ -119,25 +115,25 @@ export async function GET(request) {
     return new Response('Invalid token', { status: 401 })
   }
 
-  // `slug` 경로가 존재하는지 확인하기 위해 Headless CMS의 데이터를 가져옵니다
-  // getPostBySlug는 Headless CMS에 필요한 데이터를 가져오는 로직을 구현합니다
+  // `slug` 경로가 존재하는지 확인하기 위해 헤드리스 CMS의 데이터를 가져옵니다
+  // getPostBySlug는 헤드리스 CMS에 필요한 데이터를 가져오는 로직을 구현합니다
   const post = await getPostBySlug(slug)
 
-  // slug 경로가 존재하지 않는다면 초안 모드를 활성화하지 않습니다
+  // slug 경로가 존재하지 않는다면 드래프트 모드를 활성화하지 않습니다
   if (!post) {
     return new Response('Invalid slug', { status: 401 })
   }
 
-  // 쿠키를 설정하여 초안 모드를 활성화합니다
+  // 쿠키를 설정하여 드래프트 모드를 활성화합니다
   draftMode().enable()
 
   // 가져온 게시물의 경로로 리다이렉트합니다
-  // 리다이렉트 도중 취약점이 노출될 수 있으므로 searchParams.slug로 리다이렉트하지 않습니다.
+  // 리다이렉트 도중 취약점이 노출될 수 있으므로 searchParams.slug 경로로 리다이렉트하지 않습니다.
   redirect(post.slug)
 }
 ```
 
-성공하면, 브라우저는 초안 모드의 쿠키를 통해 보고자 하는 경로로 리다이렉트됩니다.
+성공하면, 브라우저는 드래프트 모드의 쿠키를 사용하고자 하는 경로로 리다이렉트합니다.
 
 ## 2단계: 페이지 업데이트하기
 
@@ -148,7 +144,7 @@ export async function GET(request) {
 또한 `isEnabled`의 값은 `true`가 됩니다.
 
 ```tsx filename="app/page.tsx" switcher
-// 데이터를 가져오는 페이지 컴포넌트
+// 데이터를 가져오는 페이지
 import { draftMode } from 'next/headers'
 
 async function getData() {
@@ -176,7 +172,7 @@ export default async function Page() {
 ```
 
 ```jsx filename="app/page.js" switcher
-// 데이터를 가져오는 페이지 컴포넌트
+// 데이터를 가져오는 페이지
 import { draftMode } from 'next/headers'
 
 async function getData() {
@@ -203,10 +199,9 @@ export default async function Page() {
 }
 ```
 
-끝입니다! 이제 Headless CMS를 통하거나 수동으로 초안 모드가 활성화된 라우트 핸들러에 접근하면(비밀 토큰과 `slug` 필요) 초안의 내용을 볼 수 있습니다.
-그리고 게시하지 않고도 업데이트된 초안 내용을 볼 수 있게 됩니다.
+끝입니다! 이제 헤드리스 CMS에서 또는 수동으로 드래프트 모드가 활성화된 라우트 핸들러에 접근하면(비밀 토큰과 `slug` 필요) 초안의 내용을 볼 수 있습니다. 또한 게시하는 절차 없이도 업데이트된 초안 내용을 볼 수 있게 됩니다.
 
-Headless CMS에서 초안 URL을 아래처럼 설정하거나 직접 접근하면 초안을 볼 수 있습니다.
+헤드리스 CMS에서 초안 URL을 아래처럼 설정하거나 직접 접근하면 초안을 볼 수 있습니다.
 
 ```bash filename="Terminal"
 https://<your-site>/api/draft?secret=<token>&slug=<path>
@@ -214,11 +209,11 @@ https://<your-site>/api/draft?secret=<token>&slug=<path>
 
 ## 더 알아보기
 
-### 초안 모드의 쿠키 지우기
+### 드래프트 모드의 쿠키 지우기
 
-기본적으로 초안 모드 세션은 브라우저를 닫으면 종료됩니다.
+기본적으로 드래프트 모드 세션은 브라우저를 닫으면 종료됩니다.
 
-초안 모드의 쿠키를 수동으로 지우려면 `draftMode().disable()`을 호출하는 라우트 핸들러를 생성하세요.
+드래프트 모드의 쿠키를 수동으로 지우려면 `draftMode().disable()`을 호출하는 라우트 핸들러를 생성하세요.
 
 ```ts filename="app/api/disable-draft/route.ts" switcher
 import { draftMode } from 'next/headers'
@@ -238,12 +233,12 @@ export async function GET(request) {
 }
 ```
 
-그런 다음 `/api/disable-draft`로 요청을 보내 라우트 핸들러를 호출합니다. [`next/link`](/docs/pages/api-reference/components/link)를 사용하여 이 경로를 호출하는 경우, 실수로 프리페치로 쿠키를 삭제하는 것을 방지하기 위해 `prefetch={false}`를 전달해야 합니다.
+그런 다음 `/api/disable-draft`로 요청을 보내 라우트 핸들러를 호출합니다. [`next/link`](/docs/pages/api-reference/components/link)를 사용하여 이 경로를 호출하는 경우, 실수로 프리페치 기능이 해당 경로를 호출해 쿠키를 삭제하는 것을 방지하기 위해 `prefetch={false}`를 전달해야 합니다.
 
 ### `next build` 마다 새롭게
 
 `next build`를 실행할 때마다 새로운 우회 쿠키값이 생성됩니다.
 
-이렇게 하면 우회 쿠키를 추측할 수 없습니다.
+따라서 우회 쿠키를 추측할 수 없습니다.
 
-> **알아두면 좋은 정보**: HTTP를 통해 로컬에서 초안 모드를 테스트하려면 브라우저에서 서드파티 쿠키 및 로컬 스토리지 접근을 허용해야 합니다.
+> **참고**: HTTP를 통해 로컬에서 드래프트 모드를 테스트하려면 브라우저에서 서드파티 쿠키 및 로컬 스토리지 접근을 허용해야 합니다.
