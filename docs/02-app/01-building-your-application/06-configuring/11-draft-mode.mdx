@@ -1,20 +1,20 @@
 ---
-title: Draft Mode
-description: Next.js has draft mode to toggle between static and dynamic pages. You can learn how it works with App Router here.
+title: 드래프트 모드
+description: Next.js에는 정적 페이지와 동적 페이지를 전환할 수 있는 드래프트 모드가 있습니다. 이 문서에서 App Router 방식으로 작동하는 방법을 알아볼 수 있습니다.
 ---
 
-Static rendering is useful when your pages fetch data from a headless CMS. However, it’s not ideal when you’re writing a draft on your headless CMS and want to view the draft immediately on your page. You’d want Next.js to render these pages at **request time** instead of build time and fetch the draft content instead of the published content. You’d want Next.js to to switch to [dynamic rendering](/docs/app/building-your-application/rendering/static-and-dynamic-rendering) only for this specific case.
+정적 렌더링은 페이지가 헤드리스 CMS에서 데이터를 가져올 때 유용합니다. 하지만 헤드리스 CMS에서 초안을 작성하고, 해당 내용을 페이지에서 바로 확인하려고 하는 경우에는 정적 렌더링 방식이 적합하지 않습니다. 이럴 때는 페이지를 빌드 시점이 아닌 **요청 시점**에 렌더링하고, 초안으로 작성된 페이지를 바로 가져오는 게 우리에게 필요한 방식일 것입니다. 그래서 이러한 특정 경우에만 Next.js가 [동적 렌더링](/docs/app/building-your-application/rendering/static-and-dynamic-rendering)으로 동작하면 좋겠다고 생각했습니다.
 
-Next.js has a feature called **Draft Mode** which solves this problem. Here are instructions on how to use it.
+Next.js에는 이 문제를 해결하는 **드래프트 모드(Draft Mode)**라는 기능이 있습니다. 이제부터 사용 방법에 대해 알아보겠습니다.
 
-## Step 1: Create and access the Route Handler
+## 1단계: 라우트 핸들러 생성 및 접근
 
-First, create a [Route Handler](/docs/app/building-your-application/routing/router-handlers). It can have any name - e.g. `app/api/draft/route.ts`
+먼저, [라우트 핸들러(Route Handler)](/docs/app/building-your-application/routing/router-handlers)를 생성합니다. 어떠한 이름도 가능합니다(예: `app/api/draft/route.ts`).
 
-Then, import `draftMode` from `next/headers` and call the `enable()` method.
+그런 다음 `next/headers`에서 `draftMode`를 가져와 `enable()` 메서드를 호출합니다.
 
 ```ts filename="app/api/draft/route.ts" switcher
-// route handler enabling draft mode
+// 드래프트 모드를 활성화하는 라우트 핸들러
 import { draftMode } from 'next/headers'
 
 export async function GET(request: Request) {
@@ -24,7 +24,7 @@ export async function GET(request: Request) {
 ```
 
 ```js filename="app/api/draft/route.js" switcher
-// route handler enabling draft mode
+// 드래프트 모드를 활성화하는 라우트 핸들러
 import { draftMode } from 'next/headers'
 
 export async function GET(request) {
@@ -33,118 +33,118 @@ export async function GET(request) {
 }
 ```
 
-This will set a **cookie** to enable draft mode. Subsequent requests containing this cookie will trigger **Draft Mode** changing the behavior for statically generated pages (more on this later).
+위처럼 **쿠키**를 설정해 드래프트 모드를 활성화합니다. 이 쿠키가 포함된 이후의 요청에서는 **드래프트 모드**를 실행하여, 정적으로 생성된 페이지의 동작을 변경합니다(자세한 내용은 아래에서 설명합니다).
 
-You can test this manually by visiting `/api/draft` and looking at your browser’s developer tools. Notice the `Set-Cookie` response header with a cookie named `__prerender_bypass`.
+`/api/draft` 주소로 접근한 뒤, 브라우저의 개발자 도구를 통해 수동으로 테스트할 수 있습니다. '\_\_prerender_bypass'라는 쿠키가 있는 `Set-Cookie` 응답 헤더를 확인하세요.
 
-### Securely accessing it from your Headless CMS
+### 헤드리스 CMS에서 안전하게 접근하기
 
-In practice, you’d want to call this Route Handler _securely_ from your headless CMS. The specific steps will vary depending on which headless CMS you’re using, but here are some common steps you could take.
+실제 작업에서는 헤드리스 CMS에서 라우트 핸들러를 _안전하게_ 호출하고 싶을 것입니다. 구체적인 방법은 사용 중인 헤드리스 CMS에 따라 다르지만, 몇 가지 일반적인 방법을 소개해드리겠습니다.
 
-These steps assume that the headless CMS you’re using supports setting **custom draft URLs**. If it doesn’t, you can still use this method to secure your draft URLs, but you’ll need to construct and access the draft URL manually.
+여기에서는 사용 중인 헤드리스 CMS가 **커스텀 초안 URL** 설정을 지원한다고 가정합니다. 지원하지 않는 경우에도 이 방법을 사용하여 초안 URL을 보호하려면 직접 초안 URL을 생성해야 합니다.
 
-**First**, you should create a **secret token string** using a token generator of your choice. This secret will only be known by your Next.js app and your headless CMS. This secret prevents people who don’t have access to your CMS from accessing draft URLs.
+**첫째**, 토큰 생성기를 사용하여 **비밀 토큰**을 생성해야 합니다. 이 비밀 토큰은 Next.js 앱과 헤드리스 CMS만 알아야 하며, CMS에 접근할 수 없는 사람이 초안 URL에 접근하는 것을 방지합니다.
 
-**Second**, if your headless CMS supports setting custom draft URLs, specify the following as the draft URL. This assumes that your Route Handler is located at `app/api/draft/route.ts`
+**둘째**, 헤드리스 CMS가 커스텀 초안 URL 설정을 지원하는 경우, 초안 URL을 다음과 같이 지정합니다. 여기서는 라우트 핸들러가 `app/api/draft/route.ts`에 있다고 가정합니다.
 
 ```bash filename="Terminal"
 https://<your-site>/api/draft?secret=<token>&slug=<path>
 ```
 
-- `<your-site>` should be your deployment domain.
-- `<token>` should be replaced with the secret token you generated.
-- `<path>` should be the path for the page that you want to view. If you want to view `/posts/foo`, then you should use `&slug=/posts/foo`.
+- `<your-site>`는 배포한 도메인이 되어야 합니다.
+- `<token>`은 생성해 둔 비밀 토큰입니다.
+- `<path>` 는 보려는 페이지의 경로여야 합니다. 예를 들어 `/posts/foo`를 보려면 `&slug=/posts/foo`를 사용해야 합니다.
 
-Your headless CMS might allow you to include a variable in the draft URL so that `<path>` can be set dynamically based on the CMS’s data like so: `&slug=/posts/{entry.fields.slug}`
+헤드리스 CMS를 사용하면 초안 URL에 변수를 포함해 `<path>`를 `&slug=/posts/{entry.fields.slug}`와 같이 CMS의 데이터에 따라 동적으로 설정할 수 있습니다.
 
-**Finally**, in the Route Handler:
+**마지막으로**, 라우트 핸들러에서
 
-- Check that the secret matches and that the `slug` parameter exists (if not, the request should fail).
-- Call `draftMode.enable()` to set the cookie.
-- Then redirect the browser to the path specified by `slug`.
+- 비밀 토큰이 일치하는지, `slug` 매개변수가 존재하는지 확인합니다(존재하지 않으면 요청은 실패합니다).
+- `draftMode.enable()`를 호출하여 쿠키를 설정합니다.
+- 그런 다음 브라우저를 `slug`에 지정된 경로로 리다이렉트합니다.
 
 ```ts filename="app/api/draft/route.ts" switcher
-// route handler with secret and slug
+// 비밀 토큰과 slug를 사용하는 라우트 핸들러
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 export async function GET(request: Request) {
-  // Parse query string parameters
+  // 매개변수로 들어온 쿼리 스트링을 파싱합니다
   const { searchParams } = new URL(request.url)
   const secret = searchParams.get('secret')
   const slug = searchParams.get('slug')
 
-  // Check the secret and next parameters
-  // This secret should only be known to this route handler and the CMS
+  // 비밀 토큰과 slug를 확인합니다
+  // 비밀 토큰은 이 라우트 핸들러와 CMS만 알 수 있어야 합니다
   if (secret !== 'MY_SECRET_TOKEN' || !slug) {
     return new Response('Invalid token', { status: 401 })
   }
 
-  // Fetch the headless CMS to check if the provided `slug` exists
-  // getPostBySlug would implement the required fetching logic to the headless CMS
+  // `slug` 경로가 존재하는지 확인하기 위해 헤드리스 CMS의 데이터를 가져옵니다
+  // getPostBySlug는 헤드리스 CMS에 필요한 데이터를 가져오는 로직을 구현합니다
   const post = await getPostBySlug(slug)
 
-  // If the slug doesn't exist prevent draft mode from being enabled
+  // slug 경로가 존재하지 않는다면 드래프트 모드를 활성화하지 않습니다
   if (!post) {
     return new Response('Invalid slug', { status: 401 })
   }
 
-  // Enable Draft Mode by setting the cookie
+  // 쿠키를 설정하여 드래프트 모드를 활성화합니다
   draftMode().enable()
 
-  // Redirect to the path from the fetched post
-  // We don't redirect to searchParams.slug as that might lead to open redirect vulnerabilities
+  // 가져온 게시물의 경로로 리다이렉트합니다
+  // 리다이렉트 도중 취약점이 노출될 수 있으므로 searchParams.slug 경로로 리다이렉트하지 않습니다.
   redirect(post.slug)
 }
 ```
 
 ```js filename="app/api/draft/route.js" switcher
-// route handler with secret and slug
+// 비밀 토큰과 slug를 사용하는 라우트 핸들러
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 export async function GET(request) {
-  // Parse query string parameters
+  // 매개변수로 들어온 쿼리 스트링을 파싱합니다
   const { searchParams } = new URL(request.url)
   const secret = searchParams.get('secret')
   const slug = searchParams.get('slug')
 
-  // Check the secret and next parameters
-  // This secret should only be known to this route handler and the CMS
+  // 비밀 토큰과 slug를 확인합니다
+  // 비밀 토큰은 이 라우트 핸들러와 CMS만 알 수 있어야 합니다
   if (secret !== 'MY_SECRET_TOKEN' || !slug) {
     return new Response('Invalid token', { status: 401 })
   }
 
-  // Fetch the headless CMS to check if the provided `slug` exists
-  // getPostBySlug would implement the required fetching logic to the headless CMS
+  // `slug` 경로가 존재하는지 확인하기 위해 헤드리스 CMS의 데이터를 가져옵니다
+  // getPostBySlug는 헤드리스 CMS에 필요한 데이터를 가져오는 로직을 구현합니다
   const post = await getPostBySlug(slug)
 
-  // If the slug doesn't exist prevent draft mode from being enabled
+  // slug 경로가 존재하지 않는다면 드래프트 모드를 활성화하지 않습니다
   if (!post) {
     return new Response('Invalid slug', { status: 401 })
   }
 
-  // Enable Draft Mode by setting the cookie
+  // 쿠키를 설정하여 드래프트 모드를 활성화합니다
   draftMode().enable()
 
-  // Redirect to the path from the fetched post
-  // We don't redirect to searchParams.slug as that might lead to open redirect vulnerabilities
+  // 가져온 게시물의 경로로 리다이렉트합니다
+  // 리다이렉트 도중 취약점이 노출될 수 있으므로 searchParams.slug 경로로 리다이렉트하지 않습니다.
   redirect(post.slug)
 }
 ```
 
-If it succeeds, then the browser will be redirected to the path you want to view with the draft mode cookie.
+성공하면, 브라우저는 드래프트 모드의 쿠키를 사용하고자 하는 경로로 리다이렉트합니다.
 
-## Step 2: Update page
+## 2단계: 페이지 업데이트하기
 
-The next step is to update your page to check the value of `draftMode().isEnabled`.
+다음 단계는 페이지를 업데이트하여 `draftMode().isEnabled`의 값을 확인하는 것입니다.
 
-If you request a page which has the cookie set, then data will be fetched at **request time** (instead of at build time).
+쿠키가 설정된 페이지를 요청하면 빌드 시점이 아닌 **요청 시점**에 데이터를 가져옵니다.
 
-Furthermore, the value of `isEnabled` will be `true`.
+또한 `isEnabled`의 값은 `true`가 됩니다.
 
 ```tsx filename="app/page.tsx" switcher
-// page that fetches data
+// 데이터를 가져오는 페이지
 import { draftMode } from 'next/headers'
 
 async function getData() {
@@ -172,7 +172,7 @@ export default async function Page() {
 ```
 
 ```jsx filename="app/page.js" switcher
-// page that fetches data
+// 데이터를 가져오는 페이지
 import { draftMode } from 'next/headers'
 
 async function getData() {
@@ -199,21 +199,21 @@ export default async function Page() {
 }
 ```
 
-That's it! If you access the draft Route Handler (with `secret` and `slug`) from your headless CMS or manually, you should now be able to see the draft content. And if you update your draft without publishing, you should be able to view the draft.
+끝입니다! 이제 헤드리스 CMS에서 또는 수동으로 드래프트 모드가 활성화된 라우트 핸들러에 접근하면(비밀 토큰과 `slug` 필요) 초안의 내용을 볼 수 있습니다. 또한 게시하는 절차 없이도 업데이트된 초안 내용을 볼 수 있게 됩니다.
 
-Set this as the draft URL on your headless CMS or access manually, and you should be able to see the draft.
+헤드리스 CMS에서 초안 URL을 아래처럼 설정하거나 직접 접근하면 초안을 볼 수 있습니다.
 
 ```bash filename="Terminal"
 https://<your-site>/api/draft?secret=<token>&slug=<path>
 ```
 
-## More Details
+## 더 알아보기
 
-### Clear the Draft Mode cookie
+### 드래프트 모드의 쿠키 지우기
 
-By default, the Draft Mode session ends when the browser is closed.
+기본적으로 드래프트 모드 세션은 브라우저를 닫으면 종료됩니다.
 
-To clear the Draft Mode cookie manually, create a Route Handler that calls `draftMode().disable()`:
+드래프트 모드의 쿠키를 수동으로 지우려면 `draftMode().disable()`을 호출하는 라우트 핸들러를 생성하세요.
 
 ```ts filename="app/api/disable-draft/route.ts" switcher
 import { draftMode } from 'next/headers'
@@ -233,12 +233,12 @@ export async function GET(request) {
 }
 ```
 
-Then, send a request to `/api/disable-draft` to invoke the Route Handler. If calling this route using [`next/link`](/docs/pages/api-reference/components/link), you must pass `prefetch={false}` to prevent accidentally deleting the cookie on prefetch.
+그런 다음 `/api/disable-draft`로 요청을 보내 라우트 핸들러를 호출합니다. [`next/link`](/docs/pages/api-reference/components/link)를 사용하여 이 경로를 호출하는 경우, 실수로 프리페치 기능이 해당 경로를 호출해 쿠키를 삭제하는 것을 방지하기 위해 `prefetch={false}`를 전달해야 합니다.
 
-### Unique per `next build`
+### `next build` 마다 새롭게
 
-A new bypass cookie value will be generated each time you run `next build`.
+`next build`를 실행할 때마다 새로운 우회 쿠키값이 생성됩니다.
 
-This ensures that the bypass cookie can’t be guessed.
+따라서 우회 쿠키를 추측할 수 없습니다.
 
-> **Good to know**: To test Draft Mode locally over HTTP, your browser will need to allow third-party cookies and local storage access.
+> **참고**: HTTP를 통해 로컬에서 드래프트 모드를 테스트하려면 브라우저에서 서드파티 쿠키 및 로컬 스토리지 접근을 허용해야 합니다.
