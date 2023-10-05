@@ -1,117 +1,111 @@
 ---
 title: Fast Refresh
-description: Fast Refresh is a hot module reloading experience that gives you instantaneous feedback on edits made to your React components.
+description: Fast Refresh는 React 컴포넌트 수정 사항을 즉시 피드백을 반영하는 hot module reloading 경험입니다.
 ---
 
 <details open>
-  <summary>Examples</summary>
+  <summary>예시</summary>
 
 - [Fast Refresh Demo](https://github.com/vercel/next.js/tree/canary/examples/fast-refresh-demo)
 
 </details>
 
-Fast Refresh is a Next.js feature that gives you instantaneous feedback on
-edits made to your React components. Fast Refresh is enabled by default in all
-Next.js applications on **9.4 or newer**. With Next.js Fast Refresh enabled,
-most edits should be visible within a second, **without losing component
-state**.
+Fast Refresh는 React 컴포넌트 수정 사항의 피드백을 즉시
+반영하는 Next.js 기능입니다. Fast Refresh는 **9.4 혹은 그 이상**의 모든
+Next.js 애플리케이션에 대해 기본적으로 활성화되어 있습니다. Next.js의
+Fast Refresh가 활성화된 상태에서, 대다수 수정 사항은 몇 초 내에 볼 수 있게 됩니다.
+**컴포넌트 상태를 상실하지 않으면서요**.
 
-## How It Works
+## 동작 방식
 
-- If you edit a file that **only exports React component(s)**, Fast Refresh will
-  update the code only for that file, and re-render your component. You can edit
-  anything in that file, including styles, rendering logic, event handlers, or
-  effects.
-- If you edit a file with exports that _aren't_ React components, Fast Refresh
-  will re-run both that file, and the other files importing it. So if both
-  `Button.js` and `Modal.js` import `theme.js`, editing `theme.js` will update
-  both components.
-- Finally, if you **edit a file** that's **imported by files outside of the
-  React tree**, Fast Refresh **will fall back to doing a full reload**. You
-  might have a file which renders a React component but also exports a value
-  that is imported by a **non-React component**. For example, maybe your
-  component also exports a constant, and a non-React utility file imports it. In
-  that case, consider migrating the constant to a separate file and importing it
-  into both files. This will re-enable Fast Refresh to work. Other cases can
-  usually be solved in a similar way.
+- **React 컴포넌트(들)만 내보내는** 파일만 수정한다면, Fast Refresh는
+  해당 파일에 대해서만 업데이트를 하고, 다시 컴포넌트를 렌더링할 것 입니다.
+  파일의 스타일, 렌더링 로직, 이벤트 핸들러, 혹은 effects 무엇이든 수정해도 됩니다.
+- React 컴포넌트가 _아닌_ 파일을 수정하고 내보낸다면, Fast Refresh는
+  각 파일에 대해 다시 동작할 것이고, 나머지 파일들을 포함시킬 것 입니다. 그러므로
+  `Button.js` 그리고 `Modal.js`가 `theme.js`를 import 한다면, `theme.js`를
+  수정하는 것은 각 컴포넌트를 업데이트하게 되는 것입니다.
+- 마지막으로, **React tree 외부에 있는 파일을 수정한다면**, Fast Refresh는
+  **전체 리로드를 하게 될 것입니다**. React 컴포넌트를 렌더링하지만 동시에
+  **non-React 컴포넌트**가 내보낸 값을 가져온 파일을 갖고 있을 수도 있기 때문입니다.
+  예를 들어서, 컴포넌트가 상수를 내보내고, non-React 유틸리티 파일이 가져옵니다.
+  이 경우, 상수를 여러 파일로 이전하고 각 파일에서 가져오는 것을 고려해 보세요.
+  이렇게 하면 Fast Refresh가 다시 활성화되어 동작합니다. 다른 방법들도 이와
+  유사한 방법으로 해결할 수 있습니다.
 
-## Error Resilience
+## 오류 내구성
 
-### Syntax Errors
+### 문법 오류
 
-If you make a syntax error during development, you can fix it and save the file
-again. The error will disappear automatically, so you won't need to reload the
-app. **You will not lose component state**.
+개발 중에 문법 오류가 생겼다면, 수정하고 파일을 다시 저장하세요.
+오류는 자동으로 사라지기 때문에, 앱을 다시 리로드하지 않아도 됩니다.
+**컴포넌트 상태를 상실하지 않으면서요**.
 
-### Runtime Errors
+### 런타임 오류
 
-If you make a mistake that leads to a runtime error inside your component,
-you'll be greeted with a contextual overlay. Fixing the error will automatically
-dismiss the overlay, without reloading the app.
+컴포넌트 내에서 실수로 런타임 오류가 발생했다면, 컨텍스트 오버레이(contextual overlay)가
+표시됩니다. 오류를 수정하면 오버레이는 사라지고, 앱을 리로드하지 않아도 됩니다.
 
-Component state will be retained if the error did not occur during rendering. If
-the error did occur during rendering, React will remount your application using
-the updated code.
+렌더링 중 오류가 발생하지 않았다면 컴포넌트 상태는 보존됩니다.
+그러나 만약 렌더링 중 오류가 발생했다면, React는 업데이트 코드를 이용해
+애플리케이션을 다시 마운트할 것입니다.
 
-If you have [error boundaries](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)
-in your app (which is a good idea for graceful failures in production), they
-will retry rendering on the next edit after a rendering error. This means having
-an error boundary can prevent you from always getting reset to the root app
-state. However, keep in mind that error boundaries shouldn't be _too_ granular.
-They are used by React in production, and should always be designed
-intentionally.
+앱에 [에러 바운더리(error boundaries)](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)가
+있다면(이는 프로덕션 환경에서 우아한 실패(graceful failures)를 위한 좋은 아이디어입니다),
+렌더링 오류 이후, 다음 수정에서 다시 렌더링을 시도할 것입니다.
+이는 에러 바운더리가 있다면 항상 루트 앱 상태로 리셋되는 것을
+방지할 수 있다는 것을 의미합니다. 하지만, 에러 바운더리가 _너무_
+세분되지 않아야 한다는 것을 명심하세요. 이러한 사항들은
+React 프로덕션 환경에서 사용되며, 항상 의도적으로 설계되어야 합니다.
 
-## Limitations
+## 제한 사항
 
-Fast Refresh tries to preserve local React state in the component you're
-editing, but only if it's safe to do so. Here's a few reasons why you might see
-local state being reset on every edit to a file:
+Fast Refresh는 수정하고 있는 로컬 React 상태를 보존하려고 하지만,
+안전한 경우만 그렇게 동작합니다. 파일을 수정할 때 로컬 상태가 매번 리셋되는
+이유들을 몇 가지 소개합니다.
 
-- Local state is not preserved for class components (only function components
-  and Hooks preserve state).
-- The file you're editing might have _other_ exports in addition to a React
-  component.
-- Sometimes, a file would export the result of calling a higher-order component
-  like `HOC(WrappedComponent)`. If the returned component is a
-  class, its state will be reset.
-- Anonymous arrow functions like `export default () => <div />;` cause Fast Refresh to not preserve local component state. For large codebases you can use our [`name-default-component` codemod](/docs/pages/building-your-application/upgrading/codemods#name-default-component).
+- 클래스 컴포넌트에서 로컬 상태를 보존하지 않습니다(함수 컴포넌트 그리고
+  Hooks만 상태를 보존합니다).
+- 수정 중인 파일에 React 컴포넌트 외에 _다른_ 내보내기를 포함하고 있을 수 있습니다.
+- 가끔, 파일은 `HOC(WrappedComponent)` 같은 고차 컴포넌트의 호출 결과를
+  내보낼 수도 있습니다. 반환된 컴포넌트가 class라면, 상태는 리셋될 것입니다.
+- `export default () => <div />;`와 같은 익명 화살표 함수는 Fast Refresh가 로컬 컴포넌트 상태를 보존하지 않게 합니다.
+  대규모 코드 베이스에서는 우리의 [`name-default-component` codemod](/docs/pages/building-your-application/upgrading/codemods#name-default-component)를
+  사용할 수 있습니다.
 
-As more of your codebase moves to function components and Hooks, you can expect
-state to be preserved in more cases.
+함수 컴포넌트와 Hooks로 코드 베이스를 이전할 수록, 더 많은 경우에 상태를
+보존될 것을 기대할 수 있습니다.
 
-## Tips
+## 팁
 
-- Fast Refresh preserves React local state in function components (and Hooks) by
-  default.
-- Sometimes you might want to _force_ the state to be reset, and a component to
-  be remounted. For example, this can be handy if you're tweaking an animation
-  that only happens on mount. To do this, you can add `// @refresh reset`
-  anywhere in the file you're editing. This directive is local to the file, and
-  instructs Fast Refresh to remount components defined in that file on every
-  edit.
-- You can put `console.log` or `debugger;` into the components you edit during
-  development.
+- Fast Refresh는 기본적으로 함수 컴포넌트(그리고 Hooks)에서 React 로컬 상태를
+  보존합니다.
+- 종종 _강제로_ 상태를 리셋하고, 컴포넌트가 마운트되길 원할 수 있습니다.
+  예를 들어, 마운트 시에 실행되는 애니메이션을 조정하는 경우에 유용합니다.
+  이를 위해서는, 수정하고 있는 파일 내 아무 곳에 `// @refresh reset`을
+  추가합니다. 이 지시문은 해당 파일 내에서만 유효하며, Fast Refresh가
+  해당 파일을 수정할 때마다 다시 마운트하도록 지시합니다.
+- 개발 중 수정하는 컴포넌트 내에 `console.log` 혹은 `debugger;`를
+  넣을 수 있습니다.
 
-## Fast Refresh and Hooks
+## Fast Refresh 그리고 Hooks
 
-When possible, Fast Refresh attempts to preserve the state of your component
-between edits. In particular, `useState` and `useRef` preserve their previous
-values as long as you don't change their arguments or the order of the Hook
-calls.
+가능한 경우, Fast Refresh는 수정 간에 컴포넌트의 상태를 보존하려고 합니다.
+특히, `useState` 그리고 `useRef`에 대해 인자(arguments) 혹은 Hooks 호출 순서를
+변경하지 않는 한 이전 값들을 보존합니다.
 
-Hooks with dependencies—such as `useEffect`, `useMemo`, and `useCallback`—will
-_always_ update during Fast Refresh. Their list of dependencies will be ignored
-while Fast Refresh is happening.
+`useEffect`, `useMemo`, 그리고 `useCallback` 같은 의존성을 갖는 Hooks는
+Fast Refresh 중 _항상_ 업데이트됩니다. Fast Refresh 진행 중에는
+이들의 의존성 목록이 무시됩니다.
 
-For example, when you edit `useMemo(() => x * 2, [x])` to
-`useMemo(() => x * 10, [x])`, it will re-run even though `x` (the dependency)
-has not changed. If React didn't do that, your edit wouldn't reflect on the
-screen!
+예를 들어서, `useMemo(() => x * 2, [x])`를 `useMemo(() => x * 10, [x])`로
+수정할 때, `x`(의존성)을 변경하지 않더라도 다시 실행될 것 입니다.
+React가 이를 수행하지 않았다면, 화면에 수정 사항이 반영되지 않을 수도 있습니다!
 
-Sometimes, this can lead to unexpected results. For example, even a `useEffect`
-with an empty array of dependencies would still re-run once during Fast Refresh.
+가끔씩, 이는 예기치 못한 결과를 초래합니다. 예를 들어, `useEffect`의
+의존성 배열이 비어있지만 Fast Refresh가 여전히 한번 다시 실행됩니다.
 
-However, writing code resilient to occasional re-running of `useEffect` is a good practice even
-without Fast Refresh. It will make it easier for you to introduce new dependencies to it later on
-and it's enforced by [React Strict Mode](/docs/pages/api-reference/next-config-js/reactStrictMode),
-which we highly recommend enabling.
+하지만, `useEffect`가 이따금 다시 실행되는 것에 대해 코드를 견고히 작성하는 것은
+Fast Refresh 제외하더라도 좋은 실천 방법입니다. 이는 다음에 새로운 의존성을
+도입하기 쉬워지고, 우리는 [React Strict Mode](/docs/pages/api-reference/next-config-js/reactStrictMode)를
+활성화하여 강제하게 하는 것을 강력히 권장합니다.
