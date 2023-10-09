@@ -9,14 +9,14 @@ related:
     - app/api-reference/functions/cookies
 ---
 
-[Server Actions](#server-actions) are an **alpha** feature in Next.js, built on top of React [Actions](#actions). They enable server-side data mutations, reduced client-side JavaScript, and progressively enhanced forms. They can be defined inside Server Components and/or called from Client Components:
+[Server Actions](#server-actions) 는 리액트의 [Actions](#actions) 를 기반으로 구축된 Next.js의 **주요**한 기능 중 하나입니다. 이는 클라이언트 측의 Javascript 코드를 줄이고 서버 측의 데이터 변경을 가능하게 하는 보다 발전된 형태의 기능입니다. 이는 서버 컴포넌트 내부에서 정의되거나 클라이언트 컴포넌트에서 호출될 수 있습니다.
 
-**With Server Components:**
+**서버 컴포넌트에서 사용될 때**
 
 ```jsx filename="app/add-to-cart.js" highlight={5, 6, 13}
 import { cookies } from 'next/headers'
 
-// Server action defined inside a Server Component
+// 서버 컴포넌트 내부에서 정의된 Server action
 export default function AddToCart({ productId }) {
   async function addItem(data) {
     'use server'
@@ -33,7 +33,7 @@ export default function AddToCart({ productId }) {
 }
 ```
 
-**With Client Components:**
+**클라이언트 컴포넌트에서 사용될 때**
 
 ```jsx filename="app/actions.js" highlight={1, 3}
 'use server'
@@ -49,7 +49,7 @@ export async function addItem(data) {
 
 import { addItem } from './actions.js'
 
-// Server Action being called inside a Client Component
+// 클라이언트 컴포넌트 내부에서 사용되는 Server Actions
 export default function AddToCart({ productId }) {
   return (
     <form action={addItem}>
@@ -59,15 +59,15 @@ export default function AddToCart({ productId }) {
 }
 ```
 
-> **Good to know:**
+> **참고**
 >
-> - Using Server Actions will opt into running the React `experimental` channel.
-> - React Actions, `useOptimistic`, and `useFormStatus` are not a Next.js or React Server Components specific features.
-> - Next.js integrates React Actions into the Next.js router, bundler, and caching system, including adding data mutation APIs like `revalidateTag` and `revalidatePath`.
+> - Server Actions는 리액트의 `experimental` 채널에서 사용하고 동작합니다.
+> - 리액트 Actions, `useOptimistic` 그리고 `useFormStatus`은 Next.js나 리액트 서버 컴포넌트만의 특별한 기능이 아닙니다.
+> - Next.js는 리액트 Actions의 기능을 `revalidateTag`나 `revalidatePath`과 같이 데이터 변경 API들을 추가하는 것을 포함하여 Next.js의 라우터, 번들러 그리고 캐싱 시스템까지 확장시킵니다.
 
-## Convention
+## 규칙
 
-You can enable Server Actions in your Next.js project by enabling the **experimental** `serverActions` flag.
+Next.js 프로젝트의 **experimental** `serverActions` 선택지를 활성화하여 Server Actions를 사용할 환경을 구성합니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -77,16 +77,16 @@ module.exports = {
 }
 ```
 
-### Creation
+### 생성하기
 
-Server Actions can be defined in two places:
+Server Actions는 두 곳에서 정의될 수 있습니다:
 
-- Inside the component that uses it (Server Components only)
-- In a separate file (Client and Server Components), for reusability. You can define multiple Server Actions in a single file.
+- (서버 컴포넌트에서만) 사용할 컴포넌트 내부
+- 재사용성을 고려하여 분리된 파일 (클라이언트, 서버 컴포넌트). 하나의 파일 내부에서 여러 개의 Server Actions를 정의할 수 있습니다.
 
-#### With Server Components
+#### 서버 컴포넌트에서 사용하기
 
-Create a Server Action by defining an asynchronous function with the `"use server"` directive at the top of the function body. This function should have **serializable arguments** and a **serializable return value** based on the React Server Components protocol.
+`"use server"` 키워드가 함수 최상단에서 명시된 비동기 함수 내부에서 Server Actions를 정의할 수 있습니다. 이 함수는 리액트 서버 컴포넌트 규약을 기반으로 한 **serializable arguments** 와 **serializable return value** 반드시 포함해야 합니다.
 
 ```jsx filename="app/server-component.js" highlight={2}
 export default function ServerComponent() {
@@ -97,9 +97,9 @@ export default function ServerComponent() {
 }
 ```
 
-#### With Client Components
+#### 클라이언트 컴포넌트에서 사용하기
 
-If you're using a Server Action inside a Client Component, create your action in a separate file with the "use server" directive at the top of the file. Then, import the Server Action into your Client Component:
+만일 Server Actions를 클라이언트 컴포넌트에서 사용하려 한다면, action을 "use server"키워드가 함수 최상단에서 명시된 분리된 파일에서 작성해야 합니다. 그리고, 이것을 클라이언트 컴포넌트에 불러 와 사용할 수 있습니다.
 
 ```js filename="app/actions.js" highlight={1}
 'use server'
@@ -123,19 +123,21 @@ export default function ClientComponent() {
 }
 ```
 
-> **Good to know**: When using a top-level `"use server"` directive, all exports below will be considered Server Actions. You can have multiple Server Actions in a single file.
+> **참고**
+>
+> - 함수 최상단에서 `"use server"` 키워드를 사용할 때, 해당 파일 내부의 모든 내보내는 함수들은 Server Actions로 간주될 것입니다. 이는 하나의 파일 내부에 여러 개의 Server Actions를 가질 수 있음을 의미합니다.
 
-### Invocation
+### 불러오기
 
-You can invoke Server Actions using the following methods:
+아래의 방법들을 활용해 Server Actions를 불러올 수 있습니다.
 
-- Using `action`: React's `action` prop allows invoking a Server Action on a `<form>` element.
-- Using `formAction`: React's `formAction` prop allows handling `<button>`, `<input type="submit">`, and `<input type="image">` elements in a `<form>`.
-- Custom Invocation with `startTransition`: Invoke Server Actions without using `action` or `formAction` by using `startTransition`. This method **disables [Progressive Enhancement](#progressive-enhancement)**.
+- `action` 사용하기: 리액트의 `action` 인자는 Server Actions을 `<form>` 요소에 불러올 수 있도록 해줍니다.
+- `formAction` 사용하기: 리액트의 `formAction` 인자는 `<form>` 내부의 `<button>`, `<input type="submit">`, 그리고 `<input type="image">` 요소를 다룰 수 있도록 해줍니다.
+- `startTransition`을 사용해 내가 원하는 곳에서 불러오기: `action`이나 `formAction`이 아닌 `startTransition`을 사용해서 Server Actions를 부를 수 있습니다. 이 방법은 **[Progressive Enhancement](#progressive-enhancement) 를 불가하게 만듭니다.**
 
 #### `action`
 
-You can use React's `action` prop to invoke a Server Action on a `form` element. Server Actions passed with the action prop act as asynchronous side effects in response to user interaction.
+리액트의 `action` 인자를 `form` 요소에서 Server Actions를 호출하기 위해 사용할 수 있습니다. action 속성을 통해 호출된 Server Actions는 사용자 상호작용에 의해 발생한 비동기 함수처럼 동작합니다.
 
 ```jsx filename="app/add-to-cart.js"
 export default function AddToCart({ productId }) {
@@ -154,11 +156,11 @@ export default function AddToCart({ productId }) {
 }
 ```
 
-> **Good to know**: An `action` is similar to the HTML primitive [`action`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#action)
+> **참고**: `action`은 기본 HTML `form` 요소의 [`action`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#action)과 유사합니다.
 
 #### `formAction`
 
-You can use `formAction` prop to handle **Form Actions** on elements such as `button`, `input type="submit"`, and `input type="image"`. The `formAction` prop takes precedence over the form's `action`.
+`button`, `input type="submit"`, 그리고 `input type="image"`과 같은 요소에 존재하는 **Form Actions**을 다루기 위해 `formAction`을 사용할 수 있습니다. `formAction` 속성은 form의 `action` 보다 우선시 됩니다.
 
 ```jsx filename="app/form.js" highlight={15}
 export default function Form() {
@@ -182,13 +184,13 @@ export default function Form() {
 }
 ```
 
-> **Good to know**: A `formAction` is the HTML primitive [`formaction`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#formaction). React now allows you to pass functions to this attribute.
+> **참고**: `formAction`은 HTML 원시 타입 [`formaction`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#formaction)입니다. 리액트는 이 속성에 함수를 전달할 수 있도록 해줍니다.
 
-#### Custom invocation using `startTransition`
+#### `startTransition`을 이용한 사용자 지정 호출
 
-You can also invoke Server Actions without using `action` or `formAction`. You can achieve this by using `startTransition` provided by the `useTransition` hook, which can be useful if you want to use Server Actions outside of forms, buttons, or inputs.
+`action`이나 `formAction`을 사용하지 않고 Server Actions를 사용할 수 있습니다. 제공되는 `useTransition`훅에 내장된 `startTransition`을 활용해서 이를 할 수 있고, 이는 forms, buttons, inputs 외부에서 Server Actions를 사용하기를 원할 때 유용할 수 있습니다.
 
-> **Good to know**: Using `startTransition` disables the out-of-the-box Progressive Enhancement.
+> **참고**: `startTransition`을 사용하는 것은 즉시 사용 가능한 점진적 향상을 불가능하게 만든다.
 
 ```jsx filename="app/components/example-client-component.js" highlight={3, 7, 10}
 'use client'
@@ -212,14 +214,14 @@ function ExampleClientComponent({ id }) {
 
 export async function addItem(id) {
   await addItemToDb(id)
-  // Marks all product pages for revalidating
+  // 재검증을 위해 모든 product 페이지를 표시합니다.
   revalidatePath('/product/[id]')
 }
 ```
 
-#### Custom invocation without `startTransition`
+#### `startTransition`을 사용하지 않은 사용자 지정 호출
 
-If you aren't doing [Server Mutations](#server-mutations), you can directly pass the function as a prop like any other function.
+만일 [Server Mutations](#server-mutations)을 하고 있지 않다면, 다른 일반적인 함수와 같이 이 함수를 즉시 통과시킬 수 있습니다.
 
 ```tsx filename="app/posts/[id]/page.tsx" switcher
 import kv from '@vercel/kv'
@@ -285,13 +287,13 @@ export default function LikeButton({ increment }) {
 }
 ```
 
-### Enhancements
+### 향상
 
-#### Experimental `useOptimistic`
+#### 실험적인 `useOptimistic`
 
-The experimental `useOptimistic` hook provides a way to implement optimistic updates in your application. Optimistic updates are a technique that enhances user experience by making the app appear more responsive.
+실험 기능인 `useOptimistic` 훅은 어플리케이션에 최적화 업데이트를 적용하는 방법을 제공합니다. 최적화 업데이트는 어플리케이션의 반응형을 증가시켜 사용자 경험을 향상시키는 방법입니다.
 
-When a Server Action is invoked, the UI is updated immediately to reflect the expected outcome, instead of waiting for the Server Action's response.
+Server Actions이 호출되었을 때, Server Actions의 응답을 기다리는 대신 예상되는 반환값을 반영하여 즉시 UI가 업데이트됩니다.
 
 ```jsx filename="app/thread.js"
 'use client'
@@ -330,9 +332,9 @@ export function Thread({ messages }) {
 }
 ```
 
-#### Experimental `useFormStatus`
+#### 실험적인 `useFormStatus`
 
-The **experimental** `useFormStatus` hook can be used within Form Actions, and provides the `pending` property.
+**실험기능**인 `useFormStatus` 훅은 Form Actions 내부에서 사용 가능하며, `pending`상태를 제공합니다.
 
 ```jsx filename="app/form.js"
 'use client'
@@ -354,14 +356,14 @@ function Submit() {
 }
 ```
 
-#### Progressive Enhancement
+#### 점진적 향상
 
-Progressive Enhancement allows a `<form>` to function properly without JavaScript, or with JavaScript disabled. This allows users to interact with the form and submit data even if the JavaScript for the form hasn't been loaded yet or if it fails to load.
+점진적 향상은 `<form>`이 Javascript의 사용 유뮤와 무관하게 적절히 동작하도록 합니다. 이는 유저로 하여금 form과 상호작용하고, form 사용을 위한 Javascript가 아직 로딩 중이거나 로딩에 실패했을 때에도 사용자가 form과 상호작용하고 정보를 전송할 수 있도록 합니다.
 
-Both Server Form Actions and Client Form Actions support Progressive Enhancement, using one of two strategies:
+Server Form Actions와 Client Form Actions 모두 점진적인 향상을 돕기 때문에, 아래의 두 전략 중 하나를 사용합니다.
 
-- If a **Server Action** is passed directly to a `<form>`, the form is interactive **even if JavaScript is disabled**.
-- If a **Client Action** is passed to a `<form>`, the form is still interactive, but the action will be placed in a queue until the form has hydrated. The `<form>` is prioritized with Selective Hydration, so it happens quickly.
+- 만일 **Server Action**이 `<form>`에 의해 넘겨진다면, form은 Javascript가 동작하지 않더라도 활성화됩니다.
+- 만일 **Client Action**이 `<form>`에 의해 넘겨진다면, form 은 여전히 동작하지만, 그 action은 form의 수화가 끝날 때가지 큐에 대기중일 것입니다. `<form>`은 선택적 수화에 의해 우선순위가 매겨질 것이므로, 이는 빠르게 동작할 것입니다.
 
 ```jsx filename="app/components/example-client-component.js"
 'use client'
@@ -380,15 +382,15 @@ export default function ExampleClientComponent({ myAction }) {
 }
 ```
 
-In both cases, the form is interactive before hydration occurs. Although Server Actions have the additional benefit of not relying on client JavaScript, you can still compose additional behavior with Client Actions where desired without sacrificing interactivity.
+두 경우에 모두, form은 수화가 발생하기 전부터 활성화되어있을 것입니다. Server Actions가 Javascript에 의존하지 않는다는 추가적인 이점이 있음에도 불구하고, 상호 작용성을 해치지 않기 위해 Client Actions를 사용해 추가적인 동작을 정의할 수 있습니다.
 
-## Examples
+## 예시
 
-### Usage with Client Components
+### 클라이언트 컴포넌트와의 사용
 
-#### Import
+#### 불러와서 사용하기
 
-Server Actions **cannot** be _defined_ within Client Components, but they can be _imported_. To use Server Actions in Client Components, you can import the action from a file containing a top-level `"use server"` directive.
+Server Actions는 클라이언트 컴포넌트와 같이 _정의될 수_ 없지만, _불러와질 수_ 있습니다. Server Actions를 클라이언트 컴포넌트 내부에서 사용하기 위해, `"use server"` 키워드를 최상단에서 사용중인 파일로부터 action을 불러와 사용할 수 있습니다.
 
 ```js filename="app/actions.js" highlight={1}
 'use server'
@@ -415,11 +417,11 @@ function ExampleClientComponent({ id }) {
 }
 ```
 
-#### Props
+#### 인자로 넘겨받기
 
-Although [importing](#import) Server Actions is recommended, in some cases you might want to pass down a Server Action to a Client Component as a prop.
+Server Actions는 [불러오기](#invocation)를 통해 사용되는 것이 권장되지만, 특정 상황에서 Server Actions를 클라이언트 컴포넌트의 인자로 받아와 사용해야 할 수 있습니다.
 
-For example, you might want to use a dynamically generated value within the action. In that case, passing a Server Action down as a prop might be a viable solution.
+예시로, action을 통해 동적으로 생성된 값을 사용하고 싶을 수 있습니다. 이런 경우 Server Action을 컴포넌트의 인자로 받아오는 것이 해결책이 될 수 있습니다.
 
 ```jsx filename="app/components/example-server-component.js"
 import { ExampleClientComponent } from './components/example-client-component.js'
@@ -451,9 +453,9 @@ function ExampleClientComponent({ updateItem }) {
 }
 ```
 
-### On-demand Revalidation
+### 요청에 의해 이루어지는 재검증
 
-Server Actions can be used to revalidate data on-demand by path ([`revalidatePath`](/docs/app/api-reference/functions/revalidatePath)) or by cache tag ([`revalidateTag`](/docs/app/api-reference/functions/revalidateTag)).
+Server Actions는 ([`revalidatePath`](/docs/app/api-reference/functions/revalidatePath))라는 path 혹은 ([`revalidateTag`](/docs/app/api-reference/functions/revalidateTag))라는 캐싱된 태그에 의해 요청에 의해 값을 재검증하는 용도로 사용될 수 있습니다.
 
 ```js
 import { revalidateTag } from 'next/cache'
@@ -464,8 +466,9 @@ async function revalidate() {
 }
 ```
 
-### Validation
+### 검증
 
+Server Actions을 통과한 데이터는 actions을 주입하기 전에 검증되거나 무결해질 수 있습니다. 예를 들어, action을 인수로 받는 wrapper 함수를 생성하고, 이 action이 유효할 때 action을 주입하는 함수를 반환하도록 만들어 검증할 수 있습니다.
 The data passed to a Server Action can be validated or sanitized before invoking the action. For example, you can create a wrapper function that receives the action as its argument, and returns a function that invokes the action if it's valid.
 
 ```js filename="app/actions.js"
@@ -495,9 +498,9 @@ export function withValidate(action) {
 }
 ```
 
-### Using headers
+### 헤더를 이용하기
 
-You can read incoming request headers such as `cookies` and `headers` within a Server Action.
+`cookies`나 `headers`와 같이 들어오는 요청의 헤더를 Server Action 내부에서 사용할 수 있습니다.
 
 ```js highlight={6}
 import { cookies } from 'next/headers'
@@ -511,7 +514,7 @@ async function addItem(data) {
 }
 ```
 
-Additionally, you can modify cookies within a Server Action.
+추가적으로, Server Actions를 이용해 쿠키 값을 변경해줄 수 있습니다.
 
 ```js highlight={7, 9, 10, 11, 12, 13, 14}
 import { cookies } from 'next/headers';
@@ -521,7 +524,7 @@ async function create(data) {
 
   const cart = await createCart():
   cookies().set('cartId', cart.id)
-  // or
+  // 혹은
   cookies().set({
     name: 'cartId',
     value: cart.id,
@@ -531,32 +534,32 @@ async function create(data) {
 }
 ```
 
-## Glossary
+## 용어집
 
 ### Actions
 
-Actions are an experimental feature in React, allowing you to run `async` code in response to a user interaction.
+Actions는 리액트의 실험적인 기능입니다, 사용자 상호작용의 응답으로 `비동기`코드를 실행할 수 있도록 해줍니다.
 
-Actions are not Next.js or React Server Components specific, however, they are not yet available in the stable version of React. When using Actions through Next.js, you are opting into using the React `experimental` channel.
+Actions는 Next.js나 리액트 서버 컴포넌트의 특별점이 아니지만, 아직 안정적인 리액트 버전에서는 사용하지 못합니다. Actions를 Next.js를 통해 사용할 때, 리액트의 `experimental` 채널을 사용하게 됩니다.
 
-Actions are defined through the `action` prop on an element. Typically when building HTML forms, you pass a URL to the [`action` prop](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#action). With Actions, React now allows you to pass a function directly.
+Actions는 요소 내부의 `action` 인자를 통해 정의됩니다. 일반적으로 HTML form을 작성할 때, URL을 [`action` 인자](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#action)로 넣어줄 수 있습니다. Actions를 통해, 리액트는 함수를 즉시 넣어줄 수 있도록 해줍니다.
 
-React also provides built-in solutions for [optimistic updates](#experimental-useoptimistic) with Actions. It's important to note new patterns are still being developed and new APIs may still be added.
+리액트는 Actions와 함께 [최적화된 업데이트](#experimental-useoptimistic)를 위해 사용 가능한 내장 함수들을 제공하고 있습니다. 아직 새로운 패턴이 개발 중에 있고 새로운 API가 추가될 수 있음을 알고 있어야 합니다.
 
 ### Form Actions
 
-[Actions](#actions) integrated into the web standard `<form>` API, and enable out-of-the-box progressive enhancement and [loading states](#experimental-useformstatus). Similar to the HTML primitive [`formaction`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#formaction).
+[Actions](#actions)는 웹 표준 `<form>`API에 맞게 확장되었고, 즉시 실행되는 점진적 향상과 [로딩 상태](#experimental-useformstatus)를 가능하게 해줍니다. 이는 HTML 원시 요소인 [`formaction`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#formaction)와 유사하게 동작합니다.
 
 ### Server Functions
 
-Functions that run on the server, but can be called on the client.
+서버 단에서 동작하며, 클라이언트 단에서 호출될 수 없는 함수입니다.
 
 ### Server Actions
 
-[Server Functions](#server-functions) called as an action.
+[Server Functions](#server-functions)은 action으로 불립니다.
 
-Server Actions can be progressively enhanced by passing them to a [`form` element's `action` prop](#invocation). The form is interactive before any client-side JavaScript has loaded. This means React hydration is not required for the form to submit.
+Server Actions는 [`form` 요소의`action` 속성](#invocation)을 통해 점진적으로 향상될 수 있습니다. 이 form은 클라이언트 단의 Javascript가 로딩되기 전에 작동합니다. 이는 이 form의 제출에 리액트의 수화가 필요하지 않음을 뜻합니다.
 
 ### Server Mutations
 
-[Server Actions](#server-actions) that mutates your data and calls `redirect`, `revalidatePath`, or `revalidateTag`.
+데이터를 변경하고 `redirect`, `revalidatePath`, 혹은 `revalidateTag`를 호출하는 [Server Actions](#server-actions)을 말합니다.

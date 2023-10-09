@@ -1,30 +1,30 @@
 ---
-title: API Routes
-description: Next.js supports API Routes, which allow you to build your API without leaving your Next.js app. Learn how it works here.
+title: API 라우트
+description: Next.js는 API 라우트 지원하여 Next.js 앱 내에서 API를 만들 수 있게 해줍니다. 작동 방식을 알아봅시다.
 ---
 
 <details>
-  <summary>Examples</summary>
+  <summary>예시</summary>
 
-- [Basic API Routes](https://github.com/vercel/next.js/tree/canary/examples/api-routes)
-- [API Routes Request Helpers](https://github.com/vercel/next.js/tree/canary/examples/api-routes-middleware)
-- [API Routes with GraphQL](https://github.com/vercel/next.js/tree/canary/examples/api-routes-graphql)
-- [API Routes with REST](https://github.com/vercel/next.js/tree/canary/examples/api-routes-rest)
-- [API Routes with CORS](https://github.com/vercel/next.js/tree/canary/examples/api-routes-cors)
+- [기본 API 라우트](https://github.com/vercel/next.js/tree/canary/examples/api-routes)
+- [API 라우트 요청 헬퍼](https://github.com/vercel/next.js/tree/canary/examples/api-routes-middleware)
+- [GraphQL과 함께 사용하는 API 라우트](https://github.com/vercel/next.js/tree/canary/examples/api-routes-graphql)
+- [REST와 함께 사용하는 API 라우트](https://github.com/vercel/next.js/tree/canary/examples/api-routes-rest)
+- [CORS와 함께 사용하는 API 라우트](https://github.com/vercel/next.js/tree/canary/examples/api-routes-cors)
 
 </details>
 
 <PagesOnly>
 
-> **Good to know**: If you are using the App Router, you can use [Server Components](/docs/app/building-your-application/data-fetching/fetching) or [Route Handlers](/docs/app/building-your-application/routing/router-handlers) instead of API Routes.
+> **참고**: App Router를 사용하고 있다면 API 라우트 대신 [서버 컴포넌트](/docs/app/building-your-application/data-fetching/fetching) 또는 [라우트 핸들러](/docs/app/building-your-application/routing/router-handlers)를 사용할 수 있습니다.
 
 </PagesOnly>
 
-API routes provide a solution to build your **API** with Next.js.
+API 라우트는 Next.js를 사용하여 **API**를 만들 수 있는 솔루션을 제공합니다.
 
-Any file inside the folder `pages/api` is mapped to `/api/*` and will be treated as an API endpoint instead of a `page`. They are server-side only bundles and won't increase your client-side bundle size.
+`pages/api` 폴더 내의 모든 파일은 `/api/*`에 대응되며 `page`가 아닌 API 엔드포인트로 취급됩니다. 이는 서버 측 번들이며 클라이언트 측 번들 크기를 증가시키지 않습니다.
 
-For example, the following API route `pages/api/user.js` returns a `json` response with a status code of `200`:
+예를 들어 다음 API라우트 `pages/api/user.js`는 상태코드 `200`을 가진 `json` 응답을 반환합니다.
 
 ```js
 export default function handler(req, res) {
@@ -32,50 +32,51 @@ export default function handler(req, res) {
 }
 ```
 
-> **Good to know**: API Routes will be affected by [`pageExtensions` configuration](/docs/pages/api-reference/next-config-js/pageExtensions) in `next.config.js`.
+> **참고**: API 라우트는 `next.config.js`에 있는 [`pageExtensions` 설정](/docs/pages/api-reference/next-config-js/pageExtensions)에 영향을 받습니다.
 
-For an API route to work, you need to export a function as default (a.k.a **request handler**), which then receives the following parameters:
+API 라우트가 동작하려면 다음 매개변수를 받는 함수를 default로 내보내야 합니다. (일명 **요청 핸들러**)
 
-- `req`: An instance of [http.IncomingMessage](https://nodejs.org/api/http.html#class-httpincomingmessage), plus some [pre-built middlewares](/docs/pages/api-reference/functions/next-server)
-- `res`: An instance of [http.ServerResponse](https://nodejs.org/api/http.html#class-httpserverresponse), plus some [helper functions](/docs/pages/api-reference/functions/next-server)
+- `req`: [http.IncomingMessage](https://nodejs.org/api/http.html#class-httpincomingmessage) 인스턴스와 [미리 만들어진 미들웨어](/docs/pages/api-reference/functions/next-server)
+- `res`: [http.ServerResponse](https://nodejs.org/api/http.html#class-httpserverresponse) 인스턴스와 [헬퍼 함수](/docs/pages/api-reference/functions/next-server)
 
-To handle different HTTP methods in an API route, you can use `req.method` in your request handler, like so:
+API 라우트에서 다른 HTTP 메서드를 처리하려면, 요청 핸들러에서 `req.method`를 사용하면 됩니다.
 
 ```js
 export default function handler(req, res) {
   if (req.method === 'POST') {
-    // Process a POST request
+    // POST 요청 처리
   } else {
-    // Handle any other HTTP method
+    // 다른 HTTP 메서드 처리
   }
 }
 ```
 
-To fetch API endpoints, take a look into any of the examples at the start of this section.
+API 엔드포인트를 가져오려면 이 섹션의 시작 부분에 제공된 예시를 살펴보세요.
 
-## Use Cases
+## 사용 사례
 
-For new projects, you can build your entire API with API Routes. If you have an existing API, you do not need to forward calls to the API through an API Route. Some other use cases for API Routes are:
+새 프로젝트의 경우, API 라우트를 사용하여 전체 API를 만들 수 있습니다. 기존 API가 있다면, API 라우트를 통해 API 호출을 전달할 필요가 없습니다. API 라우트에 대한 다른 사용 사례는 다음과 같습니다.
 
-- Masking the URL of an external service (e.g. `/api/secret` instead of `https://company.com/secret-url`)
-- Using [Environment Variables](/docs/pages/building-your-application/configuring/environment-variables) on the server to securely access external services.
+- 외부 서비스의 URL을 마스킹하기 (예시: `https://company.com/secret-url` 대신 `/api/secret` )
+- 서버에서 [환경 변수](/docs/pages/building-your-application/configuring/environment-variables)를 안전하게 사용하여 외부 서비스에 접근하기.
 
-## Caveats
+## 주의 사항
 
-- API Routes [do not specify CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), meaning they are **same-origin only** by default. You can customize such behavior by wrapping the request handler with the [CORS request helpers](https://github.com/vercel/next.js/tree/canary/examples/api-routes-cors).
-- API Routes can't be used with [`output: 'export'`](/docs/pages/building-your-application/deploying/static-exports)
+- API 라우트는 [CORS 헤더를 지정하지 않습니다](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS). 이는 기본적으로 **동일 출처 전용**임을 의미합니다.
+  이러한 동작은 [CORS 요청 헬퍼](https://github.com/vercel/next.js/tree/canary/examples/api-routes-cors)를 사용하여 요청 핸들러를 래핑함으로써 사용자 정의할 수 있습니다.
+- API 라우트는 [`output: 'export'`](/docs/pages/building-your-application/deploying/static-exports)와 함께 사용할 수 없습니다.
 
-## Request Helpers
+## 요청 헬퍼
 
-API Routes provide built-in request helpers which parse the incoming request (`req`):
+API 라우트는 들어오는 요청(`req`)을 분석하는 내장 요청 헬퍼를 제공합니다.
 
-- `req.cookies` - An object containing the cookies sent by the request. Defaults to `{}`
-- `req.query` - An object containing the [query string](https://en.wikipedia.org/wiki/Query_string). Defaults to `{}`
-- `req.body` - An object containing the body parsed by `content-type`, or `null` if no body was sent
+- `req.cookies` - 요청에 따라 전송된 쿠키를 포함하는 객체입니다. 기본값은 `{}` 입니다.
+- `req.query` - [쿼리 문자열](https://en.wikipedia.org/wiki/Query_string)을 포함하는 객체입니다. 기본값은 `{}` 입니다.
+- `req.body` - `content-type`에 따라 분석된 본문을 포함하는 객체, 또는 본문이 전송되지 않은 경우 `null`
 
-### Custom config
+### 사용자 정의 설정
 
-Every API Route can export a `config` object to change the default configuration, which is the following:
+모든 API 라우트는 기본 설정을 변경하기 위해 `config` 객체를 내보낼 수 있습니다. 기본 설정은 다음과 같습니다.
 
 ```js
 export const config = {
@@ -87,11 +88,11 @@ export const config = {
 }
 ```
 
-The `api` object includes all config options available for API Routes.
+`api` 객체는 API 라우트에 사용할 수 있는 모든 설정 옵션을 포함합니다.
 
-`bodyParser` is automatically enabled. If you want to consume the body as a `Stream` or with [`raw-body`](https://www.npmjs.com/package/raw-body), you can set this to `false`.
+`bodyParser`는 자동으로 활성화됩니다. 본문을 `Stream`으로 소비하거나 [`raw-body`](https://www.npmjs.com/package/raw-body)를 사용하려면 이를 `false`로 설정할 수 있습니다.
 
-One use case for disabling the automatic `bodyParsing` is to allow you to verify the raw body of a **webhook** request, for example [from GitHub](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks#validating-payloads-from-github).
+자동 `bodyParsing`을 비활성화하는 사용 사례는 **웹훅** 요청의 원시 본문을 확인하려는 경우입니다. 웹훅의 예시로는 [Github 웹훅](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks#validating-payloads-from-github)이 있습니다.
 
 ```js
 export const config = {
@@ -101,7 +102,8 @@ export const config = {
 }
 ```
 
-`bodyParser.sizeLimit` is the maximum size allowed for the parsed body, in any format supported by [bytes](https://github.com/visionmedia/bytes.js), like so:
+`bodyParser.sizeLimit`는 분석된 본문의 최대 크기를 지정하며, [bytes](https://github.com/visionmedia/bytes.js)가 지원하는 어떤 형식으로도 설정할 수 있습니다.
+예를 들어 아래와 같이 설정할 수 있습니다.
 
 ```js
 export const config = {
@@ -113,7 +115,7 @@ export const config = {
 }
 ```
 
-`externalResolver` is an explicit flag that tells the server that this route is being handled by an external resolver like _express_ or _connect_. Enabling this option disables warnings for unresolved requests.
+`externalResolver`는 이 라우트가 _express_ 또는 *connect*와 같은 외부 리졸버(resolver)에 의해 처리되고 있음을 서버에 명시적으로 알려주는 플래그입니다. 이 옵션을 활성화하면 미해결 요청에 대한 경고가 비활성화됩니다.
 
 ```js
 export const config = {
@@ -123,9 +125,9 @@ export const config = {
 }
 ```
 
-`responseLimit` is automatically enabled, warning when an API Routes' response body is over 4MB.
+`responseLimit`은 자동으로 활성화되며, API 라우트의 응답 본문이 4MB를 초과하면 경고합니다.
 
-If you are not using Next.js in a serverless environment, and understand the performance implications of not using a CDN or dedicated media host, you can set this limit to `false`.
+서버리스 환경에서 Next.js를 사용하지 않고 CDN이나 전용 미디어 호스트를 사용하지 않을 때의 성능 영향을 이해하고 있다면, 이 제한을 `false`로 설정할 수 있습니다.
 
 ```js
 export const config = {
@@ -135,8 +137,8 @@ export const config = {
 }
 ```
 
-`responseLimit` can also take the number of bytes or any string format supported by `bytes`, for example `1000`, `'500kb'` or `'3mb'`.
-This value will be the maximum response size before a warning is displayed. Default is 4MB. (see above)
+`responseLimit`은 바이트 수 또는 `bytes`가 지원하는 어떤 문자열 형식도 받을 수 있습니다. 예를 들어 `1000` 또는 `'500kb'`, `'3mb'` 등이 가능합니다.
+이 값은 경고가 표시되기 전의 최대 응답 크기가 됩니다. 기본값은 4MB입니다. (위 참조)
 
 ```js
 export const config = {
@@ -146,16 +148,16 @@ export const config = {
 }
 ```
 
-### Extending the `req` / `res` objects with TypeScript
+### TypeScript를 사용하여 `req` / `res` 객체 확장
 
-For better type-safety, it is not recommended to extend the `req` and `res` objects. Instead, use functions to work with them:
+더 나은 타입 안정성을 위해, `req` 및 `res` 객체를 확장하는 것을 권장하지 않습니다. 대신, 함께 작동하는 함수를 사용하세요.
 
 ```ts filename="utils/cookies.ts" switcher
 import { serialize, CookieSerializeOptions } from 'cookie'
 import { NextApiResponse } from 'next'
 
 /**
- * This sets `cookie` using the `res` object
+ * 이 함수는 `res` 객체를 사용하여 `cookie`를 설정합니다
  */
 export const setCookie = (
   res: NextApiResponse,
@@ -178,7 +180,7 @@ export const setCookie = (
 import { serialize } from 'cookie'
 
 /**
- * This sets `cookie` using the `res` object
+ * 이 함수는 `res` 객체를 사용하여 `cookie`를 설정합니다
  */
 export const setCookie = (res, name, value, options = {}) => {
   const stringValue =
@@ -197,10 +199,10 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { setCookie } from '../../utils/cookies'
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  // Calling our pure function using the `res` object, it will add the `set-cookie` header
-  // Add the `set-cookie` header on the main domain and expire after 30 days
+  // `res` 객체를 사용하여 순수 함수를 호출합니다. 이는 `set-cookie` 헤더를 추가합니다
+  // 메인 도메인에 `set-cookie` 헤더를 추가하고 30일 후에 만료됩니다
   setCookie(res, 'Next.js', 'api-middleware!', { path: '/', maxAge: 2592000 })
-  // Return the `set-cookie` header so we can display it in the browser and show that it works!
+  // `set-cookie` 헤더를 반환하여 브라우저에 표시하고 작동하는 것을 보여줍니다!
   res.end(res.getHeader('Set-Cookie'))
 }
 
@@ -211,17 +213,17 @@ export default handler
 import { setCookie } from '../../utils/cookies'
 
 const handler = (req, res) => {
-  // Calling our pure function using the `res` object, it will add the `set-cookie` header
-  // Add the `set-cookie` header on the main domain and expire after 30 days
+  // `res` 객체를 사용하여 순수 함수를 호출합니다. 이는 `set-cookie` 헤더를 추가합니다
+  // 메인 도메인에 `set-cookie` 헤더를 추가하고 30일 후에 만료됩니다
   setCookie(res, 'Next.js', 'api-middleware!', { path: '/', maxAge: 2592000 })
-  // Return the `set-cookie` header so we can display it in the browser and show that it works!
+  // `set-cookie` 헤더를 반환하여 브라우저에 표시하고 작동하는 것을 보여줍니다!
   res.end(res.getHeader('Set-Cookie'))
 }
 
 export default handler
 ```
 
-If you can't avoid these objects from being extended, you have to create your own type to include the extra properties:
+이러한 객체를 확장하는 것을 피할 수 없다면, 추가적인 속성을 포함하기 위해 타입을 만들어야 합니다.
 
 ```ts filename="pages/api/foo.ts" switcher
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -232,7 +234,7 @@ type NextApiRequestWithFoo = NextApiRequest & {
 }
 
 const handler = (req: NextApiRequestWithFoo, res: NextApiResponse) => {
-  req.foo('bar') // we can now use `req.foo` without type errors
+  req.foo('bar') // 이제 타입 에러 없이 `req.foo`를 사용할 수 있습니다
   res.end('ok')
 }
 
@@ -243,32 +245,33 @@ export default withFoo(handler)
 import { withFoo } from 'external-lib-foo'
 
 const handler = (req, res) => {
-  req.foo('bar') // we can now use `req.foo` without type errors
+  req.foo('bar') // 이제 타입 에러 없이 `req.foo`를 사용할 수 있습니다
   res.end('ok')
 }
 
 export default withFoo(handler)
 ```
 
-Keep in mind this is not safe since the code will still compile even if you remove `withFoo()` from the export.
+`withFoo()`를 export에서 제거하더라도 코드는 여전히 컴파일되므로, 이는 안전하지 않다는 점을 유의하세요.
 
-## Response Helpers
+## 응답 헬퍼
 
-The [Server Response object](https://nodejs.org/api/http.html#http_class_http_serverresponse), (often abbreviated as `res`) includes a set of Express.js-like helper methods to improve the developer experience and increase the speed of creating new API endpoints.
+[서버 응답 객체](https://nodejs.org/api/http.html#http_class_http_serverresponse)(보통 `res`로 줄여서 표현됨)는 개발자 경험을 향상하고 새로운 API 엔드포인트를 빠르게 생성하는 데 도움을 주기 위해 Express.js와 유사한 여러 헬퍼 함수를 포함하고 있습니다.
 
-The included helpers are:
+포함된 여러 헬퍼는 다음과 같습니다.
 
-- `res.status(code)` - A function to set the status code. `code` must be a valid [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
-- `res.json(body)` - Sends a JSON response. `body` must be a [serializable object](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)
-- `res.send(body)` - Sends the HTTP response. `body` can be a `string`, an `object` or a `Buffer`
-- `res.redirect([status,] path)` - Redirects to a specified path or URL. `status` must be a valid [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). If not specified, `status` defaults to "307" "Temporary redirect".
-- `res.revalidate(urlPath)` - [Revalidate a page on demand](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation) using `getStaticProps`. `urlPath` must be a `string`.
+- `res.status(code)` - 상태 코드를 설정하는 함수입니다. `code`는 유효한 [HTTP 상태 코드](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)여야 합니다.
+- `res.json(body)` - JSON 응답을 보냅니다. `body`는 [직렬화할 수 있는 객체](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)여야 합니다.
+- `res.send(body)` - HTTP 응답을 보냅니다. `body`는 `string`, `object` 또는 `Buffer`일 수 있습니다.
+- `res.redirect([status,] path)` - 지정된 경로 또는 URL로 리다이렉트합니다. `status`는 유효한 [HTTP 상태 코드](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)여야 합니다.
+  지정하지 않는다면 `status`의 기본값은 "307" 즉, "임시 리다이렉트(Temporary redirect)"입니다.
+- `res.revalidate(urlPath)` - `getStaticProps`를 사용하여 [요청 시 페이지 재검증](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation)을 수행합니다. `urlPath`는 `string`여야 합니다.
 
-### Setting the status code of a response
+### 응답 상태코드 설정하기
 
-When sending a response back to the client, you can set the status code of the response.
+응답을 클라이언트에게 보낼 때, 응답 상태 코드를 설정할 수 있습니다.
 
-The following example sets the status code of the response to `200` (`OK`) and returns a `message` property with the value of `Hello from Next.js!` as a JSON response:
+다음 예시는 응답의 상태 코드를 `200`(`OK`)으로 설정하고, `Hello from Next.js!` 값을 가진 `message` 프로퍼티를 JSON 응답으로 반환합니다.
 
 ```js
 export default function handler(req, res) {
@@ -276,12 +279,12 @@ export default function handler(req, res) {
 }
 ```
 
-### Sending a JSON response
+### JSON 응답 보내기
 
-When sending a response back to the client you can send a JSON response, this must be a [serializable object](https://developer.mozilla.org/en-US/docs/Glossary/Serialization).
-In a real world application you might want to let the client know the status of the request depending on the result of the requested endpoint.
+응답을 클라이언트에게 보낼 때, JSON 형식으로 보낼 수 있습니다. 이는 [직렬화할 수 있는 객체](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)여야 합니다.
+실제 애플리케이션에서는 요청한 엔드포인트의 결과에 따라 클라이언트에게 요청의 상태를 알려주고 싶을 수 있습니다.
 
-The following example sends a JSON response with the status code `200` (`OK`) and the result of the async operation. It's contained in a try catch block to handle any errors that may occur, with the appropriate status code and error message caught and sent back to the client:
+다음 예시는 상태 코드 `200`(`OK`)과 비동기 작업의 결과를 포함한 JSON 응답을 보냅니다. 이는 try-catch 블록 안에 있어 발생할 수 있는 모든 오류를 처리하며, 적절한 상태 코드와 오류 메시지를 포착해서 클라이언트에게 반환합니다.
 
 ```js
 export default async function handler(req, res) {
@@ -294,11 +297,11 @@ export default async function handler(req, res) {
 }
 ```
 
-### Sending a HTTP response
+### HTTP 응답 보내기
 
-Sending an HTTP response works the same way as when sending a JSON response. The only difference is that the response body can be a `string`, an `object` or a `Buffer`.
+HTTP 응답을 보내는 방식은 JSON 응답을 보내는 것과 동일합니다. 유일한 차이점은 응답 본문이 `string`, `object` 또는 `Buffer`일 수 있다는 것입니다.
 
-The following example sends a HTTP response with the status code `200` (`OK`) and the result of the async operation.
+다음 예시는 상태 코드 `200`(`OK`)과 비동기 작업의 결과를 가진 HTTP 응답을 보냅니다.
 
 ```js
 export default async function handler(req, res) {
@@ -311,11 +314,11 @@ export default async function handler(req, res) {
 }
 ```
 
-### Redirects to a specified path or URL
+### 지정된 경로 또는 URL로 리다이렉트하기
 
-Taking a form as an example, you may want to redirect your client to a specified path or URL once they have submitted the form.
+예를 들어 폼을 사용할 때, 클라이언트가 폼을 제출하면 지정된 경로 또는 URL로 리다이렉트할 수 있습니다.
 
-The following example redirects the client to the `/` path if the form is successfully submitted:
+다음 예시는 폼을 성공적으로 제출하면 클라이언트를 `/` 경로로 리다이렉트합니다.
 
 ```js
 export default async function handler(req, res) {
@@ -329,9 +332,9 @@ export default async function handler(req, res) {
 }
 ```
 
-### Adding TypeScript types
+### TypeScript 타입 추가하기
 
-You can make your response handlers more type-safe by importing the `NextApiRequest` and `NextApiResponse` types from `next`, in addition to those, you can also type your response data:
+`next`에서 `NextApiRequest`와 `NextApiResponse` 타입을 가져와서 응답 핸들러의 타입을 안전하게 만들 수 있습니다. 추가로 응답 데이터에도 타입을 지정할 수 있습니다.
 
 ```ts
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -348,13 +351,13 @@ export default function handler(
 }
 ```
 
-> **Good to know**: The body of `NextApiRequest` is `any` because the client may include any payload. You should validate the type/shape of the body at runtime before using it.
+> **참고**: `NextApiRequest`의 body는 클라이언트가 어떠한 페이로드라도 포함할 수 있기 때문에 `any`입니다. 이를 사용하기 전에 런타임에서 body의 타입과 형태를 검증해야 합니다.
 
-## Dynamic API Routes
+## 동적 API 라우트
 
-API routes support [dynamic routes](/docs/pages/building-your-application/routing/dynamic-routes), and follow the same file naming rules used for `pages`.
+API 라우트는 [동적 라우트](/docs/pages/building-your-application/routing/dynamic-routes)를 지원하며 `pages`에 사용되는 파일 이름 규칙을 따릅니다.
 
-For example, the API route `pages/api/post/[pid].js` has the following code:
+예를 들어 API 라우트 `pages/api/post/[pid].js`에는 다음 코드가 있습니다.
 
 ```js
 export default function handler(req, res) {
@@ -363,47 +366,48 @@ export default function handler(req, res) {
 }
 ```
 
-Now, a request to `/api/post/abc` will respond with the text: `Post: abc`.
+`/api/post/abc`로의 요청은 텍스트 `Post: abc`를 응답으로 받게 됩니다.
 
-### Index routes and Dynamic API routes
+### 인덱스 라우트와 동적 API 라우트
 
-A very common RESTful pattern is to set up routes like this:
+매우 일반적인 RESTful 패턴은 다음과 같이 라우트를 설정하는 것입니다.
 
-- `GET api/posts` - gets a list of posts, probably paginated
-- `GET api/posts/12345` - gets post id 12345
+- `GET api/posts` - 페이징 처리된 포스트 목록을 가져옵니다.
+- `GET api/posts/12345` - 포스트 id 12345를 가져옵니다.
 
-We can model this in two ways:
+이를 두 가지 방법으로 모델링할 수 있습니다.
 
-- Option 1:
+- 옵션 1
   - `/api/posts.js`
   - `/api/posts/[postId].js`
-- Option 2:
+- 옵션 2
   - `/api/posts/index.js`
   - `/api/posts/[postId].js`
 
-Both are equivalent. A third option of only using `/api/posts/[postId].js` is not valid because Dynamic Routes (including Catch-all routes - see below) do not have an `undefined` state and `GET api/posts` will not match `/api/posts/[postId].js` under any circumstances.
+두 가지 옵션은 동일합니다. 세 번째 옵션인 `/api/posts/[postId].js`만 사용하는 것은 유효하지 않습니다.
+그 이유는 동적 라우트(아래의 캐치-올 라우트 포함)는 `undefined` 상태를 갖지 않으며, 어떠한 상황에서도 `GET /api/posts`는 `/api/posts/[postId].js`와 일치하지 않기 때문입니다.
 
-### Catch all API routes
+### 캐치 올 API 라우트
 
-API Routes can be extended to catch all paths by adding three dots (`...`) inside the brackets. For example:
+API 라우트는 괄호 안에 세 개의 점(`...`)을 추가함으로써 모든 경로를 잡아내도록 확장할 수 있습니다. 예를 들어
 
-- `pages/api/post/[...slug].js` matches `/api/post/a`, but also `/api/post/a/b`, `/api/post/a/b/c` and so on.
+- `pages/api/post/[...slug].js`는 `/api/post/a`를 매치할 뿐만 아니라 `/api/post/a/b`, `/api/post/a/b/c` 등도 매치합니다.
 
-> **Good to know**: You can use names other than `slug`, such as: `[...param]`
+> **참고**: `[...param]`과 같이 `slug` 이외의 이름도 사용할 수 있습니다.
 
-Matched parameters will be sent as a query parameter (`slug` in the example) to the page, and it will always be an array, so, the path `/api/post/a` will have the following `query` object:
+매칭된 매개변수는 쿼리 매개변수(`slug`가 예시)로 페이지에 전달됩니다. 이 매개변수는 항상 배열 형태입니다. 따라서, `/api/post/a` 경로는 다음과 같은 `query` 객체를 가질 것입니다.
 
 ```json
 { "slug": ["a"] }
 ```
 
-And in the case of `/api/post/a/b`, and any other matching path, new parameters will be added to the array, like so:
+그리고 `/api/post/a/b`이나 그 외 일치하는 경로의 경우 다음과 같이 새로운 매개변수가 배열에 추가됩니다.
 
 ```json
 { "slug": ["a", "b"] }
 ```
 
-An API route for `pages/api/post/[...slug].js` could look like this:
+`pages/api/post/[...slug].js`에 대한 API 라우트는 다음과 같습니다.
 
 ```js
 export default function handler(req, res) {
@@ -412,40 +416,38 @@ export default function handler(req, res) {
 }
 ```
 
-Now, a request to `/api/post/a/b/c` will respond with the text: `Post: a, b, c`.
+이제 `/api/post/a/b/c`로의 요청은 텍스트 `Post: a, b, c`를 응답으로 받게 됩니다.
 
-### Optional catch all API routes
+### 선택적 캐치 올 API 라우트
 
-Catch all routes can be made optional by including the parameter in double brackets (`[[...slug]]`).
+캐치 올 라우트는 매개변수를 이중 괄호(`[[...slug]]`) 안에 포함함으로써 선택적으로 만들 수 있습니다.
 
-For example, `pages/api/post/[[...slug]].js` will match `/api/post`, `/api/post/a`, `/api/post/a/b`, and so on.
+캐치 올 라우트와 선택적 캐치 올 라우트의 주요 차이점은, 선택적 캐치 올 라우트를 사용하면 매개변수 없는 라우트도 일치시킨다는 것입니다(`/api/post`가 위의 예시입니다.)
 
-The main difference between catch all and optional catch all routes is that with optional, the route without the parameter is also matched (`/api/post` in the example above).
-
-The `query` objects are as follows:
+`query` 객체는 다음과 같이 표현됩니다.
 
 ```json
-{ } // GET `/api/post` (empty object)
-{ "slug": ["a"] } // `GET /api/post/a` (single-element array)
-{ "slug": ["a", "b"] } // `GET /api/post/a/b` (multi-element array)
+{ } // GET `/api/post` (빈 객체)
+{ "slug": ["a"] } // `GET /api/post/a` (단일 요소 배열)
+{ "slug": ["a", "b"] } // `GET /api/post/a/b` (다중 요소 배열)
 ```
 
-### Caveats
+### 주의사항
 
-- Predefined API routes take precedence over dynamic API routes, and dynamic API routes over catch all API routes. Take a look at the following examples:
-  - `pages/api/post/create.js` - Will match `/api/post/create`
-  - `pages/api/post/[pid].js` - Will match `/api/post/1`, `/api/post/abc`, etc. But not `/api/post/create`
-  - `pages/api/post/[...slug].js` - Will match `/api/post/1/2`, `/api/post/a/b/c`, etc. But not `/api/post/create`, `/api/post/abc`
+- 미리 정의된 API 라우트는 동적 API 라우트보다 우선시되고, 동적 API 라우트는 캐치 올 API 라우트보다 우선시됩니다. 다음 예제를 확인해 보세요.
+  - `pages/api/post/create.js` - `/api/post/create`와 일치합니다.
+  - `pages/api/post/[pid].js` - `/api/post/1`, `/api/post/abc` 등과 일치합니다. 하지만 `/api/post/create`와는 일치하지 않습니다.
+  - `pages/api/post/[...slug].js` - `/api/post/1/2`, `/api/post/a/b/c` 등과 일치합니다. 하지만 `/api/post/create`, `/api/post/abc`와는 일치하지 않습니다
 
-## Edge API Routes
+## 엣지 API 라우트
 
-Edge API Routes enable you to build high performance APIs with Next.js. Using the [Edge Runtime](/docs/pages/api-reference/edge), they are often faster than Node.js-based API Routes. This performance improvement does come with [constraints](/docs/pages/api-reference/edge#unsupported-apis), like not having access to native Node.js APIs. Instead, Edge API Routes are built on standard Web APIs.
+엣지 API 라우트를 사용하면 Next.js로 고성능 API를 만들 수 있습니다. [엣지 런타임](/docs/pages/api-reference/edge)을 사용하기 때문에, 종종 Node.js 기반 API 라우트보다 빠릅니다. 이러한 성능 개선은 기본 Node.js API에 접근할 수 없는 [제약사항](/docs/pages/api-reference/edge#unsupported-apis)이 따르지만, 대신 엣지 API 라우트는 표준 웹 API를 기반으로 합니다.
 
-Any file inside the folder `pages/api` is mapped to `/api/*` and will be treated as an API endpoint instead of a page. They are server-side only bundles and won't increase your client-side bundle size.
+`pages/api` 폴더 내의 모든 파일은 `api/*`로 대응되며, 페이지가 아닌 API 엔드포인트로 처리됩니다. 이는 서버 측 전용 번들이며 클라이언트 측 번들 크기는 증가하지 않습니다.
 
-### Examples
+### 예시
 
-#### Basic
+#### 기본
 
 ```typescript
 export const config = {
@@ -455,7 +457,7 @@ export const config = {
 export default (req) => new Response('Hello world!')
 ```
 
-#### JSON Response
+#### JSON 응답
 
 ```typescript
 import type { NextRequest } from 'next/server'
@@ -479,7 +481,7 @@ export default async function handler(req: NextRequest) {
 }
 ```
 
-#### Cache-Control
+#### 캐시 제어
 
 ```typescript
 import type { NextRequest } from 'next/server'
@@ -504,7 +506,7 @@ export default async function handler(req: NextRequest) {
 }
 ```
 
-#### Query Parameters
+#### 쿼리 매개변수
 
 ```typescript
 import type { NextRequest } from 'next/server'
@@ -520,7 +522,7 @@ export default async function handler(req: NextRequest) {
 }
 ```
 
-### Forwarding Headers
+### 헤더 전달하기
 
 ```typescript
 import { type NextRequest } from 'next/server'
@@ -541,17 +543,17 @@ export default async function handler(req: NextRequest) {
 }
 ```
 
-#### Configuring Regions (for deploying)
+#### 지역 설정 (배포를 위한)
 
-You may want to restrict your edge function to specific regions when deploying so that you can colocate near your data sources ensuring lower response times which can be achieved as shown.
+배포할 때 엣지 함수를 특정 지역으로 제한하고 싶을 수 있습니다. 이렇게 하면 데이터 소스와 가까운 곳에 서버를 위치시켜 응답 시간을 줄일 수 있습니다. 이는 아래와 같이 구현할 수 있습니다.
 
-> **Good to know**: This configuration is available in `v12.3.2` of Next.js and up.
+> **참고**: 이 설정은 Next.js `v12.3.2` 이상에서 사용할 수 있습니다.
 
 ```js
 import { NextResponse } from 'next/server'
 
 export const config = {
-  regions: ['sfo1', 'iad1'], // defaults to 'all'
+  regions: ['sfo1', 'iad1'], // 기본값은 'all'
 }
 
 export default async function handler(req: NextRequest) {
@@ -560,12 +562,12 @@ export default async function handler(req: NextRequest) {
 }
 ```
 
-## Differences between API Routes
+## API 라우트와의 차이점
 
-Edge API Routes use the [Edge Runtime](/docs/pages/api-reference/edge), whereas API Routes use the [Node.js runtime](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes).
+엣지 API 라우트는 [엣지 런타임](/docs/pages/api-reference/edge)을 사용하며, API 라우트는 [Node.js 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)을 사용합니다.
 
-Edge API Routes can [stream responses](/docs/pages/api-reference/edge#stream-apis) from the server and run _after_ cached files (e.g. HTML, CSS, JavaScript) have been accessed. Server-side streaming can help improve performance with faster [Time To First Byte (TTFB)](https://web.dev/ttfb/).
+엣지 API 라우트는 서버로부터 [응답을 스트림](/docs/pages/api-reference/edge#stream-apis)할 수 있으며, 캐시된 여러 파일(예: HTML, CSS, JavaScript)에 접근한 *이후*에 실행됩니다. 서버 측 스트리밍은 더 빠른 [Time To First Byte (TTFB)](https://web.dev/ttfb/)로 성능을 향상할 수 있습니다.
 
-> **Good to know**: Using [Edge Runtime](/docs/pages/api-reference/edge) with `getServerSideProps` does not give you access to the response object. If you need access to `res`, you should use the [Node.js runtime](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) by setting `runtime: 'nodejs'`.
+> **참고**: `getServerSideProps`와 함께 [엣지 런타임](/docs/pages/api-reference/edge)을 사용하면 응답 객체에 접근할 수 없습니다. `res`에 접근이 필요하다면 `runtime: 'nodejs'`를 설정하여 [Node.js 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)을 사용해야 합니다.
 
-View the [supported APIs](/docs/pages/api-reference/edge) and [unsupported APIs](/docs/pages/api-reference/edge#unsupported-apis) for the Edge Runtime.
+엣지 런타임에서 [지원하는 API](/docs/pages/api-reference/edge)와 [지원하지 않는 API](/docs/pages/api-reference/edge#unsupported-apis)를 확인해 보세요.

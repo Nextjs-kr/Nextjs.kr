@@ -1,47 +1,47 @@
 ---
-title: Preview Mode (Legacy)
-description: Next.js has the preview mode for statically generated pages. You can learn how it works here.
+title: 미리보기 모드 (레거시)
+description: Next.js는 정적으로 생성된 페이지에 대한 미리보기 모드를 갖고 있습니다. 이곳에서는 미리보기 모드가 어떻게 작동하는지 배웁니다.
 ---
 
-> **Warning**: This feature is **legacy** and is superseded by [Draft Mode](/docs/pages/building-your-application/configuring/draft-mode).
+> **경고**: 이 기능은 **레거시**이며 [드래프트 모드](/docs/pages/building-your-application/configuring/draft-mode)로 대체됩니다.
 
 <details>
-  <summary>Examples</summary>
+  <summary>예제</summary>
 
-- [WordPress Example](https://github.com/vercel/next.js/tree/canary/examples/cms-wordpress) ([Demo](https://next-blog-wordpress.vercel.app))
-- [DatoCMS Example](https://github.com/vercel/next.js/tree/canary/examples/cms-datocms) ([Demo](https://next-blog-datocms.vercel.app/))
-- [TakeShape Example](https://github.com/vercel/next.js/tree/canary/examples/cms-takeshape) ([Demo](https://next-blog-takeshape.vercel.app/))
-- [Sanity Example](https://github.com/vercel/next.js/tree/canary/examples/cms-sanity) ([Demo](https://next-blog-sanity.vercel.app/))
-- [Prismic Example](https://github.com/vercel/next.js/tree/canary/examples/cms-prismic) ([Demo](https://next-blog-prismic.vercel.app/))
-- [Contentful Example](https://github.com/vercel/next.js/tree/canary/examples/cms-contentful) ([Demo](https://next-blog-contentful.vercel.app/))
-- [Strapi Example](https://github.com/vercel/next.js/tree/canary/examples/cms-strapi) ([Demo](https://next-blog-strapi.vercel.app/))
-- [Prepr Example](https://github.com/vercel/next.js/tree/canary/examples/cms-prepr) ([Demo](https://next-blog-prepr.vercel.app/))
-- [Agility CMS Example](https://github.com/vercel/next.js/tree/canary/examples/cms-agilitycms) ([Demo](https://next-blog-agilitycms.vercel.app/))
-- [Cosmic Example](https://github.com/vercel/next.js/tree/canary/examples/cms-cosmic) ([Demo](https://next-blog-cosmic.vercel.app/))
-- [ButterCMS Example](https://github.com/vercel/next.js/tree/canary/examples/cms-buttercms) ([Demo](https://next-blog-buttercms.vercel.app/))
-- [Storyblok Example](https://github.com/vercel/next.js/tree/canary/examples/cms-storyblok) ([Demo](https://next-blog-storyblok.vercel.app/))
-- [GraphCMS Example](https://github.com/vercel/next.js/tree/canary/examples/cms-graphcms) ([Demo](https://next-blog-graphcms.vercel.app/))
-- [Kontent Example](https://github.com/vercel/next.js/tree/canary/examples/cms-kontent-ai) ([Demo](https://next-blog-kontent.vercel.app//))
-- [Umbraco Heartcore Example](https://github.com/vercel/next.js/tree/canary/examples/cms-umbraco-heartcore) ([Demo](https://next-blog-umbraco-heartcore.vercel.app/))
-- [Plasmic Example](https://github.com/vercel/next.js/tree/canary/examples/cms-plasmic) ([Demo](https://nextjs-plasmic-example.vercel.app/))
-- [Enterspeed Example](https://github.com/vercel/next.js/tree/canary/examples/cms-enterspeed) ([Demo](https://next-blog-demo.enterspeed.com/))
-- [Makeswift Example](https://github.com/vercel/next.js/tree/canary/examples/cms-makeswift) ([Demo](https://nextjs-makeswift-example.vercel.app/))
+- [WordPress 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-wordpress) ([데모](https://next-blog-wordpress.vercel.app))
+- [DatoCMS 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-datocms) ([데모](https://next-blog-datocms.vercel.app/))
+- [TakeShape 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-takeshape) ([데모](https://next-blog-takeshape.vercel.app/))
+- [Sanity 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-sanity) ([데모](https://next-blog-sanity.vercel.app/))
+- [Prismic 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-prismic) ([데모](https://next-blog-prismic.vercel.app/))
+- [Contentful 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-contentful) ([데모](https://next-blog-contentful.vercel.app/))
+- [Strapi 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-strapi) ([데모](https://next-blog-strapi.vercel.app/))
+- [Prepr 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-prepr) ([데모](https://next-blog-prepr.vercel.app/))
+- [Agility CMS 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-agilitycms) ([데모](https://next-blog-agilitycms.vercel.app/))
+- [Cosmic 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-cosmic) ([데모](https://next-blog-cosmic.vercel.app/))
+- [ButterCMS 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-buttercms) ([데모](https://next-blog-buttercms.vercel.app/))
+- [Storyblok 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-storyblok) ([데모](https://next-blog-storyblok.vercel.app/))
+- [GraphCMS 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-graphcms) ([데모](https://next-blog-graphcms.vercel.app/))
+- [Kontent 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-kontent-ai) ([데모](https://next-blog-kontent.vercel.app//))
+- [Umbraco Heartcore 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-umbraco-heartcore) ([데모](https://next-blog-umbraco-heartcore.vercel.app/))
+- [Plasmic 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-plasmic) ([데모](https://nextjs-plasmic-example.vercel.app/))
+- [Enterspeed 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-enterspeed) ([데모](https://next-blog-demo.enterspeed.com/))
+- [Makeswift 예제](https://github.com/vercel/next.js/tree/canary/examples/cms-makeswift) ([데모](https://nextjs-makeswift-example.vercel.app/))
 
 </details>
 
-In the [Pages documentation](/docs/pages/building-your-application/routing/pages-and-layouts) and the [Data Fetching documentation](/docs/pages/building-your-application/data-fetching), we talked about how to pre-render a page at build time (**Static Generation**) using `getStaticProps` and `getStaticPaths`.
+[페이지 문서](/docs/pages/building-your-application/routing/pages-and-layouts)와 [데이터 가져오기 문서](/docs/pages/building-your-application/data-fetching)에서, `getStaticProps`과 `getStaticPaths`를 사용하여 페이지를 빌드 타임에 미리 렌더링(**정적 생성**)하는 방법에 대해 다뤘습니다.
 
-Static Generation is useful when your pages fetch data from a headless CMS. However, it’s not ideal when you’re writing a draft on your headless CMS and want to **preview** the draft immediately on your page. You’d want Next.js to render these pages at **request time** instead of build time and fetch the draft content instead of the published content. You’d want Next.js to bypass Static Generation only for this specific case.
+정적 생성은 페이지가 headless CMS로부터 데이터를 가져올 때 유용합니다. 하지만 headless CMS에서 초안을 작성하고  해당 원고를 페이지에서 **미리보기**하려는 경우에는 이상적이지 않습니다.  Next.js가 이 페이지들을  빌드 타임 대신에 **요청 시간** 렌더링하고 게시된 내용이 아니라 초안을 가져오는 것이 좋습니다. 이러한 경우에만 Next.js가 정적 생성을 건너뛰기를 바랍니다.
 
-Next.js has a feature called **Preview Mode** which solves this problem. Here are instructions on how to use it.
+Next.js는 이러한 문제를 해결하기 위해 **미리보기 모드**라는 기능을 갖고 있습니다. 이곳에서 이 기능의 사용 방법을 배웁니다.
 
-## Step 1: Create and access a preview API route
+## 스텝 1: 미리보기 API 라우트를 생성하고 접근하기
 
-> Take a look at the [API Routes documentation](/docs/pages/building-your-application/routing/api-routes) first if you’re not familiar with Next.js API Routes.
+> Next.js API 라우트가 친숙하지 않다면 [API 라우트 문서](/docs/pages/building-your-application/routing/api-routes)를 먼저 살펴보세요.
 
-First, create a **preview API route**. It can have any name - e.g. `pages/api/preview.js` (or `.ts` if using TypeScript).
+먼저, **미리보기 API 라우트**를 생성하세요. 이것은 이름을 가질 수 있습니다. - 예 : `pages/api/preview.js` (TypeScript를 사용하고 있다면 `.ts`).
 
-In this API route, you need to call `setPreviewData` on the response object. The argument for `setPreviewData` should be an object, and this can be used by `getStaticProps` (more on this later). For now, we’ll use `{}`.
+이 API 라우트에서, 응답 객체에 대해 `setPreviewData`를 호출해야 합니다. `setPreviewData`의 매개변수는 객체여야만 하며, `getStaticProps`에 의해 사용될 수 있습니다(이에 대한 자세한 내용은 나중에 설명하겠습니다). 이제부터 우리는 `{}`를 사용할 겁니다.
 
 ```js
 export default function handler(req, res) {
@@ -51,147 +51,146 @@ export default function handler(req, res) {
 }
 ```
 
-`res.setPreviewData` sets some **cookies** on the browser which turns on the preview mode. Any requests to Next.js containing these cookies will be considered as the **preview mode**, and the behavior for statically generated pages will change (more on this later).
+`res.setPreviewData`는 브라우저에 일부 **쿠키(cookies)**를 설정하여 미리보기 모드를 활성화합니다. 이러한 쿠키를 포함하는 모든 Next.js로의 요청은 미리보기 모드로 간주하며, 정적으로 생성된 페이지의 동작이 변경됩니다 (이에 대한 자세한 내용은 나중에 설명하겠습니다).
 
-You can test this manually by creating an API route like below and accessing it from your browser manually:
+아래처럼 API 라우트를 생성하고 브라우저에서 직접 접근하여 수동으로 테스트할 수 있습니다.
 
 ```js filename="pages/api/preview.js"
-// simple example for testing it manually from your browser.
+// 브라우저로 직접 테스트하기 위한 간단 예제
 export default function handler(req, res) {
   res.setPreviewData({})
   res.end('Preview mode enabled')
 }
 ```
 
-If you open your browser’s developer tools and visit `/api/preview`, you’ll notice that the `__prerender_bypass` and `__next_preview_data` cookies will be set on this request.
+브라우저의 개발자 도구를 열고 `/api/preview`에 가 보면, 이 요청에 대해 `__prerender_bypass`와 `__next_preview_data` 쿠키가 설정된 것을 알 수 있습니다.
 
-### Securely accessing it from your Headless CMS
+### Headless CMS로부터 안전하게 접근하기
 
-In practice, you’d want to call this API route _securely_ from your headless CMS. The specific steps will vary depending on which headless CMS you’re using, but here are some common steps you could take.
+실전에서는 headless CMS로부터 _안전하게_ 이 API 라우트를 호출하고 싶을 겁니다. 사용하는 헤드리스 CMS에 따라 구체적인 단계는 다를 수 있지만, 다음은 몇 가지 일반적인 단계입니다.
 
-These steps assume that the headless CMS you’re using supports setting **custom preview URLs**. If it doesn’t, you can still use this method to secure your preview URLs, but you’ll need to construct and access the preview URL manually.
+이 절차는 사용 중인 headless CMS가 **커스텀 미리보기 URL**의 설정을 지원한다고 가정합니다. 그렇지 않은 경우에도 이 방법을 사용하여 미리보기 URL을 안전하게 만들 수 있지만, 미리보기 URL을 수동으로 구성하고 액세스해야 할 것입니다.
 
-**First**, you should create a **secret token string** using a token generator of your choice. This secret will only be known by your Next.js app and your headless CMS. This secret prevents people who don’t have access to your CMS from accessing preview URLs.
+**먼저**, 선택한 토큰 생성기를 통해 **비밀 토큰 문자열**을 생성해야 합니다. 이 비밀 키는 Next.js 앱과 headless CMS만 알 것입니다. 이 비밀은 CMS에 대한 접근 권한이 없는 사람들이 미리보기 URL에 접근하는 것을 막아줍니다.
 
-**Second**, if your headless CMS supports setting custom preview URLs, specify the following as the preview URL. This assumes that your preview API route is located at `pages/api/preview.js`.
+**다음으로**, headless CMS가 커스텀 미리보기 URL의 설정을 지원한다면, 미리보기 URL대로 다음을 명시해야 합니다. 이는 미리보기 API 라우트가 `pages/api/preview.js`에 위치하고 있다는 것을 가정합니다.
 
 ```bash filename="Terminal"
 https://<your-site>/api/preview?secret=<token>&slug=<path>
 ```
 
-- `<your-site>` should be your deployment domain.
-- `<token>` should be replaced with the secret token you generated.
-- `<path>` should be the path for the page that you want to preview. If you want to preview `/posts/foo`, then you should use `&slug=/posts/foo`.
+- `<your-site>`는 배포 도메인이어야 합니다.
+- `<token>`는 생성한 비밀 토큰으로 대체해야 합니다.
+- `<path>`는 미리보기 하고 싶은 페이지에 대한 경로여야 합니다. 만약 `/posts/foo`를 미리보기 하고 싶다면, `&slug=/posts/foo`를 사용해야 합니다.
 
-Your headless CMS might allow you to include a variable in the preview URL so that `<path>` can be set dynamically based on the CMS’s data like so: `&slug=/posts/{entry.fields.slug}`
+headless CMS는 `<path`가 CMS의 데이터에 기반하여 동적으로 설정될 수 있도록 미리보기 URL에 변수를 포함하는 것을 허용할 수 있습니다. 이렇게 말이죠. `&slug=/posts/{entry.fields.slug}`
 
-**Finally**, in the preview API route:
+**마지막으로**, 미리보기 API 라우트에서 다음을 따르세요.
 
-- Check that the secret matches and that the `slug` parameter exists (if not, the request should fail).
+- 비밀 키가 일치하며 `slug` 매개변수가 존재하는지 확인하세요(만약 아니라면, 요청은 실패해야 합니다).
 -
-- Call `res.setPreviewData`.
-- Then redirect the browser to the path specified by `slug`. (The following example uses a [307 redirect](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/307)).
+- `res.setPreviewData`를 호출하세요.
+- 그런 다음 브라우저를 `slug`에 의해 지정된 경로로 리다이렉트하세요. (다음 예시는 [307 redirect](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/307)를 사용합니다.)
 
 ```js
 export default async (req, res) => {
-  // Check the secret and next parameters
-  // This secret should only be known to this API route and the CMS
+  // 비밀 키와 다음 매개변수를 확인
+  // 이 비밀 키는 이 API 라우트와 CMS만 알고 있어야 함
   if (req.query.secret !== 'MY_SECRET_TOKEN' || !req.query.slug) {
     return res.status(401).json({ message: 'Invalid token' })
   }
 
-  // Fetch the headless CMS to check if the provided `slug` exists
-  // getPostBySlug would implement the required fetching logic to the headless CMS
+  // 제공된 `slug`가 존재하는지 확인하기 위해 headless CMS 가져오기
+  // getPostBySlug는 headless CMS로 데이터를 가져오는 데 필요한 로직을 구현하고 있을 겁니다.
   const post = await getPostBySlug(req.query.slug)
 
-  // If the slug doesn't exist prevent preview mode from being enabled
+  // 해당 slug가 존재하지 않는다면 미리보기 모드의 활성화를 방지
   if (!post) {
     return res.status(401).json({ message: 'Invalid slug' })
   }
 
-  // Enable Preview Mode by setting the cookies
+  // 쿠키를 설정하여 미리보기 모드를 활성화
   res.setPreviewData({})
 
-  // Redirect to the path from the fetched post
-  // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
+  // 가져온 포스트의 경로로 리다이렉트
+  // 오픈 리다이렉트 취약점으로 이어질 수 있기에 req.query.slug로 리다이렉트하지 않음
   res.redirect(post.slug)
 }
 ```
 
-If it succeeds, then the browser will be redirected to the path you want to preview with the preview mode cookies being set.
+성공하면 브라우저가 미리보기 모드 쿠키가 설정된 상태로 미리보기하려는 경로로 리다이렉트 됩니다.
 
-## Step 2: Update `getStaticProps`
+## 스텝 2: `getStaticProps` 업데이트하기
 
-The next step is to update `getStaticProps` to support the preview mode.
+다음 단계는 미리보기 모드를 지원하기 위해 `getStaticProps`를 업데이트하는 것입니다.
 
-If you request a page which has `getStaticProps` with the preview mode cookies set (via `res.setPreviewData`), then `getStaticProps` will be called at **request time** (instead of at build time).
+미리보기 쿠키가 설정된 상태에서 `getStaticProps`를 가진 페이지를 요청한다면(`res.setPreviewData`를 통해), `getStaticProps`는 **요청 시간**에 호출됩니다(빌드 시간 대신).
 
-Furthermore, it will be called with a `context` object where:
+게다가, `context` 객체와 함께 호출됩니다. `context` 객체는 다음과 같은 특징을 갖습니다.
 
-- `context.preview` will be `true`.
-- `context.previewData` will be the same as the argument used for `setPreviewData`.
+- `context.preview`가 `true`일 것입니다.
+- `context.previewData`가 `setPreviewData`에 사용되는 매개변수와 같을 것입니다.
 
 ```js
 export async function getStaticProps(context) {
-  // If you request this page with the preview mode cookies set:
+  // 미리보기 모드 쿠키가 설정된 상태에서 이 페이지를 요청하면,
   //
-  // - context.preview will be true
-  // - context.previewData will be the same as
-  //   the argument used for `setPreviewData`.
+  // - context.preview는 true가 됩니다.
+  // - context.previewData는 `setPreviewData`에 사용되는 매개변수와 같을 겁니다.
 }
 ```
 
-We used `res.setPreviewData({})` in the preview API route, so `context.previewData` will be `{}`. You can use this to pass session information from the preview API route to `getStaticProps` if necessary.
+우리는 미리보기 API 라우트에서 `res.setPreviewData({})`를 사용했으므로, `context.previewData`는 `{}`가 될 겁니다. 필요하다면 이를 이용해서 미리보기 API 라우트로부터 `getStaticProps`로 세션 정보를 넘길 수 있습니다.
 
-If you’re also using `getStaticPaths`, then `context.params` will also be available.
+`getStaticPaths` 또한 사용하고 있다면, `context.params` 또한 이용할 수 있습니다.
 
-### Fetch preview data
+### 미리보기 데이터 가져오기
 
-You can update `getStaticProps` to fetch different data based on `context.preview` and/or `context.previewData`.
+`context.preview` 또는 `context.previewData`에 기반하여 다른 데이터를 가져오기 위해 `getStaticProps`를 업데이트할 수 있습니다.
 
-For example, your headless CMS might have a different API endpoint for draft posts. If so, you can use `context.preview` to modify the API endpoint URL like below:
+예를 들어, headless CMS가 초안 포스트를 위해 다양한 API 엔드포인트를 가질 수 있습니다. 그렇다면, `context.preview`를 이용하여 API 엔드포인트 URL를 아래처럼 수정할 수 있습니다.
 
 ```js
 export async function getStaticProps(context) {
-  // If context.preview is true, append "/preview" to the API endpoint
-  // to request draft data instead of published data. This will vary
-  // based on which headless CMS you're using.
+  // context.preview가 true라면, 게시된 데이터 대신 초안 데이터를 요청하기 위해
+  // API 엔드포인트에 "/preview"를 붙임.
+  // 이는 사용 중인 headless CMS에 따라 달라질 수 있음
   const res = await fetch(`https://.../${context.preview ? 'preview' : ''}`)
   // ...
 }
 ```
 
-That’s it! If you access the preview API route (with `secret` and `slug`) from your headless CMS or manually, you should now be able to see the preview content. And if you update your draft without publishing, you should be able to preview the draft.
+이제 다 됐습니다! headless CMS로부터 혹은 수동으로 미리보기 API 라우트에 접근하면(`secret`과 `slug`를 통해), 미리보기 내용을 볼 수 있을 겁니다. 그리고 초안을 게시 없이 업데이트하면 초안을 미리보기 할 수 있을 겁니다.
 
-Set this as the preview URL on your headless CMS or access manually, and you should be able to see the preview.
+이것을 headless CMS에 미리보기 URL로 설정하거나 수동으로 접근하면, 미리보기를 볼 수 있을 겁니다.
 
 ```bash filename="Terminal"
 https://<your-site>/api/preview?secret=<token>&slug=<path>
 ```
 
-## More Details
+## 더 자세히
 
-> **Good to know**: during rendering `next/router` exposes an `isPreview` flag, see the [router object docs](/docs/pages/api-reference/functions/use-router#router-object) for more info.
+> **참고**: 렌더링하는 동안 `next/router`는 `isPreview`를 노출합니다. 자세한 사항은 [router 객체 문서](/docs/pages/api-reference/functions/use-router#router-object)를 참고하세요.
 
-### Specify the Preview Mode duration
+### 미리보기 모드 지속 기간 지정하기
 
-`setPreviewData` takes an optional second parameter which should be an options object. It accepts the following keys:
+`setPreviewData`는 options 객체여야 하는 선택적인 두 번째 매개변수를 받습니다. 이는 다음의 키를 받습니다.
 
-- `maxAge`: Specifies the number (in seconds) for the preview session to last for.
-- `path`: Specifies the path the cookie should be applied under. Defaults to `/` enabling preview mode for all paths.
+- `maxAge`: 미리보기 세션이 지속되는 시간(초 단위)을 지정합니다.
+- `path` : 쿠키가 적용될 경로를 지정합니다. 기본값은 `/`으로 미리보기 모드를 모든 경로에 대해 활성화합니다.
 
 ```js
 setPreviewData(data, {
-  maxAge: 60 * 60, // The preview mode cookies expire in 1 hour
-  path: '/about', // The preview mode cookies apply to paths with /about
+  maxAge: 60 * 60, // 미리보기 모드 쿠키가 1시간 후에 만료됩니다.
+  path: '/about', // 미리보기 모드 쿠키가 /about 아래의 경로에 적용됩니다.
 })
 ```
 
-### Clear the Preview Mode cookies
+### 미리보기 모드 쿠키 지우기
 
-By default, no expiration date is set for Preview Mode cookies, so the preview session ends when the browser is closed.
+기본적으로 미리보기 모드 쿠키에 만료 시간이 지정되지 않아, 브라우저가 닫힐 때 미리보기 세션이 만료됩니다.
 
-To clear the Preview Mode cookies manually, create an API route that calls `clearPreviewData()`:
+미리보기 모드 쿠키를 직접 지우려면, `clearPreviewData()`를 호출하는 API 라우트를 생성하세요.
 
 ```js filename="pages/api/clear-preview-mode-cookies.js"
 export default function handler(req, res) {
@@ -199,9 +198,9 @@ export default function handler(req, res) {
 }
 ```
 
-Then, send a request to `/api/clear-preview-mode-cookies` to invoke the API Route. If calling this route using [`next/link`](/docs/pages/api-reference/components/link), you must pass `prefetch={false}` to prevent calling `clearPreviewData` during link prefetching.
+그다음, API 라우트를 호출하기 위해 `/api/clear-preview-mode-cookies`로 요청을 보내세요. 이 라우트를 [`next/link`](/docs/pages/api-reference/components/link)를 사용해 호출한다면, 링크 프리페치 동안 `clearPreviewData`의 호출을 막기 위해 `prefetch={false}`를 넘겨주어야 합니다.
 
-If a path was specified in the `setPreviewData` call, you must pass the same path to `clearPreviewData`:
+경로가 `setPreviewData` 호출에 명시되어 있다면, `clearPreviewData`에 같은 경로를 넘겨주어야 합니다.
 
 ```js filename="pages/api/clear-preview-mode-cookies.js"
 export default function handler(req, res) {
@@ -211,17 +210,17 @@ export default function handler(req, res) {
 }
 ```
 
-### `previewData` size limits
+### `previewData` 크기 제한
 
-You can pass an object to `setPreviewData` and have it be available in `getStaticProps`. However, because the data will be stored in a cookie, there’s a size limitation. Currently, preview data is limited to 2KB.
+`setPreviewData`에 객체를 넘겨주어 `getStaticProps`에서 사용할 수 있습니다. 그러나, 데이터가 쿠키가 저장되기에 크기 제한이 있습니다. 현재 미리보기 데이터는 2KB로 제한됩니다.
 
-### Works with `getServerSideProps`
+### `getServerSideProps`와 함께 사용하기
 
-The preview mode works on `getServerSideProps` as well. It will also be available on the `context` object containing `preview` and `previewData`.
+미리보기 모드는 `getServerSideProps`에서도 작동합니다. 또한 `preview`와 `previewData`를 포함하는 `context` 객체에서도 사용할 수 있습니다.
 
-### Works with API Routes
+### API 라우트와 함께 사용하기
 
-API Routes will have access to `preview` and `previewData` under the request object. For example:
+API 라우트는 요청 객체의 `preview`와 `previewData`로의 접근 권한을 갖습니다. 예를 들어,
 
 ```js
 export default function myApiRoute(req, res) {
@@ -231,9 +230,8 @@ export default function myApiRoute(req, res) {
 }
 ```
 
-### Unique per `next build`
+### `next build`마다 유일함
 
-Both the bypass cookie value and the private key for encrypting the `previewData` change when `next build` is completed.
-This ensures that the bypass cookie can’t be guessed.
+`next build`가 완료되면 바이패스 쿠키 값과 `previewData`를 암호화하기 위한 개인 키가 변경됩니다. 이렇게 하면 바이패스 쿠키를 추측할 수 없도록 보장됩니다.
 
-> **Good to know**: To test Preview Mode locally over HTTP your browser will need to allow third-party cookies and local storage access.
+> **참고**: HTTP를 통해 로컬에서 미리보기 모드를 테스트하려면 서드파티 쿠키와 로컬 저장소 접근을 허용해야 합니다.

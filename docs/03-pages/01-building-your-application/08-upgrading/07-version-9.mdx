@@ -1,10 +1,10 @@
 ---
-title: Upgrading to Version 9
-nav_title: Version 9
-description: Upgrade your Next.js Application from Version 8 to Version 9.
+title: Next.js 9 버전으로 업그레이드
+nav_title: 버전 9
+description: Next.js 8 버전 애플리케이션을 Next.js 9 버전으로 업그레이드할 수 있습니다.
 ---
 
-To upgrade to version 9, run the following command:
+Next.js 9 버전으로 업그레이드하려면 다음 명령어를 실행하세요.
 
 ```bash filename="Terminal"
 npm install next@9
@@ -12,21 +12,21 @@ npm install next@9
 yarn add next@9
 ```
 
-## Production Deployment on Vercel
+## Vercel에서 프로덕션 배포하기
 
-If you previously configured `routes` in your `vercel.json` file for dynamic routes, these rules can be removed when leveraging Next.js 9's new [Dynamic Routing feature](/docs/pages/building-your-application/routing/dynamic-routes).
+`vercel.json`의 `routes`에 설정된 동적 경로는 Next.js 9의 새로운 [동적 라우팅](/docs/pages/building-your-application/routing/dynamic-routes)을 사용할 때 지워질 수 있습니다.
 
-Next.js 9's dynamic routes are **automatically configured on [Vercel](https://vercel.com/)** and do not require any `vercel.json` customization.
+Next.js 9의 동적 경로는 **[Vercel](https://vercel.com/)에서 자동 설정됩니다.** `vercel.json`을 커스텀 하지 않아도 괜찮습니다.
 
-You can read more about [Dynamic Routing here](/docs/pages/building-your-application/routing/dynamic-routes).
+동적 라우팅에 대한 정보는 [여기에서](/docs/pages/building-your-application/routing/dynamic-routes) 확인할 수 있습니다.
 
-## Check your Custom App File (`pages/_app.js`)
+## 커스텀 App 파일 확인하기(`pages/_app.js`)
 
-If you previously copied the [Custom `<App>`](/docs/pages/building-your-application/routing/custom-app) example, you may be able to remove your `getInitialProps`.
+이미 [커스텀 `<App>`](/docs/pages/building-your-application/routing/custom-app)의 예시를 복사했다면 `getInitialProps`를 지워도 됩니다.
 
-Removing `getInitialProps` from `pages/_app.js` (when possible) is important to leverage new Next.js features!
+Next.js의 새로운 기능을 활용하기 위해서 가능하다면 `pages/_app.js`의 `getInitialProps`를 제거해야 합니다.
 
-The following `getInitialProps` does nothing and may be removed:
+다음에 쓰인 `getInitialProps`는 하는 일이 없으므로 제거해도 좋습니다.
 
 ```js
 class MyApp extends App {
@@ -47,23 +47,23 @@ class MyApp extends App {
 }
 ```
 
-## Breaking Changes
+## 중대한 변화
 
-### `@zeit/next-typescript` is no longer necessary
+### `@zeit/next-typescript`가 불필요해졌습니다.
 
-Next.js will now ignore usage `@zeit/next-typescript` and warn you to remove it. Please remove this plugin from your `next.config.js`.
+`@zeit/next-typescript`가 사용되면 Next.js 9 버전은 이 플러그인을 제거하라고 경고할 것입니다. `next.config.js`에서 `@zeit/next-typescript`를 제거해주세요.
 
-Remove references to `@zeit/next-typescript/babel` from your custom `.babelrc` (if present).
+커스텀 한 `.babelrc`에 `@zeit/next-typescript/babel`을 레퍼런스하고 있다면 지워주세요.
 
-The usage of [`fork-ts-checker-webpack-plugin`](https://github.com/Realytics/fork-ts-checker-webpack-plugin/issues) should also be removed from your `next.config.js`.
+`next.config.js`에서 [`fork-ts-checker-webpack-plugin`](https://github.com/Realytics/fork-ts-checker-webpack-plugin/issues)를 제거해주세요.
 
-TypeScript Definitions are published with the `next` package, so you need to uninstall `@types/next` as they would conflict.
+`next` package는 TypeScript Definitions를 포함합니다. 충돌을 피하기 위해 `@types/next`를 제거해주세요.
 
-The following types are different:
+다음은 서로 다른 타입 목록입니다.
 
-> This list was created by the community to help you upgrade, if you find other differences please send a pull-request to this list to help other users.
+> 이 목록은 커뮤니티에서 업그레이드를 돕기 위해 만들어졌습니다. 새로운 예시를 찾으셨다면 이 목록으로 풀 리퀘스트를 제출하여 다른 사용자를 도와주세요.
 
-From:
+이전:
 
 ```tsx
 import { NextContext } from 'next'
@@ -71,7 +71,7 @@ import { NextAppContext, DefaultAppIProps } from 'next/app'
 import { NextDocumentContext, DefaultDocumentIProps } from 'next/document'
 ```
 
-to
+이후:
 
 ```tsx
 import { NextPageContext } from 'next'
@@ -79,16 +79,16 @@ import { AppContext, AppInitialProps } from 'next/app'
 import { DocumentContext, DocumentInitialProps } from 'next/document'
 ```
 
-### The `config` key is now an export on a page
+### `config` 키는 페이지 레벨에서 내보내기 됩니다.
 
-You may no longer export a custom variable named `config` from a page (i.e. `export { config }` / `export const config ...`).
-This exported variable is now used to specify page-level Next.js configuration like Opt-in AMP and API Route features.
+이제 페이지에서 `config`라는 이름의 커스텀 변수를 내보내기 할 수 없습니다. (`export { config }`나 `export const config ...`를 사용해서는 안 됩니다)
+페이지 레벨의 Next.js에서 내보내기된 `config` 키는 Opt-in AMP나 API Route 같은 기능을 설정하기 위해 활용됩니다.
 
-You must rename a non-Next.js-purposed `config` export to something different.
+커스텀 한 `config` 키는 다른 이름으로 변경해주세요.
 
-### `next/dynamic` no longer renders "loading..." by default while loading
+### `next/dynamic`은 로딩 중에 "loading..."을 기본값으로 렌더링하지 않습니다.
 
-Dynamic components will not render anything by default while loading. You can still customize this behavior by setting the `loading` property:
+동적 컴포넌트는 이제 로딩 중에 어떤 값도 렌더링하지 않습니다. `loading` 프로퍼티에서 커스텀 하여 원하는 값을 렌더링할 수 있습니다.
 
 ```jsx
 import dynamic from 'next/dynamic'
@@ -101,19 +101,19 @@ const DynamicComponentWithCustomLoading = dynamic(
 )
 ```
 
-### `withAmp` has been removed in favor of an exported configuration object
+### `withAmp`는 페이지에서 내보내기된 설정 객체를 사용하기 위해 제거되었습니다.
 
-Next.js now has the concept of page-level configuration, so the `withAmp` higher-order component has been removed for consistency.
+Next.js 9 버전은 페이지 레벨의 설정이 가능합니다. 컴포넌트 수준의 설정이 가능한 `withAmp`는 일관성을 유지하기 위해 제거되었습니다.
 
-This change can be **automatically migrated by running the following commands in the root of your Next.js project:**
+이 변화는 **Next.js 프로젝트의 루트에서 다음 명령어를 실행하면 자동으로 마이그레이트됩니다.**
 
 ```bash filename="Terminal"
 curl -L https://github.com/vercel/next-codemod/archive/master.tar.gz | tar -xz --strip=2 next-codemod-master/transforms/withamp-to-config.js npx jscodeshift -t ./withamp-to-config.js pages/**/*.js
 ```
 
-To perform this migration by hand, or view what the codemod will produce, see below:
+수동으로 마이그레이션을 하고 싶거나 codemod가 어떻게 진행되는지 알고 싶다면 다음 코드를 확인해 주세요.
 
-**Before**
+**이전**
 
 ```jsx
 import { withAmp } from 'next/amp'
@@ -127,7 +127,7 @@ export default withAmp(Home)
 export default withAmp(Home, { hybrid: true })
 ```
 
-**After**
+**이후**
 
 ```jsx
 export default function Home() {
@@ -141,11 +141,11 @@ export const config = {
 }
 ```
 
-### `next export` no longer exports pages as `index.html`
+### `next export`는 더 이상 페이지를 `index.html`로 내보내기 하지 않습니다.
 
-Previously, exporting `pages/about.js` would result in `out/about/index.html`. This behavior has been changed to result in `out/about.html`.
+기존에는 `pages/about.js`를 내보내기 하면 `out/about/index.html`가 만들어졌습니다. 이제는 `out/about.html`이 만들어집니다.
 
-You can revert to the previous behavior by creating a `next.config.js` with the following content:
+이전 방식으로 동작하게 하려면 `next.config.js`를 만들어 다음 내용을 작성해주세요.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -153,20 +153,20 @@ module.exports = {
 }
 ```
 
-### `pages/api/` is treated differently
+### `pages/api/`가 달라졌습니다.
 
-Pages in `pages/api/` are now considered [API Routes](https://nextjs.org/blog/next-9#api-routes).
-Pages in this directory will no longer contain a client-side bundle.
+`pages/api/`의 페이지는 [API Routes](https://nextjs.org/blog/next-9#api-routes)가 됩니다.
+`pages/api/`의 페이지는 더 이상 클라이언트 bundle을 포함하지 않습니다.
 
-## Deprecated Features
+## 더 이상 사용되지 않는 기능
 
-### `next/dynamic` has deprecated loading multiple modules at once
+### `next/dynamic`에서 한 번에 여러 개의 로딩 모듈을 띄우는 기능은 더 이상 사용되지 않습니다.
 
-The ability to load multiple modules at once has been deprecated in `next/dynamic` to be closer to React's implementation (`React.lazy` and `Suspense`).
+`next/dynamic`에서 한 번에 여러 개의 로딩 모듈을 띄우는 기능이 더 이상 사용되지 않는 이유는 React의 구현을 좀 더 쉽게 하기 위해서입니다. (`React.lazy`나 `Suspense` 구현)
 
-Updating code that relies on this behavior is relatively straightforward! We've provided an example of a before/after to help you migrate your application:
+당신의 애플리케이션에서 이 기능을 사용한 코드를 업데이트하여 마이그레이트하는 방법은 다음과 같습니다.
 
-**Before**
+**이전**
 
 ```jsx
 import dynamic from 'next/dynamic'
@@ -196,7 +196,7 @@ function DynamicBundle() {
 export default DynamicBundle
 ```
 
-**After**
+**이후**
 
 ```jsx
 import dynamic from 'next/dynamic'

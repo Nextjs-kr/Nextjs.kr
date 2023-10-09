@@ -1,9 +1,13 @@
----
-title: getStaticProps
-description: API reference for `getStaticProps`. Learn how to use `getStaticProps` to generate static pages with Next.js.
+이 내용을 참고하여 번역을 진행하겠습니다.
+
 ---
 
-Exporting a function called `getStaticProps` will pre-render a page at build time using the props returned from the function:
+title: getStaticProps
+description: `getStaticProps`를 위한 API 레퍼런스입니다. `getStaticProps`를 사용하여 Next.js로 정적 페이지를 생성하는 방법에 대해 알아봅니다.
+
+---
+
+`getStaticProps`라는 함수를 내보내면 해당 함수에서 반환된 props를 사용하여 빌드 시 페이지를 미리 렌더링합니다.
 
 ```tsx filename="pages/index.tsx" switcher
 import type { InferGetStaticPropsType, GetStaticProps } from 'next'
@@ -40,46 +44,50 @@ export default function Page({ repo }) {
 }
 ```
 
-You can import modules in top-level scope for use in `getStaticProps`. Imports used will **not be bundled for the client-side**. This means you can write **server-side code directly in `getStaticProps`**, including fetching data from your database.
+`getStaticProps`에서 사용할 모듈을 최상위 스코프로 가져올 수 있습니다. 사용된 가져오기는 **클라이언트 측에서 번들링 되지 않습니다.** 즉, 데이터베이스에서 데이터를 가져오는 것을 포함하여 **서버측 코드를 `getStaticProps`에 직접 작성할 수 있습니다.**
 
-## Context parameter
+## Context 매개변수
 
-The `context` parameter is an object containing the following keys:
+## Context 매개변수
 
-| Name            | Description                                                                                                                                                                                                                                                                                          |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `params`        | Contains the route parameters for pages using [dynamic routes](/docs/pages/building-your-application/routing/dynamic-routes). For example, if the page name is `[id].js`, then `params` will look like `{ id: ... }`. You should use this together with `getStaticPaths`, which we'll explain later. |
-| `preview`       | (Deprecated for `draftMode`) `preview` is `true` if the page is in the [Preview Mode](/docs/pages/building-your-application/configuring/preview-mode) and `false` otherwise.                                                                                                                         |
-| `previewData`   | (Deprecated for `draftMode`) The [preview](/docs/pages/building-your-application/configuring/preview-mode) data set by `setPreviewData`.                                                                                                                                                             |
-| `draftMode`     | `draftMode` is `true` if the page is in the [Draft Mode](docs/pages/building-your-application/configuring/draft-mode) and `false` otherwise.                                                                                                                                                         |
-| `locale`        | Contains the active locale (if enabled).                                                                                                                                                                                                                                                             |
-| `locales`       | Contains all supported locales (if enabled).                                                                                                                                                                                                                                                         |
-| `defaultLocale` | Contains the configured default locale (if enabled).                                                                                                                                                                                                                                                 |
+`context` 매개변수는 다음 키를 포함하는 객체입니다.
 
-## getStaticProps return values
+| 이름            | 설명                                                                                                                                                                                                                                                                  |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params`        | [동적 경로](/docs/pages/building-your-application/routing/dynamic-routes)를 사용하는 페이지의 경로 매개변수를 포함합니다. 예를 들어 페이지 이름이 `[id].js`인 경우 `params`는 `{ id: ... }`와 같이 표시됩니다. 나중에 설명할 `getStaticPaths`와 함께 사용해야 합니다. |
+| `preview`       | (`draftMode`에서는 더 이상 사용되지 않습니다.) `preview`는 페이지가 [미리보기 모드](/docs/pages/building-your-application/configuring/preview-mode)이면 `true`이고 그렇지 않으면 `false`입니다.                                                                       |
+| `previewData`   | (`draftMode`에서는 더 이상 사용되지 않습니다.) `setPreviewData`에 의해 설정된 [미리보기](/docs/pages/building-your-application/configuring/preview-mode) 데이터입니다.                                                                                                |
+| `draftMode`     | `draftMode`는 페이지가 [드래프트 모드](docs/pages/building-your-application/configuring/draft-mode)이면 `true`이고 그렇지 않으면 `false`입니다.                                                                                                                       |
+| `locale`        | 활성 로케일을 포함합니다. (사용 가능한 경우)                                                                                                                                                                                                                          |
+| `locales`       | 지원되는 모든 로케일을 포함합니다. (사용 가능한 경우)                                                                                                                                                                                                                 |
+| `defaultLocale` | 구성된 기본 로케일을 포함합니다. (사용 가능한 경우)                                                                                                                                                                                                                   |
 
-The `getStaticProps` function should return an object containing either `props`, `redirect`, or `notFound` followed by an **optional** `revalidate` property.
+## getStaticProps 반환 값
+
+## getStaticProps 반환 값
+
+`getStaticProps` 함수는 `props`, `redirect`, `notFound` 중 하나의 속성과 **선택적인** `revalidate` 속성을 포함하는 객체를 반환해야 합니다.
 
 ### `props`
 
-The `props` object is a key-value pair, where each value is received by the page component. It should be a [serializable object](https://developer.mozilla.org/en-US/docs/Glossary/Serialization) so that any props passed, could be serialized with [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
+`props` 객체는 페이지 컴포넌트에서 각 값을 받는 key-값 쌍입니다. 전달된 모든 props가 [`JSON.stringify`](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)로 직렬화될 수 있도록 [직렬화 가능한 객체](https://developer.mozilla.org/en-US/docs/Glossary/Serialization)여야 합니다.
 
 ```jsx
 export async function getStaticProps(context) {
   return {
-    props: { message: `Next.js is awesome` }, // will be passed to the page component as props
+    props: { message: `Next.js is awesome` }, // 페이지 컴포넌트에 props로 전달됩니다.
   }
 }
 ```
 
 ### `revalidate`
 
-The `revalidate` property is the amount in seconds after which a page re-generation can occur (defaults to `false` or no revalidation).
+`revalidate` 속성은 페이지를 다시 생성할 수 있는 시간(초)입니다. (기본값은 `false`이고 revalidation을 하지 않음)
 
 ```js
-// This function gets called at build time on server-side.
-// It may be called again, on a serverless function, if
-// revalidation is enabled and a new request comes in
+// 이 함수는 서버 측에서 빌드 시 호출됩니다.
+// revalidation이 활성화되고 새 요청이 들어오면
+// 서버리스 함수에서 다시 호출될 수 있습니다.
 export async function getStaticProps() {
   const res = await fetch('https://.../posts')
   const posts = await res.json()
@@ -88,25 +96,25 @@ export async function getStaticProps() {
     props: {
       posts,
     },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every 10 seconds
-    revalidate: 10, // In seconds
+    // 다음과 같은 경우, Next.js는 페이지를 다시 생성하려고 시도합니다.
+    // - 요청이 들어올 때
+    // - 최대 10초에 한 번
+    revalidate: 10, // 초 단위
   }
 }
 ```
 
-Learn more about [Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration).
+[Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)에 대해 자세히 알아보십시오.
 
-The cache status of a page leveraging ISR can be determined by reading the value of the `x-nextjs-cache` response header. The possible values are the following:
+ISR을 활용하는 페이지의 캐시 상태는 응답 헤더의 `x-nextjs-cache` 응답 헤더 값을 읽어 확인할 수 있습니다. 가능한 값은 다음과 같습니다.
 
-- `MISS` - the path is not in the cache (occurs at most once, on the first visit)
-- `STALE` - the path is in the cache but exceeded the revalidate time so it will be updated in the background
-- `HIT` - the path is in the cache and has not exceeded the revalidate time
+- `MISS` - 경로가 캐시에 없음 (첫 번째 방문 시 최대 한 번 발생)
+- `STALE` - 경로가 캐시에 있지만 revalidation 시간을 초과하여 백그라운드에서 업데이트됨
+- `HIT` - 경로가 캐시에 있으며 revalidation 시간을 초과하지 않음
 
 ### `notFound`
 
-The `notFound` boolean allows the page to return a `404` status and [404 Page](/docs/pages/building-your-application/routing/custom-error#404-page). With `notFound: true`, the page will return a `404` even if there was a successfully generated page before. This is meant to support use cases like user-generated content getting removed by its author. Note, `notFound` follows the same `revalidate` behavior [described here](#revalidate).
+`notFound` 불리언은 페이지가 `404` 상태와 [404 페이지](/docs/pages/building-your-application/routing/custom-error#404-page)를 반환하도록 허용합니다. `notFound: true`로 설정하면, 이전에 성공적으로 생성된 페이지가 있더라도 페이지는 `404`를 반환합니다. 이는 사용자가 생성한 콘텐츠가 그 작성자에 의해 제거되는 등의 사용 사례를 지원하기 위한 것입니다. 참고로, `notFound`는 [여기서](#revalidate) 설명한 것과 같은 `revalidate` 동작을 따릅니다.
 
 ```js
 export async function getStaticProps(context) {
@@ -120,18 +128,18 @@ export async function getStaticProps(context) {
   }
 
   return {
-    props: { data }, // will be passed to the page component as props
+    props: { data }, // 페이지 컴포넌트에 props로 전달됩니다.
   }
 }
 ```
 
-> **Good to know**: `notFound` is not needed for [`fallback: false`](/docs/pages/api-reference/functions/get-static-paths#fallback-false) mode as only paths returned from `getStaticPaths` will be pre-rendered.
+> **알아두세요**: `getStaticPaths`에서 반환된 경로만 사전 렌더링되므로 [`fallback: false`](/docs/pages/api-reference/functions/get-static-paths#fallback-false) 모드에는 `notFound`가 필요하지 않습니다.
 
 ### `redirect`
 
-The `redirect` object allows redirecting to internal or external resources. It should match the shape of `{ destination: string, permanent: boolean }`.
+`redirect` 객체는 내부 또는 외부 리소스로의 리디렉션을 허용합니다. 이는 `{ destination: string, permanent: boolean }`의 형태와 일치해야 합니다.
 
-In some rare cases, you might need to assign a custom status code for older `HTTP` clients to properly redirect. In these cases, you can use the `statusCode` property instead of the `permanent` property, **but not both**. You can also set `basePath: false` similar to redirects in `next.config.js`.
+일부 드문 경우에, 이전 `HTTP` 클라이언트가 제대로 리디렉션하도록 사용자 정의 상태 코드를 할당해야 할 수 있습니다. 이런 경우에는 `permanent` 속성 대신 `statusCode` 속성을 사용할 수 있습니다. **하지만 둘 다 사용할 수는 없습니다.** 또한 `next.config.js`에서의 리디렉션과 유사하게 `basePath: false`를 설정할 수도 있습니다.
 
 ```js
 export async function getStaticProps(context) {
@@ -149,28 +157,28 @@ export async function getStaticProps(context) {
   }
 
   return {
-    props: { data }, // will be passed to the page component as props
+    props: { data }, // 페이지 컴포넌트에 props로 전달됩니다.
   }
 }
 ```
 
-If the redirects are known at build-time, they should be added in [`next.config.js`](/docs/pages/api-reference/next-config-js/redirects) instead.
+리디렉션은 빌드 시간에 알려져 있다면, 대신 [`next.config.js`](/docs/pages/api-reference/next-config-js/redirects)에 추가되어야 합니다.
 
-## Reading files: Use `process.cwd()`
+## 파일 읽기: `process.cwd()` 사용
 
-Files can be read directly from the filesystem in `getStaticProps`.
+`getStaticProps`에서 파일 시스템으로부터 파일을 직접 읽을 수 있습니다.
 
-In order to do so you have to get the full path to a file.
+이를 위해서는 파일의 전체 경로를 얻어야 합니다.
 
-Since Next.js compiles your code into a separate directory you can't use `__dirname` as the path it returns will be different from the Pages Router.
+Next.js가 코드를 별도의 디렉토리로 컴파일하기 때문에 `__dirname`을 사용할 수 없습니다. 왜냐하면 반환되는 경로가 페이지 라우터와 다를 것이기 때문입니다.
 
-Instead you can use `process.cwd()` which gives you the directory where Next.js is being executed.
+대신에 Next.js가 실행되는 디렉토리를 제공하는 `process.cwd()`를 사용할 수 있습니다.
 
 ```jsx
 import { promises as fs } from 'fs'
 import path from 'path'
 
-// posts will be populated at build time by getStaticProps()
+// posts는 getStaticProps()에 의해 빌드 시간에 채워집니다.
 function Blog({ posts }) {
   return (
     <ul>
@@ -184,9 +192,9 @@ function Blog({ posts }) {
   )
 }
 
-// This function gets called at build time on server-side.
-// It won't be called on client-side, so you can even do
-// direct database queries.
+// 이 함수는 서버 측에서 빌드 시간에 호출됩니다.
+// 클라이언트 측에서는 호출되지 않으므로,
+// 심지어 직접 데이터베이스 쿼리를 수행하는 것도 가능합니다.
 export async function getStaticProps() {
   const postsDirectory = path.join(process.cwd(), 'posts')
   const filenames = await fs.readdir(postsDirectory)
@@ -195,16 +203,16 @@ export async function getStaticProps() {
     const filePath = path.join(postsDirectory, filename)
     const fileContents = await fs.readFile(filePath, 'utf8')
 
-    // Generally you would parse/transform the contents
-    // For example you can transform markdown to HTML here
+    // 일반적으로 내용을 파싱/변환합니다.
+    // 예를 들어, 여기에서 마크다운을 HTML로 변환할 수 있습니다.
 
     return {
       filename,
       content: fileContents,
     }
   })
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
+  // { props: { posts } }를 반환함으로써, Blog 컴포넌트는
+  // 빌드 시간에 `posts`를 prop으로 받게 됩니다.
   return {
     props: {
       posts: await Promise.all(posts),
@@ -215,14 +223,14 @@ export async function getStaticProps() {
 export default Blog
 ```
 
-## Version History
+## 버전 히스토리
 
-| Version   | Changes                                                                                                                                                               |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `v13.4.0` | [App Router](/docs/app/building-your-application/data-fetching) is now stable with simplifed data fetching                                                            |
-| `v12.2.0` | [On-Demand Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation) is stable.    |
-| `v12.1.0` | [On-Demand Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation) added (beta). |
-| `v10.0.0` | `locale`, `locales`, `defaultLocale`, and `notFound` options added.                                                                                                   |
-| `v10.0.0` | `fallback: 'blocking'` return option added.                                                                                                                           |
-| `v9.5.0`  | Stable [Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)                                         |
-| `v9.3.0`  | `getStaticProps` introduced.                                                                                                                                          |
+| 버전      | 변경사항                                                                                                                                                                        |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `v13.4.0` | [App Router](/docs/app/building-your-application/data-fetching)가 간소화된 데이터 가져오기로 안정화되었습니다.                                                                  |
+| `v12.2.0` | [On-Demand Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation)이 안정화되었습니다.     |
+| `v12.1.0` | [On-Demand Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation)이 추가되었습니다(베타). |
+| `v10.0.0` | `locale`, `locales`, `defaultLocale`, 그리고 `notFound` 옵션이 추가되었습니다.                                                                                                  |
+| `v10.0.0` | `fallback: 'blocking'` 반환 옵션이 추가되었습니다.                                                                                                                              |
+| `v9.5.0`  | Stable [Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration)                                                   |
+| `v9.3.0`  | `getStaticProps`가 도입되었습니다.                                                                                                                                              |
