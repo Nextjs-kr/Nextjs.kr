@@ -9,11 +9,11 @@ Next.js에서 경로는 정적 또는 동적으로 렌더링 될 수 있습니�
 - **정적** 라우트에서, 컴포넌트들은 빌드 타임에 서버에서 렌더링 됩니다. 이 작업 결과는 잦은 요청에 대해 캐싱되고 재사용됩니다.
 - **동적** 라우트에서, 컴포넌트들은 요청 시점에 서버에서 렌더링 됩니다.
 
-## Static Rendering (Default)
+## 정적 렌더링 (기본값)
 
 Next.js는 기본적으로 퍼포먼스 향상을 위해 경로를 정적으로 렌더링합니다. 따라서 모든 렌더링 작업을 사전에 완료해 사용자와 지리적으로 가까운 Content Delivery Network (CDN)에서 전달할 수 있습니다.
 
-## Static Data Fetching (Default)
+## 정적 데이터 페칭 (기본값)
 
 기본적으로 Next.js는 캐싱 동작이 명시적으로 제외되지 않은 `fetch()` 요청의 결과를 캐싱합니다. 즉, `cache` 옵션이 설정되지 않은 fetch 요청은 `force-cache` 옵션을 사용하게 됩니다.
 
@@ -21,7 +21,7 @@ Next.js는 기본적으로 퍼포먼스 향상을 위해 경로를 정적으로 
 
 데이터 페칭 요청 캐싱에 대해 더 알아보려면 [캐싱과 재검증](/docs/app/building-your-application/data-fetching/caching) 페이지를 참고하세요.
 
-## Dynamic Rendering
+## 동적 렌더링
 
 정적 렌더링 과정에 동적 함수나 캐싱되지 않은 동적 `fetch()` 요청이 발견된다면 Next.js는 라우트 전체를 요청 시점에 동적으로 렌더링하도록 전환합니다. 캐싱된 데이터 요청은 동적 렌더링에서도 여전히 재사용될 수 있습니다.
 
@@ -38,7 +38,7 @@ Next.js는 기본적으로 퍼포먼스 향상을 위해 경로를 정적으로 
 
 > **참고**: Next.js는 미래에 라우트 전체가 아닌 독립적인 레이아웃과 페이지 단위로 정적 또는 동적으로 렌더링 되는 하이브리드 서버 사이드 렌더링을 지원할 예정입니다.
 
-### Dynamic Functions
+### 동적 함수
 
 동적 함수는 유저의 쿠키, 요청 헤더, 또는 URL search params 등 요청 시점에 알 수 있는 정보에 의존합니다. Next.js에서 이런 동적 함수는 다음과 같습니다.
 
@@ -47,7 +47,7 @@ Next.js는 기본적으로 퍼포먼스 향상을 위해 경로를 정적으로 
   - `useSearchParams()`를 사용하는 클라이언트 컴포넌트를 `<Suspense/>` 바운더리로 감쌀 것을 권장합니다. 이렇게하면 상위의 클라이언트 컴포넌트들이 정적으로 렌더링될 수 있습니다. [예시](/docs/app/api-reference/functions/use-search-params#static-rendering).
 - [`searchParams`](/docs/app/api-reference/file-conventions/page#searchparams-optional) [Pages](/docs/app/api-reference/file-conventions/page) prop을 사용하는 경우 페이지는 요청 시점에 동적 렌더링 됩니다.
 
-## Dynamic Data Fetching
+## 동적 데이터 페칭
 
 동적 데이터 페칭은 `cache` 옵션을 `'no-store'`로 설정하거나 `revalidate`를 `0`으로 설정해 캐싱 동작을 비활성화한 `fetch()` 요청을 의미합니다.
 
