@@ -1,20 +1,19 @@
 ---
-title: cookies
-description: API Reference for the cookies function.
+title: 쿠키
+description: 쿠키 함수에 대한 API 레퍼런스
 related:
-  title: Next Steps
-  description: For more information on what to do next, we recommend the following sections
-  links:
+  title: 다음 단계
+  description: 다음에 수행할 작업에 대한 자세한 내용은 다음 섹션을 참조하세요.
     - app/building-your-application/data-fetching/server-actions
 ---
 
-The `cookies` function allows you to read the HTTP incoming request cookies from a [Server Component](/docs/getting-started/react-essentials) or write outgoing request cookies in a [Server Action](/docs/app/building-your-application/data-fetching/server-actions) or [Route Handler](/docs/app/building-your-application/routing/router-handlers).
+`cookies` 기능을 사용하면 [서버 구성요소](/docs/getting-started/react-essentials)에서 HTTP 수신 요청 쿠키를 읽거나 [서버 액션](/docs/app/building-your-application/data-fetching/server-actions) 또는 [라우트 핸들러](/docs/app/building-your-application/routing/router-handlers)에 송신 요청 쿠키를 쓸 수 있습니다.
 
-> **Good to know**: `cookies()` is a **[Dynamic Function](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-functions)** whose returned values cannot be known ahead of time. Using it in a layout or page will opt a route into **[dynamic rendering](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-rendering)** at request time.
+> **참고** :  `cookies()`는 반환된 값을 미리 알 수 없는 [동적 함수](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-functions)입니다. 레이아웃 또는 페이지에서 사용하면 요청 시 [동적 렌더링](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-rendering) 경로가 선택됩니다.
 
 ## `cookies().get(name)`
 
-A method that takes a cookie name and returns an object with name and value. If a cookie with `name` isn't found, it returns `undefined`. If multiple cookies match, it will only return the first match.
+쿠키 이름을 사용하고 이름과 값을 가진 개체를 반환하는 메서드입니다. name이 지정된 쿠키를 찾을 수 없으면 undefined 쿠키가 반환됩니다. 여러 쿠키가 일치하는 경우 첫 번째 일치 항목만 반환됩니다.
 
 ```jsx filename="app/page.js"
 import { cookies } from 'next/headers'
@@ -28,7 +27,7 @@ export default function Page() {
 
 ## `cookies().getAll()`
 
-A method that is similar to `get`, but returns a list of all the cookies with a matching `name`. If `name` is unspecified, it returns all the available cookies.
+`get`과 유사하지만 일치하는 `name`을 가진 모든 쿠키 목록을 반환하는 메서드입니다. `name`을 지정하지 않으면 사용 가능한 모든 쿠키를 반환합니다.
 
 ```jsx filename="app/page.js"
 import { cookies } from 'next/headers'
@@ -46,7 +45,7 @@ export default function Page() {
 
 ## `cookies().has(name)`
 
-A method that takes a cookie name and returns a `boolean` based on if the cookie exists (`true`) or not (`false`).
+쿠키 이름을 사용하고 쿠키의 존재(`true`) 여부(`false`)를 기준으로 `boolean`을 반환하는 메서드입니다.
 
 ```jsx filename="app/page.js"
 import { cookies } from 'next/headers'
@@ -60,9 +59,9 @@ export default function Page() {
 
 ## `cookies().set(name, value, options)`
 
-A method that takes a cookie name, value, and options and sets the outgoing request cookie.
+쿠키 이름, 값 및 옵션을 사용하고 나가는 요청 쿠키를 설정하는 메서드입니다.
 
-> **Good to know**: `.set()` is only available in a [Server Action](/docs/app/building-your-application/data-fetching/server-actions) or [Route Handler](/docs/app/building-your-application/routing/router-handlers).
+> **참고** : `.set()`은 [서버 액셕](/docs/app/building-your-application/data-fetching/server-actions) 또는 [라우트 핸들러](/docs/app/building-your-application/routing/router-handlers)에서만 사용할 수 있습니다.
 
 ```js filename="app/actions.js"
 'use server'
@@ -83,11 +82,11 @@ async function create(data) {
 }
 ```
 
-## Deleting cookies
+## 쿠키 삭제
 
-To "delete" a cookie, you must set a new cookie with the same name and an empty value. You can also set the `maxAge` to `0` to expire the cookie immediately.
+쿠키를 "삭제"하려면 이름이 같고 값이 비어 있는 새 쿠키를 설정해야 합니다. 쿠키를 즉시 만료하도록 `maxAge`를 `0`으로 설정할 수도 있습니다.
 
-> **Good to know**: `.set()` is only available in a [Server Action](/docs/app/building-your-application/data-fetching/server-actions) or [Route Handler](/docs/app/building-your-application/routing/router-handlers).
+> 참고 : `.set()`은 [서버 액션](/docs/app/building-your-application/data-fetching/server-actions)  또는 [라우트 핸들러](/docs/app/building-your-application/routing/router-handlers)에서만 사용할 수 있습니다.
 
 ```js filename="app/actions.js"
 'use server'
@@ -104,10 +103,10 @@ async function create(data) {
 }
 ```
 
-You can only set cookies that belong to the same domain from which `.set()` is called. Additionally, the code must be executed on the same protocol (HTTP or HTTPS) as the cookie you want to update.
+`.set()`이 호출되는 동일한 도메인에 속하는 쿠키만 설정할 수 있습니다. 또한 코드는 업데이트할 쿠키와 동일한 프로토콜(HTTP 또는 HTTPS)에서 실행되어야 합니다.
 
-## Version History
+## 버전 기록
 
-| Version   | Changes               |
+| 버전  | 변경 내용              |
 | --------- | --------------------- |
-| `v13.0.0` | `cookies` introduced. |
+| `v13.0.0` | `cookies` 소개 |
