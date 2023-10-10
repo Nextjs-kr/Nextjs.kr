@@ -1,23 +1,25 @@
 ---
 title: generateImageMetadata
-description: Learn how to generate multiple images in a single Metadata API special file.
+description: 한 개의 메타데이터 API 특수 파일에서 다수의 이미지를 생성하는 방법을 배웁니다.
+
 related:
-  title: Next Steps
-  description: View all the Metadata API options.
-  links:
-    - app/api-reference/file-conventions/metadata
-    - app/building-your-application/optimizing/metadata
+title: Next Steps
+description: 모든 메타데이터 API 옵션을 봅니다.
+links:
+- app/api-reference/file-conventions/metadata
+- app/building-your-application/optimizing/metadata
 ---
 
-You can use `generateImageMetadata` to generate different versions of one image or return multiple images for one route segment. This is useful for when you want to avoid hard-coding metadata values, such as for icons.
+한 개의 이미지의 다른 버전들을 생성하거나 한 개의 라우트 세그먼트를 위해 다수의 이미지들을 반환할 때 `generateImageMetadata`를 사용할 수 있습니다.
+이것은 아이콘과 같은 메타데이터 값들을 하드코딩하는 것을 피하고자 할 때 유용합니다.
 
-## Parameters
+## 매개변수
 
-`generateMetadata` function accepts the following parameters:
+`generateMetadata` 함수는 다음과 같은 매개변수를 받습니다:
 
-#### `params` (optional)
+#### `params` (선택사항)
 
-An object containing the [dynamic route parameters](/docs/app/building-your-application/routing/dynamic-routes) object from the root segment down to the segment `generateImageMetadata` is called from.
+루트 세그먼트에서 `generateImageMetadata`가 호출되는 세그먼트까지의 [동적 라우트 매개변수](/docs/app/building-your-application/routing/dynamic-routes) 객체를 포함하는 객체.
 
 ```tsx filename="icon.tsx" switcher
 export function generateImageMetadata({
@@ -35,23 +37,24 @@ export function generateImageMetadata({ params }) {
 }
 ```
 
-| Route                           | URL         | `params`                  |
+| 라우트                          | URL         | `params`                  |
 | ------------------------------- | ----------- | ------------------------- |
 | `app/shop/icon.js`              | `/shop`     | `undefined`               |
 | `app/shop/[slug]/icon.js`       | `/shop/1`   | `{ slug: '1' }`           |
 | `app/shop/[tag]/[item]/icon.js` | `/shop/1/2` | `{ tag: '1', item: '2' }` |
 | `app/shop/[...slug]/icon.js`    | `/shop/1/2` | `{ slug: ['1', '2'] }`    |
 
-## Returns
+## 반환값
 
-The `generateImageMetadata` function should return an `array` of objects containing the image's metadata such as `alt` and `size`. In addition, each item **must** include an `id` value will be passed to the props of the image generating function.
+`generateImageMetadata` 함수는 `alt`와 `size` 같은 이미지의 메타데이터를 포함하고 있는 객체배열을 반환해야 합니다.
+또한 각 항목은 이미지 생성 함수의 props에게 전달될 `id` 값을 **반드시** 포함하고 있어야 합니다.
 
-| Image Metadata Object | Type                                |
-| --------------------- | ----------------------------------- |
-| `id`                  | `string` (required)                 |
-| `alt`                 | `string`                            |
-| `size`                | `{ width: number; height: number }` |
-| `contentType`         | `string`                            |
+| 이미지 메타데이터 객체 | 타입                                |
+| ---------------------- | ----------------------------------- |
+| `id`                   | `string` (필수사항)                 |
+| `alt`                  | `string`                            |
+| `size`                 | `{ width: number; height: number }` |
+| `contentType`          | `string`                            |
 
 ```tsx filename="icon.tsx" switcher
 import { ImageResponse } from 'next/server'
@@ -133,11 +136,11 @@ export default function Icon({ id }) {
 }
 ```
 
-### Examples
+### 예시
 
-#### Using external data
+#### 외부데이터를 사용하는 경우
 
-This example uses the `params` object and external data to generate multiple [Open Graph images](/docs/app/api-reference/file-conventions/metadata/opengraph-image) for a route segment.
+이 예시는 라우트 세그먼트를 위한 다수의 [오픈 그래프 이미지](/docs/app/api-reference/file-conventions/metadata/opengraph-image)들을 생성하기 위해 `params` 객체와 외부 데이터를 사용합니다.
 
 ```tsx filename="app/products/[id]/opengraph-image.tsx" switcher
 import { ImageResponse } from 'next/server'
@@ -221,8 +224,8 @@ export default async function Image({ params, id }) {
 }
 ```
 
-## Version History
+## 버전 히스토리
 
-| Version   | Changes                             |
-| --------- | ----------------------------------- |
-| `v13.3.0` | `generateImageMetadata` introduced. |
+| 버전      | 변경사항                                  |
+| --------- | ----------------------------------------- |
+| `v13.3.0` | `generateImageMetadata`가 도입되었습니다. |
