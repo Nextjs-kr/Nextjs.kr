@@ -1,12 +1,12 @@
 ---
 title: generateStaticParams
-description: API reference for the generateStaticParams function.
+description: generateStaticParams 함수의 API 레퍼런스입니다.
 ---
 
-The `generateStaticParams` function can be used in combination with [dynamic route segments](/docs/app/building-your-application/routing/dynamic-routes) to [**statically generate**](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#static-rendering-default) routes at build time instead of on-demand at request time.
+`generateStaticParams` 함수는 요청 타임 대신에 빌드 타임에 [dynamic route segments](/docs/app/building-your-application/routing/dynamic-routes) to [**statically generate**](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#static-rendering-default) routes 와 함께 사용 가능합니다.
 
 ```jsx filename="app/blog/[slug]/page.js"
-// Return a list of `params` to populate the [slug] dynamic segment
+// [slug] 동적 세그먼트를 채우기 위해 `params` 목록을 반환합니다.
 export async function generateStaticParams() {
   const posts = await fetch('https://.../posts').then((res) => res.json())
 
@@ -15,52 +15,52 @@ export async function generateStaticParams() {
   }))
 }
 
-// Multiple versions of this page will be statically generated
-// using the `params` returned by `generateStaticParams`
+// 이 페이지의 여러 버전들이 정적으로 생성될 것입니다.
+// `generateStaticParams` 에 의해 반환된 `params`를 사용합니다.
 export default function Page({ params }) {
   const { slug } = params
   // ...
 }
 ```
 
-> **Good to know**
+> **알아두면 좋은 점**
 >
-> - You can use the [`dynamicParams`](/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams) segment config option to control what happens when a dynamic segment is visited that was not generated with `generateStaticParams`.
-> - During `next dev`, `generateStaticParams` will be called when you navigate to a route.
-> - During `next build`, `generateStaticParams` runs before the corresponding Layouts or Pages are generated.
-> - During revalidation (ISR), `generateStaticParams` will not be called again.
-> - `generateStaticParams` replaces the [`getStaticPaths`](/docs/pages/api-reference/functions/get-static-paths) function in the Pages Router.
+> - `generateStaticParams`로 생성되지 않은 동적 세그먼트를 조회했을 때 일어나는 것들을 [`dynamicParams`](/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams) 세그먼트 컨피그 옵션을 사용해 제어할 수 있습니다.
+> - `next dev`가 실행되는 동안, `generateStaticParams` 는 route 로 이동하는 할 때 호출될 것입니다.
+> - `next build`가 실행되는 동안, `generateStaticParams` 는 일치하는 레이아웃 또는 페이지가 생성되기 전에 실행됩니다.
+> - revalidation 이 일어나는 동안(ISR), `generateStaticParams` 는 다시 호출되지 않습니다.
+> - `generateStaticParams` 는 Pages Router 의 [`getStaticPaths`](/docs/pages/api-reference/functions/get-static-paths) 함수를 대체합니다.
 
-## Parameters
+## 매개변수
 
 `options.params` (optional)
 
-If multiple dynamic segments in a route use `generateStaticParams`, the child `generateStaticParams` function is executed once for each set of `params` the parent generates.
+만약 여러 개의 동적 세그먼트들이 `generateStaticParams` 를 사용하는 하나의 route 에 있다면, 하위의 `generateStaticParams` 함수는 상위에서 생성되는 `params` 의 각 세트마다 한 번씩 실행됩니다. 
 
-The `params` object contains the populated `params` from the parent `generateStaticParams`, which can be used to [generate the `params` in a child segment](#multiple-dynamic-segments-in-a-route).
+[하위 세그먼트의 `params` 를 생성](#multiple-dynamic-segments-in-a-route) 하는 데 사용 가능한 `params` 객체는 상위의 `generateStaticParams` 에서 채워진 `params` 를 포함합니다.
 
-## Returns
+## 반환
 
-`generateStaticParams` should return an array of objects where each object represents the populated dynamic segments of a single route.
+`generateStaticParams` 는 단일 경로의 채워진 동적 세그먼트를 나타내는 객체의 배열을 반환합니다.
 
-- Each property in the object is a dynamic segment to be filled in for the route.
-- The properties name is the segment's name, and the properties value is what that segment should be filled in with.
+- 객체의 각 속성은 경로에 대해 채워지는 동적 세그먼트입니다.
+- 속성 명은 세그먼트의 이름이고 속성 값은 해당 세그먼트를 채워야 하는 것입니다.
 
-| Example Route                    | `generateStaticParams` Return Type        |
+| 경로 예시                          | `generateStaticParams` 반환 타입            |
 | -------------------------------- | ----------------------------------------- |
 | `/product/[id]`                  | `{ id: string }[]`                        |
 | `/products/[category]/[product]` | `{ category: string, product: string }[]` |
 | `/products/[...slug]`            | `{ slug: string[] }[]`                    |
 
-## Single Dynamic Segment
+## 단일 동적 세그먼트
 
 ```tsx filename="app/product/[id]/page.tsx" switcher
 export function generateStaticParams() {
   return [{ id: '1' }, { id: '2' }, { id: '3' }]
 }
 
-// Three versions of this page will be statically generated
-// using the `params` returned by `generateStaticParams`
+// 해당 페이지의 세 가지 버전은 정적으로 생성될 것입니다.
+// `generateStaticParams` 에 의해 반환된 `params` 를 사용합니다.
 // - /product/1
 // - /product/2
 // - /product/3
@@ -75,8 +75,8 @@ export function generateStaticParams() {
   return [{ id: '1' }, { id: '2' }, { id: '3' }]
 }
 
-// Three versions of this page will be statically generated
-// using the `params` returned by `generateStaticParams`
+// 해당 페이지의 세 가지 버전은 정적으로 생성될 것입니다.
+// `generateStaticParams` 에 의해 반환된 `params` 를 사용합니다.
 // - /product/1
 // - /product/2
 // - /product/3
@@ -86,7 +86,7 @@ export default function Page({ params }) {
 }
 ```
 
-## Multiple Dynamic Segments
+## 다중 동적 세그먼트
 
 ```tsx filename="app/products/[category]/[product]/page.tsx" switcher
 export function generateStaticParams() {
@@ -97,8 +97,8 @@ export function generateStaticParams() {
   ]
 }
 
-// Three versions of this page will be statically generated
-// using the `params` returned by `generateStaticParams`
+// 해당 페이지의 세 가지 버전은 정적으로 생성될 것입니다.
+// `generateStaticParams` 에 의해 반환된 `params` 를 사용합니다.
 // - /product/a/1
 // - /product/b/2
 // - /product/c/3
@@ -121,8 +121,8 @@ export function generateStaticParams() {
   ]
 }
 
-// Three versions of this page will be statically generated
-// using the `params` returned by `generateStaticParams`
+// 해당 페이지의 세 가지 버전은 정적으로 생성될 것입니다.
+// `generateStaticParams` 에 의해 반환된 `params` 를 사용합니다.
 // - /product/a/1
 // - /product/b/2
 // - /product/c/3
@@ -132,15 +132,15 @@ export default function Page({ params }) {
 }
 ```
 
-## Catch-all Dynamic Segment
+## Catch-all 동적 세그먼트
 
 ```tsx filename="app/product/[...slug]/page.tsx" switcher
 export function generateStaticParams() {
   return [{ slug: ['a', '1'] }, { slug: ['b', '2'] }, { slug: ['c', '3'] }]
 }
 
-// Three versions of this page will be statically generated
-// using the `params` returned by `generateStaticParams`
+// 해당 페이지의 세 가지 버전은 정적으로 생성될 것입니다.
+// `generateStaticParams` 에 의해 반환된 `params` 를 사용합니다.
 // - /product/a/1
 // - /product/b/2
 // - /product/c/3
@@ -155,8 +155,8 @@ export function generateStaticParams() {
   return [{ slug: ['a', '1'] }, { slug: ['b', '2'] }, { slug: ['c', '3'] }]
 }
 
-// Three versions of this page will be statically generated
-// using the `params` returned by `generateStaticParams`
+// 해당 페이지의 세 가지 버전은 정적으로 생성될 것입니다.
+// `generateStaticParams` 에 의해 반환된 `params` 를 사용합니다.
 // - /product/a/1
 // - /product/b/2
 // - /product/c/3
@@ -166,23 +166,23 @@ export default function Page({ params }) {
 }
 ```
 
-## Examples
+## 예시
 
-### Multiple Dynamic Segments in a Route
+### 단일 경로에서의 다중 동적 세그먼트
 
-You can generate params for dynamic segments above the current layout or page, but **not below**. For example, given the `app/products/[category]/[product]` route:
+현재 레이아웃 또는 페이지 위에서 동적 세그먼트에 대한 매개변수를 생성할 수 있지만 **아래는 아닙니다**. 예를 들어, `app/products/[category]/[product]` 경로가 주어진 경우:
 
-- `app/products/[category]/[product]/page.js` can generate params for **both** `[category]` and `[product]`.
-- `app/products/[category]/layout.js` can **only** generate params for `[category]`.
+- `app/products/[category]/[product]/page.js` 는 `[category]` 와 `[product]` **모두의** 매개변수를 생성할 수 있다.
+- `app/products/[category]/layout.js` 는 `[category]` **하나에 대해서만** 매개변수를 생성할 수 있다.
 
-There are two approaches to generating params for a route with multiple dynamic segments:
+여러 동적 세그먼트가 있는 경로에 대한 매개변수를 생성하는 방법에는 두 가지가 있습니다.
 
-### Generate params from the bottom up
+### 아래에서 위로 매개변수 생성하기
 
-Generate multiple dynamic segments from the child route segment.
+하위 경로 세그먼트에서 여러 동적 세그먼트를 생성합니다.
 
 ```tsx filename="app/products/[category]/[product]/page.tsx" switcher
-// Generate segments for both [category] and [product]
+// [category] 와 [product] 모두에 대한 세그먼트가 생성됩니다.
 export async function generateStaticParams() {
   const products = await fetch('https://.../products').then((res) => res.json())
 
@@ -202,7 +202,7 @@ export default function Page({
 ```
 
 ```jsx filename="app/products/[category]/[product]/page.js" switcher
-// Generate segments for both [category] and [product]
+// [category] 와 [product] 모두에 대한 세그먼트가 생성됩니다.
 export async function generateStaticParams() {
   const products = await fetch('https://.../products').then((res) => res.json())
 
@@ -217,12 +217,12 @@ export default function Page({ params }) {
 }
 ```
 
-### Generate params from the top down
+### 위에서 아래로 매개변수 생성하기
 
-Generate the parent segments first and use the result to generate the child segments.
+상위 세그먼트를 먼저 생성하고 그 결과를 사용해 하위 세그먼트를 생성합니다.
 
 ```tsx filename="app/products/[category]/layout.tsx" switcher
-// Generate segments for [category]
+// [category] 의 세그먼트를 생성합니다.
 export async function generateStaticParams() {
   const products = await fetch('https://.../products').then((res) => res.json())
 
@@ -237,7 +237,7 @@ export default function Layout({ params }: { params: { category: string } }) {
 ```
 
 ```jsx filename="app/products/[category]/layout.js" switcher
-// Generate segments for [category]
+// [category] 의 세그먼트를 생성합니다.
 export async function generateStaticParams() {
   const products = await fetch('https://.../products').then((res) => res.json())
 
@@ -251,13 +251,13 @@ export default function Layout({ params }) {
 }
 ```
 
-A child route segment's `generateStaticParams` function is executed once for each segment a parent `generateStaticParams` generates.
+하위 경로 세그먼트의 `generateStaticParams` 함수는 상위 `generateStaticParams`가 생성하는 각 세그먼트에 대해 한 번씩 실행됩니다.
 
-The child `generateStaticParams` function can use the `params` returned from the parent `generateStaticParams` function to dynamically generate its own segments.
+하위 `generateStaticParams` 함수는 상위 `generateStaticParams` 함수에서 반환된 `params`를 사용해 자체 세그먼트를 동적으로 생성할 수 있습니다.
 
 ```tsx filename="app/products/[category]/[product]/page.tsx" switcher
-// Generate segments for [product] using the `params` passed from
-// the parent segment's `generateStaticParams` function
+// 상위 세그먼트의 `generateStaticParams` 함수에서 전달된 `params`를 사용하여
+// [product]에 대한 세그먼트를 생성합니다.
 export async function generateStaticParams({
   params: { category },
 }: {
@@ -282,8 +282,8 @@ export default function Page({
 ```
 
 ```jsx filename="app/products/[category]/[product]/page.js" switcher
-// Generate segments for [product] using the `params` passed from
-// the parent segment's `generateStaticParams` function
+// 상위 세그먼트의 `generateStaticParams` 함수에서 전달된 `params`를 사용하여
+// [product]에 대한 세그먼트를 생성합니다.
 export async function generateStaticParams({ params: { category } }) {
   const products = await fetch(
     `https://.../products?category=${category}`
@@ -299,10 +299,10 @@ export default function Page({ params }) {
 }
 ```
 
-> **Good to know**: When rendering a route, Next.js will [automatically deduplicate `fetch` requests](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping) for the same data across `generateMetadata`, `generateStaticParams`, Layouts, Pages, and Server Components. React [`cache` can be used](/docs/app/building-your-application/data-fetching/caching#react-cache) if `fetch` is unavailable.
+> **알아두면 좋은 점**: 경로를 렌더링할 때, Next.js 는 `generateMetadata`, `generateStaticParams`, 레이아웃, 페이지와 서버 컴포넌트에서 동일한 데이터에 대한 요청이 있다면 [자동으로 `fetch` 요청에 대해 중복건을 제거](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping) 할 것입니다. 리액트에서 `fetch` 가 사용이 불가하다면 [`캐시` 를 사용할 수 있습니다.](/docs/app/building-your-application/data-fetching/caching#react-cache)
 
 ## Version History
 
-| Version   | Changes                            |
+| 버전       | 변경사항                             |
 | --------- | ---------------------------------- |
-| `v13.0.0` | `generateStaticParams` introduced. |
+| `v13.0.0` | `generateStaticParams` 안내         |
