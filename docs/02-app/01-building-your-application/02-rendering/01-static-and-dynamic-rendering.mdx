@@ -1,56 +1,56 @@
 ---
 title: Static and Dynamic Rendering
 nav_title: Static and Dynamic
-description: Learn about static and dynamic rendering in Next.js.
+description: Next.js에서의 정적 그리고 동적 렌더링에 대해 배워봅시다.
 ---
 
-In Next.js, a route can be statically or dynamically rendered.
+Next.js에서 경로는 정적 또는 동적으로 렌더링 될 수 있습니다.
 
-- In a **static** route, components are rendered on the server at build time. The result of the work is cached and reused on subsequent requests.
-- In a **dynamic** route, components are rendered on the server at request time.
+- **정적** 라우트에서, 컴포넌트들은 빌드 타임에 서버에서 렌더링 됩니다. 이 작업 결과는 잦은 요청에 대해 캐싱되고 재사용됩니다.
+- **동적** 라우트에서, 컴포넌트들은 요청 시점에 서버에서 렌더링 됩니다.
 
-## Static Rendering (Default)
+## 정적 렌더링 (기본값)
 
-By default, Next.js statically renders routes to improve performance. This means all the rendering work is done ahead of time and can be served from a Content Delivery Network (CDN) geographically closer to the user.
+Next.js는 기본적으로 퍼포먼스 향상을 위해 경로를 정적으로 렌더링합니다. 따라서 모든 렌더링 작업을 사전에 완료해 사용자와 지리적으로 가까운 Content Delivery Network (CDN)에서 전달할 수 있습니다.
 
-## Static Data Fetching (Default)
+## 정적 데이터 페칭 (기본값)
 
-By default, Next.js will cache the result of `fetch()` requests that do not specifically opt out of caching behavior. This means that fetch requests that do not set a `cache` option will use the `force-cache` option.
+기본적으로 Next.js는 캐싱 동작이 명시적으로 제외되지 않은 `fetch()` 요청의 결과를 캐싱합니다. 즉, `cache` 옵션이 설정되지 않은 fetch 요청은 `force-cache` 옵션을 사용하게 됩니다.
 
-If any fetch requests in the route use the `revalidate` option, the route will be re-rendered statically during revalidation.
+라우트 내의 fetch 요청이 `revalidate` 옵션을 사용하면, 해당 라우트는 재검증 중에 정적으로 리렌더링 됩니다.
 
-To learn more about caching data fetching requests, see the [Caching and Revalidating](/docs/app/building-your-application/data-fetching/caching) page.
+데이터 페칭 요청 캐싱에 대해 더 알아보려면 [캐싱과 재검증](/docs/app/building-your-application/data-fetching/caching) 페이지를 참고하세요.
 
-## Dynamic Rendering
+## 동적 렌더링
 
-During static rendering, if a dynamic function or a dynamic `fetch()` request (no caching) is discovered, Next.js will switch to dynamically rendering the whole route at request time. Any cached data requests can still be re-used during dynamic rendering.
+정적 렌더링 과정에 동적 함수나 캐싱되지 않은 동적 `fetch()` 요청이 발견된다면 Next.js는 라우트 전체를 요청 시점에 동적으로 렌더링하도록 전환합니다. 캐싱된 데이터 요청은 동적 렌더링에서도 여전히 재사용될 수 있습니다.
 
-This table summarizes how [dynamic functions](#dynamic-functions) and [caching](#static-data-fetching-default) affect the rendering behavior of a route:
+다음 테이블은 [동적 함수](#dynamic-functions)와 [캐싱](#static-data-fetching-default)이 라우트의 렌더링 동작에 어떤 영향을 미치는지 요약합니다.
 
-| Data Fetching   | Dynamic Functions | Rendering |
-| --------------- | ----------------- | --------- |
-| Static (Cached) | No                | Static    |
-| Static (Cached) | Yes               | Dynamic   |
-| Not Cached      | No                | Dynamic   |
-| Not Cached      | Yes               | Dynamic   |
+| 데이터 페칭    | 동적 함수 | 렌더링 |
+| -------------- | --------- | ------ |
+| 정적 (캐싱 됨) | 없음      | 정적   |
+| 정적 (캐싱 됨) | 있음      | 동적   |
+| 캐싱되지 않음  | 없음      | 동적   |
+| 캐싱되지 않음  | 있음      | 동적   |
 
-Note how dynamic functions always opt the route into dynamic rendering, regardless of whether the data fetching is cached or not. In other words, static rendering is dependent not only on the data fetching behavior, but also on the dynamic functions used in the route.
+데이터 페칭이 캐싱되든 아니든, 동적 함수는 항상 라우트를 동적 렌더링 되도록 만든다는 점에 주목해야 합니다. 다시 말해, 정적 렌더링은 데이터 페칭 동작 뿐 아니라 라우트에서 사용하는 동적 함수에도 의존합니다.
 
-> **Good to know**: In the future, Next.js will introduce hybrid server-side rendering where layouts and pages in a route can be independently statically or dynamically rendered, instead of the whole route.
+> **참고**: Next.js는 미래에 라우트 전체가 아닌 독립적인 레이아웃과 페이지 단위로 정적 또는 동적으로 렌더링 되는 하이브리드 서버 사이드 렌더링을 지원할 예정입니다.
 
-### Dynamic Functions
+### 동적 함수
 
-Dynamic functions rely on information that can only be known at request time such as a user's cookies, current requests headers, or the URL's search params. In Next.js, these dynamic functions are:
+동적 함수는 유저의 쿠키, 요청 헤더, 또는 URL search params 등 요청 시점에 알 수 있는 정보에 의존합니다. Next.js에서 이런 동적 함수는 다음과 같습니다.
 
-- Using [`cookies()`](/docs/app/api-reference/functions/cookies) or [`headers()`](/docs/app/api-reference/functions/headers) in a Server Component will opt the whole route into dynamic rendering at request time.
-- Using [`useSearchParams()`](/docs/app/api-reference/functions/use-params) in Client Components will skip static rendering and instead render all Client Components up to the nearest parent Suspense boundary on the client.
-  - We recommend wrapping the Client Component that uses `useSearchParams()` in a `<Suspense/>` boundary. This will allow any Client Components above it to be statically rendered. [Example](/docs/app/api-reference/functions/use-search-params#static-rendering).
-- Using the [`searchParams`](/docs/app/api-reference/file-conventions/page#searchparams-optional) [Pages](/docs/app/api-reference/file-conventions/page) prop will opt the page into dynamic rendering at request time.
+- 서버 컴포넌트에서 [`cookies()`](/docs/app/api-reference/functions/cookies) 또는 [`headers()`](/docs/app/api-reference/functions/headers)를 사용하는 경우 라우트 전체를 요청 시점에 동적 렌더링합니다.
+- 클라이언트 컴포넌트에서 [`useSearchParams()`](/docs/app/api-reference/functions/use-params)를 사용하는 경우 정적 렌더링을 생략하고 가장 가까운 부모 Suspense 바운더리까지의 모든 클라이언트 컴포넌트들을 클라이언트에서 렌더링합니다.
+  - `useSearchParams()`를 사용하는 클라이언트 컴포넌트를 `<Suspense/>` 바운더리로 감쌀 것을 권장합니다. 이렇게하면 상위의 클라이언트 컴포넌트들이 정적으로 렌더링될 수 있습니다. [예시](/docs/app/api-reference/functions/use-search-params#static-rendering).
+- [`searchParams`](/docs/app/api-reference/file-conventions/page#searchparams-optional) [Pages](/docs/app/api-reference/file-conventions/page) prop을 사용하는 경우 페이지는 요청 시점에 동적 렌더링 됩니다.
 
-## Dynamic Data Fetching
+## 동적 데이터 페칭
 
-Dynamic data fetches are `fetch()` requests that specifically opt out of caching behavior by setting the `cache` option to `'no-store'` or `revalidate` to `0`.
+동적 데이터 페칭은 `cache` 옵션을 `'no-store'`로 설정하거나 `revalidate`를 `0`으로 설정해 캐싱 동작을 비활성화한 `fetch()` 요청을 의미합니다.
 
-The caching options for all `fetch` requests in a layout or page can also be set using the [segment config](/docs/app/api-reference/file-conventions/route-segment-config) object.
+레이아웃 또는 페이지 내의 모든 `fetch` 요청에 대한 캐싱 옵션은 [segment config](/docs/app/api-reference/file-conventions/route-segment-config) 객체를 사용해 설정할 수 있습니다.
 
-To learn more about Dynamic Data Fetching, see the [Data Fetching](/docs/app/building-your-application/data-fetching/fetching) page.
+동적 데이터 페칭에 대해 더 알아보려면 [Data Fetching](/docs/app/building-your-application/data-fetching/fetching) 페이지를 참고하세요.
