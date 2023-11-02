@@ -20,6 +20,7 @@ const config = {
 	// If you aren't using GitHub pages, you don't need these.
 	organizationName: "nano-lee", // Usually your GitHub org/user name.
 	projectName: "nano-nextjs-study", // Usually your repo name.
+	deploymentBranch: "main",
 
 	onBrokenLinks: "throw",
 	onBrokenMarkdownLinks: "warn",
