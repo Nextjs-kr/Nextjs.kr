@@ -1,74 +1,75 @@
 ---
-title: 웹팩 설정 변경하기
-nav_title: 웹팩
-description: Next.js에서 웹팩 설정을 개발자의 의도에 따라 다양하게 바꾸는 방법에 대해 알아봅니다.
+title: Custom Webpack Config
+sidebar_label: webpack
+description: Learn how to customize the webpack config used by Next.js
 ---
 
-> **참고**: 웹팩 설정에 대한 변경은 [유의적 버전 명세](https://semver.org/lang/ko/)에 포함되지 않으므로, 이와 관련된 부분은 개발자가 직접 스스로 책임지고 관리하도록 합니다.
+{/* The content of this doc is shared between the app and pages router. You can use the  component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-웹팩 설정에 내용을 추가하기 전에 먼저 Next.js에서 이미 기본으로 지원되고 있는지 여부를 살펴보세요.
+> **Good to know**: changes to webpack config are not covered by semver so proceed at your own risk
 
-- [CSS imports](/docs/pages/building-your-application/styling)
-- [CSS modules](/docs/pages/building-your-application/styling/css-modules)
-- [Sass/SCSS imports](/docs/pages/building-your-application/styling/sass)
-- [Sass/SCSS modules](/docs/pages/building-your-application/styling/sass)
-- [preact](https://github.com/vercel/next.js/tree/canary/examples/using-preact)
-- [Customizing babel configuration](/docs/pages/building-your-application/configuring/babel)
+Before continuing to add custom webpack configuration to your application make sure Next.js doesn't already support your use-case:
 
-사람들이 자주 필요로 하는 것들 중 일부는 플러그인으로도 제공됩니다.
+-   [CSS imports](/docs/app/building-your-application/styling)
+-   [CSS modules](/docs/app/building-your-application/styling/css-modules)
+-   [Sass/SCSS imports](/docs/app/building-your-application/styling/sass)
+-   [Sass/SCSS modules](/docs/app/building-your-application/styling/sass)
+-   [preact](https://github.com/vercel/next.js/tree/canary/examples/using-preact)
 
-- [@next/mdx](https://github.com/vercel/next.js/tree/canary/packages/next-mdx)
-- [@next/bundle-analyzer](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)
+Some commonly asked for features are available as plugins:
 
-웹팩 사용을 확장하기 위해 다음과 같이 `next.config.js` 내부에 `webpack` 설정을 확장하는 함수를 정의할 수 있습니다.
+-   [@next/mdx](https://github.com/vercel/next.js/tree/canary/packages/next-mdx)
+-   [@next/bundle-analyzer](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)
+
+In order to extend our usage of `webpack`, you can define a function that extends its config inside `next.config.js`, like so:
 
 ```js filename="next.config.js"
 module.exports = {
-  webpack: (
-    config,
-    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
-  ) => {
-    // 중요: 수정된 config를 반환해야 합니다.
-    return config
-  },
-}
+	webpack: (
+		config,
+		{ buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
+	) => {
+		// Important: return the modified config
+		return config;
+	},
+};
 ```
 
-> 웹팩 함수는 서버, 클라이언트에서 총 두 번 실행됩니다. `isServer` 속성을 사용하여 클라이언트에서의 설정과 서버에서의 설정을 구분할 수 있습니다.
+> The `webpack` function is executed twice, once for the server and once for the client. This allows you to distinguish between client and server configuration using the `isServer` property.
 
-`webpack` 함수는 두 번째 인자로, 다음과 같은 프로퍼티들을 포함하는 객체를 받습니다.
+The second argument to the `webpack` function is an object with the following properties:
 
-- `buildId`: `String` - 빌드 ID. 빌드 간의 고유 식별자로 사용됩니다.
-- `dev`: `Boolean` - 컴파일을 개발 환경에서 수행할지 여부를 나타냅니다.
-- `isServer`: `Boolean` - 서버 사이드 컴파일에서는 `true`로, 클라이언트 사이드에서는 `false`로 나타납니다.
-- `nextRuntime`: `String | undefined` - 서버 측 컴파일의 대상이 되는 런타임 환경입니다. String 타입으로 `"edge"` 또는 `"nodejs"` 둘 중 하나의 값이 올 수 있습니다. `undefined`의 경우 이는 클라이언트 사이드 컴파일을 의미합니다.
-- `defaultLoaders`: `Object` - Next.js에서 기본으로 사용하는 로더입니다.
-  - `babel`: `Object` - `babel-loader`가 기본 옵션입니다.
+-   `buildId`: `String` - The build id, used as a unique identifier between builds
+-   `dev`: `Boolean` - Indicates if the compilation will be done in development
+-   `isServer`: `Boolean` - It's `true` for server-side compilation, and `false` for client-side compilation
+-   `nextRuntime`: `String | undefined` - The target runtime for server-side compilation; either `"edge"` or `"nodejs"`, it's `undefined` for client-side compilation.
+-   `defaultLoaders`: `Object` - Default loaders used internally by Next.js:
+    -   `babel`: `Object` - Default `babel-loader` configuration
 
-`defaultLoaders.babel` 사용의 예시는 아래와 같습니다.
+Example usage of `defaultLoaders.babel`:
 
 ```js
-// babel-loader에 의존하는 다른 로더를 추가하는 예제입니다.
-// 이 소스는 @next/mdx 소스에서 가져왔습니다.
+// Example config for adding a loader that depends on babel-loader
+// This source was taken from the @next/mdx plugin source:
 // https://github.com/vercel/next.js/tree/canary/packages/next-mdx
 module.exports = {
-  webpack: (config, options) => {
-    config.module.rules.push({
-      test: /\.mdx/,
-      use: [
-        options.defaultLoaders.babel,
-        {
-          loader: '@mdx-js/loader',
-          options: pluginOptions.options,
-        },
-      ],
-    })
+	webpack: (config, options) => {
+		config.module.rules.push({
+			test: /\.mdx/,
+			use: [
+				options.defaultLoaders.babel,
+				{
+					loader: "@mdx-js/loader",
+					options: pluginOptions.options,
+				},
+			],
+		});
 
-    return config
-  },
-}
+		return config;
+	},
+};
 ```
 
 #### `nextRuntime`
 
-`nextRuntime`이 `"edge"` 또는 `"nodejs"`일 때 `isServer` 값은 `true`입니다. 또 nextRuntime "`edge`"는 현재 edge 런타임에서의 미들웨어와 서버 컴포넌트를 위한 것입니다.
+Notice that `isServer` is `true` when `nextRuntime` is `"edge"` or `"nodejs"`, nextRuntime "`edge`" is currently for middleware and Server Components in edge runtime only.

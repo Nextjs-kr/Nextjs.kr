@@ -1,67 +1,69 @@
 ---
-title: 기본경로
-description: 도메인 하위 경로에 Next.js 애플리케이션을 배포하려면 `basePath`를 사용합니다.
+title: basePath
+description: Use `basePath` to deploy a Next.js application under a sub-path of a domain.
 ---
 
-도메인 하위 경로에 Next.js 애플리케이션을 배포하려면 `basePath` 옵션을 사용합니다. 
+{/* The content of this doc is shared between the app and pages router. You can use the  component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-`basePath`는 애플리케이션 경로에 접두사를 설정할 수 있습니다. 예컨대 `/docs`를 `''`대신 사용하고 싶은 경우(빈 문자열이 기본값), `next.config.js` 파일을 열어 `basePath` 옵션을 추가합니다.
+To deploy a Next.js application under a sub-path of a domain you can use the `basePath` config option.
+
+`basePath` allows you to set a path prefix for the application. For example, to use `/docs` instead of `''` (an empty string, the default), open `next.config.js` and add the `basePath` config:
 
 ```js filename="next.config.js"
 module.exports = {
-  basePath: '/docs',
-}
+	basePath: "/docs",
+};
 ```
 
-> **참고**: 이 값의 경우 반드시 빌드 시점에 설정해야 하며 클라이언트 사이드 번들에 인라인으로 설정되므로 다시 빌드하지 않는 이상 변경할 수 없습니다.
+> **Good to know**: This value must be set at build time and cannot be changed without re-building as the value is inlined in the client-side bundles.
 
 ### Links
 
-`next/link`와 `next/router`를 이용해 다른 페이지들을 연결하는 경우, `basePath`는 자동으로 적용됩니다. 
+When linking to other pages using `next/link` and `next/router` the `basePath` will be automatically applied.
 
-예컨대 `basePath` 설정값이 `/docs`인 경우, `/about`은 자동으로 `/docs/about`이 됩니다.
+For example, using `/about` will automatically become `/docs/about` when `basePath` is set to `/docs`.
 
 ```js
 export default function HomePage() {
-  return (
-    <>
-      <Link href="/about">About Page</Link>
-    </>
-  )
+	return (
+		<>
+			<Link href="/about">About Page</Link>
+		</>
+	);
 }
 ```
 
-결과:
+Output html:
 
 ```html
 <a href="/docs/about">About Page</a>
 ```
 
-이제 `basePath` 설정값을 변경할 때 애플리케이션의 모든 링크를 변경하지 않아도 됩니다.
+This makes sure that you don't have to change all links in your application when changing the `basePath` value.
 
 ### Images
 
-[`next/image`](/docs/pages/api-reference/components/image) 컴포넌트를 사용할 경우, `basePath`를 `src` 경로 앞에 붙여야합니다.
+When using the [`next/image`](/docs/app/api-reference/components/image) component, you will need to add the `basePath` in front of `src`.
 
-예컨대 `basePath` 값이 `/docs`인 경우, `/docs/me.png`를 사용하면 이미지가 잘 나옵니다.
+For example, using `/docs/me.png` will properly serve your image when `basePath` is set to `/docs`.
 
 ```jsx
-import Image from 'next/image'
+import Image from "next/image";
 
 function Home() {
-  return (
-    <>
-      <h1>My Homepage</h1>
-      <Image
-        src="/docs/me.png"
-        alt="Picture of the author"
-        width={500}
-        height={500}
-      />
-      <p>Welcome to my homepage!</p>
-    </>
-  )
+	return (
+		<>
+			<h1>My Homepage</h1>
+			<Image
+				src="/docs/me.png"
+				alt="Picture of the author"
+				width={500}
+				height={500}
+			/>
+			<p>Welcome to my homepage!</p>
+		</>
+	);
 }
 
-export default Home
+export default Home;
 ```

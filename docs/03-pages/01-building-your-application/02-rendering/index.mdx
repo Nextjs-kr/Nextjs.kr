@@ -1,21 +1,25 @@
 ---
-title: 렌더링
-description: React와 Next.js에서 렌더링의 기초를 배워보세요.
+title: Rendering
+description: Learn the fundamentals of rendering in React and Next.js.
 ---
 
-기본적으로 Next.js는 모든 페이지를 **사전 렌더링**합니다. 즉, 클라이언트 측 JavaScript가 모든 작업을 수행하는 대신 Next.js가 각 페이지에 대한 HTML을 미리 생성합니다. 사전 렌더링은 성능과 SEO를 개선할 수 있습니다.
+By default, Next.js **pre-renders** every page. This means that Next.js generates HTML for each page in advance, instead of having it all done by client-side JavaScript. Pre-rendering can result in better performance and SEO.
 
-생성된 각 HTML은 해당 페이지에 필요한 최소한의 JavaScript 코드와 연결됩니다. 페이지가 브라우저에 의해 로드되면 해당 페이지의 JavaScript 코드가 실행되어 페이지를 완전히 상호작용하도록 만듭니다(이 프로세스를 React에서는 [하이드레이션](https://react.dev/reference/react-dom/client/hydrateRoot)이라고 합니다).
+Each generated HTML is associated with minimal JavaScript code necessary for that page. When a page is loaded by the browser, its JavaScript code runs and makes the page fully interactive (this process is called [hydration](https://react.dev/reference/react-dom/client/hydrateRoot) in React).
 
-### 사전 렌더링
+### Pre-rendering
 
-Next.js에는 두 가지 형태의 사전 렌더링이 있습니다. **정적 생성**과 **서버 측 렌더링**입니다. 차이점은 페이지의 HTML을 생성하는 **시점**에 있습니다.
+Next.js has two forms of pre-rendering: **Static Generation** and **Server-side Rendering**. The difference is in **when** it generates the HTML for a page.
 
-- 정적 생성: HTML은 **빌드 시**에 생성되며 각 요청에 재사용됩니다.
-- 서버 측 렌더링: HTML은 **각 요청마다** 생성됩니다.
+-   Static Generation: The HTML is generated at **build time** and will be reused on each request.
+-   Server-side Rendering: The HTML is generated on **each request**.
 
-중요한 점은 Next.js를 사용하면 각 페이지에 사용할 사전 렌더링 방식을 선택할 수 있다는 것입니다. 대부분의 페이지에는 정적 생성을 사용하고 다른 페이지에는 서버 측 렌더링을 사용하여 "하이브리드" Next.js 앱을 만들 수 있습니다.
+Importantly, Next.js lets you choose which pre-rendering form you'd like to use for each page. You can create a "hybrid" Next.js app by using Static Generation for most pages and using Server-side Rendering for others.
 
-성능상의 이유로 서버 측 렌더링보다 정적 생성을 사용하는 것을 권장합니다. 정적으로 생성된 페이지는 성능을 향상시키기 위한 추가 구성 없이 CDN에 의해 캐시 될 수 있습니다. 그러나 경우에 따라 서버 측 렌더링이 유일한 선택지일 수도 있습니다.
+We recommend using Static Generation over Server-side Rendering for performance reasons. Statically generated pages can be cached by CDN with no extra configuration to boost performance. However, in some cases, Server-side Rendering might be the only option.
 
-정적 생성 또는 서버 측 렌더링과 함께 클라이언트 측 데이터 페칭을 사용할 수도 있습니다. 이는 페이지의 일부분을 클라이언트 측 JavaScript로만 렌더링할 수 있다는 의미입니다. 자세한 내용은 [데이터 페칭](/docs/pages/building-your-application/data-fetching/client-side) 문서를 참조하세요.
+You can also use client-side data fetching along with Static Generation or Server-side Rendering. That means some parts of a page can be rendered entirely by clientside JavaScript. To learn more, take a look at the [Data Fetching](/docs/pages/building-your-application/data-fetching/client-side) documentation.
+
+import DocCardList from "@theme/DocCardList";
+
+<DocCardList />

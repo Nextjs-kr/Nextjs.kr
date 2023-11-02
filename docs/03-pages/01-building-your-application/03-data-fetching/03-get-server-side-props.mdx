@@ -1,4 +1,5 @@
 ---
+sidebar_position: 4
 title: getServerSideProps
 description: Fetch data on each request with `getServerSideProps`.
 ---
@@ -6,37 +7,37 @@ description: Fetch data on each request with `getServerSideProps`.
 If you export a function called `getServerSideProps` (Server-Side Rendering) from a page, Next.js will pre-render this page on each request using the data returned by `getServerSideProps`.
 
 ```tsx filename="pages/index.tsx" switcher
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
+import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 
 type Repo = {
-  name: string
-  stargazers_count: number
-}
+	name: string;
+	stargazers_count: number;
+};
 
-export const getServerSideProps: GetServerSideProps<{
-  repo: Repo
-}> = async () => {
-  const res = await fetch('https://api.github.com/repos/vercel/next.js')
-  const repo = await res.json()
-  return { props: { repo } }
-}
+export const getServerSideProps = (async (context) => {
+	const res = await fetch("https://api.github.com/repos/vercel/next.js");
+	const repo = await res.json();
+	return { props: { repo } };
+}) satisfies GetServerSideProps<{
+	repo: Repo;
+}>;
 
 export default function Page({
-  repo,
+	repo,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  return repo.stargazers_count
+	return repo.stargazers_count;
 }
 ```
 
 ```jsx filename="pages/index.js" switcher
-export const getServerSideProps = async () => {
-  const res = await fetch('https://api.github.com/repos/vercel/next.js')
-  const repo = await res.json()
-  return { props: { repo } }
+export async function getServerSideProps() {
+	const res = await fetch("https://api.github.com/repos/vercel/next.js");
+	const repo = await res.json();
+	return { props: { repo } };
 }
 
 export default function Page({ repo }) {
-  return repo.stargazers_count
+	return repo.stargazers_count;
 }
 ```
 
@@ -46,8 +47,8 @@ export default function Page({ repo }) {
 
 `getServerSideProps` only runs on server-side and never runs on the browser. If a page uses `getServerSideProps`, then:
 
-- When you request this page directly, `getServerSideProps` runs at request time, and this page will be pre-rendered with the returned props
-- When you request this page on client-side page transitions through [`next/link`](/docs/pages/api-reference/components/link) or [`next/router`](/docs/pages/api-reference/functions/use-router), Next.js sends an API request to the server, which runs `getServerSideProps`
+-   When you request this page directly, `getServerSideProps` runs at request time, and this page will be pre-rendered with the returned props
+-   When you request this page on client-side page transitions through [`next/link`](/docs/pages/api-reference/components/link) or [`next/router`](/docs/pages/api-reference/functions/use-router), Next.js sends an API request to the server, which runs `getServerSideProps`
 
 `getServerSideProps` returns JSON which will be used to render the page. All this work will be handled automatically by Next.js, so you don’t need to do anything extra as long as you have `getServerSideProps` defined.
 
@@ -79,18 +80,18 @@ You can explicitly set the runtime on a per-page basis by modifying the `config`
 
 ```jsx filename="pages/index.js"
 export const config = {
-  runtime: 'nodejs', // or "edge"
-}
+	runtime: "nodejs", // or "edge"
+};
 
-export const getServerSideProps = async () => {}
+export const getServerSideProps = async () => {};
 ```
 
 ## Fetching data on the client side
 
 If your page contains frequently updating data, and you don’t need to pre-render the data, you can fetch the data on the [client side](/docs/pages/building-your-application/data-fetching/client-side). An example of this is user-specific data:
 
-- First, immediately show the page without data. Parts of the page can be pre-rendered using Static Generation. You can show loading states for missing data
-- Then, fetch the data on the client side and display it when ready
+-   First, immediately show the page without data. Parts of the page can be pre-rendered using Static Generation. You can show loading states for missing data
+-   Then, fetch the data on the client side and display it when ready
 
 This approach works well for user dashboard pages, for example. Because a dashboard is a private, user-specific page, SEO is not relevant and the page doesn’t need to be pre-rendered. The data is frequently updated, which requires request-time data fetching.
 
@@ -99,21 +100,19 @@ This approach works well for user dashboard pages, for example. Because a dashbo
 The following example shows how to fetch data at request time and pre-render the result.
 
 ```jsx
-function Page({ data }) {
-  // Render data...
-}
-
 // This gets called on every request
 export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`https://.../data`)
-  const data = await res.json()
+	// Fetch data from external API
+	const res = await fetch(`https://.../data`);
+	const data = await res.json();
 
-  // Pass data to the page via props
-  return { props: { data } }
+	// Pass data to the page via props
+	return { props: { data } };
 }
 
-export default Page
+export default function Page({ data }) {
+	// Render data...
+}
 ```
 
 ## Caching with Server-Side Rendering (SSR)
@@ -129,14 +128,14 @@ You can use caching headers (`Cache-Control`) inside `getServerSideProps` to cac
 // In the background, a revalidation request will be made to populate the cache
 // with a fresh value. If you refresh the page, you will see the new value.
 export async function getServerSideProps({ req, res }) {
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59'
-  )
+	res.setHeader(
+		"Cache-Control",
+		"public, s-maxage=10, stale-while-revalidate=59",
+	);
 
-  return {
-    props: {},
-  }
+	return {
+		props: {},
+	};
 }
 ```
 

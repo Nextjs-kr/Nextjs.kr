@@ -1,21 +1,21 @@
 ---
-title: 접근성
-description: Next.js의 내장되어 있는 접근성 관련 기능입니다.
+title: Accessibility
+description: The built-in accessibility features of Next.js.
 ---
 
-Next.js 팀은 모든 개발자(및 그들의 최종 사용자)가 Next.js에 접근할 수 있도록 노력하고 있습니다. Next.js에 기본적으로 접근성 기능을 추가함으로써, 우리는 웹을 모두 포용할 수 있는 공간으로 만들고자 합니다.
+The Next.js team is committed to making Next.js accessible to all developers (and their end-users). By adding accessibility features to Next.js by default, we aim to make the Web more inclusive for everyone.
 
-## 라우트 안내
+## Route Announcements
 
-서버에서 렌더링된 페이지를 전환할 때 (예: `<a href>` 태그를 사용하는 경우) 스크린 리더 및 기타 보조 기술은 페이지가 로드하는 동안 페이지 제목을 보여주어 사용자가 페이지 변경을 알 수 있습니다.
+When transitioning between pages rendered on the server (e.g. using the `<a href>` tag) screen readers and other assistive technology announce the page title when the page loads so that users understand that the page has changed.
 
-전통적인 페이지 탐색 외에도, Next.js는 향상된 성능을 위해 클라이언트 측 전환을 지원합니다 (`next/link`를 사용). 클라이언트 측 전환을 보조 기술에 알리기 위해, Next.js는 기본적으로 라우트 안내기를 포함하고 있습니다.
+In addition to traditional page navigations, Next.js also supports client-side transitions for improved performance (using `next/link`). To ensure that client-side transitions are also announced to assistive technology, Next.js includes a route announcer by default.
 
-Next.js의 라우트 안내기는 페이지 이름을 보여주기 위해 첫 번째로 `document.title`를 다음으로 `<h1>` 엘리먼트를 마지막으로 URL 경로를 검사합니다. 가장 접근성이 높은 사용자 경험을 위해서는 애플리케이션의 각 페이지가 고유하고 페이지를 설명할 수 있는 제목을 가지도록 해야 합니다.
+The Next.js route announcer looks for the page name to announce by first inspecting `document.title`, then the `<h1>` element, and finally the URL pathname. For the most accessible user experience, ensure that each page in your application has a unique and descriptive title.
 
-## 린팅
+## Linting
 
-Next.js는 [통합 ESLint 환경](/docs/pages/building-your-application/configuring/eslint)을 제공하며, Next.js를 위한 사용자 정의 규칙을 포함합니다. Next.js에는 `eslint-plugin-jsx-a11y`가 포함되어 있어 접근성 문제를 조기에 발견하고 경고를 표시하는 데 도움을 줍니다. 다음에 대한 경고가 포함됩니다:
+Next.js provides an [integrated ESLint experience](/docs/pages/building-your-application/configuring/eslint) out of the box, including custom rules for Next.js. By default, Next.js includes `eslint-plugin-jsx-a11y` to help catch accessibility issues early, including warning on:
 
 - [aria-props](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/aria-props.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
 - [aria-proptypes](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/aria-proptypes.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
@@ -23,12 +23,12 @@ Next.js는 [통합 ESLint 환경](/docs/pages/building-your-application/configur
 - [role-has-required-aria-props](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/role-has-required-aria-props.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
 - [role-supports-aria-props](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/role-supports-aria-props.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
 
-예를 들어 이 플러그인은 `img` 태그에 alt 텍스트를 추가하고 `aria-*` 속성, `role` 속성을 올바르게 사용하는 등의 작업을 수행하도록 도와줍니다.
+For example, this plugin helps ensure you add alt text to `img` tags, use correct `aria-*` attributes, use correct `role` attributes, and more.
 
-## 접근성 자료
+## Accessibility Resources
 
-- [WebAIM WCAG 체크리스트](https://webaim.org/standards/wcag/checklist)
-- [WCAG 2.1 가이드라인](https://www.w3.org/TR/WCAG21/)
-- [A11y 프로젝트](https://www.a11yproject.com/)
-- 전경과 배경 요소 사이의 [색상 대비 비율](https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_WCAG/Perceivable/Color_contrast)을 확인하세요
-- 애니메이션 작업 시 [`움직임-감소-선호`](https://web.dev/prefers-reduced-motion/)를 사용하세요
+- [WebAIM WCAG checklist](https://webaim.org/standards/wcag/checklist)
+- [WCAG 2.1 Guidelines](https://www.w3.org/TR/WCAG21/)
+- [The A11y Project](https://www.a11yproject.com/)
+- Check [color contrast ratios](https://developer.mozilla.org/docs/Web/Accessibility/Understanding_WCAG/Perceivable/Color_contrast) between foreground and background elements
+- Use [`prefers-reduced-motion`](https://web.dev/prefers-reduced-motion/) when working with animations

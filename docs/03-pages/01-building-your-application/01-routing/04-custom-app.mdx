@@ -1,13 +1,14 @@
 ---
+sidebar_position: 4
 title: 커스텀 App
 description: Next.js의 기본 App 컴포넌트를 덮어 씀으로써 페이지 초기화를 제어하고 페이지 전체에 적용되는 레이아웃을 추가합니다.
 ---
 
 Next.js는 `App` 컴포넌트를 사용하여 페이지를 초기화합니다. `App` 컴포넌트는 덮어 쓰기 하여 페이지 초기화를 제어할 수 있으며 그 외의 기능은 다음과 같습니다.
 
-- 페이지 변경 사이에 레이아웃 유지
-- 추가 데이터를 페이지로 주입
-- [전역 CSS 추가](/docs/03-pages/01-building-your-application/04-styling/index.mdx)
+-   페이지 변경 사이에 레이아웃 유지
+-   추가 데이터를 페이지로 주입
+-   [전역 CSS 추가](/docs/03-pages/01-building-your-application/04-styling/index.mdx)
 
 ### 사용방법
 
@@ -15,7 +16,7 @@ Next.js는 `App` 컴포넌트를 사용하여 페이지를 초기화합니다. `
 
 ```jsx filename="pages/_app.js"
 export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+	return <Component {...pageProps} />;
 }
 ```
 
@@ -25,8 +26,8 @@ export default function MyApp({ Component, pageProps }) {
 
 > **참고**
 >
-> - 앱이 실행 중인 상태에서 커스텀 `App`을 추가했다면 개발 서버를 재실행해야 합니다. 이는 `pages/_app.js`가 기존에 없었을 경우에만 해당합니다.
-> - `App`은 [`getStaticProps`](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx) 또는 [`getServerSideProps`](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx)와 같은 Next.js [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching/index.mdx)를 지원하지 않습니다.
+> -   앱이 실행 중인 상태에서 커스텀 `App`을 추가했다면 개발 서버를 재실행해야 합니다. 이는 `pages/_app.js`가 기존에 없었을 경우에만 해당합니다.
+> -   `App`은 [`getStaticProps`](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx) 또는 [`getServerSideProps`](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx)와 같은 Next.js [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching/index.mdx)를 지원하지 않습니다.
 
 ## `App`에서 `getInitialProps` 사용하기
 

@@ -1,45 +1,49 @@
 ---
-title: 자동 정적 최적화
-description: Next.js는 가능할 때마다 앱을 정적 HTML로 자동 최적화합니다. 여기에서 작동 방식을 알아보세요.
+sidebar_position: 4
+title: Automatic Static Optimization
+description: Next.js automatically optimizes your app to be static HTML whenever possible. Learn how it works here.
 ---
 
-Next.js는 차단 데이터 요구사항이 없는 경우 페이지가 정적(미리 렌더링 가능)인지 자동으로 판단합니다. 이 결정은 페이지에 `getServerSideProps`와 `getInitialProps`의 유무로 판단됩니다.
+Next.js automatically determines that a page is static (can be prerendered) if it has no blocking data requirements. This determination is made by the absence of `getServerSideProps` and `getInitialProps` in the page.
 
-이 기능을 통해 Next.js는 **서버 렌더링 페이지와 정적으로 생성된 페이지**를 모두 포함하는 하이브리드 애플리케이션으로 생성할 수 있습니다.
+This feature allows Next.js to emit hybrid applications that contain **both server-rendered and statically generated pages**.
 
-> 정적으로 생성된 페이지는 여전히 반응형입니다. Next.js는 애플리케이션 클라이언트 측에 데이터를 제공해 완전히 상호 작용할 수 있도록 합니다.
+> Statically generated pages are still reactive: Next.js will hydrate your application client-side to give it full interactivity.
 
-이 기능의 주요 이점 중 하나는 최적화된 페이지를 서버측에서 계산할 필요가 없으며 여러 CDN위치에서 최종 사용자에게 즉시 스트리밍할 수 있다는 점입니다. 그 결과 사용자에게 매우 빠른 로딩 경험을 제공합니다.
+One of the main benefits of this feature is that optimized pages require no server-side computation, and can be instantly streamed to the end-user from multiple CDN locations. The result is an _ultra fast_ loading experience for your users.
 
-## 작동 방식
+## How it works
 
-페이지에 `getServerSideProps` 또는 `getInitialProps`가 있는 경우, Next.js는 요청에 따라 페이지를 온디맨드 렌더링하도록 전환합니다(즉, [서버측 렌더링](/docs/pages/building-your-application/rendering/server-side-rendering)을 실행합니다).
-그렇지 않은 경우 Next.js는 페이지를 정적 HTML로 미리 렌더링하여 페이지를 자동으로 **정적 최적화**합니다.
-미리 렌더링하는 중에는 이 단계에서 제공할 '쿼리' 정보가 없으므로 라우터의 '쿼리' 객체가 비어 있습니다. 하이드레이션(데이터를 제공하는 과정)이 끝나면 Next.js가 애플리케이션 업데이트를 트리거하여 `query` 객체에 경로 매개변수를 제공합니다.
-하이드레이션이 다른 렌더링을 발생시킨 후 쿼리가 업데이트되는 경우는 다음과 같습니다.
+If `getServerSideProps` or `getInitialProps` is present in a page, Next.js will switch to render the page on-demand, per-request (meaning [Server-Side Rendering](/docs/pages/building-your-application/rendering/server-side-rendering)).
 
-- 페이지가 [동적 경로](/docs/pages/building-your-application/routing/dynamic-routes)인 경우.
-- 페이지가 쿼리값을 url에 포함하고 있는 경우
-- [Rewrites](/docs/pages/api-reference/next-config-js/rewrites)기능은 `query`를 구문 분석하여 얻을 수 있는 매개변수가 있을 수 있으므로 `next.config.js`에 설정됩니다.
+If the above is not the case, Next.js will **statically optimize** your page automatically by prerendering the page to static HTML.
 
-쿼리가 완전히 업데이트되어 사용할 준비가 되었는지 구별하려면 [`next/router`](/docs/pages/api-reference/functions/use-router#router-object)의 `isReady` 필드를 활용할 수 있습니다.
+During prerendering, the router's `query` object will be empty since we do not have `query` information to provide during this phase. After hydration, Next.js will trigger an update to your application to provide the route parameters in the `query` object.
 
-> **참고**: [동적라우팅](/docs/pages/building-your-application/routing/dynamic-routes)를 사용하는 페이지에 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props)로 추가된 매개변수는 항상 `query` 개체 내에서 사용할 수 있습니다.
+The cases where the query will be updated after hydration triggering another render are:
 
-다음 빌드`는 정적으로 최적화된 페이지에 대해 `.html`파일을 생성합니다. 예를 들어,`pages/about.js` 페이지에 대한 결과는 다음과 같습니다.
+-   The page is a [dynamic-route](/docs/pages/building-your-application/routing/dynamic-routes).
+-   The page has query values in the URL.
+-   [Rewrites](/docs/pages/api-reference/next-config-js/rewrites) are configured in your `next.config.js` since these can have parameters that may need to be parsed and provided in the `query`.
+
+To be able to distinguish if the query is fully updated and ready for use, you can leverage the `isReady` field on [`next/router`](/docs/pages/api-reference/functions/use-router#router-object).
+
+> **Good to know**: Parameters added with [dynamic routes](/docs/pages/building-your-application/routing/dynamic-routes) to a page that's using [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) will always be available inside the `query` object.
+
+`next build` will emit `.html` files for statically optimized pages. For example, the result for the page `pages/about.js` would be:
 
 ```bash filename="Terminal"
 .next/server/pages/about.html
 ```
 
-그리고 페이지에 `getServerSideProps`를 추가하면 다음과 같이 JavaScript가 됩니다.
+And if you add `getServerSideProps` to the page, it will then be JavaScript, like so:
 
 ```bash filename="Terminal"
 .next/server/pages/about.js
 ```
 
-## 주의사항
+## Caveats
 
-- `getInitialProps`가 있는 [사용자 정의 `App`](/docs/pages/building-your-application/routing/custom-app)이 있는 경우 [정적 생성](/docs/pages/building-your-application/data-fetching/get-static-props)이 없는 페이지에서 이 최적화가 해제됩니다.
-- `getInitialProps`가 있는 [사용자 정의 `문서`](/docs/pages/building-your-application/routing/custom-document)가 있는 경우 페이지가 서버 측에서 렌더링된다고 가정하기 전에 `ctx.req`가 정의되어 있는지 확인하세요. 미리 렌더링된 페이지의 경우 `ctx.req`는 `undefined`으로 되어있습니다.
-- 라우터의 `isReady` 필드가 `true`가 될 때까지 렌더링 트리에서 [`next/router`](/docs/pages/api-reference/functions/use-router#router-object)의 `asPath` 값을 사용하지 마세요. 정적으로 최적화된 페이지는 서버가 아닌 클라이언트에서만 `asPath`를 알기 때문에 이를 프로퍼티로 사용하면 불일치 오류가 발생할 수 있습니다. [`활성 클래스 이름` 예제](https://github.com/vercel/next.js/tree/canary/examples/active-class-name)는 `asPath`를 프로퍼티로 사용하는 한 가지 방법을 보여줍니다.
+-   If you have a [custom `App`](/docs/pages/building-your-application/routing/custom-app) with `getInitialProps` then this optimization will be turned off in pages without [Static Generation](/docs/pages/building-your-application/data-fetching/get-static-props).
+-   If you have a [custom `Document`](/docs/pages/building-your-application/routing/custom-document) with `getInitialProps` be sure you check if `ctx.req` is defined before assuming the page is server-side rendered. `ctx.req` will be `undefined` for pages that are prerendered.
+-   Avoid using the `asPath` value on [`next/router`](/docs/pages/api-reference/functions/use-router#router-object) in the rendering tree until the router's `isReady` field is `true`. Statically optimized pages only know `asPath` on the client and not the server, so using it as a prop may lead to mismatch errors. The [`active-class-name` example](https://github.com/vercel/next.js/tree/canary/examples/active-class-name) demonstrates one way to use `asPath` as a prop.

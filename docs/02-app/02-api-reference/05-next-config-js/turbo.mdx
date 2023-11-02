@@ -1,70 +1,72 @@
 ---
-title: turbo (실험적 기능)
-nav_title: turbo
-description: Turbopack 관련 옵션으로 Next.js 구성하기
+title: turbo (Experimental)
+sidebar_label: turbo
+description: Configure Next.js with Turbopack-specific options
 ---
 
-> **주의**: 해당 내용은 실험적인 기능이며 `next --turbo`에서만 동작합니다.
+{/* The content of this doc is shared between the app and pages router. You can use the  component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-## 웹팩 로더
+> **Warning**: These features are experimental and will only work with `next --turbo`.
 
-현재 Turbopack은 웹팩 로더 API의 일부분을 지원하기 때문에 일부 웹팩 로더를 사용하여 Turbopack으로 코드를 변환할 수 있습니다.
+## webpack loaders
 
-로더를 구성하려면 설치한 로더의 이름과 `next.config.js` 옵션을 추가하고 파일 확장자를 로더 목록에 매핑하세요.
+Currently, Turbopack supports a subset of webpack's loader API, allowing you to use some webpack loaders to transform code in Turbopack.
+
+To configure loaders, add the names of the loaders you've installed and any options in `next.config.js`, mapping file extensions to a list of loaders:
 
 ```js filename="next.config.js"
 module.exports = {
-  experimental: {
-    turbo: {
-      loaders: {
-        // 옵션 형식
-        '.md': [
-          {
-            loader: '@mdx-js/loader',
-            options: {
-              format: 'md',
-            },
-          },
-        ],
-        // 옵션이 없는 형식
-        '.mdx': ['@mdx-js/loader'],
-      },
-    },
-  },
-}
+	experimental: {
+		turbo: {
+			rules: {
+				// Option format
+				"*.md": [
+					{
+						loader: "@mdx-js/loader",
+						options: {
+							format: "md",
+						},
+					},
+				],
+				// Option-less format
+				"*.mdx": ["@mdx-js/loader"],
+			},
+		},
+	},
+};
 ```
 
-이후 주어진 위 구성을 적용하여 앱에서 변환된 코드를 사용할 수 있습니다.
+Then, given the above configuration, you can use transformed code from your app:
 
 ```js
-import MyDoc from './my-doc.mdx'
+import MyDoc from "./my-doc.mdx";
 
 export default function Home() {
-  return <MyDoc />
+	return <MyDoc />;
 }
 ```
 
-## 모듈 분석 별칭
+## Resolve Alias
 
-Turbopack은 `next.config.js`를 통해 웹팩의 [`resolve.alias`](https://webpack.js.org/configuration/resolve/#resolvealias) 구성과 유사하게 모듈 분석 처리를 별칭으로 수정하도록 구성할 수 있습니다.
+Through `next.config.js`, Turbopack can be configured to modify module resolution through aliases, similar to webpack's [`resolve.alias`](https://webpack.js.org/configuration/resolve/#resolvealias) configuration.
 
-별칭을 구성하려면 모듈 가져오기 패턴을 `next.config.js`의 새로운 대상에 매핑하세요.
+To configure resolve aliases, map imported patterns to their new destination in `next.config.js`:
 
 ```js filename="next.config.js"
 module.exports = {
-  experimental: {
-    turbo: {
-      resolveAlias: {
-        underscore: 'lodash',
-        mocha: { browser: 'mocha/browser-entry.js' },
-      },
-    },
-  },
-}
+	experimental: {
+		turbo: {
+			resolveAlias: {
+				underscore: "lodash",
+				mocha: { browser: "mocha/browser-entry.js" },
+			},
+		},
+	},
+};
 ```
 
-해당 별칭은 `underscore` 패키지를 `lodash`로 가져온다는 것을 의미합니다. 즉 `import underscore from 'underscore'`는 `underscore` 대신 `lodash`를 로드합니다.
+This aliases imports of the `underscore` package to the `lodash` package. In other words, `import underscore from 'underscore'` will load the `lodash` module instead of `underscore`.
 
-또한 Turbopack은 Node.js의 [조건부 내보내기](https://nodejs.org/docs/latest-v18.x/api/packages.html#conditional-exports)와 유사하게 해당 필드를 통해 조건부 별칭을 지원합니다. 현재는 `browser` 조건만 지원됩니다. 위의 경우 Turbopack이 브라우저 환경을 대상으로 할 때 `mocha` 모듈 가져오기는 `mocha/browser-entry.js`로 별칭이 지정됩니다.
+Turbopack also supports conditional aliasing through this field, similar to Node.js's [conditional exports](https://nodejs.org/docs/latest-v18.x/api/packages.html#conditional-exports). At the moment only the `browser` condition is supported. In the case above, imports of the `mocha` module will be aliased to `mocha/browser-entry.js` when Turbopack targets browser environments.
 
-웹팩에서 Turbopack으로 앱을 마이그레이션하는 방법에 대한 자세한 내용과 지침은 [웹팩 호환성에 대한 Turbopack 설명서](https://turbo.build/pack/docs/migrating-from-webpack)를 참조하세요.
+For more information and guidance for how to migrate your app to Turbopack from webpack, see [Turbopack's documentation on webpack compatibility](https://turbo.build/pack/docs/migrating-from-webpack).

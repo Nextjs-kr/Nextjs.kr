@@ -1,8 +1,10 @@
 ---
 title: Font Module
-nav_title: Font
+sidebar_label: Font
 description: Optimizing loading web fonts with the built-in `next/font` loaders.
 ---
+
+{/* The content of this doc is shared between the app and pages router. You can use the  component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
 This API reference will help you understand how to use [`next/font/google`](/docs/app/building-your-application/optimizing/fonts#google-fonts) and [`next/font/local`](/docs/app/building-your-application/optimizing/fonts#local-fonts). For features and usage, please see the [Optimizing Fonts](/docs/app/building-your-application/optimizing/fonts) page.
 
@@ -30,47 +32,47 @@ The path of the font file as a string or an array of objects (with type `Array<{
 
 Used in `next/font/local`
 
-- Required
+-   Required
 
 Examples:
 
-- `src:'./fonts/my-font.woff2'` where `my-font.woff2` is placed in a directory named `fonts` inside the `app` directory
-- `src:[{path: './inter/Inter-Thin.ttf', weight: '100',},{path: './inter/Inter-Regular.ttf',weight: '400',},{path: './inter/Inter-Bold-Italic.ttf', weight: '700',style: 'italic',},]`
-- if the font loader function is called in `app/page.tsx` using `src:'../styles/fonts/my-font.ttf'`, then `my-font.ttf` is placed in `styles/fonts` at the root of the project
+-   `src:'./fonts/my-font.woff2'` where `my-font.woff2` is placed in a directory named `fonts` inside the `app` directory
+-   `src:[{path: './inter/Inter-Thin.ttf', weight: '100',},{path: './inter/Inter-Regular.ttf',weight: '400',},{path: './inter/Inter-Bold-Italic.ttf', weight: '700',style: 'italic',},]`
+-   if the font loader function is called in `app/page.tsx` using `src:'../styles/fonts/my-font.ttf'`, then `my-font.ttf` is placed in `styles/fonts` at the root of the project
 
 ### `weight`
 
 The font [`weight`](https://fonts.google.com/knowledge/glossary/weight) with the following possibilities:
 
-- A string with possible values of the weights available for the specific font or a range of values if it's a [variable](https://fonts.google.com/variablefonts) font
-- An array of weight values if the font is not a [variable google font](https://fonts.google.com/variablefonts). It applies to `next/font/google` only.
+-   A string with possible values of the weights available for the specific font or a range of values if it's a [variable](https://fonts.google.com/variablefonts) font
+-   An array of weight values if the font is not a [variable google font](https://fonts.google.com/variablefonts). It applies to `next/font/google` only.
 
 Used in `next/font/google` and `next/font/local`
 
-- Required if the font being used is **not** [variable](https://fonts.google.com/variablefonts)
+-   Required if the font being used is **not** [variable](https://fonts.google.com/variablefonts)
 
 Examples:
 
-- `weight: '400'`: A string for a single weight value - for the font [`Inter`](https://fonts.google.com/specimen/Inter?query=inter), the possible values are `'100'`, `'200'`, `'300'`, `'400'`, `'500'`, `'600'`, `'700'`, `'800'`, `'900'` or `'variable'` where `'variable'` is the default)
-- `weight: '100 900'`: A string for the range between `100` and `900` for a variable font
-- `weight: ['100','400','900']`: An array of 3 possible values for a non variable font
+-   `weight: '400'`: A string for a single weight value - for the font [`Inter`](https://fonts.google.com/specimen/Inter?query=inter), the possible values are `'100'`, `'200'`, `'300'`, `'400'`, `'500'`, `'600'`, `'700'`, `'800'`, `'900'` or `'variable'` where `'variable'` is the default)
+-   `weight: '100 900'`: A string for the range between `100` and `900` for a variable font
+-   `weight: ['100','400','900']`: An array of 3 possible values for a non variable font
 
 ### `style`
 
-The font [`style`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style) with the following possibilities:
+The font [`style`](https://developer.mozilla.org/docs/Web/CSS/font-style) with the following possibilities:
 
-- A string [value](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style#values) with default value of `'normal'`
-- An array of style values if the font is not a [variable google font](https://fonts.google.com/variablefonts). It applies to `next/font/google` only.
+-   A string [value](https://developer.mozilla.org/docs/Web/CSS/font-style#values) with default value of `'normal'`
+-   An array of style values if the font is not a [variable google font](https://fonts.google.com/variablefonts). It applies to `next/font/google` only.
 
 Used in `next/font/google` and `next/font/local`
 
-- Optional
+-   Optional
 
 Examples:
 
-- `style: 'italic'`: A string - it can be `normal` or `italic` for `next/font/google`
-- `style: 'oblique'`: A string - it can take any value for `next/font/local` but is expected to come from [standard font styles](https://developer.mozilla.org/en-US/docs/Web/CSS/font-style)
-- `style: ['italic','normal']`: An array of 2 values for `next/font/google` - the values are from `normal` and `italic`
+-   `style: 'italic'`: A string - it can be `normal` or `italic` for `next/font/google`
+-   `style: 'oblique'`: A string - it can take any value for `next/font/local` but is expected to come from [standard font styles](https://developer.mozilla.org/docs/Web/CSS/font-style)
+-   `style: ['italic','normal']`: An array of 2 values for `next/font/google` - the values are from `normal` and `italic`
 
 ### `subsets`
 
@@ -78,11 +80,11 @@ The font [`subsets`](https://fonts.google.com/knowledge/glossary/subsetting) def
 
 Used in `next/font/google`
 
-- Optional
+-   Optional
 
 Examples:
 
-- `subsets: ['latin']`: An array with the subset `latin`
+-   `subsets: ['latin']`: An array with the subset `latin`
 
 You can find a list of all subsets on the Google Fonts page for your font.
 
@@ -92,23 +94,23 @@ Some variable fonts have extra `axes` that can be included. By default, only the
 
 Used in `next/font/google`
 
-- Optional
+-   Optional
 
 Examples:
 
-- `axes: ['slnt']`: An array with value `slnt` for the `Inter` variable font which has `slnt` as additional `axes` as shown [here](https://fonts.google.com/variablefonts?vfquery=inter#font-families). You can find the possible `axes` values for your font by using the filter on the [Google variable fonts page](https://fonts.google.com/variablefonts#font-families) and looking for axes other than `wght`
+-   `axes: ['slnt']`: An array with value `slnt` for the `Inter` variable font which has `slnt` as additional `axes` as shown [here](https://fonts.google.com/variablefonts?vfquery=inter#font-families). You can find the possible `axes` values for your font by using the filter on the [Google variable fonts page](https://fonts.google.com/variablefonts#font-families) and looking for axes other than `wght`
 
 ### `display`
 
-The font [`display`](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display) with possible string [values](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display#values) of `'auto'`, `'block'`, `'swap'`, `'fallback'` or `'optional'` with default value of `'swap'`.
+The font [`display`](https://developer.mozilla.org/docs/Web/CSS/@font-face/font-display) with possible string [values](https://developer.mozilla.org/docs/Web/CSS/@font-face/font-display#values) of `'auto'`, `'block'`, `'swap'`, `'fallback'` or `'optional'` with default value of `'swap'`.
 
 Used in `next/font/google` and `next/font/local`
 
-- Optional
+-   Optional
 
 Examples:
 
-- `display: 'optional'`: A string assigned to the `optional` value
+-   `display: 'optional'`: A string assigned to the `optional` value
 
 ### `preload`
 
@@ -116,37 +118,37 @@ A boolean value that specifies whether the font should be [preloaded](/docs/app/
 
 Used in `next/font/google` and `next/font/local`
 
-- Optional
+-   Optional
 
 Examples:
 
-- `preload: false`
+-   `preload: false`
 
 ### `fallback`
 
 The fallback font to use if the font cannot be loaded. An array of strings of fallback fonts with no default.
 
-- Optional
+-   Optional
 
 Used in `next/font/google` and `next/font/local`
 
 Examples:
 
-- `fallback: ['system-ui', 'arial']`: An array setting the fallback fonts to `system-ui` or `arial`
+-   `fallback: ['system-ui', 'arial']`: An array setting the fallback fonts to `system-ui` or `arial`
 
 ### `adjustFontFallback`
 
-- For `next/font/google`: A boolean value that sets whether an automatic fallback font should be used to reduce [Cumulative Layout Shift](https://web.dev/cls/). The default is `true`.
-- For `next/font/local`: A string or boolean `false` value that sets whether an automatic fallback font should be used to reduce [Cumulative Layout Shift](https://web.dev/cls/). The possible values are `'Arial'`, `'Times New Roman'` or `false`. The default is `'Arial'`.
+-   For `next/font/google`: A boolean value that sets whether an automatic fallback font should be used to reduce [Cumulative Layout Shift](https://web.dev/cls/). The default is `true`.
+-   For `next/font/local`: A string or boolean `false` value that sets whether an automatic fallback font should be used to reduce [Cumulative Layout Shift](https://web.dev/cls/). The possible values are `'Arial'`, `'Times New Roman'` or `false`. The default is `'Arial'`.
 
 Used in `next/font/google` and `next/font/local`
 
-- Optional
+-   Optional
 
 Examples:
 
-- `adjustFontFallback: false`: for ``next/font/google`
-- `adjustFontFallback: 'Times New Roman'`: for `next/font/local`
+-   `adjustFontFallback: false`: for `next/font/google`
+-   `adjustFontFallback: 'Times New Roman'`: for `next/font/local`
 
 ### `variable`
 
@@ -154,31 +156,31 @@ A string value to define the CSS variable name to be used if the style is applie
 
 Used in `next/font/google` and `next/font/local`
 
-- Optional
+-   Optional
 
 Examples:
 
-- `variable: '--my-font'`: The CSS variable `--my-font` is declared
+-   `variable: '--my-font'`: The CSS variable `--my-font` is declared
 
 ### `declarations`
 
-An array of font face [descriptor](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face#descriptors) key-value pairs that define the generated `@font-face` further.
+An array of font face [descriptor](https://developer.mozilla.org/docs/Web/CSS/@font-face#descriptors) key-value pairs that define the generated `@font-face` further.
 
 Used in `next/font/local`
 
-- Optional
+-   Optional
 
 Examples:
 
-- `declarations: [{ prop: 'ascent-override', value: '90%' }]`
+-   `declarations: [{ prop: 'ascent-override', value: '90%' }]`
 
 ## Applying Styles
 
 You can apply the font styles in three ways:
 
-- [`className`](#classname)
-- [`style`](#style-1)
-- [CSS Variables](#css-variables)
+-   [`className`](#classname)
+-   [`style`](#style-1)
+-   [CSS Variables](#css-variables)
 
 ### `className`
 
@@ -203,34 +205,34 @@ If you would like to set your styles in an external style sheet and specify addi
 In addition to importing the font, also import the CSS file where the CSS variable is defined and set the variable option of the font loader object as follows:
 
 ```tsx filename="app/page.tsx" switcher
-import { Inter } from 'next/font/google'
-import styles from '../styles/component.module.css'
+import { Inter } from "next/font/google";
+import styles from "../styles/component.module.css";
 
 const inter = Inter({
-  variable: '--font-inter',
-})
+	variable: "--font-inter",
+});
 ```
 
 ```jsx filename="app/page.js" switcher
-import { Inter } from 'next/font/google'
-import styles from '../styles/component.module.css'
+import { Inter } from "next/font/google";
+import styles from "../styles/component.module.css";
 
 const inter = Inter({
-  variable: '--font-inter',
-})
+	variable: "--font-inter",
+});
 ```
 
 To use the font, set the `className` of the parent container of the text you would like to style to the font loader's `variable` value and the `className` of the text to the `styles` property from the external CSS file.
 
 ```tsx filename="app/page.tsx" switcher
 <main className={inter.variable}>
-  <p className={styles.text}>Hello World</p>
+	<p className={styles.text}>Hello World</p>
 </main>
 ```
 
 ```jsx filename="app/page.js" switcher
 <main className={inter.variable}>
-  <p className={styles.text}>Hello World</p>
+	<p className={styles.text}>Hello World</p>
 </main>
 ```
 
@@ -238,9 +240,9 @@ Define the `text` selector class in the `component.module.css` CSS file as follo
 
 ```css filename="styles/component.module.css"
 .text {
-  font-family: var(--font-inter);
-  font-weight: 200;
-  font-style: italic;
+	font-family: var(--font-inter);
+	font-weight: 200;
+	font-style: italic;
 }
 ```
 
@@ -255,70 +257,70 @@ For example, create a `fonts.ts` file in a `styles` folder at the root of your a
 Then, specify your font definitions as follows:
 
 ```ts filename="styles/fonts.ts" switcher
-import { Inter, Lora, Source_Sans_Pro } from 'next/font/google'
-import localFont from 'next/font/local'
+import { Inter, Lora, Source_Sans_3 } from "next/font/google";
+import localFont from "next/font/local";
 
 // define your variable fonts
-const inter = Inter()
-const lora = Lora()
+const inter = Inter();
+const lora = Lora();
 // define 2 weights of a non-variable font
-const sourceCodePro400 = Source_Sans_Pro({ weight: '400' })
-const sourceCodePro700 = Source_Sans_Pro({ weight: '700' })
+const sourceCodePro400 = Source_Sans_3({ weight: "400" });
+const sourceCodePro700 = Source_Sans_3({ weight: "700" });
 // define a custom local font where GreatVibes-Regular.ttf is stored in the styles folder
-const greatVibes = localFont({ src: './GreatVibes-Regular.ttf' })
+const greatVibes = localFont({ src: "./GreatVibes-Regular.ttf" });
 
-export { inter, lora, sourceCodePro400, sourceCodePro700, greatVibes }
+export { inter, lora, sourceCodePro400, sourceCodePro700, greatVibes };
 ```
 
 ```js filename="styles/fonts.js" switcher
-import { Inter, Lora, Source_Sans_Pro } from 'next/font/google'
-import localFont from 'next/font/local'
+import { Inter, Lora, Source_Sans_3 } from "next/font/google";
+import localFont from "next/font/local";
 
 // define your variable fonts
-const inter = Inter()
-const lora = Lora()
+const inter = Inter();
+const lora = Lora();
 // define 2 weights of a non-variable font
-const sourceCodePro400 = Source_Sans_Pro({ weight: '400' })
-const sourceCodePro700 = Source_Sans_Pro({ weight: '700' })
+const sourceCodePro400 = Source_Sans_3({ weight: "400" });
+const sourceCodePro700 = Source_Sans_3({ weight: "700" });
 // define a custom local font where GreatVibes-Regular.ttf is stored in the styles folder
-const greatVibes = localFont({ src: './GreatVibes-Regular.ttf' })
+const greatVibes = localFont({ src: "./GreatVibes-Regular.ttf" });
 
-export { inter, lora, sourceCodePro400, sourceCodePro700, greatVibes }
+export { inter, lora, sourceCodePro400, sourceCodePro700, greatVibes };
 ```
 
 You can now use these definitions in your code as follows:
 
 ```tsx filename="app/page.tsx" switcher
-import { inter, lora, sourceCodePro700, greatVibes } from '../styles/fonts'
+import { inter, lora, sourceCodePro700, greatVibes } from "../styles/fonts";
 
 export default function Page() {
-  return (
-    <div>
-      <p className={inter.className}>Hello world using Inter font</p>
-      <p style={lora.style}>Hello world using Lora font</p>
-      <p className={sourceCodePro700.className}>
-        Hello world using Source_Sans_Pro font with weight 700
-      </p>
-      <p className={greatVibes.className}>My title in Great Vibes font</p>
-    </div>
-  )
+	return (
+		<div>
+			<p className={inter.className}>Hello world using Inter font</p>
+			<p style={lora.style}>Hello world using Lora font</p>
+			<p className={sourceCodePro700.className}>
+				Hello world using Source_Sans_3 font with weight 700
+			</p>
+			<p className={greatVibes.className}>My title in Great Vibes font</p>
+		</div>
+	);
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import { inter, lora, sourceCodePro700, greatVibes } from '../styles/fonts'
+import { inter, lora, sourceCodePro700, greatVibes } from "../styles/fonts";
 
 export default function Page() {
-  return (
-    <div>
-      <p className={inter.className}>Hello world using Inter font</p>
-      <p style={lora.style}>Hello world using Lora font</p>
-      <p className={sourceCodePro700.className}>
-        Hello world using Source_Sans_Pro font with weight 700
-      </p>
-      <p className={greatVibes.className}>My title in Great Vibes font</p>
-    </div>
-  )
+	return (
+		<div>
+			<p className={inter.className}>Hello world using Inter font</p>
+			<p style={lora.style}>Hello world using Lora font</p>
+			<p className={sourceCodePro700.className}>
+				Hello world using Source_Sans_3 font with weight 700
+			</p>
+			<p className={greatVibes.className}>My title in Great Vibes font</p>
+		</div>
+	);
 }
 ```
 
@@ -326,22 +328,22 @@ To make it easier to access the font definitions in your code, you can define a 
 
 ```json filename="tsconfig.json"
 {
-  "compilerOptions": {
-    "paths": {
-      "@/fonts": ["./styles/fonts"]
-    }
-  }
+	"compilerOptions": {
+		"paths": {
+			"@/fonts": ["./styles/fonts"]
+		}
+	}
 }
 ```
 
 You can now import any font definition as follows:
 
 ```tsx filename="app/about/page.tsx" switcher
-import { greatVibes, sourceCodePro400 } from '@/fonts'
+import { greatVibes, sourceCodePro400 } from "@/fonts";
 ```
 
 ```jsx filename="app/about/page.js" switcher
-import { greatVibes, sourceCodePro400 } from '@/fonts'
+import { greatVibes, sourceCodePro400 } from "@/fonts";
 ```
 
 ## Version Changes

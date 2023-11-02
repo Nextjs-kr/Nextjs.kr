@@ -1,4 +1,5 @@
 ---
+sidebar_position: 7
 title: AMP
 description: With minimal config, and without leaving React, you can start adding AMP and improve the performance and speed of your pages.
 ---
@@ -20,34 +21,34 @@ To enable AMP support for a page, and to learn more about the different AMP conf
 
 ## Caveats
 
-- Only CSS-in-JS is supported. [CSS Modules](/docs/pages/building-your-application/styling) aren't supported by AMP pages at the moment. You can [contribute CSS Modules support to Next.js](https://github.com/vercel/next.js/issues/10549).
+-   Only CSS-in-JS is supported. [CSS Modules](/docs/pages/building-your-application/styling) aren't supported by AMP pages at the moment. You can [contribute CSS Modules support to Next.js](https://github.com/vercel/next.js/issues/10549).
 
 ## Adding AMP Components
 
 The AMP community provides [many components](https://amp.dev/documentation/components/) to make AMP pages more interactive. Next.js will automatically import all components used on a page and there is no need to manually import AMP component scripts:
 
 ```jsx
-export const config = { amp: true }
+export const config = { amp: true };
 
 function MyAmpPage() {
-  const date = new Date()
+	const date = new Date();
 
-  return (
-    <div>
-      <p>Some time: {date.toJSON()}</p>
-      <amp-timeago
-        width="0"
-        height="15"
-        datetime={date.toJSON()}
-        layout="responsive"
-      >
-        .
-      </amp-timeago>
-    </div>
-  )
+	return (
+		<div>
+			<p>Some time: {date.toJSON()}</p>
+			<amp-timeago
+				width="0"
+				height="15"
+				datetime={date.toJSON()}
+				layout="responsive"
+			>
+				.
+			</amp-timeago>
+		</div>
+	);
 }
 
-export default MyAmpPage
+export default MyAmpPage;
 ```
 
 The above example uses the [`amp-timeago`](https://amp.dev/documentation/components/amp-timeago/?format=websites) component.
@@ -55,38 +56,38 @@ The above example uses the [`amp-timeago`](https://amp.dev/documentation/compone
 By default, the latest version of a component is always imported. If you want to customize the version, you can use `next/head`, as in the following example:
 
 ```jsx
-import Head from 'next/head'
+import Head from "next/head";
 
-export const config = { amp: true }
+export const config = { amp: true };
 
 function MyAmpPage() {
-  const date = new Date()
+	const date = new Date();
 
-  return (
-    <div>
-      <Head>
-        <script
-          async
-          key="amp-timeago"
-          custom-element="amp-timeago"
-          src="https://cdn.ampproject.org/v0/amp-timeago-0.1.js"
-        />
-      </Head>
+	return (
+		<div>
+			<Head>
+				<script
+					async
+					key="amp-timeago"
+					custom-element="amp-timeago"
+					src="https://cdn.ampproject.org/v0/amp-timeago-0.1.js"
+				/>
+			</Head>
 
-      <p>Some time: {date.toJSON()}</p>
-      <amp-timeago
-        width="0"
-        height="15"
-        datetime={date.toJSON()}
-        layout="responsive"
-      >
-        .
-      </amp-timeago>
-    </div>
-  )
+			<p>Some time: {date.toJSON()}</p>
+			<amp-timeago
+				width="0"
+				height="15"
+				datetime={date.toJSON()}
+				layout="responsive"
+			>
+				.
+			</amp-timeago>
+		</div>
+	);
 }
 
-export default MyAmpPage
+export default MyAmpPage;
 ```
 
 ## AMP Validation
@@ -101,10 +102,10 @@ You can set up custom AMP validator in `next.config.js` as shown below:
 
 ```js
 module.exports = {
-  amp: {
-    validator: './custom_validator.js',
-  },
-}
+	amp: {
+		validator: "./custom_validator.js",
+	},
+};
 ```
 
 ### Skip AMP Validation
@@ -113,9 +114,9 @@ To turn off AMP validation add the following code to `next.config.js`
 
 ```js
 experimental: {
-  amp: {
-    skipValidation: true
-  }
+	amp: {
+		skipValidation: true;
+	}
 }
 ```
 
@@ -125,12 +126,12 @@ When using [Static HTML export](/docs/pages/building-your-application/deploying/
 
 For example, the hybrid AMP page `pages/about.js` would output:
 
-- `out/about.html` - HTML page with client-side React runtime
-- `out/about.amp.html` - AMP page
+-   `out/about.html` - HTML page with client-side React runtime
+-   `out/about.amp.html` - AMP page
 
 And if `pages/about.js` is an AMP-only page, then it would output:
 
-- `out/about.html` - Optimized AMP page
+-   `out/about.html` - Optimized AMP page
 
 Next.js will automatically insert a link to the AMP version of your page in the HTML version, so you don't have to, like so:
 
@@ -146,8 +147,8 @@ And the AMP version of your page will include a link to the HTML page:
 
 When [`trailingSlash`](/docs/pages/api-reference/next-config-js/trailingSlash) is enabled the exported pages for `pages/about.js` would be:
 
-- `out/about/index.html` - HTML page
-- `out/about.amp/index.html` - AMP page
+-   `out/about/index.html` - HTML page
+-   `out/about.amp/index.html` - AMP page
 
 ## TypeScript
 

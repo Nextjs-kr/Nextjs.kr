@@ -1,4 +1,5 @@
 ---
+sidebar_position: 1
 title: getStaticProps
 description: Fetch data and generate static pages with `getStaticProps`. Learn more about this API for data fetching in Next.js.
 ---
@@ -6,37 +7,37 @@ description: Fetch data and generate static pages with `getStaticProps`. Learn m
 If you export a function called `getStaticProps` (Static Site Generation) from a page, Next.js will pre-render this page at build time using the props returned by `getStaticProps`.
 
 ```tsx filename="pages/index.tsx" switcher
-import type { InferGetStaticPropsType, GetStaticProps } from 'next'
+import type { InferGetStaticPropsType, GetStaticProps } from "next";
 
 type Repo = {
-  name: string
-  stargazers_count: number
-}
+	name: string;
+	stargazers_count: number;
+};
 
-export const getStaticProps: GetStaticProps<{
-  repo: Repo
-}> = async () => {
-  const res = await fetch('https://api.github.com/repos/vercel/next.js')
-  const repo = await res.json()
-  return { props: { repo } }
-}
+export const getStaticProps = (async (context) => {
+	const res = await fetch("https://api.github.com/repos/vercel/next.js");
+	const repo = await res.json();
+	return { props: { repo } };
+}) satisfies GetStaticProps<{
+	repo: Repo;
+}>;
 
 export default function Page({
-  repo,
+	repo,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return repo.stargazers_count
+	return repo.stargazers_count;
 }
 ```
 
 ```jsx filename="pages/index.js" switcher
-export const getStaticProps = async () => {
-  const res = await fetch('https://api.github.com/repos/vercel/next.js')
-  const repo = await res.json()
-  return { props: { repo } }
+export async function getStaticProps() {
+	const res = await fetch("https://api.github.com/repos/vercel/next.js");
+	const repo = await res.json();
+	return { props: { repo } };
 }
 
 export default function Page({ repo }) {
-  return repo.stargazers_count
+	return repo.stargazers_count;
 }
 ```
 
@@ -46,20 +47,20 @@ export default function Page({ repo }) {
 
 You should use `getStaticProps` if:
 
-- The data required to render the page is available at build time ahead of a user’s request
-- The data comes from a headless CMS
-- The page must be pre-rendered (for SEO) and be very fast — `getStaticProps` generates `HTML` and `JSON` files, both of which can be cached by a CDN for performance
-- The data can be publicly cached (not user-specific). This condition can be bypassed in certain specific situation by using a Middleware to rewrite the path.
+-   The data required to render the page is available at build time ahead of a user’s request
+-   The data comes from a headless CMS
+-   The page must be pre-rendered (for SEO) and be very fast — `getStaticProps` generates `HTML` and `JSON` files, both of which can be cached by a CDN for performance
+-   The data can be publicly cached (not user-specific). This condition can be bypassed in certain specific situation by using a Middleware to rewrite the path.
 
 ## When does getStaticProps run
 
 `getStaticProps` always runs on the server and never on the client. You can validate code written inside `getStaticProps` is removed from the client-side bundle [with this tool](https://next-code-elimination.vercel.app/).
 
-- `getStaticProps` always runs during `next build`
-- `getStaticProps` runs in the background when using [`fallback: true`](/docs/pages/api-reference/functions/get-static-paths#fallback-true)
-- `getStaticProps` is called before initial render when using [`fallback: blocking`](/docs/pages/api-reference/functions/get-static-paths#fallback-blocking)
-- `getStaticProps` runs in the background when using `revalidate`
-- `getStaticProps` runs on-demand in the background when using [`revalidate()`](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation)
+-   `getStaticProps` always runs during `next build`
+-   `getStaticProps` runs in the background when using [`fallback: true`](/docs/pages/api-reference/functions/get-static-paths#fallback-true)
+-   `getStaticProps` is called before initial render when using [`fallback: blocking`](/docs/pages/api-reference/functions/get-static-paths#fallback-blocking)
+-   `getStaticProps` runs in the background when using `revalidate`
+-   `getStaticProps` runs on-demand in the background when using [`revalidate()`](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation)
 
 When combined with [Incremental Static Regeneration](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration), `getStaticProps` will run in the background while the stale page is being revalidated, and the fresh page served to the browser.
 
@@ -72,62 +73,62 @@ The following example shows how you can fetch a list of blog posts from a CMS.
 ```tsx filename="pages/blog.tsx" switcher
 // posts will be populated at build time by getStaticProps()
 export default function Blog({ posts }) {
-  return (
-    <ul>
-      {posts.map((post) => (
-        <li>{post.title}</li>
-      ))}
-    </ul>
-  )
+	return (
+		<ul>
+			{posts.map((post) => (
+				<li>{post.title}</li>
+			))}
+		</ul>
+	);
 }
 
 // This function gets called at build time on server-side.
 // It won't be called on client-side, so you can even do
 // direct database queries.
 export async function getStaticProps() {
-  // Call an external API endpoint to get posts.
-  // You can use any data fetching library
-  const res = await fetch('https://.../posts')
-  const posts = await res.json()
+	// Call an external API endpoint to get posts.
+	// You can use any data fetching library
+	const res = await fetch("https://.../posts");
+	const posts = await res.json();
 
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      posts,
-    },
-  }
+	// By returning { props: { posts } }, the Blog component
+	// will receive `posts` as a prop at build time
+	return {
+		props: {
+			posts,
+		},
+	};
 }
 ```
 
 ```jsx filename="pages/blog.js" switcher
 // posts will be populated at build time by getStaticProps()
 export default function Blog({ posts }) {
-  return (
-    <ul>
-      {posts.map((post) => (
-        <li>{post.title}</li>
-      ))}
-    </ul>
-  )
+	return (
+		<ul>
+			{posts.map((post) => (
+				<li>{post.title}</li>
+			))}
+		</ul>
+	);
 }
 
 // This function gets called at build time on server-side.
 // It won't be called on client-side, so you can even do
 // direct database queries.
 export async function getStaticProps() {
-  // Call an external API endpoint to get posts.
-  // You can use any data fetching library
-  const res = await fetch('https://.../posts')
-  const posts = await res.json()
+	// Call an external API endpoint to get posts.
+	// You can use any data fetching library
+	const res = await fetch("https://.../posts");
+	const posts = await res.json();
 
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      posts,
-    },
-  }
+	// By returning { props: { posts } }, the Blog component
+	// will receive `posts` as a prop at build time
+	return {
+		props: {
+			posts,
+		},
+	};
 }
 ```
 
@@ -146,30 +147,30 @@ Take the following example. An API route is used to fetch some data from a CMS. 
 // with getStaticProps and API routes
 // from a `lib/` directory
 export async function loadPosts() {
-  // Call an external API endpoint to get posts
-  const res = await fetch('https://.../posts/')
-  const data = await res.json()
+	// Call an external API endpoint to get posts
+	const res = await fetch("https://.../posts/");
+	const data = await res.json();
 
-  return data
+	return data;
 }
 ```
 
 ```jsx filename="pages/blog.js"
 // pages/blog.js
-import { loadPosts } from '../lib/load-posts'
+import { loadPosts } from "../lib/load-posts";
 
 // This function runs only on the server side
 export async function getStaticProps() {
-  // Instead of fetching your `/api` route you can call the same
-  // function directly in `getStaticProps`
-  const posts = await loadPosts()
+	// Instead of fetching your `/api` route you can call the same
+	// function directly in `getStaticProps`
+	const posts = await loadPosts();
 
-  // Props returned will be passed to the page component
-  return { props: { posts } }
+	// Props returned will be passed to the page component
+	return { props: { posts } };
 }
 ```
 
-Alternatively, if you are **not** using API routes to fetch data, then the [`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) API _can_ be used directly in `getStaticProps` to fetch data.
+Alternatively, if you are **not** using API routes to fetch data, then the [`fetch()`](https://developer.mozilla.org/docs/Web/API/Fetch_API) API _can_ be used directly in `getStaticProps` to fetch data.
 
 To verify what Next.js eliminates from the client-side bundle, you can use the [next-code-elimination tool](https://next-code-elimination.vercel.app/).
 

@@ -1,220 +1,144 @@
 ---
 title: useReportWebVitals
-description: useReportWebVitals 함수에 대한 API 레퍼런스
+description: API Reference for the useReportWebVitals function.
 ---
 
-`useReportWebVitals` Hook을 통해 [Core Web Vitals](https://web.dev/vitals/)을 측정하고, 분석 서비스를 함께 사용할 수 있습니다.
+{/* The content of this doc is shared between the app and pages router. You can use the  component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-<PagesOnly>
-
-```jsx filename="pages/_app.js"
-import { useReportWebVitals } from 'next/web-vitals'
-
-function MyApp({ Component, pageProps }) {
-  useReportWebVitals((metric) => {
-    console.log(metric)
-  })
-
-  return <Component {...pageProps} />
-}
-```
-
-</PagesOnly>
-
-<AppOnly>
+The `useReportWebVitals` hook allows you to report [Core Web Vitals](https://web.dev/vitals/), and can be used in combination with your analytics service.
 
 ```jsx filename="app/_components/web-vitals.js"
-'use client'
+"use client";
 
-import { useReportWebVitals } from 'next/web-vitals'
+import { useReportWebVitals } from "next/web-vitals";
 
 export function WebVitals() {
-  useReportWebVitals((metric) => {
-    console.log(metric)
-  })
+	useReportWebVitals((metric) => {
+		console.log(metric);
+	});
 }
 ```
 
 ```jsx filename="app/layout.js"
-import { WebVitals } from './_components/web-vitals'
+import { WebVitals } from "./_components/web-vitals";
 
 export default function Layout({ children }) {
-  return (
-    <html>
-      <body>
-        <WebVitals />
-        {children}
-      </body>
-    </html>
-  )
+	return (
+		<html>
+			<body>
+				<WebVitals />
+				{children}
+			</body>
+		</html>
+	);
 }
 ```
 
-> `useReportWebVitals` Hook은 `"use client"` 지시문을 필요로 합니다. 때문에 가장 성능이 좋은 접근법은 루트 레이아웃이 import하는 별도의 컴포넌트를 생성하는 것입니다. 이 방법을 통해 클라이언트 경계를 WebVitals 컴포넌트로만 제한할 수 있습니다.
-
-</AppOnly>
+> Since the `useReportWebVitals` hook requires the `"use client"` directive, the most performant approach is to create a separate component that the root layout imports. This confines the client boundary exclusively to the `WebVitals` component.
 
 ## useReportWebVitals
 
-Hook의 인자로 전달되는 `metric` 객체는 여러 속성을 포함하고 있습니다.
+The `metric` object passed as the hook's argument consists of a number of properties:
 
-- `id`: 현재 페이지 로드 컨텍스트에서 `metric`의 고유 식별자를 나타냅니다.
-- `name`: `metric`의 이름을 나타냅니다. 웹 애플리케이션에 특정 [Web Vitals](#web-vitals) `metric`(TTFB, FCP, LCP, FID, CLS)의 이름을 포함할 수 있습니다.
-- `delta`: `metric`의 현재 값과 이전 값의 차이를 나타냅니다. 값은 보통 밀리초로 표시하며, 시간에 따른 `metric` 값의 변화를 나타냅니다.
-- `entries`: `metric`과 관련된 [Performance Entries](https://developer.mozilla.org/ko/docs/Web/API/PerformanceEntry)의 배열을 나타냅니다. 해당 `entries`값은 `metric`과 관련된 성능에 대하여 자세한 정보를 제공합니다.
-- `navigationType`: `metric`의 수집을 야기한 [navigation의 type](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming/type)을 나타냅니다. 가능한 값은 `"navigate"`, `"reload"`, `"back_forward"`, 그리고 `"prerender"`입니다.
-- `rating`: `metric` 값의 등급으로, 성능에 대한 질적인 평가를 제공합니다. 가능한 값은 `"good"`, `"needs-improvement"`, 그리고 `"poor"`입니다. 등급은 일반적으로 `metric` 값이 허용되는 또는 부적절한 성능을 나타내는 사전 정의된 임계값과 비교하여 결정됩니다.
-- `value`: 각 성능을 측정하는 항목들에 대한 실제 값 또는 지속 시간으로, 보통 밀리초로 표현합니다. `metric`에 의해 추적된 성능의 양적인 측정치 값을 제공합니다. 해당 값의 출처는 측정되는 특정 `metric`에 따라 달라지며, 다양한 [Performance API](https://developer.mozilla.org/en-US/docs/Web/API/Performance_API)에서 가져올 수 있습니다.
+-   `id`: Unique identifier for the metric in the context of the current page load
+-   `name`: The name of the performance metric. Possible values include names of [Web Vitals](#web-vitals) metrics (TTFB, FCP, LCP, FID, CLS) specific to a web application.
+-   `delta`: The difference between the current value and the previous value of the metric. The value is typically in milliseconds and represents the change in the metric's value over time.
+-   `entries`: An array of [Performance Entries](https://developer.mozilla.org/docs/Web/API/PerformanceEntry) associated with the metric. These entries provide detailed information about the performance events related to the metric.
+-   `navigationType`: Indicates the [type of navigation](https://developer.mozilla.org/docs/Web/API/PerformanceNavigationTiming/type) that triggered the metric collection. Possible values include `"navigate"`, `"reload"`, `"back_forward"`, and `"prerender"`.
+-   `rating`: A qualitative rating of the metric value, providing an assessment of the performance. Possible values are `"good"`, `"needs-improvement"`, and `"poor"`. The rating is typically determined by comparing the metric value against predefined thresholds that indicate acceptable or suboptimal performance.
+-   `value`: The actual value or duration of the performance entry, typically in milliseconds. The value provides a quantitative measure of the performance aspect being tracked by the metric. The source of the value depends on the specific metric being measured and can come from various [Performance API](https://developer.mozilla.org/docs/Web/API/Performance_API)s.
 
 ## Web Vitals
 
-[Web Vitals](https://web.dev/vitals/)은 웹에서 사용자 경험을 캡처하는 유용한 `metric`들의 집합입니다. 다음의 웹 바이탈들이 모두 포함되어 있습니다:
+[Web Vitals](https://web.dev/vitals/) are a set of useful metrics that aim to capture the user
+experience of a web page. The following web vitals are all included:
 
-- [Time to First Byte (첫 바이트 도달 시간)](https://developer.mozilla.org/en-US/docs/Glossary/Time_to_first_byte) (TTFB)
-- [First Contentful Paint (최초 페인팅)](https://developer.mozilla.org/en-US/docs/Glossary/First_contentful_paint) (FCP)
-- [Largest Contentful Paint (가장 큰 콘텐츠에 대한 페인팅)](https://web.dev/lcp/) (LCP)
-- [First Input Delay (첫 입력 지연)](https://web.dev/fid/) (FID)
-- [Cumulative Layout Shift (누적 레이아웃 이동)](https://web.dev/cls/) (CLS)
-- [Interaction to Next Paint (다음 페인팅까지의 인터랙션)](https://web.dev/inp/) (INP)
+-   [Time to First Byte](https://developer.mozilla.org/docs/Glossary/Time_to_first_byte) (TTFB)
+-   [First Contentful Paint](https://developer.mozilla.org/docs/Glossary/First_contentful_paint) (FCP)
+-   [Largest Contentful Paint](https://web.dev/lcp/) (LCP)
+-   [First Input Delay](https://web.dev/fid/) (FID)
+-   [Cumulative Layout Shift](https://web.dev/cls/) (CLS)
+-   [Interaction to Next Paint](https://web.dev/inp/) (INP)
 
-`name` 속성을 사용하여 이러한 `metric`들의 모든 결과를 처리할 수 있습니다.
-
-<PagesOnly>
-
-```jsx filename="pages/_app.js"
-import { useReportWebVitals } from 'next/web-vitals'
-
-function MyApp({ Component, pageProps }) {
-  useReportWebVitals((metric) => {
-    switch (metric.name) {
-      case 'FCP': {
-        // FCP 결과 처리
-      }
-      case 'LCP': {
-        // LCP 결과 처리
-      }
-      // ...
-    }
-  })
-
-  return <Component {...pageProps} />
-}
-```
-
-</PagesOnly>
-
-<AppOnly>
+You can handle all the results of these metrics using the `name` property.
 
 ```tsx filename="app/components/web-vitals.tsx" switcher
-'use client'
+"use client";
 
-import { useReportWebVitals } from 'next/web-vitals'
+import { useReportWebVitals } from "next/web-vitals";
 
 export function WebVitals() {
-  useReportWebVitals((metric) => {
-    switch (metric.name) {
-      case 'FCP': {
-        // FCP 결과 처리
-      }
-      case 'LCP': {
-        // LCP 결과 처리
-      }
-      // ...
-    }
-  })
+	useReportWebVitals((metric) => {
+		switch (metric.name) {
+			case "FCP": {
+				// handle FCP results
+			}
+			case "LCP": {
+				// handle LCP results
+			}
+			// ...
+		}
+	});
 }
 ```
 
 ```jsx filename="app/components/web-vitals.js" switcher
-'use client'
+"use client";
 
-import { useReportWebVitals } from 'next/web-vitals'
+import { useReportWebVitals } from "next/web-vitals";
 
 export function WebVitals() {
-  useReportWebVitals((metric) => {
-    switch (metric.name) {
-      case 'FCP': {
-        // FCP 결과 처리
-      }
-      case 'LCP': {
-        // LCP 결과 처리
-      }
-      // ...
-    }
-  })
+	useReportWebVitals((metric) => {
+		switch (metric.name) {
+			case "FCP": {
+				// handle FCP results
+			}
+			case "LCP": {
+				// handle LCP results
+			}
+			// ...
+		}
+	});
 }
 ```
 
-</AppOnly>
+## Usage on Vercel
 
-<PagesOnly>
+[Vercel Speed Insights](https://vercel.com/docs/concepts/speed-insights) are automatically configured on Vercel deployments, and don't require the use of `useReportWebVitals`. This hook is useful in local development, or if you're using a different analytics service.
 
-## 사용자 정의 Metrics
+## Sending results to external systems
 
-위에서 나열한 핵심 `metric` 외에도, 페이지가 하이드레이션하고 렌더링하는 데 걸리는 시간을 측정하는 몇 가지 커스텀 `metric`이 있습니다.
-
-- `Next.js-hydration`: 페이지가 하이드레이션을 시작하고 완료하는 데 걸리는 시간 (밀리초 단위)
-- `Next.js-route-change-to-render`: 라우팅 후 페이지가 렌더링을 시작하는 데 걸리는 시간 (밀리초 단위)
-- `Next.js-render`: 라우팅 후 페이지가 렌더링을 완료하는 데 걸리는 시간 (밀리초 단위)
-
-이러한 `metric`의 모든 결과를 별도로 처리할 수 있습니다.
-
-```js
-export function reportWebVitals(metric) {
-  switch (metric.name) {
-    case 'Next.js-hydration':
-      // 하이드레이션 결과 처리
-      break
-    case 'Next.js-route-change-to-render':
-      // 라우팅 후 결과 처리
-      break
-    case 'Next.js-render':
-      // 렌더링 결과 처리
-      break
-    default:
-      break
-  }
-}
-```
-
-이러한 `metric`들은 [User Timing API](https://caniuse.com/#feat=user-timing)를 지원하는 모든 브라우저에서 작동합니다.
-
-</PagesOnly>
-
-## Vercel에서의 사용법
-
-[Vercel Speed Insights](https://vercel.com/docs/concepts/speed-insights)는 Vercel 배포에서 자동으로 구성되며, `useReportWebVitals`의 사용을 요구하지 않습니다. 즉 이 Hook은 로컬 개발 또는 다른 분석 서비스를 사용하는 경우에 유용합니다.
-
-## 결과를 외부 시스템으로 보내기
-
-당신의 사이트에서 실 사용자 성능을 측정하고 추적하기 위해 어떤 엔드포인트로든 결과를 보낼 수 있습니다. 예를 들어,
+You can send results to any endpoint to measure and track
+real user performance on your site. For example:
 
 ```js
 useReportWebVitals((metric) => {
-  const body = JSON.stringify(metric)
-  const url = 'https://example.com/analytics'
+	const body = JSON.stringify(metric);
+	const url = "https://example.com/analytics";
 
-  // 가능하면 `navigator.sendBeacon()`을 사용하고, 그렇지 않으면 `fetch()`를 사용합니다.
-  if (navigator.sendBeacon) {
-    navigator.sendBeacon(url, body)
-  } else {
-    fetch(url, { body, method: 'POST', keepalive: true })
-  }
-})
+	// Use `navigator.sendBeacon()` if available, falling back to `fetch()`.
+	if (navigator.sendBeacon) {
+		navigator.sendBeacon(url, body);
+	} else {
+		fetch(url, { body, method: "POST", keepalive: true });
+	}
+});
 ```
 
-> **알아두면 좋은 사항**: 만약 [Google Analytics](https://analytics.google.com/analytics/web/)를 사용한다면, id 값을 사용하여 `metric` 분포를 수동으로 구성할 수 있습니다 (백분위 수 등을 계산하기 위해 사용합니다).
+> **Good to know**: If you use [Google Analytics](https://analytics.google.com/analytics/web/), using the
+> `id` value can allow you to construct metric distributions manually (to calculate percentiles,
+> etc.)
 
 > ```js
 > useReportWebVitals(metric => {
->   // Google Analytics를 다음 예와 같이 초기화한 경우 `window.gtag`를 사용하세요.
+>   // Use `window.gtag` if you initialized Google Analytics as this example:
 >   // https://github.com/vercel/next.js/blob/canary/examples/with-google-analytics/pages/_app.js
 >   window.gtag('event', metric.name, {
->     value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value), // 값은 반드시 정수여야합니다.
->     event_label: metric.id, // 현재 페이지 로드의 유일한 아이디
->     non_interaction: true, // 바운스 속도에 영향을 미치지 않도록 합니다.
+>     value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value), // values must be integers
+>     event_label: metric.id, // id unique to current page load
+>     non_interaction: true, // avoids affecting bounce rate.
 >   });
 > }
 > ```
 >
-> 자세한 정보는 [sending results to Google Analytics](https://github.com/GoogleChrome/web-vitals#send-the-results-to-google-analytics)에서 확인할 수 있습니다.
+> Read more about [sending results to Google Analytics](https://github.com/GoogleChrome/web-vitals#send-the-results-to-google-analytics).

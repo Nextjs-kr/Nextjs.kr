@@ -1,4 +1,5 @@
 ---
+sidebar_position: 14
 title: Internationalization
 description: Add support for multiple languages with internationalized routing and localized content.
 ---
@@ -7,10 +8,10 @@ Next.js enables you to configure the routing and rendering of content to support
 
 ## Terminology
 
-- **Locale:** An identifier for a set of language and formatting preferences. This usually includes the preferred language of the user and possibly their geographic region.
-  - `en-US`: English as spoken in the United States
-  - `nl-NL`: Dutch as spoken in the Netherlands
-  - `nl`: Dutch, no specific region
+-   **Locale:** An identifier for a set of language and formatting preferences. This usually includes the preferred language of the user and possibly their geographic region.
+    -   `en-US`: English as spoken in the United States
+    -   `nl-NL`: Dutch as spoken in the Netherlands
+    -   `nl`: Dutch, no specific region
 
 ## Routing Overview
 
@@ -19,44 +20,41 @@ It’s recommended to use the user’s language preferences in the browser to se
 For example, using the following libraries, you can look at an incoming `Request` to determine which locale to select, based on the `Headers`, locales you plan to support, and the default locale.
 
 ```js filename="middleware.js"
-import { match } from '@formatjs/intl-localematcher'
-import Negotiator from 'negotiator'
+import { match } from "@formatjs/intl-localematcher";
+import Negotiator from "negotiator";
 
-let headers = { 'accept-language': 'en-US,en;q=0.5' }
-let languages = new Negotiator({ headers }).languages()
-let locales = ['en-US', 'nl-NL', 'nl']
-let defaultLocale = 'en-US'
+let headers = { "accept-language": "en-US,en;q=0.5" };
+let languages = new Negotiator({ headers }).languages();
+let locales = ["en-US", "nl-NL", "nl"];
+let defaultLocale = "en-US";
 
-match(languages, locales, defaultLocale) // -> 'en-US'
+match(languages, locales, defaultLocale); // -> 'en-US'
 ```
 
 Routing can be internationalized by either the sub-path (`/fr/products`) or domain (`my-site.fr/products`). With this information, you can now redirect the user based on the locale inside [Middleware](/docs/app/building-your-application/routing/middleware).
 
 ```js filename="middleware.js"
-import { NextResponse } from 'next/server'
 
 let locales = ['en-US', 'nl-NL', 'nl']
 
-// Get the preferred locale, similar to above or using a library
+// Get the preferred locale, similar to the above or using a library
 function getLocale(request) { ... }
 
 export function middleware(request) {
   // Check if there is any supported locale in the pathname
-  const pathname = request.nextUrl.pathname
-  const pathnameIsMissingLocale = locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+  const { pathname } = request.nextUrl
+  const pathnameHasLocale = locales.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
 
-  // Redirect if there is no locale
-  if (pathnameIsMissingLocale) {
-    const locale = getLocale(request)
+  if (pathnameHasLocale) return
 
-    // e.g. incoming request is /products
-    // The new URL is now /en-US/products
-    return NextResponse.redirect(
-      new URL(`/${locale}/${pathname}`, request.url)
-    )
-  }
+  // Redirect if there is no locale
+  const locale = getLocale(request)
+  request.nextUrl.pathname = `/${locale}${pathname}`
+  // e.g. incoming request is /products
+  // The new URL is now /en-US/products
+  return Response.redirect(request.nextUrl)
 }
 
 export const config = {
@@ -89,45 +87,45 @@ Let’s assume we want to support both English and Dutch content inside our appl
 
 ```json filename="dictionaries/en.json"
 {
-  "products": {
-    "cart": "Add to Cart"
-  }
+	"products": {
+		"cart": "Add to Cart"
+	}
 }
 ```
 
 ```json filename="dictionaries/nl.json"
 {
-  "products": {
-    "cart": "Toevoegen aan Winkelwagen"
-  }
+	"products": {
+		"cart": "Toevoegen aan Winkelwagen"
+	}
 }
 ```
 
 We can then create a `getDictionary` function to load the translations for the requested locale:
 
 ```jsx filename="app/[lang]/dictionaries.js"
-import 'server-only'
+import "server-only";
 
 const dictionaries = {
-  en: () => import('./dictionaries/en.json').then((module) => module.default),
-  nl: () => import('./dictionaries/nl.json').then((module) => module.default),
-}
+	en: () => import("./dictionaries/en.json").then((module) => module.default),
+	nl: () => import("./dictionaries/nl.json").then((module) => module.default),
+};
 
-export const getDictionary = async (locale) => dictionaries[locale]()
+export const getDictionary = async (locale) => dictionaries[locale]();
 ```
 
 Given the currently selected language, we can fetch the dictionary inside of a layout or page.
 
 ```jsx filename="app/[lang]/page.js"
-import { getDictionary } from './dictionaries'
+import { getDictionary } from "./dictionaries";
 
 export default async function Page({ params: { lang } }) {
-  const dict = await getDictionary(lang) // en
-  return <button>{dict.products.cart}</button> // Add to Cart
+	const dict = await getDictionary(lang); // en
+	return <button>{dict.products.cart}</button>; // Add to Cart
 }
 ```
 
-Because all layouts and pages in the `app/` directory default to [Server Components](/docs/getting-started/react-essentials#server-components), we do not need to worry about the size of the translation files affecting our client-side JavaScript bundle size. This code will **only run on the server**, and only the resulting HTML will be sent to the browser.
+Because all layouts and pages in the `app/` directory default to [Server Components](/docs/app/building-your-application/rendering/server-components), we do not need to worry about the size of the translation files affecting our client-side JavaScript bundle size. This code will **only run on the server**, and only the resulting HTML will be sent to the browser.
 
 ## Static Generation
 
@@ -135,19 +133,21 @@ To generate static routes for a given set of locales, we can use `generateStatic
 
 ```jsx filename="app/[lang]/layout.js"
 export async function generateStaticParams() {
-  return [{ lang: 'en-US' }, { lang: 'de' }]
+	return [{ lang: "en-US" }, { lang: "de" }];
 }
 
 export default function Root({ children, params }) {
-  return (
-    <html lang={params.lang}>
-      <body>{children}</body>
-    </html>
-  )
+	return (
+		<html lang={params.lang}>
+			<body>{children}</body>
+		</html>
+	);
 }
 ```
 
-## Examples
+## Resources
 
-- [Minimal i18n routing and translations](https://github.com/vercel/next.js/tree/canary/examples/app-dir-i18n-routing)
-- [next-intl](https://next-intl-docs.vercel.app/docs/next-13)
+-   [Minimal i18n routing and translations](https://github.com/vercel/next.js/tree/canary/examples/app-dir-i18n-routing)
+-   [`next-intl`](https://next-intl-docs.vercel.app/docs/next-13)
+-   [`next-international`](https://github.com/QuiiBz/next-international)
+-   [`next-i18n-router`](https://github.com/i18nexus/next-i18n-router)

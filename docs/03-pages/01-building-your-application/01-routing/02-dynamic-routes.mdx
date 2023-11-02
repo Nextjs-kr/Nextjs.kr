@@ -1,12 +1,13 @@
 ---
+sidebar_position: 2
 title: 동적 라우팅
 description: 동적 라우팅은 사용자 정의 매개 변수를 URL에 추가할 수 있는 페이지입니다. 동적 라우팅을 생성하는 것은 여기서 자세히 알아볼 수 있습니다.
 related:
-  title: 다음 단계
-  description: 다음에 수행할 작업에 대한 자세한 내용은 다음 섹션을 참조합니다.
-  links:
-    - pages/building-your-application/routing/linking-and-navigating
-    - pages/api-reference/functions/use-router
+    title: Next Steps
+    description: For more information on what to do next, we recommend the following sections
+    links:
+        - pages/building-your-application/routing/linking-and-navigating
+        - pages/api-reference/functions/use-router
 ---
 
 정확한 세그먼트 이름을 미리 알지 못하고 동적 데이터로 라우팅을 생성하는 경우, 요청 시 입력되거나 빌드 시 [미리 렌더링 되는](/docs/03-pages/01-building-your-application/03-data-fetching/02-get-static-paths.mdx) 되는 동적 세그먼트를 사용할 수 있습니다.
@@ -22,20 +23,20 @@ related:
 예를 들어 블로그에는 다음과 같은 `pages/blog/[slug].js` 경로가 포함될 수 있습니다. 여기서 `[slug]`는 블로그 게시물의 동적 세그먼트입니다.
 
 ```tsx filename="pages/blog/[slug].tsx" switcher
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function Page() {
-  const router = useRouter()
-  return <p>Post: {router.query.slug}</p>
+	const router = useRouter();
+	return <p>Post: {router.query.slug}</p>;
 }
 ```
 
 ```jsx filename="pages/blog/[slug].jsx" switcher
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function Page() {
-  const router = useRouter()
-  return <p>Post: {router.query.slug}</p>
+	const router = useRouter();
+	return <p>Post: {router.query.slug}</p>;
 }
 ```
 

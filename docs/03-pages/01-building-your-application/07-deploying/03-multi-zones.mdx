@@ -1,33 +1,34 @@
 ---
-title: 멀티 존(다중 영역)
-description: 멀티 존을 사용하여 여러 개의 Next.js 앱을 하나의 앱으로 배포하는 법 배우기.
+sidebar_position: 3
+title: Multi Zones
+description: Learn how to use multi zones to deploy multiple Next.js apps as a single app.
 ---
 
 <details open>
-  <summary>예시</summary>
+  <summary>Examples</summary>
 
-- [With Zones](https://github.com/vercel/next.js/tree/canary/examples/with-zones)
+-   [With Zones](https://github.com/vercel/next.js/tree/canary/examples/with-zones)
 
 </details>
 
-영역은 하나의 Next.js 애플리케이션의 배포입니다. 멀티 존(다중 영역)을 사용할 수 있으며 애플리케이션들을 하나의 앱으로 병합할 수 있습니다.
+A zone is a single deployment of a Next.js app. You can have multiple zones and merge them as a single app.
 
-예를 들어 다음의 애플리케이션을 작업하고 있다고 가정해 봅시다.
+For example, let's say you have the following apps:
 
-- 서비스를 제공하기 위한 하나의 애플리케이션 `/blog/**`
-- 이외의 모든 페이지를 제공하기 위한 모든 애플리케이션
+-   An app for serving `/blog/**`
+-   Another app for serving all other pages
 
-멀티 존 지원으로 각각의 애플리케이션들을 독립적으로 개발 및 배포할 수 있으며, 고객들이 하나의 주소로 접근할 수 있는, 단일 애플리케이션으로 병합할 수 있습니다.
+With multi zones support, you can merge both these apps into a single one allowing your customers to browse it using a single URL, but you can develop and deploy both apps independently.
 
-## 영역을 정의하는 방법
+## How to define a zone
 
-영역에 종속된 API는 없습니다. 다음을 확인하세요.
+There are no zone related APIs. You only need to do the following:
 
-- 애플리케이션에 필요한 페이지들을 명확히 합니다. 해당 페이지는 다른 애플리케이션에서 다뤄질 수 없습니다. `A`라는 애플리케이션이 `/blog`라는 페이지를 다루고 있다면 `B`라는 애플리케이션은 이 페이지를 다룰 수 없습니다.
-- 페이지들과 정적 파일들의 충돌을 예방하기 위해 [basePath](/docs/app/api-reference/next-config-js/basePath)를 설정하세요.
+-   Make sure to keep only the pages you need in your app, meaning that an app can't have pages from another app, if app `A` has `/blog` then app `B` shouldn't have it too.
+-   Make sure to configure a [basePath](/docs/app/api-reference/next-config-js/basePath) to avoid conflicts with pages and static files.
 
-## 영역들을 병합하는 방법
+## How to merge zones
 
-[`rewrites`](/docs/pages/api-reference/next-config-js/rewrites)를 사용하여 애플리케이션 또는 HTTP proxy 영역들을 병합할 수 있습니다.
+You can merge zones using [`rewrites`](/docs/pages/api-reference/next-config-js/rewrites) in one of the apps or any HTTP proxy.
 
-[모노레포](https://vercel.com/blog/monorepos-are-changing-how-teams-build-software?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)를 이용하면 단 한 번의 `git push`를 통해 [Vercel로 배포된 Next.js](https://vercel.com?utm_source=next-site&utm_medium=docs&utm_campaign=next-website) 애플리케이션들을 모두 배포할 수 있습니다.
+For [Next.js on Vercel](https://vercel.com?utm_source=next-site&utm_medium=docs&utm_campaign=next-website) applications, you can use a [monorepo](https://vercel.com/blog/monorepos-are-changing-how-teams-build-software?utm_source=next-site&utm_medium=docs&utm_campaign=next-website) to deploy both apps with a single `git push`.

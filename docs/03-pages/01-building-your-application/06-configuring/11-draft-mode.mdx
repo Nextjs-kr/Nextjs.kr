@@ -1,4 +1,5 @@
 ---
+sidebar_position: 11
 title: Draft Mode
 description: Next.js has draft mode to toggle between static and dynamic pages. You can learn how it works with Pages Router.
 ---
@@ -19,9 +20,9 @@ In this API route, you need to call `setDraftMode` on the response object.
 
 ```js
 export default function handler(req, res) {
-  // ...
-  res.setDraftMode({ enable: true })
-  // ...
+	// ...
+	res.setDraftMode({ enable: true });
+	// ...
 }
 ```
 
@@ -32,8 +33,8 @@ You can test this manually by creating an API route like below and accessing it 
 ```ts filename="pages/api/draft.ts"
 // simple example for testing it manually from your browser.
 export default function handler(req, res) {
-  res.setDraftMode({ enable: true })
-  res.end('Draft mode is enabled')
+	res.setDraftMode({ enable: true });
+	res.end("Draft mode is enabled");
 }
 ```
 
@@ -53,43 +54,43 @@ These steps assume that the headless CMS you’re using supports setting **custo
 https://<your-site>/api/draft?secret=<token>&slug=<path>
 ```
 
-- `<your-site>` should be your deployment domain.
-- `<token>` should be replaced with the secret token you generated.
-- `<path>` should be the path for the page that you want to view. If you want to view `/posts/foo`, then you should use `&slug=/posts/foo`.
+-   `<your-site>` should be your deployment domain.
+-   `<token>` should be replaced with the secret token you generated.
+-   `<path>` should be the path for the page that you want to view. If you want to view `/posts/foo`, then you should use `&slug=/posts/foo`.
 
 Your headless CMS might allow you to include a variable in the draft URL so that `<path>` can be set dynamically based on the CMS’s data like so: `&slug=/posts/{entry.fields.slug}`
 
 **Finally**, in the draft API route:
 
-- Check that the secret matches and that the `slug` parameter exists (if not, the request should fail).
+-   Check that the secret matches and that the `slug` parameter exists (if not, the request should fail).
 -
-- Call `res.setDraftMode`.
-- Then redirect the browser to the path specified by `slug`. (The following example uses a [307 redirect](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/307)).
+-   Call `res.setDraftMode`.
+-   Then redirect the browser to the path specified by `slug`. (The following example uses a [307 redirect](https://developer.mozilla.org/docs/Web/HTTP/Status/307)).
 
 ```js
 export default async (req, res) => {
-  // Check the secret and next parameters
-  // This secret should only be known to this API route and the CMS
-  if (req.query.secret !== 'MY_SECRET_TOKEN' || !req.query.slug) {
-    return res.status(401).json({ message: 'Invalid token' })
-  }
+	// Check the secret and next parameters
+	// This secret should only be known to this API route and the CMS
+	if (req.query.secret !== "MY_SECRET_TOKEN" || !req.query.slug) {
+		return res.status(401).json({ message: "Invalid token" });
+	}
 
-  // Fetch the headless CMS to check if the provided `slug` exists
-  // getPostBySlug would implement the required fetching logic to the headless CMS
-  const post = await getPostBySlug(req.query.slug)
+	// Fetch the headless CMS to check if the provided `slug` exists
+	// getPostBySlug would implement the required fetching logic to the headless CMS
+	const post = await getPostBySlug(req.query.slug);
 
-  // If the slug doesn't exist prevent draft mode from being enabled
-  if (!post) {
-    return res.status(401).json({ message: 'Invalid slug' })
-  }
+	// If the slug doesn't exist prevent draft mode from being enabled
+	if (!post) {
+		return res.status(401).json({ message: "Invalid slug" });
+	}
 
-  // Enable Draft Mode by setting the cookie
-  res.setDraftMode({ enable: true })
+	// Enable Draft Mode by setting the cookie
+	res.setDraftMode({ enable: true });
 
-  // Redirect to the path from the fetched post
-  // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
-  res.redirect(post.slug)
-}
+	// Redirect to the path from the fetched post
+	// We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
+	res.redirect(post.slug);
+};
 ```
 
 If it succeeds, then the browser will be redirected to the path you want to view with the draft mode cookie.
@@ -104,9 +105,9 @@ Furthermore, it will be called with a `context` object where `context.draftMode`
 
 ```js
 export async function getStaticProps(context) {
-  if (context.draftMode) {
-    // dynamic data
-  }
+	if (context.draftMode) {
+		// dynamic data
+	}
 }
 ```
 
@@ -122,11 +123,11 @@ For example, your headless CMS might have a different API endpoint for draft pos
 
 ```js
 export async function getStaticProps(context) {
-  const url = context.draftMode
-    ? 'https://draft.example.com'
-    : 'https://production.example.com'
-  const res = await fetch(url)
-  // ...
+	const url = context.draftMode
+		? "https://draft.example.com"
+		: "https://production.example.com";
+	const res = await fetch(url);
+	// ...
 }
 ```
 
@@ -148,7 +149,7 @@ To clear the Draft Mode cookie manually, create an API route that calls `setDraf
 
 ```ts filename="pages/api/disable-draft.ts"
 export default function handler(req, res) {
-  res.setDraftMode({ enable: false })
+	res.setDraftMode({ enable: false });
 }
 ```
 
@@ -156,7 +157,9 @@ Then, send a request to `/api/disable-draft` to invoke the API Route. If calling
 
 ### Works with `getServerSideProps`
 
-Draft Mode works with `getServerSideProps` as well. It will also be available on the `context` object containing `draftMode`
+Draft Mode works with `getServerSideProps`, and is available as a `draftMode` key in the [`context`](/docs/pages/api-reference/functions/get-server-side-props#context-parameter) object.
+
+> **Good to know**: You shouldn't set the `Cache-Control` header when using Draft Mode because it cannot be bypassed. Instead, we recommend using [ISR](/docs/pages/building-your-application/data-fetching/incremental-static-regeneration).
 
 ### Works with API Routes
 
@@ -164,9 +167,9 @@ API Routes will have access to `draftMode` on the request object. For example:
 
 ```js
 export default function myApiRoute(req, res) {
-  if (req.draftMode) {
-    // get draft data
-  }
+	if (req.draftMode) {
+		// get draft data
+	}
 }
 ```
 

@@ -1,42 +1,44 @@
 ---
-title: 출력
-description: 애플리케이션을 편리하게 배포할 수 있도록 Next.js는 페이지마다 어떤 파일이 필요한지를 자동으로 추적합니다. 이 문서를 통해 동작 방식을 알아봅시다.
+title: output
+description: Next.js automatically traces which files are needed by each page to allow for easy deployment of your application. Learn how it works here.
 ---
 
-빌드 과정에서 Next.js는 각 페이지와 해당 페이지의 의존성을 자동으로 추적하여 프로덕션 버전의 애플리케이션을 배포하는 데 필요한 모든 파일을 결정합니다.
+{/* The content of this doc is shared between the app and pages router. You can use the  component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-이러한 기능은 배포 크기를 대폭 줄이는 데 도움을 줍니다. 이전에는 도커로 배포할 때 패키지의 `dependencies`에 있는 모든 파일을 설치해야 `next start`를 실행할 수 있었습니다. Next.js 12부터는 `.next/` 디렉터리에서 출력 파일 추적(Output File Tracing)을 활용하여 필요한 파일만 포함할 수 있습니다.
+During a build, Next.js will automatically trace each page and its dependencies to determine all of the files that are needed for deploying a production version of your application.
 
-또한 이 기능은 다양한 문제를 일으키고 불필요한 중복을 생성할 수 있는, 더 이상 사용하지 않는 `serverless` 대상에 대한 필요성을 제거합니다.
+This feature helps reduce the size of deployments drastically. Previously, when deploying with Docker you would need to have all files from your package's `dependencies` installed to run `next start`. Starting with Next.js 12, you can leverage Output File Tracing in the `.next/` directory to only include the necessary files.
 
-## 동작 방식
+Furthermore, this removes the need for the deprecated `serverless` target which can cause various issues and also creates unnecessary duplication.
 
-`next build` 과정에서 Next.js는 [`@vercel/nft`](https://github.com/vercel/nft)를 사용하여 페이지가 로딩할 수 있는 모든 파일을 결정하기 위해 `import`, `require`, `fs`의 사용을 정적으로 분석합니다.
+## How it Works
 
-Next.js의 프로덕션 서버는 `.next/next-server.js.nft.json`에 있는, 프로덕션 환경에서 활용할 수 있는 필요한 파일 및 출력에 대해서도 추적합니다.
+During `next build`, Next.js will use [`@vercel/nft`](https://github.com/vercel/nft) to statically analyze `import`, `require`, and `fs` usage to determine all files that a page might load.
 
-`.next` 출력 디렉터리에 생성된 `.nft.json` 파일을 활용하기 위해 각 추적에서 `.nft.json` 파일과 관련된 파일 목록을 읽은 후, 해당 목록을 배포 위치로 복사할 수 있습니다.
+Next.js' production server is also traced for its needed files and output at `.next/next-server.js.nft.json` which can be leveraged in production.
 
-## 추적 파일 자동으로 복사하기
+To leverage the `.nft.json` files emitted to the `.next` output directory, you can read the list of files in each trace that are relative to the `.nft.json` file and then copy them to your deployment location.
 
-Next.js는 `node_modules`에 있는 특정 파일을 포함하여 프로덕션 버전 배포에 필요한 파일만 복사하는 `standalone` 폴더를 자동으로 생성할 수 있습니다.
+## Automatically Copying Traced Files
 
-자동 복사 기능을 활용하려면 `next.config.js`에서 활성화할 수 있습니다.
+Next.js can automatically create a `standalone` folder that copies only the necessary files for a production deployment including select files in `node_modules`.
+
+To leverage this automatic copying you can enable it in your `next.config.js`:
 
 ```js filename="next.config.js"
 module.exports = {
-  output: 'standalone',
-}
+	output: "standalone",
+};
 ```
 
-해당 코드는 `.next/standalone`에 `node_modules` 설치 없이도 자체적으로 배포될 수 있는 폴더를 생성합니다.
+This will create a folder at `.next/standalone` which can then be deployed on its own without installing `node_modules`.
 
-추가로 `next start` 대신에 사용할 수 있는 최소한의 `server.js` 파일도 출력합니다. `public`과 `.next/static` 폴더는 각각 `server.js` 파일이 자동으로 제공하는 `standalone/public`과 `standalone/.next/static` 폴더로 복사됩니다. 하지만 이 최소한의 서버는 이상적으로는 CDN이 대신 처리해야 하는 `public` 또는 `.next/static` 폴더를 기본값으로 복사하지 않습니다.
+Additionally, a minimal `server.js` file is also output which can be used instead of `next start`. This minimal server does not copy the `public` or `.next/static` folders by default as these should ideally be handled by a CDN instead, although these folders can be copied to the `standalone/public` and `standalone/.next/static` folders manually, after which `server.js` file will serve these automatically.
 
-> **참고**:
+> **Good to know**:
 >
-> - `next.config.js`는 `next build` 과정 중에 읽혀서 `server.js` 출력 파일로 직렬화됩니다. 이전 버전의 [`serverRuntimeConfig` 또는 `publicRuntimeConfig` 옵션](/docs/pages/api-reference/next-config-js/runtime-configuration)이 사용된 경우에 해당 값은 빌드 시점의 값에 따라 결정됩니다.
-> - 프로젝트에서 기본 `loader`를 사용하여 [이미지 최적화](/docs/pages/building-your-application/optimizing/images)를 사용한다면 `sharp`를 의존성으로 설치해야 합니다.
+> -   If your project needs to listen to a specific port or hostname, you can define `PORT` or `HOSTNAME` environment variables before running `server.js`. For example, run `PORT=8080 HOSTNAME=0.0.0.0 node server.js` to start the server on `http://0.0.0.0:8080`.
+> -   If your project uses [Image Optimization](/docs/app/building-your-application/optimizing/images) with the default `loader`, you must install `sharp` as a dependency:
 
 ```bash filename="Terminal"
 npm i sharp
@@ -50,47 +52,51 @@ yarn add sharp
 pnpm add sharp
 ```
 
-## 주의사항
+```bash filename="Terminal"
+bun add sharp
+```
 
-- 모노레포 설정에서 추적하는 동안 프로젝트 디렉터리를 추적에 기본적으로 사용합니다. `next build packages/web-app`에 대해서 `packages/web-app`는 추적 루트(root)가 되고, 해당 폴더의 외부에 있는 파일은 포함하지 않습니다. 해당 폴더의 외부에 있는 파일을 포함하려면 `next.config.js`에서 `experimental.outputFileTracingRoot` 옵션을 설정해야 합니다.
+## Caveats
+
+-   While tracing in monorepo setups, the project directory is used for tracing by default. For `next build packages/web-app`, `packages/web-app` would be the tracing root and any files outside of that folder will not be included. To include files outside of this folder you can set `experimental.outputFileTracingRoot` in your `next.config.js`.
 
 ```js filename="packages/web-app/next.config.js"
 module.exports = {
-  experimental: {
-    // 해당 옵션은 모노레포로부터 2단계 위의 디렉터리까지의 파일을 포함합니다
-    outputFileTracingRoot: path.join(__dirname, '../../'),
-  },
-}
+	experimental: {
+		// this includes files from the monorepo base two directories up
+		outputFileTracingRoot: path.join(__dirname, "../../"),
+	},
+};
 ```
 
-- Next.js가 필요한 파일을 포함하지 못하거나 사용하지 않는 파일을 잘못 포함하는 경우가 있습니다. 이 경우에는 `next.config.js`에서 각각 `experimental.outputFileTracingExcludes`와 `experimental.outputFileTracingIncludes`를 활용할 수 있습니다. 각 설정은 특정 페이지와 일치할 키에 대해 [minimatch globs](https://www.npmjs.com/package/minimatch)로된 객체를 허용하고, 추적에 포함하거나 제외하기 위해서 프로젝트의 루트(root)를 기준으로 한 globs로된 배열을 허용합니다.
+-   There are some cases in which Next.js might fail to include required files, or might incorrectly include unused files. In those cases, you can leverage `experimental.outputFileTracingExcludes` and `experimental.outputFileTracingIncludes` respectively in `next.config.js`. Each config accepts an object with [minimatch globs](https://www.npmjs.com/package/minimatch) for the key to match specific pages and a value of an array with globs relative to the project's root to either include or exclude in the trace.
 
 ```js filename="next.config.js"
 module.exports = {
-  experimental: {
-    outputFileTracingExcludes: {
-      '/api/hello': ['./un-necessary-folder/**/*'],
-    },
-    outputFileTracingIncludes: {
-      '/api/another': ['./necessary-folder/**/*'],
-    },
-  },
-}
+	experimental: {
+		outputFileTracingExcludes: {
+			"/api/hello": ["./un-necessary-folder/**/*"],
+		},
+		outputFileTracingIncludes: {
+			"/api/another": ["./necessary-folder/**/*"],
+		},
+	},
+};
 ```
 
-- 현재 Next.js는 생성된 `.nft.json` 파일을 사용하지 않습니다. 최소한의 배포를 생성하기 위해서는 [Vercel](https://vercel.com)과 같은 배포 플랫폼이 파일을 읽어야 합니다. 향후 릴리즈에서는 `.nft.json` 파일을 활용하기 위한 새로운 명령이 계획되어 있습니다.
+-   Currently, Next.js does not do anything with the emitted `.nft.json` files. The files must be read by your deployment platform, for example [Vercel](https://vercel.com), to create a minimal deployment. In a future release, a new command is planned to utilize these `.nft.json` files.
 
-## 실험적인 `turbotrace`
+## Experimental `turbotrace`
 
-의존성 추적은 매우 복잡한 연산과 분석이 필요하기 때문에 느릴 수 있습니다. JavaScript 구현의 더 빠르고 현명한 대안으로서 `turbotrace`를 Rust로 개발했습니다.
+Tracing dependencies can be slow because it requires very complex computations and analysis. We created `turbotrace` in Rust as a faster and smarter alternative to the JavaScript implementation.
 
-`turbotrace`를 활성화하려면 `next.config.js`에 다음 설정을 추가할 수 있습니다.
+To enable it, you can add the following configuration to your `next.config.js`:
 
 ```js filename="next.config.js"
 module.exports = {
   experimental: {
     turbotrace: {
-      // turbotrace의 로그 레벨을 설정합니다. 기본값은 `error` 입니다
+      // control the log level of the turbotrace, default is `error`
       logLevel?:
       | 'bug'
       | 'fatal'
@@ -100,20 +106,20 @@ module.exports = {
       | 'note'
       | 'suggestions'
       | 'info',
-      // turbotrace의 로그가 분석 세부 정보를 포함해야 하는지를 설정합니다. 기본값은 `false` 입니다
+      // control if the log of turbotrace should contain the details of the analysis, default is `false`
       logDetail?: boolean
-      // 모든 로그 메세지를 제한 없이 보여줍니다
-      // turbotrace는 기본적으로 각 카테고리당 로그 메세지를 1개만 보여줍니다
+      // show all log messages without limit
+      // turbotrace only show 1 log message for each categories by default
       logAll?: boolean
-      // turbotrace의 컨텍스트 디렉터리를 설정합니다
-      // 컨텍스트 디렉터리의 외부에 있는 파일은 추적하지 않습니다
-      // `experimental.outputFileTracingRoot`를 설정하는 것과 동일한 효과입니다
-      // `experimental.outputFileTracingRoot`와 이 옵션이 모두 설정된 경우, `experimental.turbotrace.contextDirectory`를 사용합니다
+      // control the context directory of the turbotrace
+      // files outside of the context directory will not be traced
+      // set the `experimental.outputFileTracingRoot` has the same effect
+      // if the `experimental.outputFileTracingRoot` and this option are both set, the `experimental.turbotrace.contextDirectory` will be used
       contextDirectory?: string
-      // 코드 내에 `process.cwd()` 표현식이 있으면 이 옵션을 설정하여 추적 중에 `turbotrace`에게 `process.cwd()`값을 전달할 수 있습니다
-      // 예를 들어 require(process.cwd() + '/package.json')는 require('/path/to/cwd/package.json')로 추적됩니다
+      // if there is `process.cwd()` expression in your code, you can set this option to tell `turbotrace` the value of `process.cwd()` while tracing.
+      // for example the require(process.cwd() + '/package.json') will be traced as require('/path/to/cwd/package.json')
       processCwd?: string
-      // `turbotrace`의 최대 메모리 사용량을 `MB` 단위로 설정합니다. 기본값은 `6000` 입니다
+      // control the maximum memory usage of the `turbotrace`, in `MB`, default is `6000`.
       memoryLimit?: number
     },
   },

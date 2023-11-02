@@ -1,13 +1,42 @@
 ---
 title: redirect
-description: 리다이렉트 함수에 대한 API 렌퍼런스입니다.
+description: API Reference for the redirect function.
 ---
 
-`redirect` 함수는 사용자를 다른 URL로 리다이렉션 시킬 수 있습니다. 404페이지로 리다이렉션해야 하는 경우 [`notFound` 함수](/docs/app/api-reference/functions/not-found)를 사용할 수 있습니다.
+The `redirect` function allows you to redirect the user to another URL. `redirect` can be used in Server Components, Client Components, [Route Handlers](/docs/app/building-your-application/routing/route-handlers), and [Server Actions](/docs/app/building-your-application/data-fetching/forms-and-mutations).
 
-## `redirect()`
+When used in a [streaming context](/docs/app/building-your-application/routing/loading-ui-and-streaming#what-is-streaming), this will insert a meta tag to emit the redirect on the client side. Otherwise, it will serve a 307 HTTP redirect response to the caller.
 
-`redirect()` 함수를 호출하면 `NEXT_REDIRECT` 에러가 발생하고 에러가 발생한 경로 세그먼트의 렌더링이 종료됩니다. `redirect()` 함수는 상대 혹은 절대 경로를 사용하여 호출할 수 있습니다.
+If a resource doesn't exist, you can use the [`notFound` function](/docs/app/api-reference/functions/not-found) instead.
+
+> **Good to know**: If you prefer to return a 308 (Permanent) HTTP redirect instead of 307 (Temporary), you can use the [`permanentRedirect` function](/docs/app/api-reference/functions/permanentRedirect) instead.
+
+## Parameters
+
+The `redirect` function accepts two arguments:
+
+```js
+redirect(path, type)
+```
+
+| Parameter | Type                                                          | Description                                                 |
+| --------- | ------------------------------------------------------------- | ----------------------------------------------------------- |
+| `path`    | `string`                                                      | The URL to redirect to. Can be a relative or absolute path. |
+| `type`    | `'replace'` (default) or `'push'` (default in Server Actions) | The type of redirect to perform.                            |
+
+By default, `redirect` will use `push` (adding a new entry to the browser history stack) in [Server Actions](/docs/app/building-your-application/data-fetching/forms-and-mutations) and `replace` (replacing the current URL in the browser history stack) everywhere else. You can override this behavior by specifying the `type` parameter.
+
+The `type` parameter has no effect when used in Server Components.
+
+## Returns
+
+`redirect` does not return any value.
+
+## Example
+
+Invoking the `redirect()` function throws a `NEXT_REDIRECT` error and terminates rendering of the route segment in which it was thrown.
+
+> **Good to know**: If you need to programmatically redirect the user after a certain event in a Client Component, you can use the [`useRouter`](/docs/app/api-reference/functions/use-router) hook.
 
 ```jsx filename="app/team/[id]/page.js"
 import { redirect } from 'next/navigation'
@@ -28,8 +57,8 @@ export default async function Profile({ params }) {
 }
 ```
 
-> **참고**: `redirect()`는 타입스크립트의 [`never`](https://www.typescriptlang.org/docs/handbook/2/functions.html#never) 타입을 사용하기 때문에 `return redirect()`로 사용할 필요가 없습니다.
+> **Good to know**: `redirect` does not require you to use `return redirect()` as it uses the TypeScript [`never`](https://www.typescriptlang.org/docs/handbook/2/functions.html#never) type.
 
-| 버전      | 변경사항        |
-| --------- | --------------- |
-| `v13.0.0` | `notFound` 안내 |
+| Version   | Changes                |
+| --------- | ---------------------- |
+| `v13.0.0` | `redirect` introduced. |

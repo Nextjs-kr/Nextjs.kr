@@ -1,0 +1,137 @@
+---
+sidebar_position: 1
+title: CSS Modules
+description: Style your Next.js Application with CSS Modules.
+---
+
+{/* The content of this doc is shared between the app and pages router. You can use the  component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+
+Next.js has built-in support for CSS Modules using the `.module.css` extension.
+
+CSS Modules locally scope CSS by automatically creating a unique class name. This allows you to use the same class name in different files without worrying about collisions. This behavior makes CSS Modules the ideal way to include component-level CSS.
+
+## Example
+
+CSS Modules can be imported into any file inside the `app` directory:
+
+```tsx filename="app/dashboard/layout.tsx" switcher
+import styles from "./styles.module.css";
+
+export default function DashboardLayout({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
+	return <section className={styles.dashboard}>{children}</section>;
+}
+```
+
+```jsx filename="app/dashboard/layout.js" switcher
+import styles from "./styles.module.css";
+
+export default function DashboardLayout({ children }) {
+	return <section className={styles.dashboard}>{children}</section>;
+}
+```
+
+```css filename="app/dashboard/styles.module.css"
+.dashboard {
+	padding: 24px;
+}
+```
+
+CSS Modules are an _optional feature_ and are **only enabled for files with the `.module.css` extension**.
+Regular `<link>` stylesheets and global CSS files are still supported.
+
+In production, all CSS Module files will be automatically concatenated into **many minified and code-split** `.css` files.
+These `.css` files represent hot execution paths in your application, ensuring the minimal amount of CSS is loaded for your application to paint.
+
+## Global Styles
+
+Global styles can be imported into any layout, page, or component inside the `app` directory.
+
+> **Good to know**: This is different from the `pages` directory, where you can only import global styles inside the `_app.js` file.
+
+For example, consider a stylesheet named `app/global.css`:
+
+```css
+body {
+	padding: 20px 20px 60px;
+	max-width: 680px;
+	margin: 0 auto;
+}
+```
+
+Inside the root layout (`app/layout.js`), import the `global.css` stylesheet to apply the styles to every route in your application:
+
+```tsx filename="app/layout.tsx" switcher
+// These styles apply to every route in the application
+import "./global.css";
+
+export default function RootLayout({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
+	return (
+		<html lang="en">
+			<body>{children}</body>
+		</html>
+	);
+}
+```
+
+```jsx filename="app/layout.js" switcher
+// These styles apply to every route in the application
+import "./global.css";
+
+export default function RootLayout({ children }) {
+	return (
+		<html lang="en">
+			<body>{children}</body>
+		</html>
+	);
+}
+```
+
+## External Stylesheets
+
+Stylesheets published by external packages can be imported anywhere in the `app` directory, including colocated components:
+
+```tsx filename="app/layout.tsx" switcher
+import "bootstrap/dist/css/bootstrap.css";
+
+export default function RootLayout({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
+	return (
+		<html lang="en">
+			<body className="container">{children}</body>
+		</html>
+	);
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import "bootstrap/dist/css/bootstrap.css";
+
+export default function RootLayout({ children }) {
+	return (
+		<html lang="en">
+			<body className="container">{children}</body>
+		</html>
+	);
+}
+```
+
+> **Good to know**: External stylesheets must be directly imported from an npm package or downloaded and colocated with your codebase. You cannot use `<link rel="stylesheet" />`.
+
+## Additional Features
+
+Next.js includes additional features to improve the authoring experience of adding styles:
+
+-   When running locally with `next dev`, local stylesheets (either global or CSS modules) will take advantage of [Fast Refresh](/docs/architecture/fast-refresh) to instantly reflect changes as edits are saved.
+-   When building for production with `next build`, CSS files will be bundled into fewer minified `.css` files to reduce the number of network requests needed to retrieve styles.
+-   If you disable JavaScript, styles will still be loaded in the production build (`next start`). However, JavaScript is still required for `next dev` to enable [Fast Refresh](/docs/architecture/fast-refresh).

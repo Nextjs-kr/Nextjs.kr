@@ -1,9 +1,9 @@
 ---
-title: 지원하는 브라우저
-description: Next.js에서 지원하는 브라우저 및 JavaScript 기능
+title: Supported Browsers
+description: Browser support and which JavaScript features are supported by Next.js.
 ---
 
-Next.js는 별다른 설정 없이 아래의 **최신 브라우저**를 지원합니다.
+Next.js supports **modern browsers** with zero configuration.
 
 - Chrome 64+
 - Edge 79+
@@ -11,10 +11,9 @@ Next.js는 별다른 설정 없이 아래의 **최신 브라우저**를 지원�
 - Opera 51+
 - Safari 12+
 
-## 브라우저 목록
+## Browserslist
 
-특정 브라우저나 기능을 대상으로 한다면 Next.js가 지원하는 [브라우저 목록(Browserslist)](https://browsersl.ist) 설정을 `package.json` 파일에 추가할 수 있습니다.
-Next.js는 기본적으로 아래의 브라우저 목록 설정을 사용합니다.
+If you would like to target specific browsers or features, Next.js supports [Browserslist](https://browsersl.ist) configuration in your `package.json` file. Next.js uses the following Browserslist configuration by default:
 
 ```json filename="package.json"
 {
@@ -28,44 +27,40 @@ Next.js는 기본적으로 아래의 브라우저 목록 설정을 사용합니�
 }
 ```
 
-## 폴리필
+## Polyfills
 
-Next.js는 [주로 사용되는 폴리필](https://github.com/vercel/next.js/blob/canary/packages/next-polyfill-nomodule/src/index.js)을 포함합니다.
+We inject [widely used polyfills](https://github.com/vercel/next.js/blob/canary/packages/next-polyfill-nomodule/src/index.js), including:
 
-- [**fetch()**](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) — `whatwg-fetch`, `unfetch`로 대체합니다.
-- [**URL**](https://developer.mozilla.org/en-US/docs/Web/API/URL) — [Node.js API의 `url` 패키지](https://nodejs.org/api/url.html)로 대체합니다.
-- [**Object.assign()**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) — `object-assign`, `object.assign`, `core-js/object/assign`으로 대체합니다.
+- [**fetch()**](https://developer.mozilla.org/docs/Web/API/Fetch_API) — Replacing: `whatwg-fetch` and `unfetch`.
+- [**URL**](https://developer.mozilla.org/docs/Web/API/URL) — Replacing: the [`url` package (Node.js API)](https://nodejs.org/api/url.html).
+- [**Object.assign()**](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) — Replacing: `object-assign`, `object.assign`, and `core-js/object/assign`.
 
-개발 종속성 패키지에 이러한 폴리필이 포함되는 경우 중복 방지를 위해 프로덕션 빌드 시 자동으로 제거됩니다.
+If any of your dependencies include these polyfills, they’ll be eliminated automatically from the production build to avoid duplication.
 
-Next.js는 번들 크기를 줄이기 위해 폴리필이 필요한 브라우저의 경우만 폴리필을 로드합니다. 대부분의 웹 트래픽에서는 폴리필을 다운로드하지 않습니다.
+In addition, to reduce bundle size, Next.js will only load these polyfills for browsers that require them. The majority of the web traffic globally will not download these polyfills.
 
-### 사용자 지정 폴리필
+### Custom Polyfills
 
-자체적으로 작성한 코드나 외부 npm 패키지가 대상 브라우저(IE 11 등)에서 지원하지 않는 기능을 필요로 한다면 직접 폴리필을 추가해야 합니다.
+If your own code or any external npm dependencies require features not supported by your target browsers (such as IE 11), you need to add polyfills yourself.
 
-이러한 경우에는 [사용자 지정 `<App>`](/docs/pages/building-your-application/routing/custom-app) 또는 개별 컴포넌트의 최상단에 필요한 **특정 폴리필**을 추가해야 합니다.
+In this case, you should add a top-level import for the **specific polyfill** you need in your [Custom `<App>`](/docs/pages/building-your-application/routing/custom-app) or the individual component.
 
-## JavaScript 기능
+## JavaScript Language Features
 
-Next.js에서 최신 JavaScript 기능을 바로 사용할 수 있습니다. Next.js는 [ES6 기능](https://github.com/lukehoban/es6features)뿐만 아니라 다음 기능을 지원합니다.
+Next.js allows you to use the latest JavaScript features out of the box. In addition to [ES6 features](https://github.com/lukehoban/es6features), Next.js also supports:
 
 - [Async/await](https://github.com/tc39/ecmascript-asyncawait) (ES2017)
-- [객체의 나머지/전개 프로퍼티](https://github.com/tc39/proposal-object-rest-spread) (ES2018)
-- [동적 `import()`](https://github.com/tc39/proposal-dynamic-import) (ES2020)
-- [옵셔널 체이닝](https://github.com/tc39/proposal-optional-chaining) (ES2020)
-- [nullish 병합](https://github.com/tc39/proposal-nullish-coalescing) (ES2020)
-- [클래스 필드](https://github.com/tc39/proposal-class-fields) 그리고 [정적 프로퍼티](https://github.com/tc39/proposal-static-class-features) (3단계 제안의 일부)
-- 등등
+- [Object Rest/Spread Properties](https://github.com/tc39/proposal-object-rest-spread) (ES2018)
+- [Dynamic `import()`](https://github.com/tc39/proposal-dynamic-import) (ES2020)
+- [Optional Chaining](https://github.com/tc39/proposal-optional-chaining) (ES2020)
+- [Nullish Coalescing](https://github.com/tc39/proposal-nullish-coalescing) (ES2020)
+- [Class Fields](https://github.com/tc39/proposal-class-fields) and [Static Properties](https://github.com/tc39/proposal-static-class-features) (part of stage 3 proposal)
+- and more!
 
-### 서버 측 폴리필
+### TypeScript Features
 
-Next.js는 클라이언트 환경뿐만 아니라 Node.js 환경에서도 `fetch()`를 폴리필합니다. 따라서 `isomorphic-unfetch`나 `node-fetch`와 같은 폴리필을 사용하지 않고도 서버 코드(`getStaticProps`, `getServerSideProps`와 같은)에서 `fetch()`를 사용할 수 있습니다.
+Next.js has built-in TypeScript support. [Learn more here](/docs/pages/building-your-application/configuring/typescript).
 
-### TypeScript 기능
+### Customizing Babel Config (Advanced)
 
-Next.js는 TypeScript 지원이 내장되어 있습니다. [자세히 알아보기](/docs/pages/building-your-application/configuring/typescript).
-
-### 사용자 지정 Babel 설정 (고급)
-
-babel 구성을 별도로 설정할 수 있습니다. [자세히 알아보기](/docs/pages/building-your-application/configuring/babel).
+You can customize babel configuration. [Learn more here](/docs/pages/building-your-application/configuring/babel).

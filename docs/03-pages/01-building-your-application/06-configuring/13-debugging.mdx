@@ -1,4 +1,5 @@
 ---
+sidebar_position: 13
 title: Debugging
 description: Learn how to debug your Next.js application with VS Code or Chrome DevTools.
 ---
@@ -13,32 +14,32 @@ Create a file named `.vscode/launch.json` at the root of your project with the f
 
 ```json filename="launch.json"
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Next.js: debug server-side",
-      "type": "node-terminal",
-      "request": "launch",
-      "command": "npm run dev"
-    },
-    {
-      "name": "Next.js: debug client-side",
-      "type": "chrome",
-      "request": "launch",
-      "url": "http://localhost:3000"
-    },
-    {
-      "name": "Next.js: debug full stack",
-      "type": "node-terminal",
-      "request": "launch",
-      "command": "npm run dev",
-      "serverReadyAction": {
-        "pattern": "started server on .+, url: (https?://.+)",
-        "uriFormat": "%s",
-        "action": "debugWithChrome"
-      }
-    }
-  ]
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Next.js: debug server-side",
+			"type": "node-terminal",
+			"request": "launch",
+			"command": "npm run dev"
+		},
+		{
+			"name": "Next.js: debug client-side",
+			"type": "chrome",
+			"request": "launch",
+			"url": "http://localhost:3000"
+		},
+		{
+			"name": "Next.js: debug full stack",
+			"type": "node-terminal",
+			"request": "launch",
+			"command": "npm run dev",
+			"serverReadyAction": {
+				"pattern": "- Local:.+(https?://.+)",
+				"uriFormat": "%s",
+				"action": "debugWithChrome"
+			}
+		}
+	]
 }
 ```
 
@@ -56,7 +57,7 @@ Click the drop down menu listing the runtime configuration, and click `Edit Conf
 
 Start your development server as usual by running `next dev`, `npm run dev`, or `yarn dev`. Once the server starts, open `http://localhost:3000` (or your alternate URL) in Chrome. Next, open Chrome's Developer Tools (`Ctrl+Shift+J` on Windows/Linux, `⌥+⌘+I` on macOS), then go to the **Sources** tab.
 
-Now, any time your client-side code reaches a [`debugger`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger) statement, code execution will pause and that file will appear in the debug area. You can also press `Ctrl+P` on Windows/Linux or `⌘+P` on macOS to search for a file and set breakpoints manually. Note that when searching here, your source files will have paths starting with `webpack://_N_E/./`.
+Now, any time your client-side code reaches a [`debugger`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/debugger) statement, code execution will pause and that file will appear in the debug area. You can also press `Ctrl+P` on Windows/Linux or `⌘+P` on macOS to search for a file and set breakpoints manually. Note that when searching here, your source files will have paths starting with `webpack://_N_E/./`.
 
 ### Server-side code
 
@@ -70,9 +71,9 @@ If you're using `npm run dev` or `yarn dev` then you should update the `dev` scr
 
 ```json filename="package.json"
 {
-  "scripts": {
-    "dev": "NODE_OPTIONS='--inspect' next dev"
-  }
+	"scripts": {
+		"dev": "NODE_OPTIONS='--inspect' next dev"
+	}
 }
 ```
 
@@ -96,9 +97,9 @@ Windows users may run into an issue when using `NODE_OPTIONS='--inspect'` as tha
 
 ```json filename="package.json"
 {
-  "scripts": {
-    "dev": "cross-env NODE_OPTIONS='--inspect' next dev"
-  }
+	"scripts": {
+		"dev": "cross-env NODE_OPTIONS='--inspect' next dev"
+	}
 }
 ```
 
@@ -110,5 +111,5 @@ Windows users may run into an issue when using `NODE_OPTIONS='--inspect'` as tha
 
 To learn more about how to use a JavaScript debugger, take a look at the following documentation:
 
-- [Node.js debugging in VS Code: Breakpoints](https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_breakpoints)
-- [Chrome DevTools: Debug JavaScript](https://developers.google.com/web/tools/chrome-devtools/javascript)
+-   [Node.js debugging in VS Code: Breakpoints](https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_breakpoints)
+-   [Chrome DevTools: Debug JavaScript](https://developers.google.com/web/tools/chrome-devtools/javascript)

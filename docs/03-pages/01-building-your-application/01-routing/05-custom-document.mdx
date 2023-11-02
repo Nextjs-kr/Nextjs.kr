@@ -1,4 +1,5 @@
 ---
+sidebar_position: 5
 title: 커스텀 Document
 description: Next.js의 기본 문서 마크업을 확장합니다.
 ---
@@ -8,34 +9,34 @@ description: Next.js의 기본 문서 마크업을 확장합니다.
 기본 Document를 덮어쓰려면 아래와 같이 `pages/_document.js` 파일을 생성하세요:
 
 ```jsx
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
-  return (
-    <Html>
-      <Head />
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  )
+	return (
+		<Html>
+			<Head />
+			<body>
+				<Main />
+				<NextScript />
+			</body>
+		</Html>
+	);
 }
 ```
 
 > **알아두면 좋은 정보**
 >
-> - `_document`는 서버에서만 렌더링 되므로 onClick과 같은 이벤트 핸들러를 사용할 수 없습니다.
-> - 페이지가 올바르게 렌더링되기 위해서는 `<Html>`, `<Head />`,` <Main />`, `<NextScript />`가 필요합니다.
+> -   `_document`는 서버에서만 렌더링 되므로 onClick과 같은 이벤트 핸들러를 사용할 수 없습니다.
+> -   페이지가 올바르게 렌더링되기 위해서는 `<Html>`, `<Head />`,` <Main />`, `<NextScript />`가 필요합니다.
 
 ## 주의사항
 
-- `_document`에서 사용되는 `<Head />` 컴포넌트는 [`next/head`](/docs/03-pages/02-api-reference/01-components/head.mdx)와 다릅니다. 여기에서 사용된 `<Head />` 컴포넌트는 모든 페이지에 공통인 `<head>` 코드로써만 사용되어야 합니다. 다른 경우에는 각 페이지나 컴포넌트에서 [`next/head`](/docs/03-pages/02-api-reference/01-components/head.mdx)를 사용하는 것이 좋습니다.
-- `<Main />` 바깥의 React 컴포넌트는 브라우저에서 초기화되지 않습니다. 여기에
-  애플리케이션 로직이나 사용자 지정 CSS(예: `styled-jsx`)를 추가하지 마십시오.
-  모든 페이지에서 공유되는 컴포넌트(메뉴나 툴바와 같은)가 필요한 경우 [레이아웃](/docs/03-pages/01-building-your-application/01-routing/01-pages-and-layouts.mdx)을
-  사용하세요.
-- `Document`는 현재 [`getStaticProps`](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx)나 [`getServerSideProps`](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx)와 같은 [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching/index.mdx)를 지원하지 않습니다.
+-   `_document`에서 사용되는 `<Head />` 컴포넌트는 [`next/head`](/docs/03-pages/02-api-reference/01-components/head.mdx)와 다릅니다. 여기에서 사용된 `<Head />` 컴포넌트는 모든 페이지에 공통인 `<head>` 코드로써만 사용되어야 합니다. 다른 경우에는 각 페이지나 컴포넌트에서 [`next/head`](/docs/03-pages/02-api-reference/01-components/head.mdx)를 사용하는 것이 좋습니다.
+-   `<Main />` 바깥의 React 컴포넌트는 브라우저에서 초기화되지 않습니다. 여기에
+    애플리케이션 로직이나 사용자 지정 CSS(예: `styled-jsx`)를 추가하지 마십시오.
+    모든 페이지에서 공유되는 컴포넌트(메뉴나 툴바와 같은)가 필요한 경우 [레이아웃](/docs/03-pages/01-building-your-application/01-routing/01-pages-and-layouts.mdx)을
+    사용하세요.
+-   `Document`는 현재 [`getStaticProps`](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx)나 [`getServerSideProps`](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx)와 같은 [데이터 페칭 메서드](/docs/03-pages/01-building-your-application/03-data-fetching/index.mdx)를 지원하지 않습니다.
 
 ## `renderPage` 커스터마이징
 
@@ -52,44 +53,44 @@ export default function Document() {
 > 라는 문구가 있었는데 출시 이후에 그냥 권장하지 않고 App 라우터로 바꿔라~ 라는 문구만 있는걸로 보아 사용해도 큰 문제는 없을듯 합니다.
 
 ```jsx
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Html, Head, Main, NextScript } from "next/document";
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    const originalRenderPage = ctx.renderPage
+	static async getInitialProps(ctx) {
+		const originalRenderPage = ctx.renderPage;
 
-    // Run the React rendering logic synchronously
-    ctx.renderPage = () =>
-      originalRenderPage({
-        // Useful for wrapping the whole react tree
-        enhanceApp: (App) => App,
-        // Useful for wrapping in a per-page basis
-        enhanceComponent: (Component) => Component,
-      })
+		// Run the React rendering logic synchronously
+		ctx.renderPage = () =>
+			originalRenderPage({
+				// Useful for wrapping the whole react tree
+				enhanceApp: (App) => App,
+				// Useful for wrapping in a per-page basis
+				enhanceComponent: (Component) => Component,
+			});
 
-    // Run the parent `getInitialProps`, it now includes the custom `renderPage`
-    const initialProps = await Document.getInitialProps(ctx)
+		// Run the parent `getInitialProps`, it now includes the custom `renderPage`
+		const initialProps = await Document.getInitialProps(ctx);
 
-    return initialProps
-  }
+		return initialProps;
+	}
 
-  render() {
-    return (
-      <Html>
-        <Head />
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    )
-  }
+	render() {
+		return (
+			<Html>
+				<Head />
+				<body>
+					<Main />
+					<NextScript />
+				</body>
+			</Html>
+		);
+	}
 }
 
-export default MyDocument
+export default MyDocument;
 ```
 
 > **참고**
 >
-> - `_document`의 `getInitialProps`는 클라이언트 측 전환 중에 호출되지 않습니다.
-> - `_document`의 `ctx` 객체는 [`getInitialProps`](/docs/03-pages/02-api-reference/02-functions/get-initial-props.mdx)에서 받는 `_ctx` 객체와 동일하며, `renderPage`가 추가된 것입니다.
+> -   `_document`의 `getInitialProps`는 클라이언트 측 전환 중에 호출되지 않습니다.
+> -   `_document`의 `ctx` 객체는 [`getInitialProps`](/docs/03-pages/02-api-reference/02-functions/get-initial-props.mdx)에서 받는 `_ctx` 객체와 동일하며, `renderPage`가 추가된 것입니다.

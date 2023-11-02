@@ -1,24 +1,24 @@
 ---
-title: NextRequest 와 NextResponse
-description: 미들웨어와 엣지 API Routes에서 사용하는 server-only 헬퍼에 대해서 알아보기
+title: NextRequest and NextResponse
+description: Learn about the server-only helpers for Middleware and Edge API Routes.
 ---
 
-`next/server`는 [미들웨어](/docs/pages/building-your-application/routing/middleware)와 [엣지 API Routes](/docs/pages/building-your-application/routing/api-routes)에서 사용할 수 있는 server-only 헬퍼를 제공합니다.
+`next/server` provides server-only helpers for use in [Middleware](/docs/pages/building-your-application/routing/middleware) and [Edge API Routes](/docs/pages/building-your-application/routing/api-routes).
 
 ## NextRequest
 
-`NextRequest` 객체는 네이티브 [`Request`](https://developer.mozilla.org/ko/docs/Web/API/Request) 인터페이스의 확장 버전이며, 다음과 같은 메소드와 프로퍼티가 추가되었습니다.
+The `NextRequest` object is an extension of the native [`Request`](https://developer.mozilla.org/docs/Web/API/Request) interface, with the following added methods and properties:
 
-- `cookies` - 쿠키와 함께 `Request`에 포함되어있는 [RequestCookies](https://edge-runtime.vercel.app/packages/cookies#for-request) 인스턴스입니다. 요청의 `Cookie` 헤더를 읽거나 수정합니다. [미들웨어에서 쿠키 사용하기](/docs/app/building-your-application/routing/middleware#using-cookies)를 참고하세요.
+- `cookies` - A [RequestCookies](https://edge-runtime.vercel.app/packages/cookies#for-request) instance with cookies from the `Request`. It reads/mutates the `Cookie` header of the request. See also [Using cookies in Middleware](/docs/app/building-your-application/routing/middleware#using-cookies).
 
-  - `get` - 쿠키의 `name`을 입력 받은 후 `name`과 `value`로 이루어진 객체를 반환하는 메소드입니다. 입력 받은 `name`을 갖는 쿠키가 없을 경우 `undefined`를 반환합니다. 다수의 쿠키가 검색된 경우 제일 처음에 검색된 쿠키를 반환합니다.
-  - `getAll` - `get`과 유사하지만 `name`과 일치하는 모든 쿠키를 배열로 반환하는 메소드입니다. `name`이 지정되지 않을 경우 검색 가능한 모든 쿠키를 반환합니다.
-  - `set` - [W3C CookieStore API](https://wicg.github.io/cookie-store/#dictdef-cookielistitem) 명세에서 정의된 `CookieListItem` 프로퍼티로 이루어진 객체를 받는 메소드입니다.
-  - `delete` - `name` 또는 다수의 이름으로 이루어진 배열을 입력받는 메소드입니다. 이름과 일치하는 쿠키를 삭제합니다. 성공적으로 삭제할 경우 `true`를 반환하며 삭제되지 않을 경우 `false`를 반환합니다.
-  - `has` - 쿠키의 `name`을 입력 받고 일치하는 쿠키가 존재하는지 (`true`) 존재하지 않는지 (`false`) 여부를 `boolean`으로 반환합니다.
-  - `clear` - 아무 인자를 받지 않으며 `Cookie` 헤더를 효율적으로 삭제하는 메소드입니다.
+  - `get` - A method that takes a cookie `name` and returns an object with `name` and `value`. If a cookie with `name` isn't found, it returns `undefined`. If multiple cookies match, it will only return the first match.
+  - `getAll` - A method that is similar to `get`, but returns a list of all the cookies with a matching `name`. If `name` is unspecified, it returns all the available cookies.
+  - `set` - A method that takes an object with properties of `CookieListItem` as defined in the [W3C CookieStore API](https://wicg.github.io/cookie-store/#dictdef-cookielistitem) spec.
+  - `delete` - A method that takes either a cookie `name` or a list of names. and removes the cookies matching the name(s). Returns `true` for deleted and `false` for undeleted cookies.
+  - `has` - A method that takes a cookie `name` and returns a `boolean` based on if the cookie exists (`true`) or not (`false`).
+  - `clear` - A method that takes no argument and will effectively remove the `Cookie` header.
 
-- `nextUrl`: 확장 및 파싱된 URL 객체를 포함하고 있습니다. 이 객체는 `pathname`, `basePath`, `trailingSlash` 그리고 `i18n` 등과 같은 Next.js의 특정 프로퍼티를 포함하고 있으며 목록은 다음과 같습니다.
+- `nextUrl`: Includes an extended, parsed, URL object that gives you access to Next.js specific properties such as `pathname`, `basePath`, `trailingSlash` and `i18n`. Includes the following properties:
   - `basePath` (`string`)
   - `buildId` (`string || undefined`)
   - `defaultLocale` (`string || undefined`)
@@ -29,18 +29,17 @@ description: 미들웨어와 엣지 API Routes에서 사용하는 server-only �
     - `locales`: (`string[] || undefined`)
   - `locale` (`string || undefined`)
   - `url` (`URL`)
-- `ip`: (`string || undefined`) - `Request`의 Ip 주소를 포함하고 있습니다. 이 정보는 호스팅 플랫폼에 의해 제공됩니다.
-- `geo` - `Request`의 지리학 상의 위치를 포함하고 있습니다. 이 정보는 호스팅 플랫폼에 의해 제공되며 다음과 같은 프로퍼티를 포함하고 있습니다.
-
+- `ip`: (`string || undefined`) - Has the IP address of the `Request`. This information is provided by your hosting platform.
+- `geo` - Has the geographic location from the `Request`. This information is provided by your hosting platform. Includes the following properties:
   - `city` (`string || undefined`)
   - `country` (`string || undefined`)
   - `region` (`string || undefined`)
   - `latitude` (`string || undefined`)
   - `longitude` (`string || undefined`)
 
-- `NextRequest` 객체는 요청을 다루는데 있어서 기본 `Request` 인터페이스보다 더 많은 제어를 할 수 있으므로, 기본 `Request` 인터페이스를 대체할 수 있습니다.
+You can use the `NextRequest` object as a direct replacement for the native `Request` interface, giving you more control over how you manipulate the request.
 
-`NextRequest`는 `next/server`에서 불러올 수 있습니다.
+`NextRequest` can be imported from `next/server`:
 
 ```typescript
 import type { NextRequest } from 'next/server'
@@ -48,9 +47,9 @@ import type { NextRequest } from 'next/server'
 
 ## NextFetchEvent
 
-- `NextFetchEvent` 객체는 기본 [`FetchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent) 객체를 확장하고 있으며, [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) 메소드를 포함하고 있습니다.
+The `NextFetchEvent` object extends the native [`FetchEvent`](https://developer.mozilla.org/docs/Web/API/FetchEvent) object, and includes the [`waitUntil()`](https://developer.mozilla.org/docs/Web/API/ExtendableEvent/waitUntil) method.
 
-- `waitUntil()` 메소드는 다른 백그라운드 작업을 수행할 때 함수의 실행을 연기할 수 있습니다.
+The `waitUntil()` method can be used to prolong the execution of the function if you have other background work to make.
 
 ```typescript
 import { NextResponse } from 'next/server'
@@ -68,7 +67,7 @@ export function middleware(req: NextRequest, event: NextFetchEvent) {
 }
 ```
 
-- `NextFetchEvent` 객체는 `next/server`에서 불러올 수 있습니다.
+The `NextFetchEvent` object can be imported from `next/server`:
 
 ```typescript
 import type { NextFetchEvent } from 'next/server'
@@ -76,54 +75,54 @@ import type { NextFetchEvent } from 'next/server'
 
 ## NextResponse
 
-- `NextResponse` 클래스는 기본 [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) 인터페이스를 확장하고 있으며, 다음의 항목을 포함하고 있습니다.
+The `NextResponse` class extends the native [`Response`](https://developer.mozilla.org/docs/Web/API/Response) interface, with the following:
 
-### 퍼블릭 메소드
+### Public Methods
 
-- `NextResponse` 클래스에서는 퍼블릭 메소드를 사용할 수 있습니다. 사용하는 방식에 따라서 인스턴스를 생성하고 변수에 할당한 후 다음과 같은 퍼블릭 메소드에 접속할 수 있습니다.
+Public methods are available on an instance of the `NextResponse` class. Depending on your use case, you can create an instance and assign to a variable, then access the following public methods:
 
-- `cookies` - `Response`에 있는 쿠키를 포함하고 있는 [ResponseCookies](https://edge-runtime.vercel.app/packages/cookies#for-response) 인스턴스 입니다. 응답의 `Set-Cookie` 헤더를 읽거나 수정합니다. [미들웨어에서 쿠키 사용하기](/docs/app/building-your-application/routing/middleware#using-cookies) 문서를 참고하세요.
-  - `get` - 쿠키의 `name`을 입력 받은 후 `name`과 `value`로 이루어진 객체를 반환하는 메소드입니다. 입력 받은 `name`을 갖는 쿠키가 없을 경우 `undefined`를 반환합니다. 다수의 쿠키가 검색된 경우 제일 처음에 검색된 쿠키를 반환합니다.
-  - `getAll` - `get`과 유사하지만 `name`과 일치하는 모든 쿠키를 배열로 반환하는 메소드입니다. `name`이 지정되지 않을 경우 검색 가능한 모든 쿠키를 반환합니다.
-  - `set` - [W3C CookieStore API](https://wicg.github.io/cookie-store/#dictdef-cookielistitem) 명세에서 정의된 `CookieListItem` 프로퍼티로 이루어진 객체를 받는 메소드입니다.
-  - `delete` - `name` 또는 다수의 이름으로 이루어진 배열을 입력받는 메소드입니다. 이름과 일치하는 쿠키를 삭제합니다. 성공적으로 삭제할 경우 `true`를 반환하며 삭제되지 않을 경우 `false`를 반환합니다.
+- `cookies` - A [ResponseCookies](https://edge-runtime.vercel.app/packages/cookies#for-response) instance with the cookies from the `Response`. It reads/mutates the `Set-Cookie` header of the response. See also [Using cookies in Middleware](/docs/app/building-your-application/routing/middleware#using-cookies).
+  - `get` - A method that takes a cookie `name` and returns an object with `name` and `value`. If a cookie with `name` isn't found, it returns `undefined`. If multiple cookies match, it will only return the first match.
+  - `getAll` - A method that is similar to `get`, but returns a list of all the cookies with a matching `name`. If `name` is unspecified, it returns all the available cookies.
+  - `set` - A method that takes an object with properties of `CookieListItem` as defined in the [W3C CookieStore API](https://wicg.github.io/cookie-store/#dictdef-cookielistitem) spec.
+  - `delete` - A method that takes either a cookie `name` or a list of names. and removes the cookies matching the name(s). Returns `true` for deleted and `false` for undeleted cookies.
 
-### 정적 메소드
+### Static Methods
 
-다음의 정적 메소드는 `NextResponse` 클래스에서 직접적으로 사용할 수 있습니다.
+The following static methods are available on the `NextResponse` class directly:
 
-- `redirect()` - `redirect` 세트와 함께 `NextResponse`를 반환합니다.
-- `rewrite()` - `rewrite` 세트와 함께 `NextResponse`를 반환합니다.
-- `next()` - 미들웨어 체인으로 이어지는 `NextResponse`를 반환합니다.
+- `redirect()` - Returns a `NextResponse` with a redirect set
+- `rewrite()` - Returns a `NextResponse` with a rewrite set
+- `next()` - Returns a `NextResponse` that will continue the middleware chain
 
-상위의 메소드를 사용하려면 **반드시 `NextResponse` 객체를 반환해야 합니다.** `NextResponse`는 `next/server`에서 불러올 수 있습니다.
+To use the methods above, **you must return the `NextResponse` object** returned. `NextResponse` can be imported from `next/server`:
 
 ```typescript
 import { NextResponse } from 'next/server'
 ```
 
-## 유저 에이전트
+## userAgent
 
-`userAgent` 헬퍼는 요청에 포함된 유저 에이전트 객체와 상호작용 할 수 있도록 도와줍니다. 기본 `Request` 객체로부터 추상화되었으며 선택적인 기능입니다. `userAgent` 헬퍼는 다음과 같은 프로퍼티를 갖고 있습니다.
+The `userAgent` helper allows you to interact with the user agent object from the request. It is abstracted from the native `Request` object, and is an opt in feature. It has the following properties:
 
-- `isBot`: (`boolean`) 요청이 알려진 봇으로부터 온 요청인지 여부
+- `isBot`: (`boolean`) Whether the request comes from a known bot
 - `browser`
-  - `name`: (`string || undefined`) 브라우저의 이름
-  - `version`: (`string || undefined`) 브라우저의 버전. 동적으로 정해집니다.
+  - `name`: (`string || undefined`) The name of the browser
+  - `version`: (`string || undefined`) The version of the browser, determined dynamically
 - `device`
-  - `model`: (`string || undefined`) 기기 모델. 동적으로 정해집니다.
-  - `type`: (`string || undefined`) 브라우저의 타입. 다음의 값 중 하나일 수 있습니다. `console`, `mobile`, `tablet`, `smarttv`, `wearable`, `embedded` 또는 `undefined`
-  - `vendor`: (`string || undefined`) 기기의 제조업체. 동적으로 정해집니다.
+  - `model`: (`string || undefined`) The model of the device, determined dynamically
+  - `type`: (`string || undefined`) The type of the browser, can be one of the following values: `console`, `mobile`, `tablet`, `smarttv`, `wearable`, `embedded`, or `undefined`
+  - `vendor`: (`string || undefined`) The vendor of the device, determined dynamically
 - `engine`
-  - `name`: (`string || undefined`) 브라우저 엔진의 이름. 다음의 항목 중 하나일 수 있습니다. `Amaya`, `Blink`, `EdgeHTML`, `Flow`, `Gecko`, `Goanna`, `iCab`, `KHTML`, `Links`, `Lynx`, `NetFront`, `NetSurf`, `Presto`, `Tasman`, `Trident`, `w3m`, `WebKit` 또는 `undefined`
-  - `version`: (`string || undefined`) 브라우저 엔진의 버전. 동적으로 정해지거나 `undefined`일 수 있습니다.
+  - `name`: (`string || undefined`) The name of the browser engine, could be one of the following values: `Amaya`, `Blink`, `EdgeHTML`, `Flow`, `Gecko`, `Goanna`, `iCab`, `KHTML`, `Links`, `Lynx`, `NetFront`, `NetSurf`, `Presto`, `Tasman`, `Trident`, `w3m`, `WebKit` or `undefined`
+  - `version`: (`string || undefined`) The version of the browser engine, determined dynamically, or `undefined`
 - `os`
-  - `name`: (`string || undefined`) OS의 이름. `undefined`일 수 있습니다.
-  - `version`: (`string || undefined`) OS의 버전. 동적으로 정해지거나 `undefined`일 수 있습니다.
+  - `name`: (`string || undefined`) The name of the OS, could be `undefined`
+  - `version`: (`string || undefined`) The version of the OS, determined dynamically, or `undefined`
 - `cpu`
-  - `architecture`: (`string || undefined`) CPU의 아키텍처. 다음의 항목 중 하나일 수 있습니다. `68k`, `amd64`, `arm`, `arm64`, `armhf`, `avr`, `ia32`, `ia64`, `irix`, `irix64`, `mips`, `mips64`, `pa-risc`, `ppc`, `sparc`, `sparc64` 또는 `undefined`
+  - `architecture`: (`string || undefined`) The architecture of the CPU, could be one of the following values: `68k`, `amd64`, `arm`, `arm64`, `armhf`, `avr`, `ia32`, `ia64`, `irix`, `irix64`, `mips`, `mips64`, `pa-risc`, `ppc`, `sparc`, `sparc64` or `undefined`
 
-`userAgent`는 `next/server`에서 블러올 수 있습니다.
+`userAgent` can be imported from `next/server`:
 
 ```typescript
 import { userAgent } from 'next/server'
@@ -143,28 +142,28 @@ export function middleware(request: NextRequest) {
 
 ## FAQ
 
-### `redirect`는 왜 307 과 308을 사용하나요?
+### Why does `redirect` use 307 and 308?
 
-`redirect()`를 사용할 때, 일시적인 리다이렉트일 경우 `307` 상태 코드가 반환되고, 영구적인 리다이렉트일 경우 `308` 상태 코드가 반환되는 것을 볼 수 있습니다. 전통적으로 일시적인 리다이렉트일 경우 `302`가 반환되고 영구적인 리다이렉트일 경우 `301`이 반환됐었지만, 많은 브라우저는 `302`를 사용할 경우 요청 메소드의 오리진과는 상관 없이 리다이렉트의 요청 메소드를 `POST`에서 `GET` 요청으로 변경하고 있습니다.
+When using `redirect()` you may notice that the status codes used are `307` for a temporary redirect, and `308` for a permanent redirect. While traditionally a `302` was used for a temporary redirect, and a `301` for a permanent redirect, many browsers changed the request method of the redirect, from a `POST` to `GET` request when using a `302`, regardless of the origins request method.
 
-`/users`에서 `/people`로 리다이렉트하는 다음의 예시를 따라가봅시다. 새로운 유저를 생성하기 위해, `/users`에 `POST` 요청을 보내고 바로 `302`로 일시적인 리다이렉트를 한다면, 요청 메소드는 `POST`에서 `GET`으로 변경될 것입니다. 이러한 동작은 사실 말이 되지 않습니다. 새로운 유저를 생성하기 위해서는 `/people`로 `POST` 요청을 보내야 합니다. `GET` 요청을 보내서는 안됩니다.
+Taking the following example of a redirect from `/users` to `/people`, if you make a `POST` request to `/users` to create a new user, and are conforming to a `302` temporary redirect, the request method will be changed from a `POST` to a `GET` request. This doesn't make sense, as to create a new user, you should be making a `POST` request to `/people`, and not a `GET` request.
 
-`307` 상태 코드의 도입은 요청 메소드가 `POST`로 유지된다는 것을 의미합니다.
+The introduction of the `307` status code means that the request method is preserved as `POST`.
 
-- `302` - 일시적인 리다이렉트. 요청 메소드를 `POST`에서 `GET`으로 변경합니다.
-- `307` - 일시적인 리다이렉트. 요청 메소드를 `POST`로 유지합니다.
+- `302` - Temporary redirect, will change the request method from `POST` to `GET`
+- `307` - Temporary redirect, will preserve the request method as `POST`
 
-`redirect()` 메소드는 일시적인 리다이렉트에 있어서 `302` 대신에 `307`을 기본적으로 사용합니다.즉, 요청이 _항상_ `POST` 요청으로 유지됩니다.
+The `redirect()` method uses a `307` by default, instead of a `302` temporary redirect, meaning your requests will _always_ be preserved as `POST` requests.
 
-만약 `POST` 요청에 `GET` 응답을 보내고 싶다면 `303`을 사용하세요.
+If you want to cause a `GET` response to a `POST` request, use `303`.
 
-HTTP 리다이렉트에 대해 더 알고 싶다면 [이 곳](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections)을 방문하세요.
+[Learn more](https://developer.mozilla.org/docs/Web/HTTP/Redirections) about HTTP Redirects.
 
-### 환경 변수에는 어떻게 접근하나요?
+### How do I access Environment Variables?
 
-엣지 미들웨어에서 `process.env`를 사용하면 [환경 변수](/docs/pages/building-your-application/configuring/environment-variables)에 접근할 수 있습니다. 환경 변수는 `next build` 과정에서 계산됩니다.
+`process.env` can be used to access [Environment Variables](/docs/pages/building-your-application/configuring/environment-variables) from Edge Middleware. They are evaluated during `next build`:
 
-| 동작함                                                       | 동작하지 **않음**                          |
+| Works                                                        | Does **not** work                          |
 | ------------------------------------------------------------ | ------------------------------------------ |
 | `console.log(process.env.MY_ENV_VARIABLE)`                   | `const getEnv = name => process.env[name]` |
 | `const { MY_ENV_VARIABLE } = process.env`                    |                                            |

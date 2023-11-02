@@ -1,17 +1,19 @@
 ---
 title: incrementalCacheHandlerPath
-description: 데이터 저장 및 재검증에 사용되는 Next.js 캐시를 설정합니다.
+description: Configure the Next.js cache used for storing and revalidating data.
 ---
 
-Next.js에서 [기본 캐시 핸들러](/docs/app/building-your-application/data-fetching/caching)는 파일 시스템 캐시를 사용합니다. 이 경우 별도의 구성이 필요하지 않지만, `next.config.js`의 `incrementalCacheHandlerPath` 필드를 사용하여 `CacheHandler`를 사용자가 정의할 수 있습니다.
+In Next.js, the [default cache handler](/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating) uses the filesystem cache. This requires no configuration, however, you can customize the cache handler by using the `incrementalCacheHandlerPath` field in `next.config.js`.
 
 ```js filename="next.config.js"
 module.exports = {
-  incrementalCacheHandlerPath: './cache-handler.js',
+  experimental: {
+    incrementalCacheHandlerPath: require.resolve('./cache-handler.js'),
+  },
 }
 ```
 
-다음은 사용자 정의 `CacheHandler`의 예시입니다.
+Here's an example of a custom cache handler:
 
 ```js filename="cache-handler.js"
 const cache = new Map()
@@ -35,31 +37,31 @@ module.exports = class CacheHandler {
 }
 ```
 
-## API 레퍼런스
+## API Reference
 
-캐시 핸들러는 `get`, `set`, `revalidateTag`와 같은 메서드로 구현할 수 있습니다.
+The cache handler can implement the following methods: `get`, `set`, and `revalidateTag`.
 
 ### `get()`
 
-| 매개변수 | 타입     | 설명                  |
-| -------- | -------- | --------------------- |
-| `key`    | `string` | 캐시할 값의 키입니다. |
+| Parameter | Type     | Description                  |
+| --------- | -------- | ---------------------------- |
+| `key`     | `string` | The key to the cached value. |
 
-캐시 된 값을 반환하거나 찾을 수 없는 경우 `null`을 반환합니다.
+Returns the cached value or `null` if not found.
 
 ### `set()`
 
-| 매개변수 | 타입             | 설명                             |
-| -------- | ---------------- | -------------------------------- |
-| `key`    | `string`         | 아래의 데이터를 저장할 키입니다. |
-| `data`   | Data 또는 `null` | 캐시할 데이터입니다.             |
+| Parameter | Type           | Description                      |
+| --------- | -------------- | -------------------------------- |
+| `key`     | `string`       | The key to store the data under. |
+| `data`    | Data or `null` | The data to be cached.           |
 
-`Promise<void>`를 반환합니다.
+Returns `Promise<void>`.
 
 ### `revalidateTag()`
 
-| 매개변수 | 타입     | 설명                        |
-| -------- | -------- | --------------------------- |
-| `tag`    | `string` | 재검증할 캐시의 태그입니다. |
+| Parameter | Type     | Description                  |
+| --------- | -------- | ---------------------------- |
+| `tag`     | `string` | The cache tag to revalidate. |
 
-`Promise<void>`를 반환합니다. [데이터 재검증](/docs/app/building-your-application/data-fetching/revalidating) 또는 [revalidateTag()](/docs/app/api-reference/functions/revalidateTag) 함수에 대해 자세히 알아보시기 바랍니다.
+Returns `Promise<void>`. Learn more about [revalidating data](/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating) or the [`revalidateTag()`](/docs/app/api-reference/functions/revalidateTag) function.

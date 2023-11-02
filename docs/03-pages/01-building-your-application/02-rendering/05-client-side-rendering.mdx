@@ -1,72 +1,73 @@
 ---
-title: 클라이언트 사이드 렌더링 (Client-side Rendering)
-description: 페이지 라우터에서 클라이언트 사이드 렌더링을 구현하는 방법을 알아보세요.
+sidebar_position: 5
+title: Client-side Rendering (CSR)
+description: Learn how to implement client-side rendering in the Pages Router.
 related:
-  description: Learn about the alternative rendering methods in Next.js.
-  links:
-    - pages/building-your-application/rendering/server-side-rendering
-    - pages/building-your-application/rendering/static-site-generation
-    - pages/building-your-application/rendering/incremental-static-regeneration
-    - app/building-your-application/routing/loading-ui-and-streaming
+    description: Learn about the alternative rendering methods in Next.js.
+    links:
+        - pages/building-your-application/rendering/server-side-rendering
+        - pages/building-your-application/rendering/static-site-generation
+        - pages/building-your-application/rendering/incremental-static-regeneration
+        - app/building-your-application/routing/loading-ui-and-streaming
 ---
 
-React를 사용한 클라이언트 사이드 렌더링(CSR)에서 브라우저는 최소한의 HTML 페이지와 페이지에 필요한 자바스크립트를 다운로드합니다. 그런 다음 자바스크립트를 사용하여 DOM을 업데이트하고 페이지를 렌더링합니다. 애플리케이션을 처음 로드할 때 사용자가 전체 페이지를 보기까지 약간의 지연이 발생할 수 있는데, 이는 모든 자바스크립트가 다운로드, 구문 분석 및 실행될 때까지 페이지가 완전히 렌더링되지 않기 때문입니다.
+In Client-Side Rendering (CSR) with React, the browser downloads a minimal HTML page and the JavaScript needed for the page. The JavaScript is then used to update the DOM and render the page. When the application is first loaded, the user may notice a slight delay before they can see the full page, this is because the page isn't fully rendered until all the JavaScript is downloaded, parsed, and executed.
 
-페이지가 처음 로드된 후에는 필요한 데이터만 가져오면 되고 자바스크립트가 전체 페이지를 새로고침하지 않고도 페이지의 일부를 다시 렌더링할 수 있으므로 일반적으로 동일한 웹사이트의 다른 페이지로 이동하는 것이 더 빠릅니다.
+After the page has been loaded for the first time, navigating to other pages on the same website is typically faster, as only necessary data needs to be fetched, and JavaScript can re-render parts of the page without requiring a full page refresh.
 
-Next.js에서는 클라이언트 사이드 렌더링을 구현하는 두 가지 방법이 있습니다.
+In Next.js, there are two ways you can implement client-side rendering:
 
-1. 페이지 내부에서 React의 `useEffect()` hook을 서버 사이드 렌더링 메서드([`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 와 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)) 대신 사용합니다.
-2. 클라이언트에서 데이터를 가져오기 위해 [SWR](https://swr.vercel.app/) 또는 [TanStack Query](https://tanstack.com/query/v3/)와 같은 데이터 페치 라이브러리를 사용합니다.(권장)
+1. Using React's `useEffect()` hook inside your pages instead of the server-side rendering methods ([`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) and [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)).
+2. Using a data fetching library like [SWR](https://swr.vercel.app/) or [TanStack Query](https://tanstack.com/query/latest/) to fetch data on the client (recommended).
 
-다음은 Next.js 페이지 내에서 `useEffect()`를 사용하는 예시입니다.
+Here's an example of using `useEffect()` inside a Next.js page:
 
 ```jsx filename="pages/index.js"
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
 export function Page() {
-  const [data, setData] = useState(null)
+	const [data, setData] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('https://api.example.com/data')
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const result = await response.json()
-      setData(result)
-    }
+	useEffect(() => {
+		const fetchData = async () => {
+			const response = await fetch("https://api.example.com/data");
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			const result = await response.json();
+			setData(result);
+		};
 
-    fetchData().catch((e) => {
-      // 필요에 따라 오류를 처리합니다.
-      console.error('An error occurred while fetching the data: ', e)
-    })
-  }, [])
+		fetchData().catch((e) => {
+			// handle the error as needed
+			console.error("An error occurred while fetching the data: ", e);
+		});
+	}, []);
 
-  return <p>{data ? `Your data: ${data}` : 'Loading...'}</p>
+	return <p>{data ? `Your data: ${data}` : "Loading..."}</p>;
 }
 ```
 
-위의 예시에서 컴포넌트는 `Loading....` 렌더링으로 시작합니다. 그런 다음 데이터를 가져오면 데이터를 다시 렌더링하여 표시합니다.
+In the example above, the component starts by rendering `Loading...`. Then, once the data is fetched, it re-renders and displays the data.
 
-`useEffect()`에서 데이터를 불러오는 것은 이전 React 애플리케이션에서 볼 수 있는 패턴이지만 더 나은 성능, 캐싱, 최적화 업데이트 등을 위해 데이터 페치 라이브러리를 사용하는 것을 권장합니다. 다음은 [SWR](https://swr.vercel.app/)을 사용해 클라이언트에서 데이터를 페치하는 최소한의 예시입니다.
+Although fetching data in a `useEffect` is a pattern you may see in older React Applications, we recommend using a data-fetching library for better performance, caching, optimistic updates, and more. Here's a minimum example using [SWR](https://swr.vercel.app/) to fetch data on the client:
 
 ```jsx filename="pages/index.js"
-import useSWR from 'swr'
+import useSWR from "swr";
 
 export function Page() {
-  const { data, error, isLoading } = useSWR(
-    'https://api.example.com/data',
-    fetcher
-  )
+	const { data, error, isLoading } = useSWR(
+		"https://api.example.com/data",
+		fetcher,
+	);
 
-  if (error) return <p>Failed to load.</p>
-  if (isLoading) return <p>Loading...</p>
+	if (error) return <p>Failed to load.</p>;
+	if (isLoading) return <p>Loading...</p>;
 
-  return <p>Your Data: {data}</p>
+	return <p>Your Data: {data}</p>;
 }
 ```
 
-> **참고**:
+> **Good to know**:
 >
-> CSR은 SEO에 영향을 미칠 수 있습니다. 일부 검색 엔진 크롤러는 자바스크립트를 실행하지 않으므로 애플리케이션의 초기의 비어 있거나 로딩 중인 상태만 볼 수 있습니다. 또한 인터넷 연결 속도가 느린 사용자나 디바이스의 경우 전체 페이지를 보기 전에 모든 자바스크립트가 로드되고 실행될 때까지 기다려야 하므로 성능 문제가 발생할 수 있습니다. Next.js는 애플리케이션의 **각 페이지의 필요에 따라** [서버 사이드 렌더링](/docs/pages/building-your-application/rendering/server-side-rendering), 정적 사이트 생성(/docs/pages/building-your-application/rendering/static-site-generation), 클라이언트 사이드 렌더링을 조합하여 사용할 수 있는 하이브리드 접근 방식을 장려합니다. 앱 라우터에서는 페이지가 렌더링되는 동안 로딩 인디케이터를 표시하기 위해 [Suspense와 함께 로딩 UI](/docs/app/building-your-application/routing/loading-ui-and-streaming)를 사용할 수도 있습니다.
+> Keep in mind that CSR can impact SEO. Some search engine crawlers might not execute JavaScript and therefore only see the initial empty or loading state of your application. It can also lead to performance issues for users with slower internet connections or devices, as they need to wait for all the JavaScript to load and run before they can see the full page. Next.js promotes a hybrid approach that allows you to use a combination of [server-side rendering](/docs/pages/building-your-application/rendering/server-side-rendering), [static site generation](/docs/pages/building-your-application/rendering/static-site-generation), and client-side rendering, **depending on the needs of each page** in your application. In the App Router, you can also use [Loading UI with Suspense](/docs/app/building-your-application/routing/loading-ui-and-streaming) to show a loading indicator while the page is being rendered.

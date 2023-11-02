@@ -1,35 +1,36 @@
 ---
-title: 동적 라우트
-description: 동적 라우트는 프로그래밍적인 방식으로 동적 데이터로부터 라우트 세그먼트를 생성하는 데 사용될 수 있습니다.
+sidebar_position: 5
+title: Dynamic Routes
+description: Dynamic Routes can be used to programmatically generate route segments from dynamic data.
 related:
-  title: 다음 단계
-  description: 다음 단계에 대한 더 많은 정보를 알고 싶다면, 다음과 같은 섹션들을 추천합니다.
-  links:
-    - app/building-your-application/routing/linking-and-navigating
-    - app/api-reference/functions/generate-static-params
+    title: Next Steps
+    description: For more information on what to do next, we recommend the following sections
+    links:
+        - app/building-your-application/routing/linking-and-navigating
+        - app/api-reference/functions/generate-static-params
 ---
 
-정확한 세그먼트 이름을 미리 알 수 없어 동적 데이터로 라우트를 생성하려는 경우, 요청 시 채워지거나 빌드 시 [미리 렌더링 되는](#generating-static-params) 동적 세그먼트를 사용할 수 있습니다.
+When you don't know the exact segment names ahead of time and want to create routes from dynamic data, you can use Dynamic Segments that are filled in at request time or [prerendered](#generating-static-params) at build time.
 
 ## Convention
 
-동적 세그먼트는 폴더명을 대괄호로 감싸서 생성할 수 있습니다 `[폴더명]`. 예시로, `[id]` 또는 `[slug]`.
+A Dynamic Segment can be created by wrapping a folder's name in square brackets: `[folderName]`. For example, `[id]` or `[slug]`.
 
-동적 세그먼트는 [`layout`](/docs/app/api-reference/file-conventions/layout), [`page`](/docs/app/api-reference/file-conventions/page), [`route`](/docs/app/building-your-application/routing/router-handlers) 및 생성 메타데이터 함수에 `params` 프로퍼티로 전달됩니다.
+Dynamic Segments are passed as the `params` prop to [`layout`](/docs/app/api-reference/file-conventions/layout), [`page`](/docs/app/api-reference/file-conventions/page), [`route`](/docs/app/building-your-application/routing/route-handlers), and [`generateMetadata`](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function) functions.
 
 ## Example
 
-예를 들어, 블로그가 `app/blog/[slug]/page.js` 라는 경로를 포함할 경우, 여기서 `[slug]`가 블로그 게시글의 동적 세그먼트입니다.
+For example, a blog could include the following route `app/blog/[slug]/page.js` where `[slug]` is the Dynamic Segment for blog posts.
 
 ```tsx filename="app/blog/[slug]/page.tsx" switcher
 export default function Page({ params }: { params: { slug: string } }) {
-  return <div>My Post: {params.slug}</div>
+	return <div>My Post: {params.slug}</div>;
 }
 ```
 
 ```jsx filename="app/blog/[slug]/page.js" switcher
 export default function Page({ params }) {
-  return <div>My Post: {params.slug}</div>
+	return <div>My Post: {params.slug}</div>;
 }
 ```
 
@@ -39,45 +40,45 @@ export default function Page({ params }) {
 | `app/blog/[slug]/page.js` | `/blog/b`   | `{ slug: 'b' }` |
 | `app/blog/[slug]/page.js` | `/blog/c`   | `{ slug: 'c' }` |
 
-세그먼트에 대한 파라미터를 생성하는 방법을 알아보려면 [generateStaticParams()](#generating-static-params) 페이지를 참조하세요.
+See the [generateStaticParams()](#generating-static-params) page to learn how to generate the params for the segment.
 
-> **참고**: 동적 세그먼트는 `pages` 디렉토리의 [동적 라우트](/docs/app/building-your-application/routing/dynamic-routes)와 동일합니다.
+> **Good to know**: Dynamic Segments are equivalent to [Dynamic Routes](/docs/app/building-your-application/routing/dynamic-routes) in the `pages` directory.
 
 ## Generating Static Params
 
-`generateStaticParams` 함수는 [동적 라우트 세그먼트](/docs/app/building-your-application/routing/dynamic-routes)와 함께 사용하여 요청 시가 아닌 빌드 시에 라우트를 [**정적으로 생성**](/docs/app/building-your-application/rendering/static-and-dynamic-rendering#static-rendering-default)할 수 있습니다.
+The `generateStaticParams` function can be used in combination with [dynamic route segments](/docs/app/building-your-application/routing/dynamic-routes) to [**statically generate**](/docs/app/building-your-application/rendering/server-components#static-rendering-default) routes at build time instead of on-demand at request time.
 
 ```tsx filename="app/blog/[slug]/page.tsx" switcher
 export async function generateStaticParams() {
-  const posts = await fetch('https://.../posts').then((res) => res.json())
+	const posts = await fetch("https://.../posts").then((res) => res.json());
 
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
+	return posts.map((post) => ({
+		slug: post.slug,
+	}));
 }
 ```
 
 ```jsx filename="app/blog/[slug]/page.js" switcher
 export async function generateStaticParams() {
-  const posts = await fetch('https://.../posts').then((res) => res.json())
+	const posts = await fetch("https://.../posts").then((res) => res.json());
 
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
+	return posts.map((post) => ({
+		slug: post.slug,
+	}));
 }
 ```
 
-`generateStaticParams` 함수의 주요 이점은 효율적인 데이터 요청입니다. Fetch 요청을 사용하여 `generateStaticParams` 함수 내에서 콘텐츠를 가져오는 경우, 요청은 [자동으로 중복 제거](/docs/app/building-your-application/data-fetching#automatic-fetch-request-deduping)됩니다. 즉, 여러 `generateStaticParams`, 레이아웃 및 페이지에 걸쳐 동일한 인자를 가진 중복된 `fetch` 요청은 한 번만 수행되므로 빌드 시간이 단축됩니다.
+The primary benefit of the `generateStaticParams` function is its smart retrieval of data. If content is fetched within the `generateStaticParams` function using a `fetch` request, the requests are [automatically memoized](/docs/app/building-your-application/caching#request-memoization). This means a `fetch` request with the same arguments across multiple `generateStaticParams`, Layouts, and Pages will only be made once, which decreases build times.
 
-`Pages` 디렉토리로부터 마이그레이션이 필요하면 [마이그레이션 가이드](/docs/app/building-your-application/upgrading/app-router-migration#dynamic-paths-getstaticpaths)를 참고하세요.
+Use the [migration guide](/docs/app/building-your-application/upgrading/app-router-migration#dynamic-paths-getstaticpaths) if you are migrating from the `pages` directory.
 
-더 많은 정보 및 활용 사례는 [`generateStaticParams` server function documentation](/docs/app/api-reference/functions/generate-static-params)를 참조하세요.
+See [`generateStaticParams` server function documentation](/docs/app/api-reference/functions/generate-static-params) for more information and advanced use cases.
 
 ## Catch-all Segments
 
-동적 세그먼트는 괄호 `[...폴더명]` 안에 줄임표를 추가하여 **catch-all** 후속 세그먼트로 확장될 수 있습니다.
+Dynamic Segments can be extended to **catch-all** subsequent segments by adding an ellipsis inside the brackets `[...folderName]`.
 
-예를 들어, `app/shop/[...slug]/page.js` 는 `/shop/clothes`, 뿐만 아니라 `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts`, 등과도 일치합니다.
+For example, `app/shop/[...slug]/page.js` will match `/shop/clothes`, but also `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts`, and so on.
 
 | Route                        | Example URL   | `params`                    |
 | ---------------------------- | ------------- | --------------------------- |
@@ -87,11 +88,11 @@ export async function generateStaticParams() {
 
 ## Optional Catch-all Segments
 
-Catch-all 세그먼트는 이중 대괄호 안에 매개변수인 `[[...폴더명]]`을 포함하여 **선택적으로** 생성할 수 있습니다.
+Catch-all Segments can be made **optional** by including the parameter in double square brackets: `[[...folderName]]`.
 
-예를 들어, `app/shop/[[...slug]]/page.js` 는 `/shop/clothes`, `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts` **이외에도** `/shop` 과 일치합니다.
+For example, `app/shop/[[...slug]]/page.js` will **also** match `/shop`, in addition to `/shop/clothes`, `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts`.
 
-**catch-all** 과 **optional catch-all** 세그먼트의 차이점은 optional을 사용하면 매개변수가 없는 경로도 일치한다는 것입니다 (위 예제에서는 `/shop`).
+The difference between **catch-all** and **optional catch-all** segments is that with optional, the route without the parameter is also matched (`/shop` in the example above).
 
 | Route                          | Example URL   | `params`                    |
 | ------------------------------ | ------------- | --------------------------- |
@@ -102,17 +103,17 @@ Catch-all 세그먼트는 이중 대괄호 안에 매개변수인 `[[...폴더�
 
 ## TypeScript
 
-TypeScript를 사용하는 경우 구성된 라우트 세그먼트에 따라 `params`에 대한 타입을 추가할 수 있습니다.
+When using TypeScript, you can add types for `params` depending on your configured route segment.
 
 ```tsx filename="app/blog/[slug]/page.tsx" switcher
 export default function Page({ params }: { params: { slug: string } }) {
-  return <h1>My Page</h1>
+	return <h1>My Page</h1>;
 }
 ```
 
 ```jsx filename="app/blog/[slug]/page.js" switcher
 export default function Page({ params }) {
-  return <h1>My Page</h1>
+	return <h1>My Page</h1>;
 }
 ```
 
@@ -122,4 +123,4 @@ export default function Page({ params }) {
 | `app/shop/[...slug]/page.js`        | `{ slug: string[] }`                     |
 | `app/[categoryId]/[itemId]/page.js` | `{ categoryId: string, itemId: string }` |
 
-> **참고**: 이 기능은 향후 [TypeScript plugin](/docs/app/building-your-application/configuring/typescript#typescript-plugin)에 의해 자동으로 처리될 수 있습니다.
+> **Good to know**: This may be done automatically by the [TypeScript plugin](/docs/app/building-your-application/configuring/typescript#typescript-plugin) in the future.

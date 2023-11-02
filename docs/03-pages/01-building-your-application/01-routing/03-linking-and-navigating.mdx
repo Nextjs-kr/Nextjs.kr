@@ -1,4 +1,5 @@
 ---
+sidebar_position: 3
 title: Linking과 Navigating
 description: Next.js에서 네비게이션이 어떻게 동작하는지, 그리고 Link 컴포넌트와 `useRouter` 훅을 어떻게 사용하는지 알아봅시다.
 ---
@@ -8,32 +9,32 @@ Next.js 라우터를 사용하면 페이지 간에 SPA와 유사한 클라이언
 클라이언트 사이드 라우팅을 위한 `Link` 컴포넌트가 제공됩니다.
 
 ```jsx
-import Link from 'next/link'
+import Link from "next/link";
 
 function Home() {
-  return (
-    <ul>
-      <li>
-        <Link href="/">Home</Link>
-      </li>
-      <li>
-        <Link href="/about">About Us</Link>
-      </li>
-      <li>
-        <Link href="/blog/hello-world">Blog Post</Link>
-      </li>
-    </ul>
-  )
+	return (
+		<ul>
+			<li>
+				<Link href="/">Home</Link>
+			</li>
+			<li>
+				<Link href="/about">About Us</Link>
+			</li>
+			<li>
+				<Link href="/blog/hello-world">Blog Post</Link>
+			</li>
+		</ul>
+	);
 }
 
-export default Home
+export default Home;
 ```
 
 위의 예시에서는 여러 개의 링크를 사용합니다. 각 링크는 알고있는 페이지에 대한 경로(`href`)를 매핑합니다.
 
-- `/` → `pages/index.js`
-- `/about` → `pages/about.js`
-- `/blog/hello-world` → `pages/blog/[slug].js`
+-   `/` → `pages/index.js`
+-   `/about` → `pages/about.js`
+-   `/blog/hello-world` → `pages/blog/[slug].js`
 
 뷰포트에 있는 모든 `<Link />`는 기본적으로 [Static Generation](/docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx)을 사용하는 페이지를 미리 불러옵니다.(해당 데이터도 포함) [서버사이드 렌더링](/docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx) 라우트는 `<Link />`를 클릭한 경우에만 불러옵니다.
 
@@ -42,23 +43,23 @@ export default Home
 인터폴레이션을 통해 경로를 생성할 수도 있는데, 이는 [동적 라우팅 세그먼트](/docs/03-pages/01-building-your-application/01-routing/02-dynamic-routes.mdx)에 유용합니다.
 
 ```jsx
-import Link from 'next/link'
+import Link from "next/link";
 
 function Posts({ posts }) {
-  return (
-    <ul>
-      {posts.map((post) => (
-        <li key={post.id}>
-          <Link href={`/blog/${encodeURIComponent(post.slug)}`}>
-            {post.title}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  )
+	return (
+		<ul>
+			{posts.map((post) => (
+				<li key={post.id}>
+					<Link href={`/blog/${encodeURIComponent(post.slug)}`}>
+						{post.title}
+					</Link>
+				</li>
+			))}
+		</ul>
+	);
 }
 
-export default Posts
+export default Posts;
 ```
 
 > 이 예시에서는 경로가 utf-8과 호환되도록 하기 위해 [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent)를 사용합니다.
@@ -66,39 +67,39 @@ export default Posts
 대신, 다음과 같이 `href`에 URL 객체를 사용할 수도 있습니다.
 
 ```jsx
-import Link from 'next/link'
+import Link from "next/link";
 
 function Posts({ posts }) {
-  return (
-    <ul>
-      {posts.map((post) => (
-        <li key={post.id}>
-          <Link
-            href={{
-              pathname: '/blog/[slug]',
-              query: { slug: post.slug },
-            }}
-          >
-            {post.title}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  )
+	return (
+		<ul>
+			{posts.map((post) => (
+				<li key={post.id}>
+					<Link
+						href={{
+							pathname: "/blog/[slug]",
+							query: { slug: post.slug },
+						}}
+					>
+						{post.title}
+					</Link>
+				</li>
+			))}
+		</ul>
+	);
 }
 
-export default Posts
+export default Posts;
 ```
 
-- `pathname`: `pages` 디렉토리에 잇는 페이지 경로명입니다. 이 경우는 `/blog/[slug]`입니다.
-- 'query': 동적 세그먼트를 포함하는 객체입니다. 이 경우는 `slug`입니다.
+-   `pathname`: `pages` 디렉토리에 잇는 페이지 경로명입니다. 이 경우는 `/blog/[slug]`입니다.
+-   'query': 동적 세그먼트를 포함하는 객체입니다. 이 경우는 `slug`입니다.
 
 ## 라우터 주입하기
 
 <details>
   <summary>예제</summary>
 
-- [Dynamic Routing](https://github.com/vercel/next.js/tree/canary/examples/dynamic-routing)
+-   [Dynamic Routing](https://github.com/vercel/next.js/tree/canary/examples/dynamic-routing)
 
 </details>
 
@@ -111,7 +112,7 @@ export default Posts
 <details>
   <summary>예제</summary>
 
-- [Using Router](https://github.com/vercel/next.js/tree/canary/examples/using-router)
+-   [Using Router](https://github.com/vercel/next.js/tree/canary/examples/using-router)
 
 </details>
 
@@ -120,16 +121,16 @@ export default Posts
 다음 에시는 [`useRouter`](/docs/03-pages/02-api-reference/02-functions/use-router.mdx) 훅을 사용하여 페이지를 이동하는 기본적인 방법을 보여줍니다.
 
 ```jsx
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function ReadMore() {
-  const router = useRouter()
+	const router = useRouter();
 
-  return (
-    <button onClick={() => router.push('/about')}>
-      Click here to read more
-    </button>
-  )
+	return (
+		<button onClick={() => router.push("/about")}>
+			Click here to read more
+		</button>
+	);
 }
 ```
 
@@ -138,7 +139,7 @@ export default function ReadMore() {
 <details>
   <summary>예제</summary>
 
-- [Shallow Routing](https://github.com/vercel/next.js/tree/canary/examples/with-shallow-routing)
+-   [Shallow Routing](https://github.com/vercel/next.js/tree/canary/examples/with-shallow-routing)
 
 </details>
 
@@ -149,24 +150,24 @@ export default function ReadMore() {
 얕은 라우팅을 사용하기 위해서는 `shallow` 옵션을 `true`로 설정해야 합니다. 다음 예시를 살펴봅시다.
 
 ```jsx
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 // 현재 URL은 '/'
 function Page() {
-  const router = useRouter()
+	const router = useRouter();
 
-  useEffect(() => {
-    // 첫번째 렌더 이후에 항상 네비게이션을 수행합니다.
-    router.push('/?counter=10', undefined, { shallow: true })
-  }, [])
+	useEffect(() => {
+		// 첫번째 렌더 이후에 항상 네비게이션을 수행합니다.
+		router.push("/?counter=10", undefined, { shallow: true });
+	}, []);
 
-  useEffect(() => {
-    // counter가 변경되었습니다!
-  }, [router.query.counter])
+	useEffect(() => {
+		// counter가 변경되었습니다!
+	}, [router.query.counter]);
 }
 
-export default Page
+export default Page;
 ```
 
 URL은 `/?counter=10`으로 업데이트되지만, 페이지는 교체되지 않습니다. 오직 라우터의 상태만 변경됩니다.
@@ -188,7 +189,7 @@ componentDidUpdate(prevProps) {
 얕은 라우팅은 현재 페이지의 URL 변경에 대해서**만** 동작합니다. 예를 들어 `pages/about.js`라는 다른 페이지가 있다고 가정해봅시다. 그리고 다음과 같이 실행한다면:
 
 ```js
-router.push('/?counter=10', '/about?counter=10', { shallow: true })
+router.push("/?counter=10", "/about?counter=10", { shallow: true });
 ```
 
 새로운 페이지로 라우팅했기 때문에 얕은 라우팅을 요청했음에도 불구하고 현재 페이지 대신 새로운 페이지를 로드하고 데이터를 새로 불러옵니다.

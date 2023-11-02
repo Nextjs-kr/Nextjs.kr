@@ -1,4 +1,5 @@
 ---
+sidebar_position: 10
 title: Testing
 description: Learn how to set up Next.js with three commonly used testing tools — Cypress, Playwright, Jest, and React Testing Library.
 ---
@@ -6,10 +7,10 @@ description: Learn how to set up Next.js with three commonly used testing tools 
 <details open>
   <summary>Examples</summary>
 
-- [Next.js with Cypress](https://github.com/vercel/next.js/tree/canary/examples/with-cypress)
-- [Next.js with Playwright](https://github.com/vercel/next.js/tree/canary/examples/with-playwright)
-- [Next.js with Jest and React Testing Library](https://github.com/vercel/next.js/tree/canary/examples/with-jest)
-- [Next.js with Vitest](https://github.com/vercel/next.js/tree/canary/examples/with-vitest)
+-   [Next.js with Cypress](https://github.com/vercel/next.js/tree/canary/examples/with-cypress)
+-   [Next.js with Playwright](https://github.com/vercel/next.js/tree/canary/examples/with-playwright)
+-   [Next.js with Jest and React Testing Library](https://github.com/vercel/next.js/tree/canary/examples/with-jest)
+-   [Next.js with Vitest](https://github.com/vercel/next.js/tree/canary/examples/with-vitest)
 
 </details>
 
@@ -39,19 +40,19 @@ Add Cypress to the `package.json` scripts field:
 
 ```json filename="package.json"
 {
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "cypress": "cypress open"
-  }
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"cypress:open": "cypress open"
+	}
 }
 ```
 
 Run Cypress for the first time to generate examples that use their recommended folder structure:
 
 ```bash filename="Terminal"
-npm run cypress
+npm run cypress:open
 ```
 
 You can look through the generated examples and the [Writing Your First Test](https://docs.cypress.io/guides/getting-started/writing-your-first-test) section of the Cypress Documentation to help you get familiar with Cypress.
@@ -65,47 +66,47 @@ The [Cypress docs contain a guide](https://docs.cypress.io/guides/core-concepts/
 Assuming the following two Next.js pages:
 
 ```jsx filename="pages/index.js"
-import Link from 'next/link'
+import Link from "next/link";
 
 export default function Home() {
-  return (
-    <nav>
-      <h1>Homepage</h1>
-      <Link href="/about">About</Link>
-    </nav>
-  )
+	return (
+		<nav>
+			<h1>Homepage</h1>
+			<Link href="/about">About</Link>
+		</nav>
+	);
 }
 ```
 
 ```jsx filename="pages/about.js"
 export default function About() {
-  return (
-    <div>
-      <h1>About Page</h1>
-      <Link href="/">Homepage</Link>
-    </div>
-  )
+	return (
+		<div>
+			<h1>About Page</h1>
+			<Link href="/">Homepage</Link>
+		</div>
+	);
 }
 ```
 
 Add a test to check your navigation is working correctly:
 
 ```js filename="cypress/e2e/app.cy.js"
-describe('Navigation', () => {
-  it('should navigate to the about page', () => {
-    // Start from the index page
-    cy.visit('http://localhost:3000/')
+describe("Navigation", () => {
+	it("should navigate to the about page", () => {
+		// Start from the index page
+		cy.visit("http://localhost:3000/");
 
-    // Find a link with an href attribute containing "about" and click it
-    cy.get('a[href*="about"]').click()
+		// Find a link with an href attribute containing "about" and click it
+		cy.get('a[href*="about"]').click();
 
-    // The new url should include "/about"
-    cy.url().should('include', '/about')
+		// The new url should include "/about"
+		cy.url().should("include", "/about");
 
-    // The new page should contain an h1 with "About page"
-    cy.get('h1').contains('About Page')
-  })
-})
+		// The new page should contain an h1 with "About page"
+		cy.get("h1").contains("About Page");
+	});
+});
 ```
 
 You can use `cy.visit("/")` instead of `cy.visit("http://localhost:3000/")` if you add `baseUrl: 'http://localhost:3000'` to the `cypress.config.js` configuration file.
@@ -119,21 +120,21 @@ Component tests build and mount a specific component without having to bundle yo
 Assuming the same components from the previous section, add a test to validate a component is rendering the expected output:
 
 ```jsx filename="pages/about.cy.js"
-import AboutPage from './about.js'
+import AboutPage from "./about.js";
 
-describe('<AboutPage />', () => {
-  it('should render and display expected content', () => {
-    // Mount the React component for the About page
-    cy.mount(<AboutPage />)
+describe("<AboutPage />", () => {
+	it("should render and display expected content", () => {
+		// Mount the React component for the About page
+		cy.mount(<AboutPage />);
 
-    // The new page should contain an h1 with "About page"
-    cy.get('h1').contains('About Page')
+		// The new page should contain an h1 with "About page"
+		cy.get("h1").contains("About Page");
 
-    // Validate that a link with the expected URL is present
-    // *Following* the link is better suited to an E2E test
-    cy.get('a[href="/"]').should('be.visible')
-  })
-})
+		// Validate that a link with the expected URL is present
+		// *Following* the link is better suited to an E2E test
+		cy.get('a[href="/"]').should("be.visible");
+	});
+});
 ```
 
 ### Running your Cypress tests
@@ -156,21 +157,22 @@ You will have noticed that running Cypress so far has opened an interactive brow
 
 ```json filename="package.json"
 {
-  "scripts": {
-    //...
-    "e2e": "start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
-    "e2e:headless": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
-    "component": "cypress open --component",
-    "component:headless": "cypress run --component"
-  }
+	"scripts": {
+		//...
+		"e2e": "start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
+		"e2e:headless": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
+		"component": "cypress open --component",
+		"component:headless": "cypress run --component"
+	}
 }
 ```
 
 You can learn more about Cypress and Continuous Integration from these resources:
 
-- [Cypress Continuous Integration Docs](https://docs.cypress.io/guides/continuous-integration/introduction)
-- [Cypress GitHub Actions Guide](https://on.cypress.io/github-actions)
-- [Official Cypress GitHub Action](https://github.com/cypress-io/github-action)
+-   [Cypress Continuous Integration Docs](https://docs.cypress.io/guides/continuous-integration/introduction)
+-   [Cypress GitHub Actions Guide](https://on.cypress.io/github-actions)
+-   [Official Cypress GitHub Action](https://github.com/cypress-io/github-action)
+-   [Cypress Discord](https://discord.com/invite/cypress)
 
 ## Playwright
 
@@ -198,12 +200,12 @@ Add Playwright to the `package.json` scripts field:
 
 ```json filename="package.json"
 {
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "test:e2e": "playwright test"
-  }
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"test:e2e": "playwright test"
+	}
 }
 ```
 
@@ -212,57 +214,57 @@ Add Playwright to the `package.json` scripts field:
 Assuming the following two Next.js pages:
 
 ```jsx filename="pages/index.js"
-import Link from 'next/link'
+import Link from "next/link";
 
 export default function Home() {
-  return (
-    <nav>
-      <Link href="/about">About</Link>
-    </nav>
-  )
+	return (
+		<nav>
+			<Link href="/about">About</Link>
+		</nav>
+	);
 }
 ```
 
 ```jsx filename="pages/about.js"
 export default function About() {
-  return (
-    <div>
-      <h1>About Page</h1>
-    </div>
-  )
+	return (
+		<div>
+			<h1>About Page</h1>
+		</div>
+	);
 }
 ```
 
 Add a test to verify that your navigation is working correctly:
 
 ```ts filename="e2e/example.spec.ts" switcher
-import { test, expect } from '@playwright/test'
+import { test, expect } from "@playwright/test";
 
-test('should navigate to the about page', async ({ page }) => {
-  // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
-  await page.goto('http://localhost:3000/')
-  // Find an element with the text 'About Page' and click on it
-  await page.click('text=About')
-  // The new URL should be "/about" (baseURL is used there)
-  await expect(page).toHaveURL('http://localhost:3000/about')
-  // The new page should contain an h1 with "About Page"
-  await expect(page.locator('h1')).toContainText('About Page')
-})
+test("should navigate to the about page", async ({ page }) => {
+	// Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
+	await page.goto("http://localhost:3000/");
+	// Find an element with the text 'About Page' and click on it
+	await page.click("text=About");
+	// The new URL should be "/about" (baseURL is used there)
+	await expect(page).toHaveURL("http://localhost:3000/about");
+	// The new page should contain an h1 with "About Page"
+	await expect(page.locator("h1")).toContainText("About Page");
+});
 ```
 
 ```js filename="e2e/example.spec.js" switcher
-import { test, expect } from '@playwright/test'
+import { test, expect } from "@playwright/test";
 
-test('should navigate to the about page', async ({ page }) => {
-  // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
-  await page.goto('http://localhost:3000/')
-  // Find an element with the text 'About Page' and click on it
-  await page.click('text=About')
-  // The new URL should be "/about" (baseURL is used there)
-  await expect(page).toHaveURL('http://localhost:3000/about')
-  // The new page should contain an h1 with "About Page"
-  await expect(page.locator('h1')).toContainText('About Page')
-})
+test("should navigate to the about page", async ({ page }) => {
+	// Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
+	await page.goto("http://localhost:3000/");
+	// Find an element with the text 'About Page' and click on it
+	await page.click("text=About");
+	// The new URL should be "/about" (baseURL is used there)
+	await expect(page).toHaveURL("http://localhost:3000/about");
+	// The new page should contain an h1 with "About Page"
+	await expect(page.locator("h1")).toContainText("About Page");
+});
 ```
 
 You can use `page.goto("/")` instead of `page.goto("http://localhost:3000/")`, if you add [`"baseURL": "http://localhost:3000"`](https://playwright.dev/docs/api/class-testoptions#test-options-base-url) to the `playwright.config.ts` configuration file.
@@ -281,9 +283,10 @@ Playwright will by default run your tests in the [headless mode](https://playwri
 
 You can learn more about Playwright and Continuous Integration from these resources:
 
-- [Getting started with Playwright](https://playwright.dev/docs/intro)
-- [Use a development server](https://playwright.dev/docs/test-webserver/)
-- [Playwright on your CI provider](https://playwright.dev/docs/ci)
+-   [Getting started with Playwright](https://playwright.dev/docs/intro)
+-   [Use a development server](https://playwright.dev/docs/test-webserver/)
+-   [Playwright on your CI provider](https://playwright.dev/docs/ci)
+-   [Playwright Discord](https://discord.com/invite/playwright-807756831384403968)
 
 ## Jest and React Testing Library
 
@@ -316,34 +319,34 @@ npm install --save-dev jest jest-environment-jsdom @testing-library/react @testi
 Create a `jest.config.mjs` file in your project's root directory and add the following:
 
 ```js filename="jest.config.mjs"
-import nextJest from 'next/jest.js'
+import nextJest from "next/jest.js";
 
 const createJestConfig = nextJest({
-  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
-  dir: './',
-})
+	// Provide the path to your Next.js app to load next.config.js and .env files in your test environment
+	dir: "./",
+});
 
 // Add any custom config to be passed to Jest
 /** @type {import('jest').Config} */
 const config = {
-  // Add more setup options before each test is run
-  // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+	// Add more setup options before each test is run
+	// setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
 
-  testEnvironment: 'jest-environment-jsdom',
-}
+	testEnvironment: "jest-environment-jsdom",
+};
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-export default createJestConfig(config)
+export default createJestConfig(config);
 ```
 
 Under the hood, `next/jest` is automatically configuring Jest for you, including:
 
-- Setting up `transform` using [SWC](/docs/architecture/nextjs-compiler)
-- Auto mocking stylesheets (`.css`, `.module.css`, and their scss variants), image imports and [`next/font`](/docs/pages/building-your-application/optimizing/fonts)
-- Loading `.env` (and all variants) into `process.env`
-- Ignoring `node_modules` from test resolving and transforms
-- Ignoring `.next` from test resolving
-- Loading `next.config.js` for flags that enable SWC transforms
+-   Setting up `transform` using [SWC](/docs/architecture/nextjs-compiler)
+-   Auto mocking stylesheets (`.css`, `.module.css`, and their scss variants), image imports and [`next/font`](/docs/pages/building-your-application/optimizing/fonts)
+-   Loading `.env` (and all variants) into `process.env`
+-   Ignoring `node_modules` from test resolving and transforms
+-   Ignoring `.next` from test resolving
+-   Loading `next.config.js` for flags that enable SWC transforms
 
 > **Good to know**: To test environment variables directly, load them manually in a separate setup script or in your `jest.config.js` file. For more information, please see [Test Environment Variables](/docs/pages/building-your-application/configuring/environment-variables#test-environment-variables).
 
@@ -355,47 +358,47 @@ Here are the recommended options to configure Jest for Next.js:
 
 ```js filename="jest.config.js"
 module.exports = {
-  collectCoverage: true,
-  // on node 14.x coverage provider v8 offers good speed and more or less good report
-  coverageProvider: 'v8',
-  collectCoverageFrom: [
-    '**/*.{js,jsx,ts,tsx}',
-    '!**/*.d.ts',
-    '!**/node_modules/**',
-    '!<rootDir>/out/**',
-    '!<rootDir>/.next/**',
-    '!<rootDir>/*.config.js',
-    '!<rootDir>/coverage/**',
-  ],
-  moduleNameMapper: {
-    // Handle CSS imports (with CSS modules)
-    // https://jestjs.io/docs/webpack#mocking-css-modules
-    '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
+	collectCoverage: true,
+	// on node 14.x coverage provider v8 offers good speed and more or less good report
+	coverageProvider: "v8",
+	collectCoverageFrom: [
+		"**/*.{js,jsx,ts,tsx}",
+		"!**/*.d.ts",
+		"!**/node_modules/**",
+		"!<rootDir>/out/**",
+		"!<rootDir>/.next/**",
+		"!<rootDir>/*.config.js",
+		"!<rootDir>/coverage/**",
+	],
+	moduleNameMapper: {
+		// Handle CSS imports (with CSS modules)
+		// https://jestjs.io/docs/webpack#mocking-css-modules
+		"^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
 
-    // Handle CSS imports (without CSS modules)
-    '^.+\\.(css|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
+		// Handle CSS imports (without CSS modules)
+		"^.+\\.(css|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
 
-    // Handle image imports
-    // https://jestjs.io/docs/webpack#handling-static-assets
-    '^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$/i': `<rootDir>/__mocks__/fileMock.js`,
+		// Handle image imports
+		// https://jestjs.io/docs/webpack#handling-static-assets
+		"^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$/i": `<rootDir>/__mocks__/fileMock.js`,
 
-    // Handle module aliases
-    '^@/components/(.*)$': '<rootDir>/components/$1',
-  },
-  // Add more setup options before each test is run
-  // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
-  testEnvironment: 'jsdom',
-  transform: {
-    // Use babel-jest to transpile tests with the next/babel preset
-    // https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object
-    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
-  },
-  transformIgnorePatterns: [
-    '/node_modules/',
-    '^.+\\.module\\.(css|sass|scss)$',
-  ],
-}
+		// Handle module aliases
+		"^@/components/(.*)$": "<rootDir>/components/$1",
+	},
+	// Add more setup options before each test is run
+	// setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+	testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/.next/"],
+	testEnvironment: "jsdom",
+	transform: {
+		// Use babel-jest to transpile tests with the next/babel preset
+		// https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object
+		"^.+\\.(js|jsx|ts|tsx)$": ["babel-jest", { presets: ["next/babel"] }],
+	},
+	transformIgnorePatterns: [
+		"/node_modules/",
+		"^.+\\.module\\.(css|sass|scss)$",
+	],
+};
 ```
 
 You can learn more about each configuration option in the [Jest docs](https://jestjs.io/docs/configuration).
@@ -406,15 +409,15 @@ Stylesheets and images aren't used in the tests but importing them may cause err
 
 ```js filename="__mocks__/fileMock.js"
 module.exports = {
-  src: '/img.jpg',
-  height: 24,
-  width: 24,
-  blurDataURL: 'data:image/png;base64,imagedata',
-}
+	src: "/img.jpg",
+	height: 24,
+	width: 24,
+	blurDataURL: "data:image/png;base64,imagedata",
+};
 ```
 
 ```js filename="__mocks__/styleMock.js"
-module.exports = {}
+module.exports = {};
 ```
 
 For more information on handling static assets, please refer to the [Jest Docs](https://jestjs.io/docs/webpack#handling-static-assets).
@@ -424,14 +427,16 @@ For more information on handling static assets, please refer to the [Jest Docs](
 `@testing-library/jest-dom` includes a set of convenient [custom matchers](https://github.com/testing-library/jest-dom#custom-matchers) such as `.toBeInTheDocument()` making it easier to write tests. You can import the custom matchers for every test by adding the following option to the Jest configuration file:
 
 ```js filename="jest.config.js"
-setupFilesAfterEnv: ['<rootDir>/jest.setup.js']
+setupFilesAfterEnv: ["<rootDir>/jest.setup.js"];
 ```
 
 Then, inside `jest.setup.js`, add the following import:
 
 ```js filename="jest.setup.js"
-import '@testing-library/jest-dom/extend-expect'
+import "@testing-library/jest-dom";
 ```
+
+> [`extend-expect` was removed in `v6.0`](https://github.com/testing-library/jest-dom/releases/tag/v6.0.0), so if you are using `@testing-library/jest-dom` before version 6, you will need to import `@testing-library/jest-dom/extend-expect` instead.
 
 If you need to add more setup options before each test, it's common to add them to the `jest.setup.js` file above.
 
@@ -441,12 +446,14 @@ If your project is using [Module Path Aliases](/docs/pages/building-your-applica
 
 ```json filename="tsconfig.json or jsconfig.json"
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/components/*": ["components/*"]
-    }
-  }
+	"compilerOptions": {
+		"module": "esnext",
+		"moduleResolution": "node",
+		"baseUrl": "./",
+		"paths": {
+			"@/components/*": ["components/*"]
+		}
+	}
 }
 ```
 
@@ -464,12 +471,12 @@ Add the Jest executable in watch mode to the `package.json` scripts:
 
 ```json filename="package.json"
 {
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "test": "jest --watch"
-  }
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"test": "jest --watch"
+	}
 }
 ```
 
@@ -482,33 +489,33 @@ Your project is now ready to run tests. Follow Jest's convention by adding tests
 For example, we can add a test to check if the `<Home />` component successfully renders a heading:
 
 ```jsx filename="__tests__/index.test.js"
-import { render, screen } from '@testing-library/react'
-import Home from '../pages/index'
-import '@testing-library/jest-dom'
+import { render, screen } from "@testing-library/react";
+import Home from "../pages/index";
+import "@testing-library/jest-dom";
 
-describe('Home', () => {
-  it('renders a heading', () => {
-    render(<Home />)
+describe("Home", () => {
+	it("renders a heading", () => {
+		render(<Home />);
 
-    const heading = screen.getByRole('heading', {
-      name: /welcome to next\.js!/i,
-    })
+		const heading = screen.getByRole("heading", {
+			name: /welcome to next\.js!/i,
+		});
 
-    expect(heading).toBeInTheDocument()
-  })
-})
+		expect(heading).toBeInTheDocument();
+	});
+});
 ```
 
 Optionally, add a [snapshot test](https://jestjs.io/docs/snapshot-testing) to keep track of any unexpected changes to your `<Home />` component:
 
 ```jsx filename="__tests__/snapshot.js"
-import { render } from '@testing-library/react'
-import Home from '../pages/index'
+import { render } from "@testing-library/react";
+import Home from "../pages/index";
 
-it('renders homepage unchanged', () => {
-  const { container } = render(<Home />)
-  expect(container).toMatchSnapshot()
-})
+it("renders homepage unchanged", () => {
+	const { container } = render(<Home />);
+	expect(container).toMatchSnapshot();
+});
 ```
 
 > **Good to know**: Test files should not be included inside the Pages Router because any files inside the Pages Router are considered routes.
@@ -519,16 +526,16 @@ Run `npm run test` to run your test suite. After your tests pass or fail, you wi
 
 For further reading, you may find these resources helpful:
 
-- [Jest Docs](https://jestjs.io/docs/getting-started)
-- [React Testing Library Docs](https://testing-library.com/docs/react-testing-library/intro/)
-- [Testing Playground](https://testing-playground.com/) - use good testing practices to match elements.
+-   [Jest Docs](https://jestjs.io/docs/getting-started)
+-   [React Testing Library Docs](https://testing-library.com/docs/react-testing-library/intro/)
+-   [Testing Playground](https://testing-playground.com/) - use good testing practices to match elements.
 
 ## Community Packages and Examples
 
 The Next.js community has created packages and articles you may find helpful:
 
-- [next-router-mock](https://github.com/scottrippey/next-router-mock) for Storybook.
-- [Test Preview Vercel Deploys with Cypress](https://glebbahmutov.com/blog/develop-preview-test/) by Gleb Bahmutov.
+-   [next-router-mock](https://github.com/scottrippey/next-router-mock) for Storybook.
+-   [Test Preview Vercel Deploys with Cypress](https://glebbahmutov.com/blog/develop-preview-test/) by Gleb Bahmutov.
 
 For more information on what to read next, we recommend:
 

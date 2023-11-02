@@ -1,177 +1,181 @@
 ---
-title: 로딩 UI과 스트리밍
-description: Suspense로 감싸진 UI를 로드하면 특정 경로의 세그먼트에 대한 fallback을 만들고 컨텐츠가 준비된 이후 자동으로 스트리밍합니다.
+sidebar_position: 6
+title: Loading UI and Streaming
+description: Built on top of Suspense, Loading UI allows you to create a fallback for specific route segments, and automatically stream content as it becomes ready.
 ---
 
-특별한 파일인 `loading.js`는 [React Suspense](https://react.dev/reference/react/Suspense)로 의미 있는 로딩 UI를 만들 수 있습니다.
-이 컨벤션으로 경로 세그먼트의 내용이 로드되는 동안 서버에서 [순간 로딩 상태(instant loading state)](#instant-loading-states)를 표시할 수 있고 렌더링이 되면 자동으로 새로운 내용으로 교체됩니다.
+The special file `loading.js` helps you create meaningful Loading UI with [React Suspense](https://react.dev/reference/react/Suspense). With this convention, you can show an [instant loading state](#instant-loading-states) from the server while the content of a route segment loads. The new content is automatically swapped in once rendering is complete.
 
 <Image
-  alt="Loading UI"
-  srcLight="/docs/light/loading-ui.png"
-  srcDark="/docs/dark/loading-ui.png"
-  width="1600"
-  height="691"
+	alt="Loading UI"
+	srcLight="/docs/light/loading-ui.png"
+	srcDark="/docs/dark/loading-ui.png"
+	width="1600"
+	height="691"
 />
 
-## 순간 로딩 상태
+## Instant Loading States
 
-순간 로딩 상태는 탐색할 때 나타나는 fallback UI입니다. 스켈레톤과 스피너 같은 로더 또는 표지, 제목 등 화면의 작지만 의미 있는 부분을 미리 렌더링할 수 있습니다.
-이를 통해 사용자는 앱이 응답 중임을 알 수 있고 더 나은 사용자 경험을 할 수 있습니다.
+An instant loading state is fallback UI that is shown immediately upon navigation. You can pre-render loading indicators such as skeletons and spinners, or a small but meaningful part of future screens such as a cover photo, title, etc. This helps users understand the app is responding and provides a better user experience.
 
-폴더 안에 `loading.js` 파일을 추가해서 로딩 상태를 만들 수 있습니다.
+Create a loading state by adding a `loading.js` file inside a folder.
 
 <Image
-  alt="loading.js special file"
-  srcLight="/docs/light/loading-special-file.png"
-  srcDark="/docs/dark/loading-special-file.png"
-  width="1600"
-  height="606"
+	alt="loading.js special file"
+	srcLight="/docs/light/loading-special-file.png"
+	srcDark="/docs/dark/loading-special-file.png"
+	width="1600"
+	height="606"
 />
 
 ```tsx filename="app/dashboard/loading.tsx" switcher
 export default function Loading() {
-  // 스켈레톤을 포함하여 Loading 함수 내부에 어떤 UI도 추가할 수 있습니다.
-  return <LoadingSkeleton />
+	// You can add any UI inside Loading, including a Skeleton.
+	return <LoadingSkeleton />;
 }
 ```
 
 ```jsx filename="app/dashboard/loading.js" switcher
 export default function Loading() {
-  // 스켈레톤을 포함하여 Loading 함수 내부에 어떤 UI도 추가할 수 있습니다.
-  return <LoadingSkeleton />
+	// You can add any UI inside Loading, including a Skeleton.
+	return <LoadingSkeleton />;
 }
 ```
 
-같은 폴더에서 `loading.js`는 `layout.js` 안에 중첩됩니다. 그러면 자동으로 `<Suspense>` 영역 안에 `page.js` 파일과 하위 자식을 감싸줍니다.
+In the same folder, `loading.js` will be nested inside `layout.js`. It will automatically wrap the `page.js` file and any children below in a `<Suspense>` boundary.
 
 <Image
-  alt="loading.js overview"
-  srcLight="/docs/light/loading-overview.png"
-  srcDark="/docs/dark/loading-overview.png"
-  width="1600"
-  height="768"
+	alt="loading.js overview"
+	srcLight="/docs/light/loading-overview.png"
+	srcDark="/docs/dark/loading-overview.png"
+	width="1600"
+	height="768"
 />
 
-> **참고**
+> **Good to know**:
 >
-> - [server-centric routing](/docs/app/building-your-application/routing#server-centric-routing-with-client-side-navigation)을 이용한 탐색은 즉시 이루어집니다.
-> - 탐색은 중단할 수 있으며, 이는 새로운 Route의 모든 내용이 완전히 로드될 필요 없이 다른 Route로 넘어갈 수 있음을 의미합니다.
-> - 새로운 라우트 세그먼트들이 로드되는 동안에도 공유 레이아웃은 상호 작용이 가능합니다.
+> -   Navigation is immediate, even with [server-centric routing](/docs/app/building-your-application/routing/linking-and-navigating#how-routing-and-navigation-works).
+> -   Navigation is interruptible, meaning changing routes does not need to wait for the content of the route to fully load before navigating to another route.
+> -   Shared layouts remain interactive while new route segments load.
 
-> **추천:** 라우트 세그먼트(layouts and pages)들에 `loading.js`규칙을 사용하세요. Next.js는 이 기능을 최적화합니다.
+> **Recommendation:** Use the `loading.js` convention for route segments (layouts and pages) as Next.js optimizes this functionality.
 
-## Suspense를 이용한 스트리밍
+## Streaming with Suspense
 
-`loading.js`뿐 아니라 UI 구성 요소에 대한 Suspense Boundaries를 수동으로 만들 수도 있습니다. App 라우터는 [Node.js와 Edge runtimes](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) 모두에 대해 [Suspense](https://react.dev/reference/react/Suspense)를 이용한 스트리밍을 지원합니다.
+In addition to `loading.js`, you can also manually create Suspense Boundaries for your own UI components. The App Router supports streaming with [Suspense](https://react.dev/reference/react/Suspense) for both [Node.js and Edge runtimes](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes).
 
-### 스트리밍이 무엇인가요?
+### What is Streaming?
 
-React와 Next.js에서 스트리밍이 어떻게 작동하는지 알아보려면 **Server-Side Rendering (SSR)**와 제한 사항에 대해 이해하는 것이 좋습니다.
+To learn how Streaming works in React and Next.js, it's helpful to understand **Server-Side Rendering (SSR)** and its limitations.
 
-SSR을 사용하면 사용자가 페이지를 보고 상호작용하기까지 다음과 같은 단계를 진행해야 합니다.
+With SSR, there's a series of steps that need to be completed before a user can see and interact with a page:
 
-1. 먼저 주어진 페이지의 모든 데이터를 서버에서 가져옵니다.
-2. 서버는 페이지의 HTML을 렌더링합니다.
-3. 페이지의 HTML, CSS, JavaScript를 클라이언트로 전송합니다.
-4. 생성된 HTML과 CSS를 사용하여 사용자가 상호작용할 수 없는 UI를 보여줍니다.
-5. 마지막으로 React [hydrates](https://react.dev/reference/react-dom/client/hydrateRoot#hydrating-server-rendered-html)는 사용자가 UI와 상호작용할 수 있도록 만들어 줍니다.
-
-<Image
-  alt="Chart showing Server Rendering without Streaming"
-  어
-  srcLight="/docs/light/server-rendering-without-streaming-chart.png"
-  srcDark="/docs/dark/server-rendering-without-streaming-chart.png"
-  width="1600"
-  height="612"
-/>
-
-이런 단계를 순차적으로 진행됩니다. 즉, 서버는 모든 데이터를 가져온 후에만 페이지에 대한 HTML을 렌더링할 수 있습니다. 그리고 클라이언트에서 모든 React 페이지 구성 요소들에 대한 코드가 다운로드된 이후 UI를 hydrate할 수 있습니다.
-
-SSR을 사용하는 React와 Next.js는 사용자에게 상호작용할 수 없는 페이지를 표시함으로써 가시적인 로딩 성능을 향상합니다.
+1. First, all data for a given page is fetched on the server.
+2. The server then renders the HTML for the page.
+3. The HTML, CSS, and JavaScript for the page are sent to the client.
+4. A non-interactive user interface is shown using the generated HTML, and CSS.
+5. Finally, React [hydrates](https://react.dev/reference/react-dom/client/hydrateRoot#hydrating-server-rendered-html) the user interface to make it interactive.
 
 <Image
-  alt="Server Rendering without Streaming"
-  srcLight="/docs/light/server-rendering-without-streaming.png"
-  srcDark="/docs/dark/server-rendering-without-streaming.png"
-  width="1600"
-  height="748"
+	alt="Chart showing Server Rendering without Streaming"
+	srcLight="/docs/light/server-rendering-without-streaming-chart.png"
+	srcDark="/docs/dark/server-rendering-without-streaming-chart.png"
+	width="1600"
+	height="612"
 />
 
-그러나 페이지를 사용자에게 표시하기 전에 서버의 모든 데이터를 가져와야 하므로 속도가 느려질 수 있습니다.
+These steps are sequential and blocking, meaning the server can only render the HTML for a page once all the data has been fetched. And, on the client, React can only hydrate the UI once the code for all components in the page has been downloaded.
 
-**Streaming**을 사용하면 페이지의 HTML을 더 작은 청크 단위로 분리함으로써 서버에서 클라이언트로 청크들을 점진적으로 보낼 수 있습니다.
+SSR with React and Next.js helps improve the perceived loading performance by showing a non-interactive page to the user as soon as possible.
 
 <Image
-  alt="How Server Rendering with Streaming Works"
-  srcLight="/docs/light/server-rendering-with-streaming.png"
-  srcDark="/docs/dark/server-rendering-with-streaming.png"
-  width="1600"
-  height="785"
+	alt="Server Rendering without Streaming"
+	srcLight="/docs/light/server-rendering-without-streaming.png"
+	srcDark="/docs/dark/server-rendering-without-streaming.png"
+	width="1600"
+	height="748"
 />
 
-이렇게 하면 UI를 렌더링하기 전에 모든 데이터가 로드될 때까지 기다리지 않고 페이지의 일부를 더 빨리 로드할 수 있습니다.
+However, it can still be slow as all data fetching on server needs to be completed before the page can be shown to the user.
 
-각 구성 요소는 청크로 간주할 수 있으므로 스트리밍은 React의 Component 모델과 잘 동작합니다. 우선순위가 높거나(e.g. 제품 정보) 데이터에 의존하지 않는 컴포넌트(e.g. 레이아웃)는 먼저 전송될 수 있으며 React는 hydration을 더 일찍 시작할 수 있습니다. 우선순위가 낮은 컴포넌트(e.g. 리뷰, 추천 상품)는 데이터를 가져온 후 동일한 서버 요청으로 전송할 수 있습니다.
+**Streaming** allows you to break down the page's HTML into smaller chunks and progressively send those chunks from the server to the client.
 
 <Image
-  alt="Chart showing Server Rendering with Streaming"
-  srcLight="/docs/light/server-rendering-with-streaming-chart.png"
-  srcDark="/docs/dark/server-rendering-with-streaming-chart.png"
-  width="1600"
-  height="730"
+	alt="How Server Rendering with Streaming Works"
+	srcLight="/docs/light/server-rendering-with-streaming.png"
+	srcDark="/docs/dark/server-rendering-with-streaming.png"
+	width="1600"
+	height="785"
 />
 
-스트리밍은 [Time To First Byte (TTFB)](https://web.dev/ttfb/)과 [First Contentful Paint (FCP)](https://web.dev/first-contentful-paint/)를 줄일 수 있으므로 긴 데이터 요청이 페이지 렌더링을 막는 것을 방지할 때 더 유용합니다. 또한 [Time to Interactive (TTI)](https://developer.chrome.com/en/docs/lighthouse/performance/interactive/)는 특히 성능이 낮은 장치에서 효과적입니다.
+This enables parts of the page to be displayed sooner, without waiting for all the data to load before any UI can be rendered.
+
+Streaming works well with React's component model because each component can be considered a chunk. Components that have higher priority (e.g. product information) or that don't rely on data can be sent first (e.g. layout), and React can start hydration earlier. Components that have lower priority (e.g. reviews, related products) can be sent in the same server request after their data has been fetched.
+
+<Image
+	alt="Chart showing Server Rendering with Streaming"
+	srcLight="/docs/light/server-rendering-with-streaming-chart.png"
+	srcDark="/docs/dark/server-rendering-with-streaming-chart.png"
+	width="1600"
+	height="730"
+/>
+
+Streaming is particularly beneficial when you want to prevent long data requests from blocking the page from rendering as it can reduce the [Time To First Byte (TTFB)](https://web.dev/ttfb/) and [First Contentful Paint (FCP)](https://web.dev/first-contentful-paint/). It also helps improve [Time to Interactive (TTI)](https://developer.chrome.com/en/docs/lighthouse/performance/interactive/), especially on slower devices.
 
 ### Example
 
-`<Suspense>`는 비동기 동작(e.g. fetch 데이터)을 실행하는 컴포넌트 감싸고 동작이 진행되는 동안 fallback UI(e.g. 스켈레톤, 스피너)를 표시한 후 동작이 완료되면 컴포넌트를 교체합니다.
+`<Suspense>` works by wrapping a component that performs an asynchronous action (e.g. fetch data), showing fallback UI (e.g. skeleton, spinner) while it's happening, and then swapping in your component once the action completes.
 
 ```tsx filename="app/dashboard/page.tsx" switcher
-import { Suspense } from 'react'
-import { PostFeed, Weather } from './Components'
+import { Suspense } from "react";
+import { PostFeed, Weather } from "./Components";
 
 export default function Posts() {
-  return (
-    <section>
-      <Suspense fallback={<p>피드 로딩 중...</p>}>
-        <PostFeed />
-      </Suspense>
-      <Suspense fallback={<p>날씨 로딩 중...</p>}>
-        <Weather />
-      </Suspense>
-    </section>
-  )
+	return (
+		<section>
+			<Suspense fallback={<p>Loading feed...</p>}>
+				<PostFeed />
+			</Suspense>
+			<Suspense fallback={<p>Loading weather...</p>}>
+				<Weather />
+			</Suspense>
+		</section>
+	);
 }
 ```
 
 ```jsx filename="app/dashboard/page.js" switcher
-import { Suspense } from 'react'
-import { PostFeed, Weather } from './Components'
+import { Suspense } from "react";
+import { PostFeed, Weather } from "./Components";
 
 export default function Posts() {
-  return (
-    <section>
-      <Suspense fallback={<p>피드 로딩 중...</p>}>
-        <PostFeed />
-      </Suspense>
-      <Suspense fallback={<p>날씨 로딩 중...</p>}>
-        <Weather />
-      </Suspense>
-    </section>
-  )
+	return (
+		<section>
+			<Suspense fallback={<p>Loading feed...</p>}>
+				<PostFeed />
+			</Suspense>
+			<Suspense fallback={<p>Loading weather...</p>}>
+				<Weather />
+			</Suspense>
+		</section>
+	);
 }
 ```
 
-Suspense를 사용하면 다음과 같은 이점이 있습니다.
+By using Suspense, you get the benefits of:
 
-1. **스트리밍 서버 렌더링** - 서버에서 클라이언트로 HTML을 점진적으로 렌더링합니다.
-2. **선택적 Hydration** - React는 사용자 상호 작용을 기준으로 상호 작용할 수 있게 만들 컴포넌트의 우선 순위를 설정합니다.
+1. **Streaming Server Rendering** - Progressively rendering HTML from the server to the client.
+2. **Selective Hydration** - React prioritizes what components to make interactive first based on user interaction.
 
-Suspense의 예시와 사용 사례에 대한 자세한 내용은 [React 문서](https://react.dev/reference/react/Suspense)를 참고하세요.
+For more Suspense examples and use cases, please see the [React Documentation](https://react.dev/reference/react/Suspense).
 
 ### SEO
 
-- Next.js는 [`generateMetadata`](/docs/app/api-reference/functions/generate-metadata) 내부의 데이터를 가져올 때까지 기다렸다가 UI를 클라이언트로 스트리밍합니다. 이렇게 하면 스트리밍된 응답의 첫 번째에 `<head>` 태그가 포함됩니다.
-- 스트리밍은 서버 렌더링이므로 SEO에 영향을 주지 않습니다. [Mobile Friendly Test](https://search.google.com/test/mobile-friendly)를 사용하여 구글의 웹 크롤러에 페이지가 어떻게 표시되는지, 배포된 HTML ([소스](https://web.dev/rendering-on-the-web/#seo-considerations))을 확인할 수 있습니다.
+-   Next.js will wait for data fetching inside [`generateMetadata`](/docs/app/api-reference/functions/generate-metadata) to complete before streaming UI to the client. This guarantees the first part of a streamed response includes `<head>` tags.
+-   Since streaming is server-rendered, it does not impact SEO. You can use the [Mobile Friendly Test](https://search.google.com/test/mobile-friendly) tool from Google to see how your page appears to Google's web crawlers and view the serialized HTML ([source](https://web.dev/rendering-on-the-web/#seo-considerations)).
+
+### Status Codes
+
+When streaming, a `200` status code will be returned to signal that the request was successful.
+
+The server can still communicate errors or issues to the client within the streamed content itself, for example, when using [`redirect`](/docs/app/api-reference/functions/redirect) or [`notFound`](/docs/app/api-reference/functions/not-found). Since the response headers have already been sent to the client, the status code of the response cannot be updated. This does not affect SEO.

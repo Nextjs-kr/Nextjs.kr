@@ -1,115 +1,116 @@
 ---
-title: 지속적 통합 (CI) 빌드 캐싱
-description: Next.js 빌드를 캐싱하도록 CI를 구성하는 방법입니다.
+sidebar_position: 4
+title: Continuous Integration (CI) Build Caching
+description: Learn how to configure CI to cache Next.js builds
 ---
 
-`.next/cache`빌드 성능을 향상시키기 위해 Next.js는 빌드 간에 공유되는 캐시를 저장합니다.
+To improve build performance, Next.js saves a cache to `.next/cache` that is shared between builds.
 
-CI (지속적 통합) 환경에서 캐시를 활용하려면 CI 워크플로우를 올바르게 구성하여 빌드 사이에 캐시를 올바르게 유지하도록 설정해야 합니다.
+To take advantage of this cache in Continuous Integration (CI) environments, your CI workflow will need to be configured to correctly persist the cache between builds.
 
-> CI가 `.next/cache`를 빌드 사이에서 유지하지 않도록 설정되어 있다면 [No Cache Detected](/docs/messages/no-cache) 오류가 발생할 수 있습니다.
+> If your CI is not configured to persist `.next/cache` between builds, you may see a [No Cache Detected](/docs/messages/no-cache) error.
 
-다음은 일반적인 CI providers에 대한 캐시 구성 예시입니다.
+Here are some example cache configurations for common CI providers:
 
 ## Vercel
 
-Next.js에서는 캐싱이 자동으로 구성됩니다. 사용자의 조치가 필요하지 않습니다.
+Next.js caching is automatically configured for you. There's no action required on your part.
 
 ## CircleCI
 
-`.circleci/config.yml` 파일의 `save_cache` 단계에서 `.next/cache`를 포함하도록 수정합니다.
+Edit your `save_cache` step in `.circleci/config.yml` to include `.next/cache`:
 
 ```yaml
 steps:
-  - save_cache:
-      key: dependency-cache-{{ checksum "yarn.lock" }}
-      paths:
-        - ./node_modules
-        - ./.next/cache
+    - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+              - ./node_modules
+              - ./.next/cache
 ```
 
-`save_cache` 키가 없다면, CircleCI의 [빌드 캐싱 설정 문서](https://circleci.com/docs/2.0/caching/)를 따라 진행합니다.
+If you do not have a `save_cache` key, please follow CircleCI's [documentation on setting up build caching](https://circleci.com/docs/2.0/caching/).
 
 ## Travis CI
 
-'.travis.yml' 파일에 다음 내용을 추가하거나 병합합니다.
+Add or merge the following into your `.travis.yml`:
 
 ```yaml
 cache:
-  directories:
-    - $HOME/.cache/yarn
-    - node_modules
-    - .next/cache
+    directories:
+        - $HOME/.cache/yarn
+        - node_modules
+        - .next/cache
 ```
 
 ## GitLab CI
 
-`.gitlab-ci.yml`파일에 다음 내용을 추가하거나 병합합니다.
+Add or merge the following into your `.gitlab-ci.yml`:
 
 ```yaml
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules/
-    - .next/cache/
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+        - node_modules/
+        - .next/cache/
 ```
 
 ## Netlify CI
 
-[`@netlify/plugin-nextjs`](https://www.npmjs.com/package/@netlify/plugin-nextjs)와 함께[Netlify Plugins](https://www.netlify.com/products/build/plugins/)을 사용하세요.
+Use [Netlify Plugins](https://www.netlify.com/products/build/plugins/) with [`@netlify/plugin-nextjs`](https://www.npmjs.com/package/@netlify/plugin-nextjs).
 
 ## AWS CodeBuild
 
-`buildspec.yml`파일에 다음 내용을 추가하거나 병합합니다.
+Add (or merge in) the following to your `buildspec.yml`:
 
 ```yaml
 cache:
-  paths:
-    - 'node_modules/**/*' # Cache `node_modules` for faster `yarn` or `npm i`
-    - '.next/cache/**/*' # Cache Next.js for faster application rebuilds
+    paths:
+        - "node_modules/**/*" # Cache `node_modules` for faster `yarn` or `npm i`
+        - ".next/cache/**/*" # Cache Next.js for faster application rebuilds
 ```
 
 ## GitHub Actions
 
-GitHub's [actions/cache](https://github.com/actions/cache)를 사용해, 다음 단계를 워크플로우 파일에 추가하세요.
+Using GitHub's [actions/cache](https://github.com/actions/cache), add the following step in your workflow file:
 
 ```yaml
 uses: actions/cache@v3
 with:
-  # See here for caching with `yarn` https://github.com/actions/cache/blob/main/examples#node---yarn or you can leverage caching with actions/setup-node https://github.com/actions/setup-node
-  path: |
-    ~/.npm
-    ${{ github.workspace }}/.next/cache
-  # Generate a new cache whenever packages or source files change.
-  key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-  # If source files changed but packages didn't, rebuild from a prior cache.
-  restore-keys: |
-    ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+    # See here for caching with `yarn` https://github.com/actions/cache/blob/main/examples.md#node---yarn or you can leverage caching with actions/setup-node https://github.com/actions/setup-node
+    path: |
+        ~/.npm
+        ${{ github.workspace }}/.next/cache
+    # Generate a new cache whenever packages or source files change.
+    key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+    # If source files changed but packages didn't, rebuild from a prior cache.
+    restore-keys: |
+        ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 ```
 
 ## Bitbucket Pipelines
 
-bitbucket-pipelines.yml 파일의 최상위 수준(pipelines와 동일한 수준)에 다음 내용을 추가하거나 병합하세요.
+Add or merge the following into your `bitbucket-pipelines.yml` at the top level (same level as `pipelines`):
 
 ```yaml
 definitions:
-  caches:
-    nextcache: .next/cache
+    caches:
+        nextcache: .next/cache
 ```
 
-파이프라인의 `step`에서 `caches`섹션에 해당 캐시를 참조하세요.
+Then reference it in the `caches` section of your pipeline's `step`:
 
 ```yaml
 - step:
-    name: your_step_name
-    caches:
-      - node
-      - nextcache
+      name: your_step_name
+      caches:
+          - node
+          - nextcache
 ```
 
 ## Heroku
 
-Heroku의 [커스텀 캐시](https://devcenter.heroku.com/articles/nodejs-support#custom-caching)를 사용해, 상위의 package.json에 `cacheDirectories` 배열을 추가하세요.
+Using Heroku's [custom cache](https://devcenter.heroku.com/articles/nodejs-support#custom-caching), add a `cacheDirectories` array in your top-level package.json:
 
 ```javascript
 "cacheDirectories": [".next/cache"]
@@ -117,12 +118,12 @@ Heroku의 [커스텀 캐시](https://devcenter.heroku.com/articles/nodejs-suppor
 
 ## Azure Pipelines
 
-Azure Pipelines의 [캐시 작업](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/utility/cache)을 사용해, `next build`를 실행하는 작업 전에 다음 작업을 파이프라인 YAML 파일에 추가하세요.
+Using Azure Pipelines' [Cache task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/utility/cache), add the following task to your pipeline yaml file somewhere prior to the task that executes `next build`:
 
 ```yaml
 - task: Cache@2
-  displayName: 'Cache .next/cache'
+  displayName: "Cache .next/cache"
   inputs:
-    key: next | $(Agent.OS) | yarn.lock
-    path: '$(System.DefaultWorkingDirectory)/.next/cache'
+      key: next | $(Agent.OS) | yarn.lock
+      path: "$(System.DefaultWorkingDirectory)/.next/cache"
 ```

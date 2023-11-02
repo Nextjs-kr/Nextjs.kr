@@ -1,44 +1,46 @@
 ---
-title: 리다이렉트
-description: Next 애플리케이션에 리다이렉트 기능 추가하기.
+title: redirects
+description: Add redirects to your Next.js app.
 ---
 
-리다이렉트는 들어오는 요청 경로를 다른 경로로 재요청합니다.
+{/* The content of this doc is shared between the app and pages router. You can use the  component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-리다이렉트를 사용하려면 `next.config.js`파일 안에 `redirects`키를 사용할 수 있습니다.
+Redirects allow you to redirect an incoming request path to a different destination path.
+
+To use redirects you can use the `redirects` key in `next.config.js`:
 
 ```js filename="next.config.js"
 module.exports = {
-  async redirects() {
-    return [
-      {
-        source: '/about',
-        destination: '/',
-        permanent: true,
-      },
-    ]
-  },
-}
+	async redirects() {
+		return [
+			{
+				source: "/about",
+				destination: "/",
+				permanent: true,
+			},
+		];
+	},
+};
 ```
 
-리다이렉트는 `source`, `destination`, `permanent` 프로퍼티를 가진 객체를 포함하는 배열을 반환하는 비동기 함수입니다.
+`redirects` is an async function that expects an array to be returned holding objects with `source`, `destination`, and `permanent` properties:
 
-- `source`는 들어오는 요청 경로에 대한 패턴을 나타냅니다.
-- `destination`은 라우팅할 경로를 나타냅니다.
-- `permanent` 프로퍼티는 `true` 혹은 `false` 값을 갖습니다. - 값이 `true`라면 클라이언트/검색 엔진에게 영구적 리다이렉트를 캐시 하도록 명시하는 308 Status Code를 사용합니다. 값이 `false`라면, 일시적이고 캐시 되지 않는 307 Status Code를 사용합니다.
+-   `source` is the incoming request path pattern.
+-   `destination` is the path you want to route to.
+-   `permanent` `true` or `false` - if `true` will use the 308 status code which instructs clients/search engines to cache the redirect forever, if `false` will use the 307 status code which is temporary and is not cached.
 
-> **왜 Next.js가 307과 308 Status Code를 사용하나요?** 전통적으로 302는 일시적인 리다이렉트, 301은 영구적인 리다이렉트 일 때 사용을 합니다. 하지만 많은 브라우저들은 기존 요청 메서드와 상관없이 리다이렉트시 요청 메서드를 `GET`메서드로 변경합니다. 예를 들어 브라우저가 `/v2/users/` location이 포함된 `302` Status Code를 반환하는 `POST /v1/users`에 요청한다면, 후속 요청은 기대했던 `POST /v2/users`이 아닌 `GET /v2/users`로 요청하게 됩니다. Next.js는 명시적으로 사용된 요청 메서드를 보존하기 위해 307 일시적 리다이렉트, 308 영구적 리다이렉트 Status Code를 사용합니다.
+> **Why does Next.js use 307 and 308?** Traditionally a 302 was used for a temporary redirect, and a 301 for a permanent redirect, but many browsers changed the request method of the redirect to `GET`, regardless of the original method. For example, if the browser made a request to `POST /v1/users` which returned status code `302` with location `/v2/users`, the subsequent request might be `GET /v2/users` instead of the expected `POST /v2/users`. Next.js uses the 307 temporary redirect, and 308 permanent redirect status codes to explicitly preserve the request method used.
 
-- `basePath` : `false` 혹은 `undefined` - false인 경우, `basePath`는 매칭에 포함되지 않으며, 외부 리다이렉트에만 사용할 수 있습니다.
-- `locale` : `false` 혹은 `undefined` - locale을 일치시킬 때 locale을 포함하지 않아야 하는 경우입니다.
-- `has` 프로퍼티는 `type`, `key` 그리고 `value` 프로퍼티들을 가지는 [has objects](#header-cookie-and-query-matching)에 대한 배열입니다.
-- `missing` 프로퍼티는 `type`, `key` 그리고 `value` 프로퍼티들을 가지는 [missing objects](#header-cookie-and-query-matching)에 대한 배열입니다.
+-   `basePath`: `false` or `undefined` - if false the `basePath` won't be included when matching, can be used for external redirects only.
+-   `locale`: `false` or `undefined` - whether the locale should not be included when matching.
+-   `has` is an array of [has objects](#header-cookie-and-query-matching) with the `type`, `key` and `value` properties.
+-   `missing` is an array of [missing objects](#header-cookie-and-query-matching) with the `type`, `key` and `value` properties.
 
-리다이렉트 옵션은 pages 폴더와 `/public`파일을 포함하는 파일 시스템 전에 확인됩니다.
+Redirects are checked before the filesystem which includes pages and `/public` files.
 
-리다이렉트 옵션은 [Middleware](/docs/app/building-your-application/routing/middleware)가 있고, 경로가 일치하지 않는 한 (`Link`, `router.push`) 클라이언트 사이드 라우팅에서는 적용되지 않습니다.
+Redirects are not applied to client-side routing (`Link`, `router.push`), unless [Middleware](/docs/app/building-your-application/routing/middleware) is present and matches the path.
 
-리다이렉트가 적용되었을 때, 요청에서 받은 어떠한 쿼리 값들도 리다이렉트 될 페이지에 전달됩니다. 예를 들어 다음 리다이렉트 구성을 살펴봅시다.
+When a redirect is applied, any query values provided in the request will be passed through to the redirect destination. For example, see the following redirect configuration:
 
 ```js
 {
@@ -48,255 +50,257 @@ module.exports = {
 }
 ```
 
-`/old-blog/post-1?hello=world`으로 요청하면, 클라이언트는 `/blog/post-1?hello=world`로 리다이렉트 됩니다.
+When `/old-blog/post-1?hello=world` is requested, the client will be redirected to `/blog/post-1?hello=world`.
 
-## 경로 매칭
+## Path Matching
 
-경로 일치가 허용됩니다. 예를들어 `/old-blog/:slug`는 `/old-blog/hello-world`로 일치됩니다. (중첩된 경로 없음)
-
-```js filename="next.config.js"
-module.exports = {
-  async redirects() {
-    return [
-      {
-        source: '/old-blog/:slug',
-        destination: '/news/:slug', // 일치되는 파라미터가 destination 프로퍼티에서도 사용될 수 있다.
-        permanent: true,
-      },
-    ]
-  },
-}
-```
-
-### 와일드 카드 경로 매칭
-
-와일드카드 경로를 일치시키기 위해서 매개변수 뒤에 `*`를 사용할 수 있습니다. 예를 들어 `/blog/:slug*`는 `/blog/a/b/c/d/hello-world`와 일치됩니다.
+Path matches are allowed, for example `/old-blog/:slug` will match `/old-blog/hello-world` (no nested paths):
 
 ```js filename="next.config.js"
 module.exports = {
-  async redirects() {
-    return [
-      {
-        source: '/blog/:slug*',
-        destination: '/news/:slug*', // 일치되는 파라미터가 destination 프로퍼티에서도 사용될 수 있다.
-        permanent: true,
-      },
-    ]
-  },
-}
+	async redirects() {
+		return [
+			{
+				source: "/old-blog/:slug",
+				destination: "/news/:slug", // Matched parameters can be used in the destination
+				permanent: true,
+			},
+		];
+	},
+};
 ```
 
-### 정규식 경로 매칭
+### Wildcard Path Matching
 
-정규식 경로를 일치시키려면 정규 표현식을 매개변수 뒤에 괄호로 묶을 수 있습니다. 예를 들어, `/post/:slug(\\d{1,})`는 `/post/123`와는 일치하지만, `/post/abc`와는 일치하지 않습니다.
+To match a wildcard path you can use `*` after a parameter, for example `/blog/:slug*` will match `/blog/a/b/c/d/hello-world`:
 
 ```js filename="next.config.js"
 module.exports = {
-  async redirects() {
-    return [
-      {
-        source: '/post/:slug(\\d{1,})',
-        destination: '/news/:slug', // 일치되는 파라미터가 destination 프로퍼티에서도 사용될 수 있다.
-        permanent: false,
-      },
-    ]
-  },
-}
+	async redirects() {
+		return [
+			{
+				source: "/blog/:slug*",
+				destination: "/news/:slug*", // Matched parameters can be used in the destination
+				permanent: true,
+			},
+		];
+	},
+};
 ```
 
-다음의 이 표현들 `(`, `)`, `{`, `}`, `:`, `*`, `+`, `?`은 정규식 경로를 일치에 사용될 수 있으므로 `source`에서 특수한 값으로 사용되지 않을 때, 이들 앞에 `\\`을 추가하여 이스케이프 처리해야 합니다.
+### Regex Path Matching
+
+To match a regex path you can wrap the regex in parentheses after a parameter, for example `/post/:slug(\\d{1,})` will match `/post/123` but not `/post/abc`:
 
 ```js filename="next.config.js"
 module.exports = {
-  async redirects() {
-    return [
-      {
-        // `/english(default)/something` 요청된 해당 경로와 일치합니다.
-        source: '/english\\(default\\)/:slug',
-        destination: '/en-us/:slug',
-        permanent: false,
-      },
-    ]
-  },
-}
+	async redirects() {
+		return [
+			{
+				source: "/post/:slug(\\d{1,})",
+				destination: "/news/:slug", // Matched parameters can be used in the destination
+				permanent: false,
+			},
+		];
+	},
+};
 ```
 
-## 헤더, 쿠키, 쿼리 매칭
-
-header, cookie, query 값이 또한 `has` 필드와도 일치하거나 `missing` 필드와 일치하지 않는 경우에만 리다이렉트를 시킬 수 있습니다. 리다이렉트가 적용되려면 `source` 및 모든 `has` 항목이 모두 일치해야 하고 모든 `missing` 항목이 일치하지 않아야 합니다.
-
-`has` 그리고 `missing` 항목들은 다음 필드 값들을 가질 수 있습니다.
-
-- `type`: `String` - `header`, `cookie`, `host`, 이거나 `query`들 중 하나여야만 합니다.
-- `key`: `String` - 일치시킬 선택된 유형의 키 입니다.
-- `value`: `String` 혹은 `undefined` - 체크해야 할 값, undefined이면 모든값이 일치해야 합니다. 값의 특정 부분을 캡처하기 위해 정규식과 비슷한 문자열을 사용할 수 있습니다. 예를 들어 값으로 `first-(?<paramName>.*)`을 사용하면 `first-second`를 대상으로 사용할 때 `:paramName`으로 `second`를 사용할 수 있습니다.
+The following characters `(`, `)`, `{`, `}`, `:`, `*`, `+`, `?` are used for regex path matching, so when used in the `source` as non-special values they must be escaped by adding `\\` before them:
 
 ```js filename="next.config.js"
 module.exports = {
-  async redirects() {
-    return [
-      // header에 `x-redirect-me`가 존재한다면,
-      // 리다이렉트가 적용됩니다.
-      {
-        source: '/:path((?!another-page$).*)',
-        has: [
-          {
-            type: 'header',
-            key: 'x-redirect-me',
-          },
-        ],
-        permanent: false,
-        destination: '/another-page',
-      },
-      // header에 `x-dont-redirect`가 존재한다면,
-      // 리다이렉트가 적용됩니다.
-      {
-        source: '/:path((?!another-page$).*)',
-        missing: [
-          {
-            type: 'header',
-            key: 'x-do-not-redirect',
-          },
-        ],
-        permanent: false,
-        destination: '/another-page',
-      },
-      // source, query, cookie가 모두 일치된다면,
-      // 리다이렉트가 적용됩니다.
-      {
-        source: '/specific/:path*',
-        has: [
-          {
-            type: 'query',
-            key: 'page',
-            // 값이 제공되고 명명된 캡처 그룹을 사용하지 않기 때문에 대상에서 페이지 값은 사용할 수 없습니다.
-            // `(?<page>home)`과 같은 명명된 캡처 그룹을 사용하지 않았다면 페이지 값은 대상에서 사용할 수 없습니다.
-            value: 'home',
-          },
-          {
-            type: 'cookie',
-            key: 'authorized',
-            value: 'true',
-          },
-        ],
-        permanent: false,
-        destination: '/another/:path*',
-      },
-      // header에 `x-authorized`가 존재하고,
-      // 일치하는 값이 포함된다면, 리다이렉트가 적용됩니다.
-      {
-        source: '/',
-        has: [
-          {
-            type: 'header',
-            key: 'x-authorized',
-            value: '(?<authorized>yes|true)',
-          },
-        ],
-        permanent: false,
-        destination: '/home?authorized=:authorized',
-      },
-      // host가 `example.com`이면,
-      // 리다이렉트가 적용됩니다.
-      {
-        source: '/:path((?!another-page$).*)',
-        has: [
-          {
-            type: 'host',
-            value: 'example.com',
-          },
-        ],
-        permanent: false,
-        destination: '/another-page',
-      },
-    ]
-  },
-}
+	async redirects() {
+		return [
+			{
+				// this will match `/english(default)/something` being requested
+				source: "/english\\(default\\)/:slug",
+				destination: "/en-us/:slug",
+				permanent: false,
+			},
+		];
+	},
+};
 ```
 
-### basePath 기능과 함께 사용하는 리다이렉트 활용
+## Header, Cookie, and Query Matching
 
-리다이렉트와 함께 [`basePath` support](/docs/app/api-reference/next-config-js/basePath) 지원을 활용할 때는 각 `source`와 `destination`이 자동으로 `basePath`와 접두사로 추가됩니다. 그러나 리다이렉트에 `basePath: false`를 추가하지 않으면 기본적으로 `basePath`가 적용됩니다.
+To only match a redirect when header, cookie, or query values also match the `has` field or don't match the `missing` field can be used. Both the `source` and all `has` items must match and all `missing` items must not match for the redirect to be applied.
+
+`has` and `missing` items can have the following fields:
+
+-   `type`: `String` - must be either `header`, `cookie`, `host`, or `query`.
+-   `key`: `String` - the key from the selected type to match against.
+-   `value`: `String` or `undefined` - the value to check for, if undefined any value will match. A regex like string can be used to capture a specific part of the value, e.g. if the value `first-(?<paramName>.*)` is used for `first-second` then `second` will be usable in the destination with `:paramName`.
 
 ```js filename="next.config.js"
 module.exports = {
-  basePath: '/docs',
-
-  async redirects() {
-    return [
-      {
-        source: '/with-basePath', // 자동으로 /docs/with-basePath가 됩니다. 
-        destination: '/another', // 자동으로 becomes /docs/another가 됩니다.
-        permanent: false,
-      },
-      {
-        // basePath: false가 적용되었기 때문에 /docs가 포함이 되지 않습니다.
-        source: '/without-basePath',
-        destination: 'https://example.com',
-        basePath: false,
-        permanent: false,
-      },
-    ]
-  },
-}
+	async redirects() {
+		return [
+			// if the header `x-redirect-me` is present,
+			// this redirect will be applied
+			{
+				source: "/:path((?!another-page$).*)",
+				has: [
+					{
+						type: "header",
+						key: "x-redirect-me",
+					},
+				],
+				permanent: false,
+				destination: "/another-page",
+			},
+			// if the header `x-dont-redirect` is present,
+			// this redirect will NOT be applied
+			{
+				source: "/:path((?!another-page$).*)",
+				missing: [
+					{
+						type: "header",
+						key: "x-do-not-redirect",
+					},
+				],
+				permanent: false,
+				destination: "/another-page",
+			},
+			// if the source, query, and cookie are matched,
+			// this redirect will be applied
+			{
+				source: "/specific/:path*",
+				has: [
+					{
+						type: "query",
+						key: "page",
+						// the page value will not be available in the
+						// destination since value is provided and doesn't
+						// use a named capture group e.g. (?<page>home)
+						value: "home",
+					},
+					{
+						type: "cookie",
+						key: "authorized",
+						value: "true",
+					},
+				],
+				permanent: false,
+				destination: "/another/:path*",
+			},
+			// if the header `x-authorized` is present and
+			// contains a matching value, this redirect will be applied
+			{
+				source: "/",
+				has: [
+					{
+						type: "header",
+						key: "x-authorized",
+						value: "(?<authorized>yes|true)",
+					},
+				],
+				permanent: false,
+				destination: "/home?authorized=:authorized",
+			},
+			// if the host is `example.com`,
+			// this redirect will be applied
+			{
+				source: "/:path((?!another-page$).*)",
+				has: [
+					{
+						type: "host",
+						value: "example.com",
+					},
+				],
+				permanent: false,
+				destination: "/another-page",
+			},
+		];
+	},
+};
 ```
 
-### i18n 기능과 함께 사용하는 리다이렉트 활용
+### Redirects with basePath support
 
-리다이렉트와 함께 [`i18n` support](/docs/pages/building-your-application/routing/internationalization) 지원을 활용할 때는 `source`와 `destination`이 자동으로 구성된 `locales`을 처리하기 위해 접두사로 추가됩니다. 
+When leveraging [`basePath` support](/docs/app/api-reference/next-config-js/basePath) with redirects each `source` and `destination` is automatically prefixed with the `basePath` unless you add `basePath: false` to the redirect:
 
 ```js filename="next.config.js"
 module.exports = {
-  i18n: {
-    locales: ['en', 'fr', 'de'],
-    defaultLocale: 'en',
-  },
+	basePath: "/docs",
 
-  async redirects() {
-    return [
-      {
-        source: '/with-locale', // 자동으로 모든 locale을 다룹니다.
-        destination: '/another', // 자동으로 locale을 전달합니다.
-        permanent: false,
-      },
-      {
-        // locale: false이기 때문에 자동으로 locale이 다뤄지지 않습니다.
-        source: '/nl/with-locale-manual',
-        destination: '/nl/another',
-        locale: false,
-        permanent: false,
-      },
-      {
-        // `en`이 defaultLocale로 지정되있기 때문에 `/`와 일치합니다.
-        source: '/en',
-        destination: '/en/another',
-        locale: false,
-        permanent: false,
-      },
-        // locale: false가 설정되어 있더라도 모든 locale을 일치시킬 수 있습니다.
-      {
-        source: '/:locale/page',
-        destination: '/en/newpage',
-        permanent: false,
-        locale: false,
-      }
-      {
-        // 이 경우들은 /(en|fr|de)/(.*)로 변환되므로 /:path*와 같은 최상위 `/` 또는 `/fr` 경로와 일치하지 않습니다.
-        source: '/(.*)',
-        destination: '/another',
-        permanent: false,
-      },
-    ]
-  },
-}
+	async redirects() {
+		return [
+			{
+				source: "/with-basePath", // automatically becomes /docs/with-basePath
+				destination: "/another", // automatically becomes /docs/another
+				permanent: false,
+			},
+			{
+				// does not add /docs since basePath: false is set
+				source: "/without-basePath",
+				destination: "https://example.com",
+				basePath: false,
+				permanent: false,
+			},
+		];
+	},
+};
 ```
 
-일부 특수한 경우에는 이전의 HTTP 클라이언트에서 올바른 리다이렉트를 위해 사용자 정의 상태 코드를 지정해야 할 수도 있습니다. 이러한 경우 `permanent` 프로퍼티 대신 `statusCode` 프로퍼티를 사용할 수 있지만, 둘 다 동시에 사용할 수는 없습니다. 또한, IE11 호환성을 보장하기 위해 308 상태 코드에 대해 자동으로 `Refresh` 헤더가 추가됩니다.
+### Redirects with i18n support
 
-## 다른 환경에서의 리다이렉트 활용
+When leveraging [`i18n` support](/docs/app/building-your-application/routing/internationalization) with redirects each `source` and `destination` is automatically prefixed to handle the configured `locales` unless you add `locale: false` to the redirect. If `locale: false` is used you must prefix the `source` and `destination` with a locale for it to be matched correctly.
 
-- [API Routes](/docs/pages/api-reference/functions/next-server)에서는 `res.redirect()`를 사용할 수 있습니다.
-- [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) and [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)에서는, 요청 시점에 특정 페이지로 리다이렉트 할 수 있습니다.
+```js filename="next.config.js"
+module.exports = {
+	i18n: {
+		locales: ["en", "fr", "de"],
+		defaultLocale: "en",
+	},
+
+	async redirects() {
+		return [
+			{
+				source: "/with-locale", // automatically handles all locales
+				destination: "/another", // automatically passes the locale on
+				permanent: false,
+			},
+			{
+				// does not handle locales automatically since locale: false is set
+				source: "/nl/with-locale-manual",
+				destination: "/nl/another",
+				locale: false,
+				permanent: false,
+			},
+			{
+				// this matches '/' since `en` is the defaultLocale
+				source: "/en",
+				destination: "/en/another",
+				locale: false,
+				permanent: false,
+			},
+			// it's possible to match all locales even when locale: false is set
+			{
+				source: "/:locale/page",
+				destination: "/en/newpage",
+				permanent: false,
+				locale: false,
+			},
+			{
+				// this gets converted to /(en|fr|de)/(.*) so will not match the top-level
+				// `/` or `/fr` routes like /:path* would
+				source: "/(.*)",
+				destination: "/another",
+				permanent: false,
+			},
+		];
+	},
+};
+```
+
+In some rare cases, you might need to assign a custom status code for older HTTP Clients to properly redirect. In these cases, you can use the `statusCode` property instead of the `permanent` property, but not both. To to ensure IE11 compatibility, a `Refresh` header is automatically added for the 308 status code.
+
+## Other Redirects
+
+-   Inside [API Routes](/docs/pages/api-reference/functions/next-server), you can use `res.redirect()`.
+-   Inside [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) and [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props), you can redirect specific pages at request-time.
 
 ## Version History
 

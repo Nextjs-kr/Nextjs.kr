@@ -1,435 +1,439 @@
 ---
 title: rewrites
-description: Next.js 애플리케이션에 rewrites를 사용하세요.
+description: Add rewrites to your Next.js app.
 ---
 
-Rewrites는 들어오는 요청 경로를 다른 목적지 경로로 연결합니다.
+{/* The content of this doc is shared between the app and pages router. You can use the  component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-Rewrites는 URL 프록시처럼 경로를 가려주어 사용자가 사이트에서 위치를 바꾸지 않은 것처럼 보이게 합니다. 반면 [redirects](/docs/pages/api-reference/next-config-js/redirects) 새로운 페이지로 경로를 재설정하고 URL 변경을 표시합니다.
+Rewrites allow you to map an incoming request path to a different destination path.
 
-rewrite를 사용하기 위해 `next.config.js`에 `rewrites` 키를 사용할 수 있습니다:
+Rewrites act as a URL proxy and mask the destination path, making it appear the user hasn't changed their location on the site. In contrast, [redirects](/docs/app/api-reference/next-config-js/redirects) will reroute to a new page and show the URL changes.
 
-```js filename="next.config.js"
-module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: '/about',
-        destination: '/',
-      },
-    ]
-  },
-}
-```
-
-Rewrites는 클라이언트 측 라우팅에 적용되며 위의 예제에서 `<Link href="/about">` 는 rewrites가 적용될 것입니다.
-
-`rewrites`는 비동기 함수로 `source`와 `destination` 속성을 갖는 객체를 포함하는 배열 또는 배열로 구성된 객체를 반환합니다.
-
-- `source`: `String` - 들어오는 요청 경로 패턴입니다.
-- `destination`: `String` 라우팅하기를 원하는 경로입니다.
-- `basePath`: `false` or `undefined` - false인 경우 매칭 시 basePath가 포함되지 않으며 외부 rewrites에만 사용할 수 있습니다.
-- `locale`: `false` or `undefined` - 매칭 시 로케일이 포함되지 말아야 하는지 아닌지를 나타냅니다.
-- `has` 는 [has objects](#header-cookie-and-query-matching)로 구성된 배열입니다. 이는 `type`, `key`, `value` 속성을 포함합니다.
-- `missing` 은 [missing objects](#header-cookie-and-query-matching)로 구성된 배열입니다. 이는 `type`, `key`, `value` 속성을 포함합니다.
-
-`rewrites` 함수가 배열을 반환할 때 rewrites는 파일시스템(pages 와 `/public` 파일들)을 확인하고 동적 라우트 전에 적용됩니다. `rewrites` 함수가 배열로 구성된 객체를 특정한 형태로 반환할 때, 이러한 동작은 바뀔 수 있으며 Next.js의 `v10.1` 부터 더 세밀하게 제어됩니다:
+To use rewrites you can use the `rewrites` key in `next.config.js`:
 
 ```js filename="next.config.js"
 module.exports = {
-  async rewrites() {
-    return {
-      beforeFiles: [
-        // rewrites는 headers/redirects 후에 확인되고 
-        // 페이지 파일들을 오버라이딩하는 _next/public의 파일을 포함한 
-        // 모든 파일 전에 확인됩니다.
-        {
-          source: '/some-page',
-          destination: '/somewhere-else',
-          has: [{ type: 'query', key: 'overrideMe' }],
-        },
-      ],
-      afterFiles: [
-        // rewrites는 pages/pubic 파일 뒤에, 
-        // 동적인 라우트 뒤에 전에 확인됩니다. 
-        {
-          source: '/non-existent',
-          destination: '/somewhere-else',
-        },
-      ],
-      fallback: [
-        // rewrites는 pages/public 파일들,
-        // 동적인 라우트가 모두 확인되고 난 후 확인됩니다.
-        {
-          source: '/:path*',
-          destination: `https://my-old-site.com/:path*`,
-        },
-      ],
-    }
-  },
-}
+	async rewrites() {
+		return [
+			{
+				source: "/about",
+				destination: "/",
+			},
+		];
+	},
+};
 ```
 
-> **참고**: rewrites에서 `beforeFiles`는 파일시스템/동적 라우트를 소스와 매칭 직후에 확인하지 않고 모든 `beforeFiles`가 확인될 때까지 계속됩니다.
+Rewrites are applied to client-side routing, a `<Link href="/about">` will have the rewrite applied in the above example.
 
-Next.js에서 라우트가 확인되는 순서:
+`rewrites` is an async function that expects to return either an array or an object of arrays (see below) holding objects with `source` and `destination` properties:
 
-1. [headers](/docs/pages/api-reference/next-config-js/headers) 가 확인 및 적용됩니다
-2. [redirects](/docs/pages/api-reference/next-config-js/redirects) 가 확인 및 적용됩니다
-3. `beforeFiles` 의 rewrites가 가 확인 및 적용됩니다
-4. [public directory](/docs/pages/building-your-application/optimizing/static-assets) 의 정적인 파일, `_next/static` 파일, 그리고 동적이지 않은 페이지가 확인 및 제공됩니다
-5. `afterFiles` rewrites가 확인되고 적용됩니다. rewrites 중 하나가 매치되면 각 매칭 후 동적인 경로/정적인 파일을 확인합니다
-6. `fallback` rewrites 가 확인 및 적용됩니다. 이들은 동적인 경로와 모든 정적인 assets이 확인된 후, 404 페이지가 렌더링 되기 전에 적용됩니다. `getStaticPaths` 에서 [fallback: true/'blocking'](/docs/pages/api-reference/functions/get-static-paths#fallback-true) 를 사용한다면, `next.config.js` 에 정의된 fallback `rewrites` 는 동작하지 _않습니다_.
+-   `source`: `String` - is the incoming request path pattern.
+-   `destination`: `String` is the path you want to route to.
+-   `basePath`: `false` or `undefined` - if false the basePath won't be included when matching, can be used for external rewrites only.
+-   `locale`: `false` or `undefined` - whether the locale should not be included when matching.
+-   `has` is an array of [has objects](#header-cookie-and-query-matching) with the `type`, `key` and `value` properties.
+-   `missing` is an array of [missing objects](#header-cookie-and-query-matching) with the `type`, `key` and `value` properties.
 
-## Rewrite 매개변수들
-
-rewirte에서 매개변수를 사용할 때 그 중 어느 것도 `destinaion`에 사용되지 않으면, 그 매개변수들은 쿼리에 기본값으로 전달됩니다. 
+When the `rewrites` function returns an array, rewrites are applied after checking the filesystem (pages and `/public` files) and before dynamic routes. When the `rewrites` function returns an object of arrays with a specific shape, this behavior can be changed and more finely controlled, as of `v10.1` of Next.js:
 
 ```js filename="next.config.js"
 module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: '/old-about/:path*',
-        destination: '/about', // :path 매개변수가 여기에 사용되지 않기 때문에 쿼리에 자동으로 전달됩니다.
-      },
-    ]
-  },
-}
+	async rewrites() {
+		return {
+			beforeFiles: [
+				// These rewrites are checked after headers/redirects
+				// and before all files including _next/public files which
+				// allows overriding page files
+				{
+					source: "/some-page",
+					destination: "/somewhere-else",
+					has: [{ type: "query", key: "overrideMe" }],
+				},
+			],
+			afterFiles: [
+				// These rewrites are checked after pages/public files
+				// are checked but before dynamic routes
+				{
+					source: "/non-existent",
+					destination: "/somewhere-else",
+				},
+			],
+			fallback: [
+				// These rewrites are checked after both pages/public files
+				// and dynamic routes are checked
+				{
+					source: "/:path*",
+					destination: `https://my-old-site.com/:path*`,
+				},
+			],
+		};
+	},
+};
 ```
 
-매개변수가 destination에 사용된다면 매개변수 중 어느 것도 쿼리에 자동으로 전달되지 않습니다. 
+> **Good to know**: rewrites in `beforeFiles` do not check the filesystem/dynamic routes immediately after matching a source, they continue until all `beforeFiles` have been checked.
+
+The order Next.js routes are checked is:
+
+1. [headers](/docs/app/api-reference/next-config-js/headers) are checked/applied
+2. [redirects](/docs/app/api-reference/next-config-js/redirects) are checked/applied
+3. `beforeFiles` rewrites are checked/applied
+4. static files from the [public directory](/docs/app/building-your-application/optimizing/static-assets), `_next/static` files, and non-dynamic pages are checked/served
+5. `afterFiles` rewrites are checked/applied, if one of these rewrites is matched we check dynamic routes/static files after each match
+6. `fallback` rewrites are checked/applied, these are applied before rendering the 404 page and after dynamic routes/all static assets have been checked. If you use [fallback: true/'blocking'](/docs/pages/api-reference/functions/get-static-paths#fallback-true) in `getStaticPaths`, the fallback `rewrites` defined in your `next.config.js` will _not_ be run.
+
+## Rewrite parameters
+
+When using parameters in a rewrite the parameters will be passed in the query by default when none of the parameters are used in the `destination`.
 
 ```js filename="next.config.js"
 module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: '/docs/:path*',
-        destination: '/:path*', // :path 매개변수는 여기에 사용되므로 쿼리에 자동으로 전달되지 않습니다
-      },
-    ]
-  },
-}
+	async rewrites() {
+		return [
+			{
+				source: "/old-about/:path*",
+				destination: "/about", // The :path parameter isn't used here so will be automatically passed in the query
+			},
+		];
+	},
+};
 ```
 
-매개변수가 이미 목적지에 사용되고 있다면 `destination` 에 쿼리를 명시함으로써 매개변수들을 직접 쿼리에 전달할 수 있습니다. 
+If a parameter is used in the destination none of the parameters will be automatically passed in the query.
 
 ```js filename="next.config.js"
 module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: '/:first/:second',
-        destination: '/:first?second=:second',
-        // 첫 번째(:first) 매개변수가 목적지에 사용되었기 때문에 
-        // 두 번째(:second) 매개변수는 자동으로 쿼리에 더해지지 않습니다
-        // 하지만 위에 보이는 것처럼 개발자가 직접 추가할 수 있습니다
-      },
-    ]
-  },
-}
+	async rewrites() {
+		return [
+			{
+				source: "/docs/:path*",
+				destination: "/:path*", // The :path parameter is used here so will not be automatically passed in the query
+			},
+		];
+	},
+};
 ```
 
-> **참고**: [Automatic Static Optimization](/docs/pages/building-your-application/rendering/automatic-static-optimization) 의 정적인 페이지들 또는 rewrites로부터 온 [prerendering](/docs/pages/building-your-application/data-fetching/get-static-props) 매개변수들은 하이드레이션과 쿼리에 제공된 이후 클라이언트 측에 파싱됩니다. 
-
-## 경로 매칭
-
-경로 매칭은 허용됩니다. 예를 들면 `/blog/:slug` 는 `/blog/hello-world` 에 매칭됩니다. (중첩된 경로 없음):
+You can still pass the parameters manually in the query if one is already used in the destination by specifying the query in the `destination`.
 
 ```js filename="next.config.js"
 module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: '/blog/:slug',
-        destination: '/news/:slug', // 매치된 매개변수들은 목적지에 사용될 수 있습니다
-      },
-    ]
-  },
-}
+	async rewrites() {
+		return [
+			{
+				source: "/:first/:second",
+				destination: "/:first?second=:second",
+				// Since the :first parameter is used in the destination the :second parameter
+				// will not automatically be added in the query although we can manually add it
+				// as shown above
+			},
+		];
+	},
+};
 ```
 
-### 와일드카드 경로 매칭
+> **Good to know**: Static pages from [Automatic Static Optimization](/docs/pages/building-your-application/rendering/automatic-static-optimization) or [prerendering](/docs/pages/building-your-application/data-fetching/get-static-props) params from rewrites will be parsed on the client after hydration and provided in the query.
 
-와일드카드 경로를 매칭하기 위해 매개변수 뒤에 `*` 을 사용할 수 있습니다. 예를 들어 `/blog/:slug*` 는 `/blog/a/b/c/d/hello-world`에 매칭됩니다:
+## Path Matching
+
+Path matches are allowed, for example `/blog/:slug` will match `/blog/hello-world` (no nested paths):
 
 ```js filename="next.config.js"
 module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: '/blog/:slug*',
-        destination: '/news/:slug*', // 매치된 매개변수들은 목적지에 사용될 수 있습니다
-      },
-    ]
-  },
-}
+	async rewrites() {
+		return [
+			{
+				source: "/blog/:slug",
+				destination: "/news/:slug", // Matched parameters can be used in the destination
+			},
+		];
+	},
+};
 ```
 
-### 정규식 경로 매칭
+### Wildcard Path Matching
 
-정규식 경로를 매칭하기 위해 정규식을 매개변수 뒤, parenthsis에 정규식을 감쌀 수 있습니다. 예를 들어 `/blog/:slug(\\d{1,})` 는 `/blog/123` 에 매칭되지만 `/blog/abc` 에는 매칭되지 않습니다:
+To match a wildcard path you can use `*` after a parameter, for example `/blog/:slug*` will match `/blog/a/b/c/d/hello-world`:
 
 ```js filename="next.config.js"
 module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: '/old-blog/:post(\\d{1,})',
-        destination: '/blog/:post', // 매치된 매개변수들은 목적지에 사용될 수 있습니다
-      },
-    ]
-  },
-}
+	async rewrites() {
+		return [
+			{
+				source: "/blog/:slug*",
+				destination: "/news/:slug*", // Matched parameters can be used in the destination
+			},
+		];
+	},
+};
 ```
 
-다음의 문자들 `(`, `)`, `{`, `}`, `:`, `*`, `+`, `?` 은 정규식 경로 매칭에 사용됩니다. 따라서 `source` 에서 특별하지 않은 값으로 사용될 때에는 위 문자들 앞에 반드시 `\\` 를 더해야 합니다:
+### Regex Path Matching
+
+To match a regex path you can wrap the regex in parenthesis after a parameter, for example `/blog/:slug(\\d{1,})` will match `/blog/123` but not `/blog/abc`:
 
 ```js filename="next.config.js"
 module.exports = {
-  async rewrites() {
-    return [
-      {
-        // 이는 요청중인 `/english(default)/something` 과 매치될 것입니다
-        source: '/english\\(default\\)/:slug',
-        destination: '/en-us/:slug',
-      },
-    ]
-  },
-}
+	async rewrites() {
+		return [
+			{
+				source: "/old-blog/:post(\\d{1,})",
+				destination: "/blog/:post", // Matched parameters can be used in the destination
+			},
+		];
+	},
+};
 ```
 
-## 헤더, 쿠키, 쿼리 매칭
-
-헤더, 쿠키, 쿼리 값들이 `has` 필드와 매치되거나, `missing` 필드와 매치되지 않을 때만 rewrites를 사용할 수 있습니다. rewrite가 적용되기 위해 `source` 와 모든 `has` 아이템들은 모두 매치되어야 하며 모든  `missing` 아이템들은 매치되지 않아야 합니다. 
-
-`has` 와 `missing` 항목들은 다음의 필드를 가질 수 있습니다:
-
-- `type`: `String` - `header`, `cookie`, `host`, `query` 중 하나여야만 합니다.
-- `key`: `String` - 비교하기로 선택한 유형의 키.
-- `value`: `String` or `undefined` - 확인해야 할 값, 만약 undefined라면 어떤 값이든 매치됩니다. 문자열과 같은 정규식은 값의 특정한 부분을 포착하는 데에 사용될 수 있습니다. 예를 들어 만약  `first-(?<paramName>.*)` 가 `first-second` 를 위해 사용되었다면 `second` 는 도착 경로에 `:paramName` 와 함께 사용할 수 있습니다. 
+The following characters `(`, `)`, `{`, `}`, `:`, `*`, `+`, `?` are used for regex path matching, so when used in the `source` as non-special values they must be escaped by adding `\\` before them:
 
 ```js filename="next.config.js"
 module.exports = {
-  async rewrites() {
-    return [
-      // `x-rewrite-me` 헤더가 있다면,
-      // 이 rewrite는 적용됩니다
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'header',
-            key: 'x-rewrite-me',
-          },
-        ],
-        destination: '/another-page',
-      },
-      // `x-rewrite-me` 헤더가 없다면
-      // 이 rewrite는 적용됩니다
-      {
-        source: '/:path*',
-        missing: [
-          {
-            type: 'header',
-            key: 'x-rewrite-me',
-          },
-        ],
-        destination: '/another-page',
-      },
-      // source, query, cookie가 매치되면, 
-      // 이 rewrite는 적용됩니다
-      {
-        source: '/specific/:path*',
-        has: [
-          {
-            type: 'query',
-            key: 'page',
-            // 이 페이지는 destination에 사용할 수 없습니다.
-            // value가 제공되지만 지정된 캡처 그룹을 사용하지 않기 떄문입니다. 
-            // 예. (?<page>home)
-            value: 'home',
-          },
-          {
-            type: 'cookie',
-            key: 'authorized',
-            value: 'true',
-          },
-        ],
-        destination: '/:path*/home',
-      },
-      // x-authorized` 헤더가 존재하고
-      // 매치되는 값을 가지고 있다면 이 rewrite는 적용됩니다
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'header',
-            key: 'x-authorized',
-            value: '(?<authorized>yes|true)',
-          },
-        ],
-        destination: '/home?authorized=:authorized',
-      },
-      // 호스트가 `example.com`이면,
-      // 이 rewrite는 적용됩니다 
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'example.com',
-          },
-        ],
-        destination: '/another-page',
-      },
-    ]
-  },
-}
+	async rewrites() {
+		return [
+			{
+				// this will match `/english(default)/something` being requested
+				source: "/english\\(default\\)/:slug",
+				destination: "/en-us/:slug",
+			},
+		];
+	},
+};
 ```
 
-## 외부 URL로 다시 쓰기
+## Header, Cookie, and Query Matching
+
+To only match a rewrite when header, cookie, or query values also match the `has` field or don't match the `missing` field can be used. Both the `source` and all `has` items must match and all `missing` items must not match for the rewrite to be applied.
+
+`has` and `missing` items can have the following fields:
+
+-   `type`: `String` - must be either `header`, `cookie`, `host`, or `query`.
+-   `key`: `String` - the key from the selected type to match against.
+-   `value`: `String` or `undefined` - the value to check for, if undefined any value will match. A regex like string can be used to capture a specific part of the value, e.g. if the value `first-(?<paramName>.*)` is used for `first-second` then `second` will be usable in the destination with `:paramName`.
+
+```js filename="next.config.js"
+module.exports = {
+	async rewrites() {
+		return [
+			// if the header `x-rewrite-me` is present,
+			// this rewrite will be applied
+			{
+				source: "/:path*",
+				has: [
+					{
+						type: "header",
+						key: "x-rewrite-me",
+					},
+				],
+				destination: "/another-page",
+			},
+			// if the header `x-rewrite-me` is not present,
+			// this rewrite will be applied
+			{
+				source: "/:path*",
+				missing: [
+					{
+						type: "header",
+						key: "x-rewrite-me",
+					},
+				],
+				destination: "/another-page",
+			},
+			// if the source, query, and cookie are matched,
+			// this rewrite will be applied
+			{
+				source: "/specific/:path*",
+				has: [
+					{
+						type: "query",
+						key: "page",
+						// the page value will not be available in the
+						// destination since value is provided and doesn't
+						// use a named capture group e.g. (?<page>home)
+						value: "home",
+					},
+					{
+						type: "cookie",
+						key: "authorized",
+						value: "true",
+					},
+				],
+				destination: "/:path*/home",
+			},
+			// if the header `x-authorized` is present and
+			// contains a matching value, this rewrite will be applied
+			{
+				source: "/:path*",
+				has: [
+					{
+						type: "header",
+						key: "x-authorized",
+						value: "(?<authorized>yes|true)",
+					},
+				],
+				destination: "/home?authorized=:authorized",
+			},
+			// if the host is `example.com`,
+			// this rewrite will be applied
+			{
+				source: "/:path*",
+				has: [
+					{
+						type: "host",
+						value: "example.com",
+					},
+				],
+				destination: "/another-page",
+			},
+		];
+	},
+};
+```
+
+## Rewriting to an external URL
 
 <details>
-  <summary>예제들</summary>
+  <summary>Examples</summary>
 
-- [Next.js의 점진적 적용](https://github.com/vercel/next.js/tree/canary/examples/custom-routes-proxying)
-- [Multiple Zones 사용하기](https://github.com/vercel/next.js/tree/canary/examples/with-zones)
+-   [Incremental adoption of Next.js](https://github.com/vercel/next.js/tree/canary/examples/custom-routes-proxying)
+-   [Using Multiple Zones](https://github.com/vercel/next.js/tree/canary/examples/with-zones)
 
 </details>
 
-Rewrites는 외부 url로 고쳐 쓸 수 있게 합니다. 이는 특히 Next.js를 점진적으로 적용할 때 유용합니다. 다음 예제는 메인 앱의 `/blog` 경로를 외부 사이트로 리다이렉팅하기 위해 rewrite를 사용합니다. 
+Rewrites allow you to rewrite to an external url. This is especially useful for incrementally adopting Next.js. The following is an example rewrite for redirecting the `/blog` route of your main app to an external site.
 
 ```js filename="next.config.js"
 module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: '/blog',
-        destination: 'https://example.com/blog',
-      },
-      {
-        source: '/blog/:slug',
-        destination: 'https://example.com/blog/:slug', // 매치된 매개변수는 destination에 사용될 수 있습니다
-      },
-    ]
-  },
-}
+	async rewrites() {
+		return [
+			{
+				source: "/blog",
+				destination: "https://example.com/blog",
+			},
+			{
+				source: "/blog/:slug",
+				destination: "https://example.com/blog/:slug", // Matched parameters can be used in the destination
+			},
+		];
+	},
+};
 ```
 
-만약 `trailingSlash: true` 를 사용하고 있다면 후행 슬래시를 `source` 매개변수에 삽입해야 합니다. 목적지 서버가 후행 슬래시를 필요로 한다면 이를 `destination` 매개변수에도 포함해야 합니다.
+If you're using `trailingSlash: true`, you also need to insert a trailing slash in the `source` parameter. If the destination server is also expecting a trailing slash it should be included in the `destination` parameter as well.
 
 ```js filename="next.config.js"
 module.exports = {
-  trailingSlash: true,
-  async rewrites() {
-    return [
-      {
-        source: '/blog/',
-        destination: 'https://example.com/blog/',
-      },
-      {
-        source: '/blog/:path*/',
-        destination: 'https://example.com/blog/:path*/',
-      },
-    ]
-  },
-}
+	trailingSlash: true,
+	async rewrites() {
+		return [
+			{
+				source: "/blog/",
+				destination: "https://example.com/blog/",
+			},
+			{
+				source: "/blog/:path*/",
+				destination: "https://example.com/blog/:path*/",
+			},
+		];
+	},
+};
 ```
 
-### Next.js의 점진적인 적용 
+### Incremental adoption of Next.js
 
-또한 모든 Next.js 경로를 확인한 후 Next.js가 기존 웹 사이트에 대한 프록시로 폴백되도록 할 수 있습니다. 이렇게 하면 더 많은 페이지를 Next.js로 마이그레이션할 때 rewrites 구성을 변경할 필요가 없습니다.
+You can also have Next.js fall back to proxying to an existing website after checking all Next.js routes.
+
+This way you don't have to change the rewrites configuration when migrating more pages to Next.js
 
 ```js filename="next.config.js"
 module.exports = {
-  async rewrites() {
-    return {
-      fallback: [
-        {
-          source: '/:path*',
-          destination: `https://custom-routes-proxying-endpoint.vercel.app/:path*`,
-        },
-      ],
-    }
-  },
-}
+	async rewrites() {
+		return {
+			fallback: [
+				{
+					source: "/:path*",
+					destination: `https://custom-routes-proxying-endpoint.vercel.app/:path*`,
+				},
+			],
+		};
+	},
+};
 ```
 
-### rewrites의 basePath 지원
+### Rewrites with basePath support
 
-[`basePath` support](/docs/app/api-reference/next-config-js/basePath) 를 rewrites와 함께 사용할 때, rewrite에 `basePath: false` 를 추가하지 않으면 각 `source` 와 `destination` 에 자동으로 `basePath` 접두사가 붙습니다. 
+When leveraging [`basePath` support](/docs/app/api-reference/next-config-js/basePath) with rewrites each `source` and `destination` is automatically prefixed with the `basePath` unless you add `basePath: false` to the rewrite:
 
 ```js filename="next.config.js"
 module.exports = {
-  basePath: '/docs',
+	basePath: "/docs",
 
-  async rewrites() {
-    return [
-      {
-        source: '/with-basePath', // 자동으로 /docs/with-basePath 가 됩니다
-        destination: '/another', // 자동으로 /docs/another 가 됩니다
-      },
-      {
-        //  basePath: false가 설정되어 있으므로 /without-basePath 에 /docs 를 추가하지 않습니다 
-        // 주의: 이는 내부 rewrites로 사용될 수 없습니다. 예. `destination: '/another'`
-        source: '/without-basePath',
-        destination: 'https://example.com',
-        basePath: false,
-      },
-    ]
-  },
-}
+	async rewrites() {
+		return [
+			{
+				source: "/with-basePath", // automatically becomes /docs/with-basePath
+				destination: "/another", // automatically becomes /docs/another
+			},
+			{
+				// does not add /docs to /without-basePath since basePath: false is set
+				// Note: this can not be used for internal rewrites e.g. `destination: '/another'`
+				source: "/without-basePath",
+				destination: "https://example.com",
+				basePath: false,
+			},
+		];
+	},
+};
 ```
 
-### rewrites의 i18n 지원 
+### Rewrites with i18n support
 
-[`i18n` support](/docs/pages/building-your-application/routing/internationalization) 를 rewrites와 사용할 때, rewrite에 `locale: false`를 추가하지 않으면 구성된 `locales` 를 처리하기 위해 각 `source` 와 `destination` 에 자동으로 접두사가 붙습니다. `locale: false` 를 사용한다면 정확하게 매치되게 하기 위해 locale로 `source` and `destination` 에 접두사를 붙여야 합니다. 
+When leveraging [`i18n` support](/docs/app/building-your-application/routing/internationalization) with rewrites each `source` and `destination` is automatically prefixed to handle the configured `locales` unless you add `locale: false` to the rewrite. If `locale: false` is used you must prefix the `source` and `destination` with a locale for it to be matched correctly.
 
 ```js filename="next.config.js"
 module.exports = {
-  i18n: {
-    locales: ['en', 'fr', 'de'],
-    defaultLocale: 'en',
-  },
+	i18n: {
+		locales: ["en", "fr", "de"],
+		defaultLocale: "en",
+	},
 
-  async rewrites() {
-    return [
-      {
-        source: '/with-locale', // 자동으로 모든 locales를 제어합니다
-        destination: '/another', // 자동으로 locale을 전달합니다 
-      },
-      {
-        // locale: false 로 설정되었기 때문에 자동으로 locales 를 제어하지 않습니다
-        source: '/nl/with-locale-manual',
-        destination: '/nl/another',
-        locale: false,
-      },
-      {
-        // `en`이 defaultLocale이기 때문에 이는 '/' 를 매치합니다
-        source: '/en',
-        destination: '/en/another',
-        locale: false,
-      },
-      {
-        // locale: false로 설정되어 있을 때도 모든 locales를 매치하는 것은 불가능합니다
-        source: '/:locale/api-alias/:path*',
-        destination: '/api/:path*',
-        locale: false,
-      },
-      {
-        // 이는 /(en|fr|de)/(.*) 로 바꿔지기 때문에 top-level을 매치하지 않습니다
-        // `/` 또는 `/fr` 는 /:path* 와 같이 라우트 합니다
-        source: '/(.*)',
-        destination: '/another',
-      },
-    ]
-  },
-}
+	async rewrites() {
+		return [
+			{
+				source: "/with-locale", // automatically handles all locales
+				destination: "/another", // automatically passes the locale on
+			},
+			{
+				// does not handle locales automatically since locale: false is set
+				source: "/nl/with-locale-manual",
+				destination: "/nl/another",
+				locale: false,
+			},
+			{
+				// this matches '/' since `en` is the defaultLocale
+				source: "/en",
+				destination: "/en/another",
+				locale: false,
+			},
+			{
+				// it's possible to match all locales even when locale: false is set
+				source: "/:locale/api-alias/:path*",
+				destination: "/api/:path*",
+				locale: false,
+			},
+			{
+				// this gets converted to /(en|fr|de)/(.*) so will not match the top-level
+				// `/` or `/fr` routes like /:path* would
+				source: "/(.*)",
+				destination: "/another",
+			},
+		];
+	},
+};
 ```
 
-## 버전 변화 과정
+## Version History
 
 | Version   | Changes          |
 | --------- | ---------------- |

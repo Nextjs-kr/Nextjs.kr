@@ -1,4 +1,5 @@
 ---
+sidebar_position: 1
 title: 페이지와 레이아웃
 description: 페이지 라우터를 사용하여 페이지와 레이아웃을 만들어보자
 ---
@@ -13,7 +14,7 @@ Next.js에서 **페이지**는 `pages` 디렉토리에 있는 `.js`, `.jsx`, `.t
 
 ```jsx
 export default function About() {
-  return <div>About</div>
+	return <div>About</div>;
 }
 ```
 
@@ -21,15 +22,15 @@ export default function About() {
 
 라우터는 `index`라는 이름의 파일을 디렉토리의 루트로 자동 라우팅합니다.
 
-- `pages/index.js` → `/`
-- `pages/blog/index.js` → `/blog`
+-   `pages/index.js` → `/`
+-   `pages/blog/index.js` → `/blog`
 
 ## 중첩 경로
 
 라우터는 중첩된 파일을 지원합니다. 중첩된 폴더 구조를 만들면 자동으로 동일한 방식으로 라우팅됩니다.
 
-- `pages/blog/first-post.js` → `/blog/first-post`
-- `pages/dashboard/settings/username.js` → `/dashboard/settings/username`
+-   `pages/blog/first-post.js` → `/blog/first-post`
+-   `pages/dashboard/settings/username.js` → `/dashboard/settings/username`
 
 ## 동적 경로가 있는 페이지
 
@@ -42,17 +43,17 @@ Next.js는 동적 경로가 있는 페이지를 지원합니다. 예를 들어, 
 리액트에서는 [페이지](/docs/03-pages/01-building-your-application/01-routing/01-pages-and-layouts.mdx)를 여러 컴포넌트로 분해할 수 있습니다. 이러한 컴포넌트 중 상당수는 페이지 간에 재사용되는 경우가 많습니다. 예를 들어 모든 페이지에 동일한 네비게이션 바와 푸터가 있을 수 있습니다.
 
 ```jsx filename="components/layout.js"
-import Navbar from './navbar'
-import Footer from './footer'
+import Navbar from "./navbar";
+import Footer from "./footer";
 
 export default function Layout({ children }) {
-  return (
-    <>
-      <Navbar />
-      <main>{children}</main>
-      <Footer />
-    </>
-  )
+	return (
+		<>
+			<Navbar />
+			<main>{children}</main>
+			<Footer />
+		</>
+	);
 }
 ```
 
@@ -63,14 +64,14 @@ export default function Layout({ children }) {
 전체 애플리케이션에 하나의 레이아웃만 필요한 경우 [커스텀 App](/docs/03-pages/01-building-your-application/01-routing/03-custom-app.mdx)을 만들고 이 레이아웃으로 애플리케이션을 래핑할 수 있습니다. 페이지를 전환해도 `<Layout />` 컴포넌트는 재사용되므로 컴포넌트 상태(예: 입력 값)가 유지됩니다.
 
 ```jsx filename="pages/_app.js"
-import Layout from '../components/layout'
+import Layout from "../components/layout";
 
 export default function MyApp({ Component, pageProps }) {
-  return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
-  )
+	return (
+		<Layout>
+			<Component {...pageProps} />
+		</Layout>
+	);
 }
 ```
 
@@ -100,10 +101,10 @@ Page.getLayout = function getLayout(page) {
 
 ```jsx filename="pages/_app.js"
 export default function MyApp({ Component, pageProps }) {
-  // 페이지 단위 레이아웃이 있는 경우 이를 사용
-  const getLayout = Component.getLayout || ((page) => page)
+	// 페이지 단위 레이아웃이 있는 경우 이를 사용
+	const getLayout = Component.getLayout || ((page) => page);
 
-  return getLayout(<Component {...pageProps} />)
+	return getLayout(<Component {...pageProps} />);
 }
 ```
 
@@ -118,44 +119,44 @@ export default function MyApp({ Component, pageProps }) {
 타입스크립트를 사용할 때는 먼저 `getLayout` 함수를 포함하는 새로운 페이지 타입을 만들어야 합니다. 그런 다음 이 타입을 사용하기 위해 `Component` 프로퍼티를 오버라이드하는 새로운 `AppProps` 타입을 만들어야 합니다.
 
 ```tsx filename="pages/index.tsx" switcher
-import type { ReactElement } from 'react'
-import Layout from '../components/layout'
-import NestedLayout from '../components/nested-layout'
-import type { NextPageWithLayout } from './_app'
+import type { ReactElement } from "react";
+import Layout from "../components/layout";
+import NestedLayout from "../components/nested-layout";
+import type { NextPageWithLayout } from "./_app";
 
 const Page: NextPageWithLayout = () => {
-  return <p>hello world</p>
-}
+	return <p>hello world</p>;
+};
 
 Page.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <Layout>
-      <NestedLayout>{page}</NestedLayout>
-    </Layout>
-  )
-}
+	return (
+		<Layout>
+			<NestedLayout>{page}</NestedLayout>
+		</Layout>
+	);
+};
 
-export default Page
+export default Page;
 ```
 
 ```tsx filename="pages/_app.tsx" switcher
-import type { ReactElement, ReactNode } from 'react'
-import type { NextPage } from 'next'
-import type { AppProps } from 'next/app'
+import type { ReactElement, ReactNode } from "react";
+import type { NextPage } from "next";
+import type { AppProps } from "next/app";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
+	getLayout?: (page: ReactElement) => ReactNode;
+};
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+	Component: NextPageWithLayout;
+};
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  // Use the layout defined at the page level, if available
-  const getLayout = Component.getLayout ?? ((page) => page)
+	// Use the layout defined at the page level, if available
+	const getLayout = Component.getLayout ?? ((page) => page);
 
-  return getLayout(<Component {...pageProps} />)
+	return getLayout(<Component {...pageProps} />);
 }
 ```
 
@@ -164,22 +165,22 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 레이아웃 내부에서는 `useEffect` 또는 [SWR](https://swr.vercel.app/)과 같은 라이브러리를 사용하여 클라이언트 사이드에서만 데이터를 가져올 수 있습니다. 레이아웃은 [페이지](/docs/03-pages/01-building-your-application/01-routing/01-pages-and-layouts.mdx)가 아니므로 현재로서는 `getStaticProps` 또는 `getServerSideProps`를 사용할 수 없습니다.
 
 ```jsx filename="components/layout.js"
-import useSWR from 'swr'
-import Navbar from './navbar'
-import Footer from './footer'
+import useSWR from "swr";
+import Navbar from "./navbar";
+import Footer from "./footer";
 
 export default function Layout({ children }) {
-  const { data, error } = useSWR('/api/navigation', fetcher)
+	const { data, error } = useSWR("/api/navigation", fetcher);
 
-  if (error) return <div>Failed to load</div>
-  if (!data) return <div>Loading...</div>
+	if (error) return <div>Failed to load</div>;
+	if (!data) return <div>Loading...</div>;
 
-  return (
-    <>
-      <Navbar links={data.links} />
-      <main>{children}</main>
-      <Footer />
-    </>
-  )
+	return (
+		<>
+			<Navbar links={data.links} />
+			<main>{children}</main>
+			<Footer />
+		</>
+	);
 }
 ```
