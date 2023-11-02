@@ -18,8 +18,8 @@ const config = {
 
 	// GitHub pages deployment config.
 	// If you aren't using GitHub pages, you don't need these.
-	organizationName: "goorm EXP", // Usually your GitHub org/user name.
-	projectName: "goorm EXP 스터디", // Usually your repo name.
+	organizationName: "nano-lee", // Usually your GitHub org/user name.
+	projectName: "nano-nextjs-study", // Usually your repo name.
 
 	onBrokenLinks: "throw",
 	onBrokenMarkdownLinks: "warn",
