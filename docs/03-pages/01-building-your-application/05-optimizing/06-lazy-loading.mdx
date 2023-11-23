@@ -1,8 +1,115 @@
 ---
 sidebar_position: 6
-title: Lazy Loading
+title: 지연 로딩
 description: Lazy load imported libraries and React Components to improve your application's loading performance.
-source: app/building-your-application/optimizing/lazy-loading
 ---
 
-{/* DO NOT EDIT. The content of this doc is generated from the source above. To edit the content of this page, navigate to the source page in your editor. You can use the `Content` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+[지연 로딩](https://developer.mozilla.org/docs/Web/Performance/Lazy_loading)은 Next.js에서 라우트를 렌더링하는 데 필요한 JavaScript 양을 줄여 애플리케이션의 초기 로딩 성능을 향상시킵니다.
+
+**클라이언트 컴포넌트**나 import되는 라이브러리의 로딩을 지연시키고, 필요할 때만 클라이언트 번들에 포함시켜 초기 로딩 성능을 향상시킬 수 있습니다. 예를 들어, 사용자가 모달을 열 때까지 모달의 로딩을 지연시킬 수 있습니다.
+
+Next.js에서 지연 로딩을 구현하는 방법은 두 가지가 있습니다.
+
+1. `next/dynamic`을 사용한 [동적 임포트](#nextdynamic)
+2. [Suspense](https://react.dev/reference/react/Suspense)와 함께 [`React.lazy()`](https://react.dev/reference/react/lazy)를 사용
+
+서버 컴포넌트들은 기본적으로 [코드 스플릿](https://developer.mozilla.org/docs/Glossary/Code_splitting)이 되며, [스트리밍](/docs/app/building-your-application/routing/loading-ui-and-streaming)을 사용하여 서버에서 클라이언트로 UI 조각을 점진적으로 전송할 수 있습니다. 지연 로딩은 클라이언트 컴포넌트에만 적용됩니다.
+
+> Philip: 이 docs가 특히 App Router 관련 설명이 많이 껴있습니다. 참고로 클라이언트 컴포넌트 === 저희가 일반적으로 사용하는 컴포넌트입니다. (클라이언트 컴포넌트도 서버에서 렌더링 된다는 점에 유의)
+
+## `next/dynamic`
+
+`next/dynamic`은 [`React.lazy()`](https://react.dev/reference/react/lazy)와 [Suspense](https://react.dev/reference/react/Suspense)의 조합입니다. 점진적인 마이그레이션을 위해 `app`과 `pages` 디렉토리에서 동일한 방식으로 작동합니다.
+
+## 예제
+
+아래 예제에서 `next/dynamic`을 사용했기 때문에 헤더 컴포넌트는 페이지의 초기 JavaScript 번들에 포함되지 않습니다. 페이지는 먼저 Suspense `fallback`을 렌더링하고, `Suspense` 경계가 해결되면 `Header` 컴포넌트를 렌더링합니다.
+
+```jsx
+import dynamic from "next/dynamic";
+
+const DynamicHeader = dynamic(
+  () => import("../components/header"),
+  {
+    loading: () => <p>Loading...</p>,
+  }
+);
+
+export default function Home() {
+  return <DynamicHeader />;
+}
+```
+
+> **알고 있으면 좋은 사실**: `import('path/to/component')`에서 경로는 명시적으로 작성되어야 합니다. 템플릿 문자열이나 변수가 될 수 없습니다. 또한 `import()`는 Next.js가 webpack 번들/모듈의 id를 특정 `dynamic()` 호출과 일치시켜 사전로드할 수 있도록 하기 위해 `dynamic()` 호출 내부에 있어야 합니다. `dynamic()`은 React 렌더링 내부에서 사용할 수 없습니다. 사전로드가 작동하려면 모듈의 최상위에 표시되어야 하기 때문입니다. `React.lazy`와 유사합니다.
+
+> Philip: 컴포넌트 안에서는 사용할 수 없다는 의미입니다.
+
+## named exports와 함께 사용하기
+
+named export를 동적으로 임포트하려면, [`import()`](https://github.com/tc39/proposal-dynamic-import#example)가 리턴하는 [Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)에서 꺼내오면 됩니다.
+
+```jsx filename="components/hello.js"
+export function Hello() {
+  return <p>Hello!</p>;
+}
+
+// pages/index.js
+import dynamic from "next/dynamic";
+
+const DynamicComponent = dynamic(() =>
+  import("../components/hello").then((mod) => mod.Hello)
+);
+```
+
+## no SSR과 함께 사용하기
+
+클라이언트 측에서 컴포넌트를 동적으로 로드하려면, `ssr` 옵션을 사용하여 서버 렌더링을 비활성화할 수 있습니다. 이는 `window`와 같은 브라우저 API에 의존하는 외부 종속성이나 컴포넌트에 유용합니다.
+
+```jsx
+import dynamic from "next/dynamic";
+
+const DynamicHeader = dynamic(
+  () => import("../components/header"),
+  {
+    ssr: false,
+  }
+);
+```
+
+> Philip: 이 옵션을 사용하면 서버단 프리 렌더링(SSR)을 막습니다. '버튼을 클릭하면 나오는 모달' 등에서 사용할 수 있겠습니다.
+
+## 외부 라이브러리와 함께 사용하기
+
+이어지는 예제에서는 외부 라이브러리인 `fuse.js`를 사용하여 퍼지 검색을 수행합니다. 사용자가 검색 입력란에 타이핑할 때만 모듈이 브라우저에 로드됩니다.
+
+```jsx
+import { useState } from "react";
+
+const names = ["Tim", "Joe", "Bel", "Lee"];
+
+export default function Page() {
+  const [results, setResults] = useState();
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Search"
+        onChange={async (e) => {
+          const { value } = e.currentTarget;
+          // Dynamically load fuse.js
+          const Fuse = (await import("fuse.js")).default;
+          const fuse = new Fuse(names);
+
+          setResults(fuse.search(value));
+        }}
+      />
+      <pre>Results: {JSON.stringify(results, null, 2)}</pre>
+    </div>
+  );
+}
+```
+
+> Philip:
+>
+> Next.js가 제공하는 [Best Practice 레포](https://github.com/vercel/commerce)([데모](https://demo.vercel.store/))를 보면 ([pages 최신 커밋](https://github.com/vercel/commerce/tree/6d783eae355a1ce047d96319cba51599e9f576db)) [이렇게 사용하고 있습니다.](https://github.com/vercel/commerce/blob/6d783eae355a1ce047d96319cba51599e9f576db/site/components/common/Layout/Layout.tsx)

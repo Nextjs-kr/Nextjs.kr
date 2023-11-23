@@ -1,9 +1,159 @@
 ---
 sidebar_position: 3
-title: Script Optimization
-sidebar_label: Scripts
+title: Script 최적화
+sidebar_label: Script 최적화
 description: Optimize 3rd party scripts with the built-in Script component.
 source: app/building-your-application/optimizing/scripts
 ---
 
-{/* DO NOT EDIT. The content of this doc is generated from the source above. To edit the content of this page, navigate to the source page in your editor. You can use the `Content` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+### Application Scripts
+
+써드파티 스크립트를 모든 경로에서 로드하려면 `next/script`를 사용해 커스텀 `_app`에 스크립트를 넣으세요.
+
+```tsx filename="pages/_app.js" switcher
+import Script from "next/script";
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <>
+      <Component {...pageProps} />
+      <Script src="https://example.com/script.js" />
+    </>
+  );
+}
+```
+
+이 스크립트는 앱의 _모든_ 경로에 접근할 때 로드되고 실행됩니다. Next.js는 사용자가 페이지를 이동하더라도 스크립트가 **한 번만 로드**되도록 보장합니다.
+
+> **권장 사항**: 성능에 불필요한 영향을 줄이기 위해 특정 페이지나 레이아웃에만 써드파티 스크립트를 포함하는 것이 좋습니다.
+
+### 로드 전략 (Strategy)
+
+`next/script`는 기본적으로 모든 페이지나 레이아웃에서 써드파티 스크립트를 로드할 수 있지만, `strategy` 속성을 사용해 로드 동작을 세밀하게 조정할 수 있습니다.
+
+- `beforeInteractive`: Next.js 코드와 페이지 하이드레이션 전에 스크립트를 로드합니다.
+- `afterInteractive`: (**기본값**) 페이지 하이드레이션 후에 스크립트를 로드합니다.
+- `lazyOnload`: 브라우저가 유휴 상태일 때 스크립트를 로드합니다.
+- `worker`: (experimental) web worker에서 스크립트를 로드합니다.
+
+각 전략들과 사용 사례에 대해 자세히 알아보려면 [`next/script`](/docs/app/api-reference/components/script#strategy) API 레퍼런스 문서를 참고하세요.
+
+### Web Worker로 스크립트 오프로드하기 (Experimental)
+
+> **경고**: `worker` 로드 전략은 아직 안정화되지 않았으며 [`app`](/docs/app/building-your-application/routing/defining-routes) 디렉토리와 호환되지 않습니다. 주의해서 사용하세요.
+
+`worker` 전략을 사용하는 스크립트는 offload되어 [Partytown](https://partytown.builder.io/)을 사용해 web worker에서 실행됩니다. 이렇게 하면 메인 스레드를 앱의 나머지 코드에 할당함으로써 사이트의 성능을 향상시킬 수 있습니다.
+
+> Philip:
+>
+> offloading: 메인 스레드가 아닌 다른 스레드에서 실행하는 것
+>
+> Partytown: 웹 워커에서 실행되는 스크립트를 위한 라이브러리(웹 워커로 써드파티 스크립트를 실행할 수 있게 해줌)
+
+이 로드 전략은 아직 실험적이며 `next.config.js`에서 `nextScriptWorkers` 플래그를 활성화해야만 사용할 수 있습니다.
+
+```js filename="next.config.js"
+module.exports = {
+  experimental: {
+    nextScriptWorkers: true,
+  },
+};
+```
+
+설정이 끝났다면 `next`를 실행하세요(`npm run dev` 또는 `yarn dev`). 그러면 Next.js가 필요한 패키지를 설치하는 방법을 안내합니다.
+
+```bash filename="Terminal"
+npm run dev
+```
+
+"Please install Partytown by running `npm install @builder.io/partytown`"와 같은 안내가 표시됩니다.
+
+모든 준비를 마치고 `strategy="worker"`를 사용하면 Next.js가 Partytown을 자동으로 인스턴스화하고 스크립트를 web worker로 오프로드합니다.
+
+```tsx filename="pages/home.tsx" switcher
+import Script from "next/script";
+
+export default function Home() {
+  return (
+    <>
+      <Script
+        src="https://example.com/script.js"
+        strategy="worker"
+      />
+    </>
+  );
+}
+```
+
+써드파티 스크립트를 web worker에서 로드할 때는 고려해야 할 사항이 많습니다. 더 자세한 정보는 Partytown의 [tradeoffs](https://partytown.builder.io/trade-offs) 문서를 참고하세요.
+
+### 인라인 스크립트
+
+인라인 스크립트 혹은 외부 파일이 아닌 스크립트도 Script 컴포넌트에서 지원됩니다. 중괄호 안에 자바스크립트를 넣어 작성할 수 있습니다.
+
+```jsx
+<Script id="show-banner">
+  {`document.getElementById('banner').classList.remove('hidden')`}
+</Script>
+```
+
+혹은 `dangerouslySetInnerHTML` 속성을 사용해 작성할 수도 있습니다.
+
+```jsx
+<Script
+  id="show-banner"
+  dangerouslySetInnerHTML={{
+    __html: `document.getElementById('banner').classList.remove('hidden')`,
+  }}
+/>
+```
+
+> **경고**: Next.js가 스크립트를 추적하고 최적화하려면 인라인 스크립트에 `id` 속성을 할당해야 합니다.
+
+### 추가 코드 실행하기
+
+Script 컴포넌트에 이벤트 핸들러를 사용해 특정 이벤트가 발생하면 추가 코드를 실행할 수 있습니다.
+
+- `onLoad`: 스크립트가 로드된 후 코드를 실행합니다.
+- `onReady`: 스크립트가 로드된 후 컴포넌트가 마운트될 때마다 코드를 실행합니다.
+- `onError`: 스크립트가 로드되지 못했을 때 코드를 실행합니다.
+
+```tsx filename="pages/index.tsx" switcher
+import Script from "next/script";
+
+export default function Page() {
+  return (
+    <>
+      <Script
+        src="https://example.com/script.js"
+        onLoad={() => {
+          console.log("Script has loaded");
+        }}
+      />
+    </>
+  );
+}
+```
+
+각 이벤트 핸들러에 대해 자세히 알아보려면 [`next/script`](/docs/app/api-reference/components/script#onload) API 레퍼런스 문서를 참고하세요.
+
+### 추가 속성들
+
+[`nonce`](https://developer.mozilla.org/docs/Web/HTML/Global_attributes/nonce)나 [사용자 정의 data 속성](https://developer.mozilla.org/docs/Web/HTML/Global_attributes/data-*)처럼 Script 컴포넌트에서 사용되지 않는 `<script>` 요소에 할당할 수 있는 많은 DOM 속성이 있습니다. 이런 속성들은 사용하면 최적화된 `<script>` 요소에 자동으로 전달됩니다.
+
+```tsx filename="pages/index.tsx" switcher
+import Script from "next/script";
+
+export default function Page() {
+  return (
+    <>
+      <Script
+        src="https://example.com/script.js"
+        id="example-script"
+        nonce="XUENAJFW"
+        data-test="script"
+      />
+    </>
+  );
+}
+```

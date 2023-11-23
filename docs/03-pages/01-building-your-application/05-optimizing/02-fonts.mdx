@@ -1,9 +1,281 @@
 ---
 sidebar_position: 2
-title: Font Optimization
-sidebar_label: Fonts
+title: 폰트 최적화
+sidebar_label: 폰트 최적화
 description: Optimize your application's web fonts with the built-in `next/font` loaders.
-source: "app/building-your-application/optimizing/fonts"
+related:
+  title: API Reference
+  description: Learn more about the next/font API.
+  links:
+    - app/api-reference/components/font
 ---
 
-{/* DO NOT EDIT. The content of this doc is generated from the source above. To edit the content of this page, navigate to the source page in your editor. You can use the `Content` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+[**`next/font`**](/docs/app/api-reference/components/font)는 자동으로 폰트를 최적화하고(커스텀 폰트 포함) 개인 정보 보호 및 성능 향상을 위해 외부 네트워크 요청을 제거합니다.
+
+> **🎥 시청:** `next/font`를 사용하는 방법에 대해 자세히 알아보세요 → [YouTube (6분)](https://www.youtube.com/watch?v=L8_98i_bMMA).
+
+`next/font`에는 _모든_ 폰트 파일에 대해 사용할 수 있는 **내장된 자동 self-hosting**이 포함되어 있습니다. CSS의 `size-adjust` 속성을 사용하기 때문에 레이아웃 시프트 없이 웹 폰트를 최적으로 로드할 수 있음을 의미합니다.
+
+> Philip: `size-adjust`는 폰트 글리프의 outline과 metrics를 조정하는 CSS 속성입니다. 이를 사용해 다양한 폰트들의 폰트 사이즈를 동일하게 맞춰줄 수 있습니다. 폰트의 사이즈를 맞추면 여러 종류를 사용해도 layout shift가 발생하지 않습니다.
+
+이 새로운 폰트 시스템은 모든 Google Fonts를 성능과 개인 정보 보호를 고려해 편리하게 사용할 수 있도록 합니다. CSS와 폰트 파일은 빌드 타임에 다운로드되어 정적 애셋과 함께 self-hosted됩니다. 덕분에 **브라우저에서 Google로 요청이 전송되지 않습니다.**
+
+## Google Fonts
+
+자동으로 Google Fonts를 self-host합니다. 폰트는 배포에 포함되어 배포와 동일한 도메인에서 제공됩니다. **브라우저에서 Google로 요청이 전송되지 않습니다.**
+
+`next/font/google`에서 사용할 폰트를 함수로 가져와 시작하세요. 성능과 유연성을 위해 [variable fonts](https://fonts.google.com/variablefonts)를 사용하는 것을 권장합니다.
+
+> Philip: variable font(가변 폰트)는 폰트의 width, weight, style을 마음대로 조정할 수 있는 폰트입니다.
+
+모든 페이지에서 폰트를 사용하려면 `/pages` 디렉터리 내의 [`_app.js`](https://nextjs.org/docs/pages/building-your-application/routing/custom-app) 파일에 아래 코드를 추가하세요.
+
+```jsx filename="pages/_app.js" switcher
+import { Inter } from "next/font/google";
+
+// If loading a variable font, you don't need to specify the font weight
+const inter = Inter({ subsets: ["latin"] });
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <main className={inter.className}>
+      <Component {...pageProps} />
+    </main>
+  );
+}
+```
+
+variable font를 사용할 수 없다면 **weight를 지정해야 합니다.**
+
+```jsx filename="pages/_app.js" switcher
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  weight: "400",
+  subsets: ["latin"],
+});
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <main className={roboto.className}>
+      <Component {...pageProps} />
+    </main>
+  );
+}
+```
+
+배열을 사용해 여러 weight와 style을 지정할 수도 있습니다.
+
+```jsx filename="app/layout.js"
+const roboto = Roboto({
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+});
+```
+
+> **알고 있으면 좋은 사실**: 여러 단어로 이루어진 폰트 이름은 밑줄(\_)을 사용합니다. 예를 들어 `Roboto Mono`는 `Roboto_Mono`로 가져와야 합니다.
+
+### `<head>`에서 폰트 적용하기
+
+wrapper와 `className` 없이 `<head>`에 폰트를 적용할 수도 있습니다.
+
+```jsx filename="pages/_app.js"
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <>
+      <style jsx global>{`
+        html {
+          font-family: ${inter.style.fontFamily};
+        }
+      `}</style>
+      <Component {...pageProps} />
+    </>
+  );
+}
+```
+
+### 하나의 페이지에서만 사용하기
+
+하나의 페이지에서만 폰트를 사용하려면 아래와 같이 페이지에 추가하세요.
+
+```jsx filename="pages/index.js"
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export default function Home() {
+  return (
+    <div className={inter.className}>
+      <p>Hello World</p>
+    </div>
+  );
+}
+```
+
+### subset 지정하기
+
+Google Fonts는 자동으로 [subset](https://fonts.google.com/knowledge/glossary/subsetting)됩니다. 이렇게 하면 폰트 파일의 크기가 줄어들고 성능이 향상됩니다. 미리 로드할 subset을 정의해야 합니다. [`preload`](/docs/app/api-reference/components/font#preload)가 `true`인 상태에서 subset을 지정하지 않으면 경고가 발생합니다.
+
+```jsx filename="pages/_app.js"
+const inter = Inter({ subsets: ["latin"] });
+```
+
+[Font API Reference](/docs/app/api-reference/components/font)에서 더 많은 정보를 확인하세요.
+
+> Philip: 폰트에서 subset이란 불필요한 글자를 제거하고 자주 사용하는 글자만 남겨두는 것을 말합니다. 폰트 파일의 크기를 줄이고 성능을 향상시킬 수 있습니다.
+
+### 여러 폰트 사용하기
+
+앱에 여러 폰트를 가져와 사용할 수 있습니다. 두 가지 방법이 있습니다.
+
+첫 번째 방법은 폰트를 export하는 유틸리티 함수를 만들고 import하여 `className`을 적용하는 것입니다. 이렇게 하면 렌더링될 때 폰트의 프리 로딩을 보장됩니다.
+
+```ts filename="app/fonts.ts" switcher
+import { Inter, Roboto_Mono } from "next/font/google";
+
+export const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export const roboto_mono = Roboto_Mono({
+  subsets: ["latin"],
+  display: "swap",
+});
+```
+
+위 예제에서는 `Inter`가 전역으로 적용되고 `Roboto Mono`는 필요할 때 import하여 적용할 수 있습니다.
+
+또는 [CSS variable](/docs/app/api-reference/components/font#variable)을 만들고 원하는 CSS 솔루션과 함께 사용할 수도 있습니다.
+
+```css filename="app/global.css"
+html {
+  font-family: var(--font-inter);
+}
+
+h1 {
+  font-family: var(--font-roboto-mono);
+}
+```
+
+위 예제에서는 `Inter`가 전역으로 적용되고 `<h1>` 태그는 `Roboto Mono`로 스타일이 지정됩니다.
+
+> **권장 사항**: 각 폰트는 클라이언트가 다운로드해야 하는 추가 리소스이므로 여러 폰트를 사용할 때는 신중하게 사용하세요.
+
+## 로컬 폰트
+
+`next/font/local`를 import하고 로컬 폰트 파일의 `src`를 지정하세요. 성능과 유연성을 위해 [variable fonts](https://fonts.google.com/variablefonts)를 사용하는 것을 권장합니다.
+
+```jsx filename="pages/_app.js"
+import localFont from "next/font/local";
+
+// Font files can be colocated inside of `pages`
+const myFont = localFont({ src: "./my-font.woff2" });
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <main className={myFont.className}>
+      <Component {...pageProps} />
+    </main>
+  );
+}
+```
+
+하나의 font family에 여러 파일을 사용하려면 `src`를 배열로 지정하세요.
+
+```js
+const roboto = localFont({
+  src: [
+    {
+      path: "./Roboto-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./Roboto-Italic.woff2",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "./Roboto-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "./Roboto-BoldItalic.woff2",
+      weight: "700",
+      style: "italic",
+    },
+  ],
+});
+```
+
+[Font API Reference](/docs/app/api-reference/components/font)에서 더 많은 정보를 확인하세요.
+
+## Tailwind CSS와 함께 사용하기
+
+`next/font`는 [CSS variable](/docs/app/api-reference/components/font#css-variables)을 통해 [Tailwind CSS](https://tailwindcss.com/)와 함께 사용할 수 있습니다.
+
+이어지는 예제에서는 `next/font/google`의 `Inter` 폰트를 사용합니다(Google 또는 Local Fonts의 폰트를 사용할 수 있습니다). `variable` 옵션을 사용해 CSS 변수 이름을 정의하고 `inter`에 할당하여 폰트를 로드합니다. 그런 다음 `inter.variable`을 사용해 CSS 변수를 HTML 문서에 추가했습니다.
+
+```jsx filename="pages/_app.js"
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <main className={`${inter.variable} font-sans`}>
+      <Component {...pageProps} />
+    </main>
+  );
+}
+```
+
+마지막으로 CSS 변수를 [Tailwind CSS config](/docs/app/building-your-application/styling/tailwind-css#configuring-tailwind)에 추가하면 됩니다.
+
+```js filename="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["var(--font-inter)"],
+        mono: ["var(--font-roboto-mono)"],
+      },
+    },
+  },
+  plugins: [],
+};
+```
+
+이제 `font-sans`와 `font-mono` 유틸리티 클래스를 사용해 요소에 폰트를 적용할 수 있습니다.
+
+## Preloading
+
+폰트 함수가 사이트의 페이지에서 호출되면 전역으로 사용할 수 없고 모든 라우트에서 preload되지는 않습니다. 대신 폰트는 사용된 파일의 유형에 따라 관련 라우트에서만 preload됩니다.
+
+- [하나의 유니크한 페이지](/docs/pages/building-your-application/routing/pages-and-layouts)에 사용되면 해당 페이지 이하 라우트에서 preload됩니다.
+- [커스텀 App](/docs/pages/building-your-application/routing/custom-app)에 사용되면 `/pages` 아래의 사이트의 모든 라우트에서 preload됩니다.
+
+## 폰트 재사용하기
+
+`localFont`나 Google 폰트 함수를 호출할 때마다 해당 폰트는 앱에 하나의 인스턴스로 호스팅됩니다. 따라서 여러 파일에서 동일한 폰트 함수를 로드하면 동일한 폰트의 여러 인스턴스가 호스팅됩니다. 이런 경우 다음 방법을 권장합니다.
+
+- 폰트 로더 함수를 하나의 공유되는 파일에서 호출합니다.
+- 상수로 export합니다.
+- 이 상수를 폰트를 사용하려는 각 파일에서 import합니다.

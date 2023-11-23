@@ -1,8 +1,30 @@
 ---
 sidebar_position: 5
-title: Static Assets
+title: 정적 애셋
 description: Next.js allows you to serve static files, like images, in the public directory. You can learn how it works here.
 source: app/building-your-application/optimizing/static-assets
 ---
 
-{/* DO NOT EDIT. The content of this doc is generated from the source above. To edit the content of this page, navigate to the source page in your editor. You can use the `Content` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+Next.js는 루트 디렉토리의 `public` 폴더에서 이미지같은 정적 파일을 서빙할 수 있습니다. `public` 안에 있는 파일들은 기본 URL(`/`)로부터 참조될 수 있습니다.
+
+예를 들어 `public` 안에 `me.png`를 추가한다면, 이렇게 이미지에 접근할 수 있습니다.
+
+```jsx filename="Avatar.js"
+import Image from "next/image";
+
+export function Avatar() {
+  return (
+    <Image src="/me.png" alt="me" width="64" height="64" />
+  );
+}
+```
+
+`robots.txt`나 `favicon.ico`, Google Site Verification, HTML 파일같이 정적 파일들을 위한 폴더로도 유용합니다. 하지만 `pages/` 디렉토리 안에 있는 파일과 이름이 같은 정적 파일을 가지고 있지 않도록 주의해야 합니다. 이렇게 하면 에러가 발생합니다. [더 읽어보기.](https://nextjs.org/docs/messages/conflicting-public-file-page)
+
+> Philip: Google Site Verification을 위한 파일도 있어서 나온 말입니다.
+
+> 알고 있으면 좋은 사실:
+>
+> `public` 디렉토리의 이름은 변경할 수 없습니다. 정적 파일을 서빙하는 유일한 디렉토리입니다.
+>
+> - [빌드 타임](/docs/app/api-reference/next-cli#build)에 `public` 디렉토리 안에 있는 파일들만 Next.js가 서빙합니다. request time에 추가된 파일들은 사용할 수 없습니다. 지속적인 파일 저장이 필요하다면 [AWS S3](https://aws.amazon.com/s3/) 같은 서드파티 서비스를 사용하는 것을 추천합니다.
